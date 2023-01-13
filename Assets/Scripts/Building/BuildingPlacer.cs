@@ -33,16 +33,16 @@ public class BuildingPlacer : MonoBehaviour
 
                 if (_lastPlacementPosition != _raycastHit.point)
                 {
-                    _building.CheckValidPlacement();
+                    //_building.CheckValidPlacement();
                 }
 
                 _lastPlacementPosition = _raycastHit.point;
             }
 
-            if (_building.HasValidPlacement && Input.GetMouseButtonDown(0))
-            {
-                _PlaceBuilding();
-            }
+            //if (_building.HasValidPlacement && Input.GetMouseButtonDown(0))
+            //{
+            //    _PlaceBuilding();
+            //}
         }
     }
 
