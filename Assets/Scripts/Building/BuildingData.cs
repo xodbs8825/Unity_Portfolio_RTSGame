@@ -5,7 +5,7 @@ using UnityEngine;
 public class BuildingData
 {
     private string _code;
-    public int _hp;
+    private int _hp;
 
     public BuildingData(string code, int hp)
     {

@@ -1,27 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BuildingPlacer : MonoBehaviour
 {
-    private Building _building = null;
+    private Building _placedBuilding = null;
 
     private Ray _ray;
     private RaycastHit _raycastHit;
     private Vector3 _lastPlacementPosition;
 
-    void Start()
-    {
-        _PrepareBuilding(0);
-    }
-
     void Update()
     {
-        if (_building != null)
+        if (_placedBuilding != null)
         {
             if (Input.GetKeyUp(KeyCode.Escape))
             {
-                _CancelBuilding();
+                CancelPlacedBuilding();
                 return;
             }
 
@@ -29,45 +25,45 @@ public class BuildingPlacer : MonoBehaviour
 
             if (Physics.Raycast(_ray, out _raycastHit, 1000f, Globals.TERRAIN_LAYER_MASK))
             {
-                _building.SetPosition(_raycastHit.point);
+                _placedBuilding.SetPosition(_raycastHit.point);
 
                 if (_lastPlacementPosition != _raycastHit.point)
                 {
-                    //_building.CheckValidPlacement();
+                    _placedBuilding.CheckValidPlacement();
                 }
 
                 _lastPlacementPosition = _raycastHit.point;
             }
 
-            //if (_building.HasValidPlacement && Input.GetMouseButtonDown(0))
-            //{
-            //    _PlaceBuilding();
-            //}
+            if (_placedBuilding.HasValidPlacement && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            {
+                PlaceBuilding();
+            }
         }
     }
 
-    void _PrepareBuilding(int buildingDataIndex)
+    void PreparePlacedBuilding(int buildingDataIndex)
     {
-        if (_building != null && !_building.IsFixed)
-        {
-            Destroy(_building.Transform.gameObject);
-        }
-
         Building building = new Building(Globals.BUILDING_DATA[buildingDataIndex]);
-
-        _building = building;
+        building.Transform.GetComponent<BuildingManager>().Initialize(building);
+        _placedBuilding = building;
         _lastPlacementPosition = Vector3.zero;
     }
 
-    void _CancelBuilding()
+    void CancelPlacedBuilding()
     {
-        Destroy(_building.Transform.gameObject);
-        _building = null;
+        Destroy(_placedBuilding.Transform.gameObject);
+        _placedBuilding = null;
     }
 
-    void _PlaceBuilding()
+    void PlaceBuilding()
     {
-        _building.Place();
-        _PrepareBuilding(_building.DataIndex);
+        _placedBuilding.Place();
+        PreparePlacedBuilding(_placedBuilding.DataIndex);
+    }
+
+    public void SelectPlacedBuilding(int buildingDataIndex)
+    {
+        PreparePlacedBuilding(buildingDataIndex);
     }
 }
