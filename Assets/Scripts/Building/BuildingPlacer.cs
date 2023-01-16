@@ -5,11 +5,17 @@ using UnityEngine.EventSystems;
 
 public class BuildingPlacer : MonoBehaviour
 {
+    private UIManager _uiManager;
     private Building _placedBuilding = null;
 
     private Ray _ray;
     private RaycastHit _raycastHit;
     private Vector3 _lastPlacementPosition;
+
+    private void Awake()
+    {
+        _uiManager = GetComponent<UIManager>();
+    }
 
     void Update()
     {
@@ -59,7 +65,12 @@ public class BuildingPlacer : MonoBehaviour
     void PlaceBuilding()
     {
         _placedBuilding.Place();
-        PreparePlacedBuilding(_placedBuilding.DataIndex);
+
+        if (_placedBuilding.CanBuy()) PreparePlacedBuilding(_placedBuilding.DataIndex);
+        else _placedBuilding = null;
+
+        _uiManager.UpdateResourceTexts();
+        _uiManager.CheckBuildingButtons();
     }
 
     public void SelectPlacedBuilding(int buildingDataIndex)
