@@ -2,32 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingData
+// 클래스 인스턴스와는 별도로 대량의 데이터를 저장하는 데 사용할 수 있는 데이터 컨테이너
+// 값의 사본이 생성되는 것을 방지하여 프로젝트의 메모리 사용을 줄인다
+// 연결된 MonoBehaviour 스크립트에 변경되지 않는 데이터를 저장하는 프리팹이 있는 프로젝트의 경우 유용하다
+[CreateAssetMenu(fileName = "Building", menuName = "Scriptable Objects/Building", order = 1)]
+public class BuildingData : ScriptableObject
 {
-    private string _code;
-    private int _hp;
-    private Dictionary<string, int> _cost;
-
-    public BuildingData(string code, int hp, Dictionary<string, int> cost)
-    {
-        _code = code;
-        _hp = hp;
-        _cost = cost;
-    }
+    public string code;
+    public string unitName;
+    public string description;
+    public int healthPoint;
+    public GameObject prefab;
+    public List<ResourceValue> cost;
 
     public bool CanBuy()
     {
-        foreach (KeyValuePair<string, int> pair in _cost)
+        foreach (ResourceValue resource in cost)
         {
-            if (Globals.GAME_RESOURCES[pair.Key].Amount < pair.Value)
-            {
+            if (Globals.GAME_RESOURCES[resource.code].Amount < resource.amount)
                 return false;
-            }
         }
         return true;
     }
-
-    public string Code { get => _code; }
-    public int HP { get => _hp; }
-    public Dictionary<string, int> Cost { get => _cost; }
 }
