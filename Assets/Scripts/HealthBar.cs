@@ -1,89 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField]
-    private Image image;
+    public RectTransform rectTransform;
 
-    [SerializeField]
-    private float maxHealthPoints = 100;
+    private Transform _target;
+    private Vector3 _lastTargetPosition;
+    private Vector2 _pos;
 
-    [SerializeField]
-    private float healthBarStepsLength = 10;
+    private float _yOffset;
 
-    [SerializeField]
-    private float damagesDecreaseRate = 10;
-
-    private float currentHealthPoints;
-
-    private RectTransform imageRectTransform;
-
-    private float damages;
-
-    public float Health
+    private void Update()
     {
-        get { return currentHealthPoints; }
-        set
-        {
-            currentHealthPoints = Mathf.Clamp(value, 0, MaxHealthPoints);
-            image.material.SetFloat("_Percent", currentHealthPoints / MaxHealthPoints);
-
-            if (currentHealthPoints < Mathf.Epsilon)
-                Damages = 0;
-        }
+        if (!_target || _lastTargetPosition == _target.position)
+            return;
+        SetPosition();
     }
 
-    public float Damages
+    public void Initialize(Transform target, float yOffset)
     {
-        get { return damages; }
-        set
-        {
-            damages = Mathf.Clamp(value, 0, MaxHealthPoints);
-            image.material.SetFloat("_DamagesPercent", damages / MaxHealthPoints);
-        }
+        _target = target;
+        _yOffset = yOffset;
     }
 
-    public float MaxHealthPoints
+    public void SetPosition()
     {
-        get { return maxHealthPoints; }
-        set
-        {
-            maxHealthPoints = value;
-            image.material.SetFloat("_Steps", MaxHealthPoints / healthBarStepsLength);
-        }
-    }
+        if (!_target) return;
 
-    protected void Awake()
-    {
-        imageRectTransform = image.GetComponent<RectTransform>();
-        image.material = Instantiate(image.material); // Clone material
+        _pos = Camera.main.WorldToScreenPoint(_target.position);
+        _pos.y += _yOffset;
 
-        image.material.SetVector("_ImageSize", new Vector4(imageRectTransform.rect.size.x, imageRectTransform.rect.size.y, 0, 0));
-
-        MaxHealthPoints = MaxHealthPoints; // Force the call to the setter in order to update the material
-        currentHealthPoints = MaxHealthPoints; // Force the call to the setter in order to update the material
-    }
-
-    protected void Update()
-    {
-        if (Damages > 0)
-        {
-            Damages -= damagesDecreaseRate * Time.deltaTime;
-        }
-
-        // Dummy test, you can remove t$$anonymous$$s
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Hurt(20);
-        }
-    }
-
-    public void Hurt(float damagesPoints)
-    {
-        Damages = damagesPoints;
-        Health -= Damages;
+        rectTransform.anchoredPosition = _pos;
+        _lastTargetPosition = _target.position;
     }
 }
