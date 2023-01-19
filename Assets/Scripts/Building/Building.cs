@@ -21,12 +21,16 @@ public class Building
 
     private BuildingManager _buildingManager;
 
+    private Transform buildingParent;
+
     public Building(BuildingData data)
     {
         _data = data;
         _currentHealthPoint = data.healthPoint;
 
-        GameObject g = GameObject.Instantiate(data.prefab) as GameObject;
+        buildingParent = GameObject.Find("BuildingParent").GetComponent<Transform>();
+
+        GameObject g = GameObject.Instantiate(data.prefab, buildingParent) as GameObject;
         _transform = g.transform;
 
         _buildingManager = _transform.GetComponent<BuildingManager>();

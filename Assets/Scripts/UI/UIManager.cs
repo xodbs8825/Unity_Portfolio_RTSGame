@@ -95,7 +95,7 @@ public class UIManager : MonoBehaviour
     public void SetInfoPanel(BuildingData data)
     {
         // 텍스트 업데이트
-        if (data.code != "") _infoPanelTitleText.text = data.code;
+        if (data.code != "") _infoPanelTitleText.text = data.unitName;
         if (data.description != "") _infoPanelDescriptionText.text = data.description;
 
         // 자원 코스트 지우고 다시 Instatiate

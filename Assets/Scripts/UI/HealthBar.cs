@@ -10,6 +10,7 @@ public class HealthBar : MonoBehaviour
     private Vector3 _lastTargetPosition;
     private Vector2 _pos;
 
+    private float _xOffset;
     private float _yOffset;
 
     private void Update()
