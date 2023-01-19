@@ -30,7 +30,7 @@ public class HealthBar : MonoBehaviour
         if (!_target) return;
 
         _pos = Camera.main.WorldToScreenPoint(_target.position);
-        _pos.y += _yOffset;
+        _pos.y = _yOffset;
 
         rectTransform.anchoredPosition = _pos;
         _lastTargetPosition = _target.position;

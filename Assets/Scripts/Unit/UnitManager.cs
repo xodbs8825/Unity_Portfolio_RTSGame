@@ -6,12 +6,12 @@ public class UnitManager : MonoBehaviour
 {
     public GameObject selectionCircle;
 
-    private Transform _canvas;
+    private Transform _healthBarParent;
     private GameObject _healthBar;
 
     private void Awake()
     {
-        _canvas = GameObject.Find("Canvas").transform;
+        _healthBarParent = GameObject.Find("HealthBarParent").transform;
     }
 
     private void OnMouseDown()
@@ -33,16 +33,15 @@ public class UnitManager : MonoBehaviour
         if (_healthBar == null)
         {
             _healthBar = GameObject.Instantiate(Resources.Load("Prefabs/UI/HealthBar")) as GameObject;
-            _healthBar.transform.SetParent(_canvas);
+            _healthBar.transform.SetParent(_healthBarParent);
 
             HealthBar healthBar = _healthBar.GetComponent<HealthBar>();
             Rect boundingBox = Utils.GetBoundingBoxOnScreen(
-                transform.Find("Mesh").GetComponent<Renderer>().bounds,
+                transform.Find("SelectionCircle").GetComponent<Renderer>().bounds,
                 Camera.main
                 );
 
-
-            healthBar.Initialize(transform, transform.Find("Mesh").GetComponent<Renderer>().bounds.min.y);
+            healthBar.Initialize(transform, boundingBox.y);
             healthBar.SetPosition();
         }
     }
