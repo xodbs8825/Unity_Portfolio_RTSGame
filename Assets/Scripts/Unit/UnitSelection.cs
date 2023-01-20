@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class UnitSelection : MonoBehaviour
 {
+    public UIManager uiManager;
+
     private bool _isDraggingMouseBox = false;
     private Vector3 _dragStartPosition;
 
     Ray _ray;
     RaycastHit _raycastHit;
+
+    private Dictionary<int, List<UnitManager>> _selectionGroups = new Dictionary<int, List<UnitManager>>();
 
     void Update()
     {
@@ -36,6 +40,18 @@ public class UnitSelection : MonoBehaviour
                 {
                     if (_raycastHit.transform.tag == "Terrain") DeselectAllUnits();
                 }
+            }
+        }
+
+        if (Input.anyKeyDown)
+        {
+            int alphaKey = Utils.GetAlphaKeyValue(Input.inputString);
+            if (alphaKey != -1)
+            {
+                if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+                    CreateSelectionGroup(alphaKey);
+                else
+                    ReselectGroup(alphaKey);
             }
         }
     }
@@ -80,5 +96,42 @@ public class UnitSelection : MonoBehaviour
         {
             unitManager.Deselect();
         }
+    }
+
+    public void SelectUnitsGroup(int index)
+    {
+        ReselectGroup(index);
+    }
+
+    private void CreateSelectionGroup(int index)
+    {
+        if (Globals.SELECTED_UNITS.Count == 0)
+        {
+            if (_selectionGroups.ContainsKey(index))
+                RemoveSelectionGroup(index);
+            return;
+        }
+
+        List<UnitManager> groupUnits = new List<UnitManager>(Globals.SELECTED_UNITS);
+        _selectionGroups[index] = groupUnits;
+
+        uiManager.ToggleSelectionGroupButton(index, true);
+    }
+
+    private void RemoveSelectionGroup(int index)
+    {
+        _selectionGroups.Remove(index);
+        uiManager.ToggleSelectionGroupButton(index, false);
+    }
+
+    private void ReselectGroup(int index)
+    {
+        if (!_selectionGroups.ContainsKey(index))
+            return;
+
+        DeselectAllUnits();
+
+        foreach (UnitManager unitManager in _selectionGroups[index])
+            unitManager.Select();
     }
 }

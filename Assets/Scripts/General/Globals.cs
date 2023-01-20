@@ -6,6 +6,8 @@ public class Globals : MonoBehaviour
 {
     public static int TERRAIN_LAYER_MASK = 1 << 8;
 
+    public static UnitData[] UNIT_DATA;
+
     public static BuildingData[] BUILDING_DATA;
 
     public static Dictionary<string, GameResource> GAME_RESOURCES = new Dictionary<string, GameResource>()

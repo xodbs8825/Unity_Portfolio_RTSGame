@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   code: house
   unitName: House
-  description: Basic building
+  description: Basic residence building
   healthPoint: 100
   prefab: {fileID: 5542380815447981279, guid: c25759ed314c4364c82bce295f224bdb, type: 3}
   cost:

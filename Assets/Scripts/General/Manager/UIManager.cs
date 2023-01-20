@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour
     public Transform resourcesUIParent;
     public GameObject gameResourceDisplayPrefab;
 
+    public Transform selectedUnitsListParent;
+    public GameObject selectedUnitsDisplayPrefab;
+
     private Dictionary<string, Text> _resourcesTexts;
     private Dictionary<string, Button> _buildingButtons;
 
@@ -22,6 +25,8 @@ public class UIManager : MonoBehaviour
     private Transform _infoPanelResourcesCostParent;
 
     public GameObject gameResourceCostPrefab;
+
+    public Transform selectionGroupsParent;
 
     private void Awake()
     {
@@ -40,7 +45,7 @@ public class UIManager : MonoBehaviour
         _buildingButtons = new Dictionary<string, Button>();
         for (int i = 0; i < Globals.BUILDING_DATA.Length; i++)
         {
-            BuildingData data = Globals.BUILDING_DATA[i];
+            UnitData data = Globals.BUILDING_DATA[i];
 
             GameObject button = GameObject.Instantiate(buildingButtonPrefab, buildingMenu);
             button.name = data.unitName;
@@ -64,6 +69,9 @@ public class UIManager : MonoBehaviour
         _infoPanelDescriptionText = infoPanelTransform.Find("Content/Description").GetComponent<Text>();
         _infoPanelResourcesCostParent = infoPanelTransform.Find("Content/ResourcesCost");
         ShowInfoPanel(false);
+
+        for (int i = 0; i <= 9; i++)
+            ToggleSelectionGroupButton(i, false);
     }
 
     private void OnEnable()
@@ -73,17 +81,69 @@ public class UIManager : MonoBehaviour
 
         EventManager.AddTypedListener("HoverBuildingButton", OnHoverBuildingButton);
         EventManager.RemoveListener("UnhoverBuildingButton", OnUnhoverBuildingButton);
+
+        EventManager.AddTypedListener("SelectUnit", OnSelectUnit);
+        EventManager.AddTypedListener("DeselectUnit", OnDeselectUnit);
     }
 
     private void OnDisable()
     {
         EventManager.RemoveListener("UpdateResourceTexts", OnUpdateResourceTexts);
         EventManager.RemoveListener("CheckBuildingButtons", OnCheckBuildingButtons);
+
+        EventManager.RemoveTypedListener("SelectUnit", OnSelectUnit);
+        EventManager.RemoveTypedListener("DeselectUnit", OnDeselectUnit);
+    }
+
+    private void OnSelectUnit(CustomEventData data)
+    {
+        AddSelectedUnitToUIList(data.unit);
+    }
+
+    private void OnDeselectUnit(CustomEventData data)
+    {
+        RemoveSelectedUnitToUILIst(data.unit.Code);
+    }
+
+    public void AddSelectedUnitToUIList(Unit unit)
+    {
+        Transform alreadyInstantiatedChild = selectedUnitsListParent;
+
+        if (alreadyInstantiatedChild != null)
+        {
+            Text t = alreadyInstantiatedChild.Find("Count").GetComponent<Text>();
+            int count = int.Parse(t.text);
+            t.text = (count + 1).ToString();
+        }
+        else
+        {
+            GameObject g = GameObject.Instantiate(selectedUnitsDisplayPrefab, selectedUnitsListParent);
+            g.name = unit.Code;
+            Transform t = g.transform;
+            t.Find("Count").GetComponent<Text>().text = "1";
+            t.Find("Name").GetComponent<Text>().text = unit.Data.unitName;
+        }
+    }
+
+    public void RemoveSelectedUnitToUILIst(string code)
+    {
+        Transform listItem = selectedUnitsListParent.Find(code);
+        if (listItem == null) return;
+
+        Text t = listItem.Find("Count").GetComponent<Text>();
+        
+        int count = int.Parse(t.text);
+        count -= 1;
+
+        if (count == 0)
+            DestroyImmediate(listItem.gameObject);
+        else
+            t.text = count.ToString();
     }
 
     private void OnHoverBuildingButton(CustomEventData data)
     {
-        SetInfoPanel(data.buildingData);
+        SetInfoPanel(data.unitData);
         ShowInfoPanel(true);
     }
 
@@ -92,7 +152,7 @@ public class UIManager : MonoBehaviour
         ShowInfoPanel(false);
     }
 
-    public void SetInfoPanel(BuildingData data)
+    public void SetInfoPanel(UnitData data)
     {
         // 텍스트 업데이트
         if (data.code != "") _infoPanelTitleText.text = data.unitName;
@@ -111,6 +171,9 @@ public class UIManager : MonoBehaviour
 
                 t.Find("Text").GetComponent<Text>().text = resource.amount.ToString();
                 t.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Textures/GameResources/{resource.code}");
+
+                //if (Globals.GAME_RESOURCES[resource.code].Amount < resource.amount)
+                    //t.Find("Text").GetComponent<Text>().color = invalidTextColor;
             }
         }
     }
@@ -140,7 +203,7 @@ public class UIManager : MonoBehaviour
 
     public void CheckBuildingButtons()
     {
-        foreach (BuildingData data in Globals.BUILDING_DATA)
+        foreach (UnitData data in Globals.BUILDING_DATA)
         {
             _buildingButtons[data.code].interactable = data.CanBuy();
         }
@@ -154,7 +217,12 @@ public class UIManager : MonoBehaviour
 
     private void OnCheckBuildingButtons()
     {
-        foreach (BuildingData data in Globals.BUILDING_DATA)
+        foreach (UnitData data in Globals.BUILDING_DATA)
             _buildingButtons[data.code].interactable = data.CanBuy();
+    }
+
+    public void ToggleSelectionGroupButton(int index, bool on)
+    {
+        selectionGroupsParent.Find(index.ToString()).gameObject.SetActive(on);
     }
 }

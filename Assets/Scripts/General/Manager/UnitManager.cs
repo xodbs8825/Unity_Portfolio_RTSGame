@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
 public class UnitManager : MonoBehaviour
 {
     public GameObject selectionCircle;
 
     private Transform _healthBarParent;
     private GameObject _healthBar;
+
+    protected BoxCollider _collider;
+
+    protected virtual Unit Unit { get; set; }
 
     private void Awake()
     {
@@ -44,6 +49,8 @@ public class UnitManager : MonoBehaviour
             healthBar.Initialize(transform, boundingBox.y);
             healthBar.SetPosition();
         }
+
+        EventManager.TriggerTypedEvent("SelectUnit", new CustomEventData(Unit));
     }
 
     public void Select() { Select(false, false); }
@@ -78,5 +85,13 @@ public class UnitManager : MonoBehaviour
 
         Destroy(_healthBar);
         _healthBar = null;
+
+        EventManager.TriggerTypedEvent("DeselectUnit", new CustomEventData(Unit));
+    }
+
+    public void Initialize(Unit unit)
+    {
+        _collider = GetComponent<BoxCollider>();
+        Unit = unit;
     }
 }

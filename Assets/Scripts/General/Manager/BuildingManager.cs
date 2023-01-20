@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
 public class BuildingManager : UnitManager
 {
-    private BoxCollider _collider;
-
     private Building _building = null;
+    protected override Unit Unit 
+    {
+        get { return _building; }
+        set { _building = value is Building ? (Building)value : null; }
+    }
+
+
     private int _nCollisions = 0;
 
     public void Initialize(Building building)
