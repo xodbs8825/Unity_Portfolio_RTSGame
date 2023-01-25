@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Globals : MonoBehaviour
+public static class Globals
 {
     public static int TERRAIN_LAYER_MASK = 1 << 8;
 
@@ -12,9 +12,8 @@ public class Globals : MonoBehaviour
 
     public static Dictionary<string, GameResource> GAME_RESOURCES = new Dictionary<string, GameResource>()
     {
-        { "gold", new GameResource("Gold", 9999999) },
-        { "wood", new GameResource("Wood", 9999999) },
-        { "stone", new GameResource("Stone", 9999999) }
+        {"mineral", new GameResource("Mineral", 99999) },
+        {"gas", new GameResource("Gas", 99999) }
     };
 
     public static List<UnitManager> SELECTED_UNITS = new List<UnitManager>();

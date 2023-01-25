@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Utils : MonoBehaviour
+public static class Utils
 {
     static Texture2D _whiteTexture;
     public static Texture2D WhiteTexture

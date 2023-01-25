@@ -18,7 +18,7 @@ MonoBehaviour:
   healthPoint: 100
   prefab: {fileID: 5542380815447981279, guid: c25759ed314c4364c82bce295f224bdb, type: 3}
   cost:
-  - code: gold
+  - code: mineral
     amount: 100
-  - code: wood
+  - code: gas
     amount: 120

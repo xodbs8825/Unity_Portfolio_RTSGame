@@ -8,9 +8,6 @@ public class Unit
     protected Transform _transform;
     protected int _currentHealth;
 
-    protected Transform _unitParent;
-    protected Transform _buildingParent;
-
     protected string _uid;
     protected int _level;
     protected List<ResourceValue> _production;
@@ -21,13 +18,7 @@ public class Unit
         _data = data;
         _currentHealth = data.healthPoint;
 
-        _unitParent = GameObject.Find("Unit/UnitParent").GetComponent<Transform>();
-        _buildingParent = GameObject.Find("Unit/BuildingParent").GetComponent<Transform>();
-
         GameObject g = GameObject.Instantiate(data.prefab) as GameObject;
-
-        if (data.prefab.CompareTag("Unit")) g.transform.SetParent(_unitParent);
-        else if (data.prefab.CompareTag("Building")) g.transform.SetParent(_buildingParent);
 
         _transform = g.transform;
 
