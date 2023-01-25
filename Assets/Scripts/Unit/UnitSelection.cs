@@ -48,11 +48,12 @@ public class UnitSelection : MonoBehaviour
             int alphaKey = Utils.GetAlphaKeyValue(Input.inputString);
             if (alphaKey != -1)
             {
-                if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+                if (Input.GetKey(KeyCode.LeftControl))
                     CreateSelectionGroup(alphaKey);
                 else
                     ReselectGroup(alphaKey);
             }
+            Debug.Log(alphaKey);
         }
     }
 
@@ -105,6 +106,7 @@ public class UnitSelection : MonoBehaviour
 
     private void CreateSelectionGroup(int index)
     {
+        // check there are units currently selected
         if (Globals.SELECTED_UNITS.Count == 0)
         {
             if (_selectionGroups.ContainsKey(index))
@@ -126,6 +128,7 @@ public class UnitSelection : MonoBehaviour
 
     private void ReselectGroup(int index)
     {
+        // check the group actually is defined
         if (!_selectionGroups.ContainsKey(index))
             return;
 

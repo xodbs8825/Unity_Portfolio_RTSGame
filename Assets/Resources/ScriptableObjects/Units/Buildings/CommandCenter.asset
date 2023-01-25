@@ -10,15 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66fdca5b6dc1a0d42909c7167a4b0ea2, type: 3}
-  m_Name: House
+  m_Name: CommandCenter
   m_EditorClassIdentifier: 
-  code: house
-  unitName: House
-  description: Basic residence building
-  healthPoint: 100
+  code: commandCenter
+  unitName: Command Center
+  description: Terran Command Center
+  healthPoint: 4000
   prefab: {fileID: 5542380815447981279, guid: c25759ed314c4364c82bce295f224bdb, type: 3}
   cost:
   - code: mineral
-    amount: 100
-  - code: gas
-    amount: 120
+    amount: 400

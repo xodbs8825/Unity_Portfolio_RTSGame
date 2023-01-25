@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
 
     public Transform selectedUnitsListParent;
     public GameObject selectedUnitsDisplayPrefab;
+    public Transform selectionGroupsParent;
 
     private Dictionary<string, Text> _resourcesTexts;
     private Dictionary<string, Button> _buildingButtons;
@@ -25,8 +26,6 @@ public class UIManager : MonoBehaviour
     private Transform _infoPanelResourcesCostParent;
 
     public GameObject gameResourceCostPrefab;
-
-    public Transform selectionGroupsParent;
 
     private void Awake()
     {
@@ -70,7 +69,7 @@ public class UIManager : MonoBehaviour
         _infoPanelResourcesCostParent = infoPanelTransform.Find("Content/ResourcesCost");
         ShowInfoPanel(false);
 
-        for (int i = 0; i <= 9; i++)
+        for (int i = 1; i <= 9; i++)
             ToggleSelectionGroupButton(i, false);
     }
 
@@ -107,14 +106,15 @@ public class UIManager : MonoBehaviour
 
     public void AddSelectedUnitToUIList(Unit unit)
     {
-        Transform alreadyInstantiatedChild = selectedUnitsListParent;
-
+        // if there is another unit of the same type already selected, increase the counter
+        Transform alreadyInstantiatedChild = selectedUnitsListParent.Find(unit.Code);
         if (alreadyInstantiatedChild != null)
         {
             Text t = alreadyInstantiatedChild.Find("Count").GetComponent<Text>();
             int count = int.Parse(t.text);
             t.text = (count + 1).ToString();
         }
+        // else create a brand new counter initialized with a count of 1
         else
         {
             GameObject g = GameObject.Instantiate(selectedUnitsDisplayPrefab, selectedUnitsListParent);

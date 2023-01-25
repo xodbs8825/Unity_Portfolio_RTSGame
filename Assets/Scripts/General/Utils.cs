@@ -110,6 +110,7 @@ public static class Utils
         if (inputString == "7") return 7;
         if (inputString == "8") return 8;
         if (inputString == "9") return 9;
+
         return -1;
     }
 }

@@ -12,8 +12,8 @@ public static class Globals
 
     public static Dictionary<string, GameResource> GAME_RESOURCES = new Dictionary<string, GameResource>()
     {
-        {"mineral", new GameResource("Mineral", 99999) },
-        {"gas", new GameResource("Gas", 99999) }
+        {"mineral", new GameResource("Mineral", 9999999) },
+        {"gas", new GameResource("Gas", 9999999) }
     };
 
     public static List<UnitManager> SELECTED_UNITS = new List<UnitManager>();
