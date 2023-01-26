@@ -17,6 +17,9 @@ public class UIManager : MonoBehaviour
     public GameObject selectedUnitsDisplayPrefab;
     public Transform selectionGroupsParent;
 
+    private Unit _selectedUnit;
+    public GameObject unitSkillButtonPrefab;
+
     private Dictionary<string, Text> _resourcesTexts;
     private Dictionary<string, Button> _buildingButtons;
 
@@ -26,6 +29,12 @@ public class UIManager : MonoBehaviour
     private Transform _infoPanelResourcesCostParent;
 
     public GameObject gameResourceCostPrefab;
+    public GameObject selectedUnitMenu;
+    private Text _selectedUnitTitleText;
+    private Text _selectedUnitLevelText;
+    private Transform _selectedUnitResourcesProductionParent;
+    private Transform _selectedUnitActionButtonsParent;
+
 
     private void Awake()
     {
@@ -36,6 +45,7 @@ public class UIManager : MonoBehaviour
             GameObject display = Instantiate(gameResourceDisplayPrefab, resourcesUIParent);
             display.name = pair.Key;
             _resourcesTexts[pair.Key] = display.transform.Find("Text").GetComponent<Text>();
+            //display.transform.Find("Icon").GetComponent<Sprite>() = Resources.Load<Sprite>($"")
             SetResourceText(pair.Key, pair.Value.Amount);
         }
 
@@ -71,6 +81,12 @@ public class UIManager : MonoBehaviour
 
         for (int i = 1; i <= 9; i++)
             ToggleSelectionGroupButton(i, false);
+
+        Transform selectedUnitMenuTransform = selectedUnitMenu.transform;
+        _selectedUnitTitleText = selectedUnitMenuTransform.Find("Content/Title").GetComponent<Text>();
+        _selectedUnitLevelText = selectedUnitMenuTransform.Find("Content/Level").GetComponent<Text>();
+        _selectedUnitResourcesProductionParent = selectedUnitMenuTransform.Find("Content/ResourcesProduction");
+        _selectedUnitActionButtonsParent = selectedUnitMenuTransform.Find("Content/SpecificActions");
     }
 
     private void OnEnable()
@@ -97,11 +113,18 @@ public class UIManager : MonoBehaviour
     private void OnSelectUnit(CustomEventData data)
     {
         AddSelectedUnitToUIList(data.unit);
+        SetSelectedUnitMenu(data.unit);
+        ShowSelectedUnitMenu(true);
     }
 
     private void OnDeselectUnit(CustomEventData data)
     {
         RemoveSelectedUnitToUILIst(data.unit.Code);
+
+        if (Globals.SELECTED_UNITS.Count == 0)
+            ShowSelectedUnitMenu(true);
+        else
+            SetSelectedUnitMenu(Globals.SELECTED_UNITS[Globals.SELECTED_UNITS.Count - 1].Unit);
     }
 
     public void AddSelectedUnitToUIList(Unit unit)
@@ -224,5 +247,39 @@ public class UIManager : MonoBehaviour
     public void ToggleSelectionGroupButton(int index, bool on)
     {
         selectionGroupsParent.Find(index.ToString()).gameObject.SetActive(on);
+    }
+
+    private void SetSelectedUnitMenu(Unit unit)
+    {
+        //_selectedUnit = unit;
+
+        // update texts
+        _selectedUnitTitleText.text = unit.Data.unitName;
+        _selectedUnitLevelText.text = $"Level {unit.Level}";
+
+        // clear resource production and reinstantiate new one
+        foreach (Transform child in _selectedUnitResourcesProductionParent)
+            Destroy(child.gameObject);
+
+        if (unit.Production.Count > 0)
+        {
+            GameObject g;
+            Transform t;
+
+            foreach (ResourceValue resource in unit.Production)
+            {
+                g = GameObject.Instantiate(gameResourceCostPrefab, _selectedUnitResourcesProductionParent);
+                t = g.transform;
+
+                t.Find("Text").GetComponent<Text>().text = $"+{resource.amount}";
+                t.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Textures/GameResources/{resource.code}");
+            }
+        }
+
+    }
+
+    private void ShowSelectedUnitMenu(bool show)
+    {
+
     }
 }

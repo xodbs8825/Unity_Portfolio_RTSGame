@@ -12,6 +12,8 @@ public class Unit
     protected int _level;
     protected List<ResourceValue> _production;
 
+    protected List<SkillManager> _skillManagers;
+
     public Unit(UnitData data) : this(data, new List<ResourceValue>() { }) { }
     public Unit(UnitData data, List<ResourceValue> production)
     {
@@ -25,6 +27,16 @@ public class Unit
         _uid = System.Guid.NewGuid().ToString();
         _level = 1;
         _production = production;
+
+        _skillManagers = new List<SkillManager>();
+
+        SkillManager skillManager;
+        foreach (SkillData skill in _data.skills)
+        {
+            skillManager = g.AddComponent<SkillManager>();
+            skillManager.Initialize(skill, g);
+            _skillManagers.Add(skillManager);
+        }
     }
 
     public void SetPosition(Vector3 position)
@@ -58,6 +70,11 @@ public class Unit
             Globals.GAME_RESOURCES[resource.code].AddAmount(resource.amount);
     }
 
+    public void TriggerSkill(int index, GameObject target = null)
+    {
+        _skillManagers[index].Trigger(target);
+    }
+
     public UnitData Data { get => _data; }
     public string Code { get => _data.code; }
     public Transform Transform { get => _transform; }
@@ -66,4 +83,5 @@ public class Unit
     public string Uid { get => _uid; }
     public int Level { get => _level; }
     public List<ResourceValue> Production { get => _production; }
+    public List<SkillManager> SkillManagers { get => _skillManagers; }
 }
