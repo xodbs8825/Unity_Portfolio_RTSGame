@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UnitSelection : MonoBehaviour
 {
@@ -14,8 +15,23 @@ public class UnitSelection : MonoBehaviour
 
     private Dictionary<int, List<UnitManager>> _selectionGroups = new Dictionary<int, List<UnitManager>>();
 
+    private Dictionary<int, KeyCode> unitNumbering = new Dictionary<int, KeyCode>()
+    {
+        {1, KeyCode.Alpha1 },
+        {2, KeyCode.Alpha2 },
+        {3, KeyCode.Alpha3 },
+        {4, KeyCode.Alpha4 },
+        {5, KeyCode.Alpha5 },
+        {6, KeyCode.Alpha6 },
+        {7, KeyCode.Alpha7 },
+        {8, KeyCode.Alpha8 },
+        {9, KeyCode.Alpha9 }
+    };
+
     void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             _isDraggingMouseBox = true;
@@ -43,17 +59,47 @@ public class UnitSelection : MonoBehaviour
             }
         }
 
-        if (Input.anyKeyDown)
+        if (Input.GetKey(KeyCode.LeftControl))
         {
-            int alphaKey = Utils.GetAlphaKeyValue(Input.inputString);
-            if (alphaKey != -1)
-            {
-                if (Input.GetKey(KeyCode.LeftControl))
-                    CreateSelectionGroup(alphaKey);
-                else
-                    ReselectGroup(alphaKey);
-            }
-            Debug.Log(alphaKey);
+            if (Input.GetKey(KeyCode.Alpha1))
+                CreateSelectionGroup(1);
+            if (Input.GetKey(KeyCode.Alpha2))
+                CreateSelectionGroup(2);
+            if (Input.GetKey(KeyCode.Alpha3))
+                CreateSelectionGroup(3);
+            if (Input.GetKey(KeyCode.Alpha4))
+                CreateSelectionGroup(4);
+            if (Input.GetKey(KeyCode.Alpha5))
+                CreateSelectionGroup(5);
+            if (Input.GetKey(KeyCode.Alpha6))
+                CreateSelectionGroup(6);
+            if (Input.GetKey(KeyCode.Alpha7))
+                CreateSelectionGroup(7);
+            if (Input.GetKey(KeyCode.Alpha8))
+                CreateSelectionGroup(8);
+            if (Input.GetKey(KeyCode.Alpha9))
+                CreateSelectionGroup(9);
+        }
+        else
+        {
+            if (Input.GetKey(KeyCode.Alpha1))
+                ReselectGroup(1);
+            if (Input.GetKey(KeyCode.Alpha2))
+                ReselectGroup(2);
+            if (Input.GetKey(KeyCode.Alpha3))
+                ReselectGroup(3);
+            if (Input.GetKey(KeyCode.Alpha4))
+                ReselectGroup(4);
+            if (Input.GetKey(KeyCode.Alpha5))
+                ReselectGroup(5);
+            if (Input.GetKey(KeyCode.Alpha6))
+                ReselectGroup(6);
+            if (Input.GetKey(KeyCode.Alpha7))
+                ReselectGroup(7);
+            if (Input.GetKey(KeyCode.Alpha8))
+                ReselectGroup(8);
+            if (Input.GetKey(KeyCode.Alpha9))
+                ReselectGroup(9);
         }
     }
 
@@ -64,7 +110,7 @@ public class UnitSelection : MonoBehaviour
             _dragStartPosition,
             Input.mousePosition
             );
-        
+
         GameObject[] selectableUnits = GameObject.FindGameObjectsWithTag("Unit");
 
         bool inBounds;
@@ -136,5 +182,11 @@ public class UnitSelection : MonoBehaviour
 
         foreach (UnitManager unitManager in _selectionGroups[index])
             unitManager.Select();
+    }
+
+    private void UnitNumbering(int index)
+    {
+        if (Input.GetKey(unitNumbering[index]))
+            CreateSelectionGroup(index);
     }
 }

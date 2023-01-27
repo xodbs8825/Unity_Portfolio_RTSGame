@@ -113,4 +113,20 @@ public static class Utils
 
         return -1;
     }
+
+    public static int UnitNumberingKeyValue(string inputString)
+    {
+        if (inputString == "0") return 0;
+        if (inputString == "1") return 1;
+        if (inputString == "2") return 2;
+        if (inputString == "3") return 3;
+        if (inputString == "4") return 4;
+        if (inputString == "5") return 5;
+        if (inputString == "6") return 6;
+        if (inputString == "7") return 7;
+        if (inputString == "8") return 8;
+        if (inputString == "9") return 9;
+
+        return -1;
+    }
 }

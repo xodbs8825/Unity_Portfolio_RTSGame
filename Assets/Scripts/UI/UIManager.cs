@@ -31,8 +31,8 @@ public class UIManager : MonoBehaviour
     public GameObject gameResourceCostPrefab;
     public GameObject selectedUnitMenu;
     private Text _selectedUnitTitleText;
-    private Text _selectedUnitLevelText;
-    private Transform _selectedUnitResourcesProductionParent;
+    //private Text _selectedUnitLevelText;
+    //private Transform _selectedUnitResourcesProductionParent;
     private Transform _selectedUnitActionButtonsParent;
 
 
@@ -45,8 +45,9 @@ public class UIManager : MonoBehaviour
             GameObject display = Instantiate(gameResourceDisplayPrefab, resourcesUIParent);
             display.name = pair.Key;
             _resourcesTexts[pair.Key] = display.transform.Find("Text").GetComponent<Text>();
-            //display.transform.Find("Icon").GetComponent<Sprite>() = Resources.Load<Sprite>($"")
             SetResourceText(pair.Key, pair.Value.Amount);
+
+            display.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Textures/GameResources/{pair.Key}");
         }
 
         // 건물 건설을 위한 버튼 생성
@@ -84,9 +85,9 @@ public class UIManager : MonoBehaviour
 
         Transform selectedUnitMenuTransform = selectedUnitMenu.transform;
         _selectedUnitTitleText = selectedUnitMenuTransform.Find("Content/Title").GetComponent<Text>();
-        _selectedUnitLevelText = selectedUnitMenuTransform.Find("Content/Level").GetComponent<Text>();
-        _selectedUnitResourcesProductionParent = selectedUnitMenuTransform.Find("Content/ResourcesProduction");
-        _selectedUnitActionButtonsParent = selectedUnitMenuTransform.Find("Content/SpecificActions");
+        //_selectedUnitLevelText = selectedUnitMenuTransform.Find("Content/Level").GetComponent<Text>();
+        //_selectedUnitResourcesProductionParent = selectedUnitMenuTransform.Find("Content/ResourcesProduction");
+        _selectedUnitActionButtonsParent = selectedUnitMenuTransform.Find("Buttons/SpecificActions");
     }
 
     private void OnEnable()
@@ -186,7 +187,8 @@ public class UIManager : MonoBehaviour
 
         if (data.cost.Count > 0)
         {
-            GameObject g; Transform t;
+            GameObject g;
+            Transform t;
             foreach (ResourceValue resource in data.cost)
             {
                 g = GameObject.Instantiate(gameResourceCostPrefab, _infoPanelResourcesCostParent);
@@ -209,6 +211,11 @@ public class UIManager : MonoBehaviour
     private void SetResourceText(string resource, int value)
     {
         _resourcesTexts[resource].text = value.ToString();
+    }
+
+    private void SetResourceIcon(string resource, Sprite icon)
+    {
+
     }
 
     public void UpdateResourceTexts()
@@ -251,35 +258,62 @@ public class UIManager : MonoBehaviour
 
     private void SetSelectedUnitMenu(Unit unit)
     {
-        //_selectedUnit = unit;
+        _selectedUnit = unit;
 
-        // update texts
+        // 텍스트 업데이트
         _selectedUnitTitleText.text = unit.Data.unitName;
-        _selectedUnitLevelText.text = $"Level {unit.Level}";
+        //_selectedUnitLevelText.text = $"Level {unit.Level}";
 
-        // clear resource production and reinstantiate new one
-        foreach (Transform child in _selectedUnitResourcesProductionParent)
+        // clear resource production and reinstantiate
+        //foreach (Transform child in _selectedUnitResourcesProductionParent)
+        //    Destroy(child.gameObject);
+
+        //if (unit.Production.Count > 0)
+        //{
+        //    GameObject g;
+        //    Transform t;
+
+        //    foreach (ResourceValue resource in unit.Production)
+        //    {
+        //        g = GameObject.Instantiate(gameResourceCostPrefab, _selectedUnitResourcesProductionParent);
+        //        t = g.transform;
+
+        //        t.Find("Text").GetComponent<Text>().text = $"+{resource.amount}";
+        //        t.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Textures/GameResources/{resource.code}");
+        //    }
+        //}
+
+        // clear skills and reinstantiate new ones
+        foreach (Transform child in _selectedUnitActionButtonsParent)
             Destroy(child.gameObject);
 
-        if (unit.Production.Count > 0)
+        if (unit.SkillManagers.Count > 0)
         {
             GameObject g;
             Transform t;
+            Button b;
 
-            foreach (ResourceValue resource in unit.Production)
+            for (int i = 0; i < unit.SkillManagers.Count; i++)
             {
-                g = GameObject.Instantiate(gameResourceCostPrefab, _selectedUnitResourcesProductionParent);
+                g = GameObject.Instantiate(unitSkillButtonPrefab, _selectedUnitActionButtonsParent);
                 t = g.transform;
+                b = g.GetComponent<Button>();
 
-                t.Find("Text").GetComponent<Text>().text = $"+{resource.amount}";
-                t.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Textures/GameResources/{resource.code}");
+                unit.SkillManagers[i].SetButton(b);
+                t.Find("Text").GetComponent<Text>().text = unit.SkillManagers[i].skill.skillName;
+
+                AddUnitSkillButtonListener(b, i);
             }
         }
+    }
 
+    private void AddUnitSkillButtonListener(Button b, int i)
+    {
+        b.onClick.AddListener(() => _selectedUnit.TriggerSkill(i));
     }
 
     private void ShowSelectedUnitMenu(bool show)
     {
-
+        selectedUnitMenu.SetActive(show);
     }
 }
