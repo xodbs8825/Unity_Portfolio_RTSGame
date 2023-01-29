@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum SkillType
 {
@@ -34,7 +35,7 @@ public class SkillData : ScriptableObject
                         );
                     CharacterData data = (CharacterData)unitData;
                     Character character = new Character(data);
-                    character.Transform.position = instantiatePosition;
+                    character.Transform.GetComponent<NavMeshAgent>().Warp(instantiatePosition);
                     character.Transform.GetComponent<CharacterManager>().Initialize(character);
                 }
                 break;

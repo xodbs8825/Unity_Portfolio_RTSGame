@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class BuildingPlacer : MonoBehaviour
@@ -12,15 +13,19 @@ public class BuildingPlacer : MonoBehaviour
     private RaycastHit _raycastHit;
     private Vector3 _lastPlacementPosition;
 
+    private bool isAbleToBuild;
+
     private void Awake()
     {
         _uiManager = GetComponent<UIManager>();
+        isAbleToBuild = true;
     }
 
     void Update()
     {
         if (_placedBuilding != null)
         {
+            isAbleToBuild = false;
             if (Input.GetKeyUp(KeyCode.Escape))
             {
                 CancelPlacedBuilding();
@@ -44,6 +49,7 @@ public class BuildingPlacer : MonoBehaviour
             if (_placedBuilding.HasValidPlacement && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 PlaceBuilding();
+                CancelPlacedBuilding();
             }
         }
     }
@@ -56,25 +62,38 @@ public class BuildingPlacer : MonoBehaviour
         _lastPlacementPosition = Vector3.zero;
     }
 
-    void CancelPlacedBuilding()
+    public void CancelPlacedBuilding()
     {
         Destroy(_placedBuilding.Transform.gameObject);
         _placedBuilding = null;
+
+        isAbleToBuild = true;
     }
 
     void PlaceBuilding()
     {
         _placedBuilding.Place();
 
-        if (_placedBuilding.CanBuy()) PreparePlacedBuilding(_placedBuilding.DataIndex);
-        else _placedBuilding = null;
+        if (_placedBuilding.CanBuy())
+            PreparePlacedBuilding(_placedBuilding.DataIndex);
+        else
+        {
+            EventManager.TriggerEvent("PlaceBuildingOff");
+            _placedBuilding = null;
+        }
 
         EventManager.TriggerEvent("UpdateResourceTexts");
         EventManager.TriggerEvent("CheckBuildingButtons");
+
+        Globals.UpdateNevMeshSurface();
+
+        isAbleToBuild = true;
     }
 
     public void SelectPlacedBuilding(int buildingDataIndex)
     {
         PreparePlacedBuilding(buildingDataIndex);
     }
+
+    public bool IsAbleToBuild { get => isAbleToBuild; }
 }

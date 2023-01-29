@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public static class Globals
 {
@@ -17,4 +18,11 @@ public static class Globals
     };
 
     public static List<UnitManager> SELECTED_UNITS = new List<UnitManager>();
+
+    public static NavMeshSurface NAV_MESH_SURFACE;
+
+    public static void UpdateNevMeshSurface()
+    {
+        NAV_MESH_SURFACE.UpdateNavMesh(NAV_MESH_SURFACE.navMeshData);
+    }
 }

@@ -15,7 +15,7 @@ public class UnitSelection : MonoBehaviour
 
     private Dictionary<int, List<UnitManager>> _selectionGroups = new Dictionary<int, List<UnitManager>>();
 
-    private Dictionary<int, KeyCode> unitNumbering = new Dictionary<int, KeyCode>()
+    private Dictionary<int, KeyCode> _unitNumbering = new Dictionary<int, KeyCode>
     {
         {1, KeyCode.Alpha1 },
         {2, KeyCode.Alpha2 },
@@ -47,59 +47,18 @@ public class UnitSelection : MonoBehaviour
 
         if (Globals.SELECTED_UNITS.Count > 0)
         {
-            if (Input.GetKeyDown(KeyCode.Escape)) DeselectAllUnits();
-
             if (Input.GetMouseButtonDown(0))
             {
                 _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(_ray, out _raycastHit, 1000f))
-                {
-                    if (_raycastHit.transform.tag == "Terrain") DeselectAllUnits();
-                }
             }
         }
 
-        if (Input.GetKey(KeyCode.LeftControl))
+        for (int i = 1; i <= _unitNumbering.Count; i++)
         {
-            if (Input.GetKey(KeyCode.Alpha1))
-                CreateSelectionGroup(1);
-            if (Input.GetKey(KeyCode.Alpha2))
-                CreateSelectionGroup(2);
-            if (Input.GetKey(KeyCode.Alpha3))
-                CreateSelectionGroup(3);
-            if (Input.GetKey(KeyCode.Alpha4))
-                CreateSelectionGroup(4);
-            if (Input.GetKey(KeyCode.Alpha5))
-                CreateSelectionGroup(5);
-            if (Input.GetKey(KeyCode.Alpha6))
-                CreateSelectionGroup(6);
-            if (Input.GetKey(KeyCode.Alpha7))
-                CreateSelectionGroup(7);
-            if (Input.GetKey(KeyCode.Alpha8))
-                CreateSelectionGroup(8);
-            if (Input.GetKey(KeyCode.Alpha9))
-                CreateSelectionGroup(9);
-        }
-        else
-        {
-            if (Input.GetKey(KeyCode.Alpha1))
-                ReselectGroup(1);
-            if (Input.GetKey(KeyCode.Alpha2))
-                ReselectGroup(2);
-            if (Input.GetKey(KeyCode.Alpha3))
-                ReselectGroup(3);
-            if (Input.GetKey(KeyCode.Alpha4))
-                ReselectGroup(4);
-            if (Input.GetKey(KeyCode.Alpha5))
-                ReselectGroup(5);
-            if (Input.GetKey(KeyCode.Alpha6))
-                ReselectGroup(6);
-            if (Input.GetKey(KeyCode.Alpha7))
-                ReselectGroup(7);
-            if (Input.GetKey(KeyCode.Alpha8))
-                ReselectGroup(8);
-            if (Input.GetKey(KeyCode.Alpha9))
-                ReselectGroup(9);
+            if (Input.GetKey(KeyCode.LeftControl))
+                UnitNumbering(1, i);
+            else
+                UnitNumbering(2, i);
         }
     }
 
@@ -184,9 +143,20 @@ public class UnitSelection : MonoBehaviour
             unitManager.Select();
     }
 
-    private void UnitNumbering(int index)
+    private void UnitNumbering(int switchIndex, int index)
     {
-        if (Input.GetKey(unitNumbering[index]))
-            CreateSelectionGroup(index);
+        switch (switchIndex)
+        {
+            case 1:
+                if (Input.GetKey(_unitNumbering[index]))
+                    CreateSelectionGroup(index);
+                break;
+            case 2:
+                if (Input.GetKey(_unitNumbering[index]))
+                    ReselectGroup(index);
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6c9bc1f5a984e241a01bdb2b77f9fcf, type: 3}
-  m_Name: Soldier
+  m_Name: SCV
   m_EditorClassIdentifier: 
-  code: soldier
-  unitName: Soldier
+  code: scv
+  unitName: SCV
   description: Simple Unit
-  healthPoint: 30
+  healthPoint: 50
   prefab: {fileID: 5542380815447981279, guid: f294de0d17cb791459e18eb4754e5c06, type: 3}
   cost:
   - code: mineral
-    amount: 30
+    amount: 50
+  skills: []

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
-  m_Name: SpawnSoldier
+  m_Name: SpawnSCV
   m_EditorClassIdentifier: 
-  code: spawn_soldier
-  skillName: Spawn Soldier
-  description: Spawn Soldier
+  code: spawn_scv
+  skillName: Spawn SCV
+  description: Spawn SCV
   type: 0
   unitData: {fileID: 11400000, guid: 219740ede27913f4796fbe973448b082, type: 2}
   castTime: 1
