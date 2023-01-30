@@ -17,6 +17,7 @@ public class UnitSelection : MonoBehaviour
 
     private Dictionary<int, KeyCode> _unitNumbering = new Dictionary<int, KeyCode>
     {
+        {0, KeyCode.Alpha0 },
         {1, KeyCode.Alpha1 },
         {2, KeyCode.Alpha2 },
         {3, KeyCode.Alpha3 },
@@ -30,8 +31,6 @@ public class UnitSelection : MonoBehaviour
 
     void Update()
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
-
         if (Input.GetMouseButtonDown(0))
         {
             _isDraggingMouseBox = true;
@@ -39,6 +38,8 @@ public class UnitSelection : MonoBehaviour
         }
 
         if (Input.GetMouseButtonUp(0)) _isDraggingMouseBox = false;
+
+        if (EventSystem.current.IsPointerOverGameObject()) return;
 
         if (_isDraggingMouseBox && _dragStartPosition != Input.mousePosition)
         {
@@ -53,7 +54,7 @@ public class UnitSelection : MonoBehaviour
             }
         }
 
-        for (int i = 1; i <= _unitNumbering.Count; i++)
+        for (int i = 0; i < _unitNumbering.Count; i++)
         {
             if (Input.GetKey(KeyCode.LeftControl))
                 UnitNumbering(1, i);

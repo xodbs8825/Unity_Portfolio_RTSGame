@@ -7,7 +7,7 @@ public class CameraManager : MonoBehaviour
 {
     private float translationSpeed = 80f;
     private float altitude = 40f;
-    private float zoomSpeed = 30f;
+    private float zoomSpeed = 1000f;
 
     private Camera _camera;
     private RaycastHit _hit;
@@ -72,6 +72,6 @@ public class CameraManager : MonoBehaviour
     private void Zoom(int zoomDir)
     {
         _camera.orthographicSize += zoomDir * Time.deltaTime * zoomSpeed;
-        _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, 8f, 26f);
+        _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, 8f, 50f);
     }
 }

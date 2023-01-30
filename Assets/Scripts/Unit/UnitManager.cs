@@ -8,9 +8,11 @@ public class UnitManager : MonoBehaviour
     public GameObject selectionCircle;
 
     private Transform _healthBarParent;
-    public GameObject _healthBar;
+    public GameObject healthBar;
 
     protected BoxCollider _collider;
+
+    private float size;
 
     public virtual Unit Unit { get; set; }
 
@@ -21,8 +23,10 @@ public class UnitManager : MonoBehaviour
 
     private void Update()
     {
-        if (_healthBar != null)
-            SetHPBar(_healthBar.GetComponent<HealthBar>(), _collider.size.z);
+        if (healthBar != null)
+            SetHPBar(healthBar.GetComponent<HealthBar>(), _collider.size.z);
+
+        size = 50 / Camera.main.orthographicSize;
     }
 
     private void OnMouseDown()
@@ -48,25 +52,30 @@ public class UnitManager : MonoBehaviour
 
     private void HealthBarSetting()
     {
-        if (_healthBar == null)
+        if (healthBar == null)
         {
-            _healthBar = GameObject.Instantiate(Resources.Load("Prefabs/UI/HealthBar")) as GameObject;
-            _healthBar.transform.SetParent(_healthBarParent);
+            healthBar = GameObject.Instantiate(Resources.Load("Prefabs/UI/HealthBar")) as GameObject;
+            healthBar.transform.SetParent(_healthBarParent);
 
-            HealthBar healthBar = _healthBar.GetComponent<HealthBar>();
+            HealthBar _healthBar = healthBar.GetComponent<HealthBar>();
 
-            SetHPBar(healthBar, _collider.size.z);
+            SetHPBar(_healthBar, _collider.size.z);
         }
     }
 
     private void SetHPBar(HealthBar hpBar, float colliderZSize)
     {
+        SetHPBarPosition(hpBar, colliderZSize);
+
+        hpBar.SetHPUISize(_collider.size.x * 10 * size);
+    }
+
+    public void SetHPBarPosition(HealthBar hpBar, float colliderZSize)
+    {
         Vector3 hpPos = hpBar.GetComponent<RectTransform>().position;
         hpPos = Camera.main.WorldToScreenPoint(transform.position - Vector3.up);
-        hpPos.y -= colliderZSize * 3;
+        hpPos.y -= colliderZSize * 3 * size;
         hpBar.GetComponent<RectTransform>().position = hpPos;
-
-        hpBar.SetHPUISize(_collider.size.x * 10);
     }
 
     public void Select() { Select(false, false); }
@@ -78,24 +87,21 @@ public class UnitManager : MonoBehaviour
             return;
         }
 
-        if (holdingShift)
+        if (holdingShift) // 쉬프트를 누른 상태에서 유닛을 선택한 경우:
         {
-            if (Globals.SELECTED_UNITS.Contains(this))
+            if (Globals.SELECTED_UNITS.Contains(this)) // 1. 선택된 유닛을 선택한 경우 셀렉이 된 그룹에서 제외
                 Deselect();
-            else SelectUtils();
+            else SelectUtils(); // 2. 선택되지 않은 유닛을 선택한 경우 셀렉 그룹에 추가
         }
-        else
+        else // 쉬프트를 누르지 않은 경우 무조건 클릭한 유닛만 선택
         {
-            if (!Globals.SELECTED_UNITS.Contains(this))
+            List<UnitManager> selectedUnits = new List<UnitManager>(Globals.SELECTED_UNITS);
+            foreach (UnitManager unitManager in selectedUnits)
             {
-                List<UnitManager> selectedUnits = new List<UnitManager>(Globals.SELECTED_UNITS);
-                foreach (UnitManager unitManager in selectedUnits)
-                {
-                    unitManager.Deselect();
-                }
-
-                SelectUtils();
+                unitManager.Deselect();
             }
+
+            SelectUtils();
         }
     }
 
@@ -104,8 +110,8 @@ public class UnitManager : MonoBehaviour
         Globals.SELECTED_UNITS.Remove(this);
         selectionCircle.SetActive(false);
 
-        Destroy(_healthBar);
-        _healthBar = null;
+        Destroy(healthBar);
+        healthBar = null;
 
         EventManager.TriggerEvent("DeselectUnit", Unit);
     }

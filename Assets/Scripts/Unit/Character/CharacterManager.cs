@@ -21,6 +21,9 @@ public class CharacterManager : UnitManager
     private void Update()
     {
         CheckUnitsNavigations();
+
+        if (healthBar != null)
+            base.SetHPBarPosition(healthBar.GetComponent<HealthBar>(), _collider.size.z);
     }
 
     private void CheckUnitsNavigations()
