@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        selectedUnitActionButtonsParent.SetActive(false);
+        ShowPanel(selectedUnitActionButtonsParent, false);
 
         // 인게임 자원 텍스트 생성
         _resourcesTexts = new Dictionary<string, Text>();
@@ -87,7 +87,7 @@ public class UIManager : MonoBehaviour
         _infoPanelTitleText = infoPanelTransform.Find("Content/Title").GetComponent<Text>();
         _infoPanelDescriptionText = infoPanelTransform.Find("Content/Description").GetComponent<Text>();
         _infoPanelResourcesCostParent = infoPanelTransform.Find("Content/ResourcesCost");
-        ShowInfoPanel(false);
+        ShowPanel(infoPanel, false);
 
         for (int i = 1; i <= 9; i++)
             ToggleSelectionGroupButton(i, false);
@@ -101,12 +101,15 @@ public class UIManager : MonoBehaviour
     [System.Obsolete]
     private void Update()
     {
-        cancelMenu.SetActive(!_buildingPlacer.IsAbleToBuild);
+        ShowPanel(cancelMenu, !_buildingPlacer.IsAbleToBuild);
+
+        if (!buildingMenu.active)
+            ShowPanel(infoPanel, false);
 
         if (!cancelMenu.active && !selectedUnitActionButtonsParent.active)
-            buildingMenu.SetActive(true);
+            ShowPanel(buildingMenu, true);
         else
-            buildingMenu.SetActive(false);
+            ShowPanel(buildingMenu, false);
     }
 
     private void OnEnable()
@@ -134,7 +137,7 @@ public class UIManager : MonoBehaviour
         Unit unit = (Unit)data;
         AddSelectedUnitToUIList(unit);
         SetSelectedUnitMenu(unit);
-        ShowSelectedUnitMenu(true);
+        ShowPanel(selectedUnitMenu, true);
     }
 
     private void OnDeselectUnit(object data)
@@ -143,11 +146,11 @@ public class UIManager : MonoBehaviour
         RemoveSelectedUnitToUILIst(unit.Code);
 
         if (Globals.SELECTED_UNITS.Count == 0)
-            ShowSelectedUnitMenu(false);
+            ShowPanel(selectedUnitMenu, false);
         else
             SetSelectedUnitMenu(Globals.SELECTED_UNITS[Globals.SELECTED_UNITS.Count - 1].Unit);
 
-        selectedUnitActionButtonsParent.SetActive(false);
+        ShowPanel(selectedUnitActionButtonsParent, false);
     }
 
     public void AddSelectedUnitToUIList(Unit unit)
@@ -190,12 +193,12 @@ public class UIManager : MonoBehaviour
     private void OnHoverBuildingButton(object data)
     {
         SetInfoPanel((UnitData)data);
-        ShowInfoPanel(true);
+        ShowPanel(infoPanel, true);
     }
 
     private void OnUnhoverBuildingButton()
     {
-        ShowInfoPanel(false);
+        ShowPanel(infoPanel, false);
     }
 
     public void SetInfoPanel(UnitData data)
@@ -222,9 +225,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ShowInfoPanel(bool show)
+    public void ShowPanel(GameObject panel, bool show)
     {
-        infoPanel.SetActive(show);
+        panel.SetActive(show);
     }
 
     private void SetResourceText(string resource, int value)
@@ -272,12 +275,12 @@ public class UIManager : MonoBehaviour
 
     public void ToggleSelectionGroupButton(int index, bool on)
     {
-        selectionGroupsParent.Find(index.ToString()).gameObject.SetActive(on);
+        ShowPanel(selectionGroupsParent.Find(index.ToString()).gameObject, on);
     }
 
     private void SetSelectedUnitMenu(Unit unit)
     {
-        selectedUnitActionButtonsParent.SetActive(true);
+        ShowPanel(selectedUnitActionButtonsParent, true);
 
         _selectedUnit = unit;
 
@@ -311,10 +314,5 @@ public class UIManager : MonoBehaviour
     private void AddUnitSkillButtonListener(Button b, int i)
     {
         b.onClick.AddListener(() => _selectedUnit.TriggerSkill(i));
-    }
-
-    private void ShowSelectedUnitMenu(bool show)
-    {
-        selectedUnitMenu.SetActive(show);
     }
 }

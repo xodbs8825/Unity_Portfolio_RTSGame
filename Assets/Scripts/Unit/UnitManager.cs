@@ -12,7 +12,9 @@ public class UnitManager : MonoBehaviour
 
     protected BoxCollider _collider;
 
-    private float size;
+    public float zoomSize;
+
+    public GameObject fov;
 
     public virtual Unit Unit { get; set; }
 
@@ -24,9 +26,9 @@ public class UnitManager : MonoBehaviour
     private void Update()
     {
         if (healthBar != null)
-            SetHPBar(healthBar.GetComponent<HealthBar>(), _collider.size.z);
+            SetHPBar(healthBar.GetComponent<HealthBar>(), _collider, zoomSize);
 
-        size = 50 / Camera.main.orthographicSize;
+        zoomSize = 50 / Camera.main.orthographicSize;
     }
 
     private void OnMouseDown()
@@ -59,22 +61,22 @@ public class UnitManager : MonoBehaviour
 
             HealthBar _healthBar = healthBar.GetComponent<HealthBar>();
 
-            SetHPBar(_healthBar, _collider.size.z);
+            SetHPBar(_healthBar, _collider, zoomSize);
         }
     }
 
-    private void SetHPBar(HealthBar hpBar, float colliderZSize)
+    public void SetHPBar(HealthBar hpBar, BoxCollider collider, float zoomSize)
     {
-        SetHPBarPosition(hpBar, colliderZSize);
+        SetHPBarPosition(hpBar, collider.size.z * zoomSize);
 
-        hpBar.SetHPUISize(_collider.size.x * 10 * size);
+        hpBar.SetHPUISize(collider.size.x * 10 * zoomSize);
     }
 
     public void SetHPBarPosition(HealthBar hpBar, float colliderZSize)
     {
         Vector3 hpPos = hpBar.GetComponent<RectTransform>().position;
         hpPos = Camera.main.WorldToScreenPoint(transform.position - Vector3.up);
-        hpPos.y -= colliderZSize * 3 * size;
+        hpPos.y -= colliderZSize * 3;
         hpBar.GetComponent<RectTransform>().position = hpPos;
     }
 
@@ -120,5 +122,10 @@ public class UnitManager : MonoBehaviour
     {
         _collider = GetComponent<BoxCollider>();
         Unit = unit;
+    }
+
+    public void EnableFOV()
+    {
+        fov.SetActive(true);
     }
 }

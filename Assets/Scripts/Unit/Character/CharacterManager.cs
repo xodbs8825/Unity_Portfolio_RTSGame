@@ -22,8 +22,10 @@ public class CharacterManager : UnitManager
     {
         CheckUnitsNavigations();
 
+        zoomSize = 50 / Camera.main.orthographicSize;
+
         if (healthBar != null)
-            base.SetHPBarPosition(healthBar.GetComponent<HealthBar>(), _collider.size.z);
+            base.SetHPBar(healthBar.GetComponent<HealthBar>(), _collider, zoomSize);
     }
 
     private void CheckUnitsNavigations()

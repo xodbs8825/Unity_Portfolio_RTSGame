@@ -82,6 +82,9 @@
     <Compile Include="Assets\Scripts\Unit\UnitData.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Resources\Shader\AlphaProjection.shader" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity 2020.3.36f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

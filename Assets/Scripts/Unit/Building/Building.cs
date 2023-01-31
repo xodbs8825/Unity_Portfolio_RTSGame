@@ -35,7 +35,7 @@ public class Building : Unit
 
         if (placement == BuildingPlacement.VALID)
         {
-            Material refMaterial = Resources.Load("Materials/Valid") as Material;
+            Material refMaterial = Resources.Load("Materials/Building/Valid") as Material;
 
             materials = new List<Material>();
             for (int i = 0; i < _materials.Count; i++)
@@ -43,7 +43,7 @@ public class Building : Unit
         }
         else if (placement == BuildingPlacement.INVALID)
         {
-            Material refMaterial = Resources.Load("Materials/Invalid") as Material;
+            Material refMaterial = Resources.Load("Materials/Building/Invalid") as Material;
 
             materials = new List<Material>();
             for (int i = 0; i < _materials.Count; i++)

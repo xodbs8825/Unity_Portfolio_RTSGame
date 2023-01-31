@@ -14,6 +14,7 @@ public class UnitData : ScriptableObject
     public int healthPoint;
     public GameObject prefab;
     public List<ResourceValue> cost;
+    public float fieldOfView;
 
     public bool CanBuy()
     {

@@ -37,6 +37,8 @@ public class Unit
             skillManager.Initialize(skill, g);
             _skillManagers.Add(skillManager);
         }
+
+        _transform.Find("FOV").transform.localScale = new Vector3(data.fieldOfView, data.fieldOfView, 0f);
     }
 
     public void SetPosition(Vector3 position)
@@ -52,6 +54,8 @@ public class Unit
         {
             Globals.GAME_RESOURCES[resource.code].AddAmount(-resource.amount);
         }
+
+        _transform.GetComponent<UnitManager>().EnableFOV();
     }
 
     public bool CanBuy()

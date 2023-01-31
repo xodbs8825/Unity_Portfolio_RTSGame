@@ -54,6 +54,11 @@ public class BuildingPlacer : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        
+    }
+
     void PreparePlacedBuilding(int buildingDataIndex)
     {
         Building building = new Building(Globals.BUILDING_DATA[buildingDataIndex]);

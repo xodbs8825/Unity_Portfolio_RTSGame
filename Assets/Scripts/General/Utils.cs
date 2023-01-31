@@ -65,35 +65,13 @@ public static class Utils
         return bounds;
     }
 
-    public static int GetAlphaKeyValue(string inputString)
+    public static Vector3 MiddleOfScreenPointToWorld() { return MiddleOfScreenPointToWorld(Camera.main); }
+    public static Vector3 MiddleOfScreenPointToWorld(Camera cam)
     {
-        if (inputString == "0") return 0;
-        if (inputString == "1") return 1;
-        if (inputString == "2") return 2;
-        if (inputString == "3") return 3;
-        if (inputString == "4") return 4;
-        if (inputString == "5") return 5;
-        if (inputString == "6") return 6;
-        if (inputString == "7") return 7;
-        if (inputString == "8") return 8;
-        if (inputString == "9") return 9;
-
-        return -1;
-    }
-
-    public static int UnitNumberingKeyValue(string inputString)
-    {
-        if (inputString == "0") return 0;
-        if (inputString == "1") return 1;
-        if (inputString == "2") return 2;
-        if (inputString == "3") return 3;
-        if (inputString == "4") return 4;
-        if (inputString == "5") return 5;
-        if (inputString == "6") return 6;
-        if (inputString == "7") return 7;
-        if (inputString == "8") return 8;
-        if (inputString == "9") return 9;
-
-        return -1;
+        RaycastHit hit;
+        Ray ray = cam.ScreenPointToRay(0.5f * new Vector2(Screen.width, Screen.height));
+        if (Physics.Raycast(ray, out hit, 1000f, Globals.TERRAIN_LAYER_MASK))
+            return hit.point;
+        return Vector3.zero;
     }
 }
