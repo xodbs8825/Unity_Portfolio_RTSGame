@@ -56,7 +56,16 @@ public class BuildingPlacer : MonoBehaviour
 
     private void Start()
     {
-        
+        // 게임 시작에 생산 건물 Instantiate
+        _placedBuilding = new Building(Globals.BUILDING_DATA[0]);
+        _placedBuilding.SetPosition(GameManager.instance.startPosition);
+
+        // 건물 데이터와 매니저 연동
+        _placedBuilding.Transform.GetComponent<BuildingManager>().Initialize(_placedBuilding);
+        PlaceBuilding();
+
+        // 시작하자마자 선택 된 유닛이 없도록
+        CancelPlacedBuilding();
     }
 
     void PreparePlacedBuilding(int buildingDataIndex)

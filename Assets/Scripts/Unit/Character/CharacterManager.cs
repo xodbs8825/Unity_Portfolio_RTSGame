@@ -20,26 +20,10 @@ public class CharacterManager : UnitManager
 
     private void Update()
     {
-        CheckUnitsNavigations();
-
         zoomSize = 50 / Camera.main.orthographicSize;
 
         if (healthBar != null)
             base.SetHPBar(healthBar.GetComponent<HealthBar>(), _collider, zoomSize);
-    }
-
-    private void CheckUnitsNavigations()
-    {
-        if (Globals.SELECTED_UNITS.Count > 0 && Input.GetMouseButtonUp(1))
-        {
-            _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(_ray, out _raycastHit, 1000f, Globals.TERRAIN_LAYER_MASK))
-            {
-                foreach (UnitManager um in Globals.SELECTED_UNITS)
-                    if (um.GetType() == typeof(CharacterManager))
-                        ((CharacterManager)um).MoveTo(_raycastHit.point);
-            }
-        }
     }
 
     public void MoveTo(Vector3 targetPosition)
