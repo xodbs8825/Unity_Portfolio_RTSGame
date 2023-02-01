@@ -14,6 +14,8 @@ public class Unit
 
     protected List<SkillManager> _skillManagers;
 
+    protected float _fieldOfView;
+
     public Unit(UnitData data) : this(data, new List<ResourceValue>() { }) { }
     public Unit(UnitData data, List<ResourceValue> production)
     {
@@ -28,6 +30,8 @@ public class Unit
         _level = 1;
         _production = production;
 
+        _fieldOfView = data.fieldOfView;
+
         _skillManagers = new List<SkillManager>();
 
         SkillManager skillManager;
@@ -37,8 +41,6 @@ public class Unit
             skillManager.Initialize(skill, g);
             _skillManagers.Add(skillManager);
         }
-
-        _transform.Find("FOV").transform.localScale = new Vector3(data.fieldOfView, data.fieldOfView, 0f);
     }
 
     public void SetPosition(Vector3 position)
@@ -55,7 +57,7 @@ public class Unit
             Globals.GAME_RESOURCES[resource.code].AddAmount(-resource.amount);
         }
 
-        _transform.GetComponent<UnitManager>().EnableFOV();
+        _transform.GetComponent<UnitManager>().EnableFOV(_fieldOfView);
     }
 
     public bool CanBuy()

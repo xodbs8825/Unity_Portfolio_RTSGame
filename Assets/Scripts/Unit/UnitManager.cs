@@ -28,7 +28,7 @@ public class UnitManager : MonoBehaviour
         if (healthBar != null)
             SetHPBar(healthBar.GetComponent<HealthBar>(), _collider, zoomSize);
 
-        zoomSize = 50 / Camera.main.orthographicSize;
+        zoomSize = 80f / Camera.main.orthographicSize;
     }
 
     private void OnMouseDown()
@@ -124,8 +124,28 @@ public class UnitManager : MonoBehaviour
         Unit = unit;
     }
 
-    public void EnableFOV()
+    public void EnableFOV(float size)
     {
         fov.SetActive(true);
+        MeshRenderer mr = fov.GetComponent<MeshRenderer>();
+        mr.material = new Material(mr.material);
+        StartCoroutine(ScalingFOV(size));
+    }
+
+    private IEnumerator ScalingFOV(float size)
+    {
+        float r = 0f, t = 0f, step = 0.02f;
+        float scaleUpTime = 0.3f;
+        Vector3 _startScale = fov.transform.localScale;
+        Vector3 _endScale = size * Vector3.one;
+        _endScale.z = 1f;
+
+        do
+        {
+            fov.transform.localScale = Vector3.Lerp(_startScale, _endScale, r);
+            t += step;
+            r = t / scaleUpTime;
+            yield return new WaitForSecondsRealtime(step);
+        } while (r < 1f);
     }
 }

@@ -22,3 +22,5 @@ MonoBehaviour:
     amount: 80
   - code: gas
     amount: 80
+  fieldOfView: 50
+  skills: []

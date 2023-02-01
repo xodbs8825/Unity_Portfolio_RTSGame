@@ -20,4 +20,5 @@ MonoBehaviour:
   cost:
   - code: mineral
     amount: 50
+  fieldOfView: 30
   skills: []

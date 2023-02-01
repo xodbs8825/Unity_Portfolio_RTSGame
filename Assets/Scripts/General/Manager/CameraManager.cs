@@ -72,6 +72,6 @@ public class CameraManager : MonoBehaviour
     private void Zoom(int zoomDir)
     {
         _camera.orthographicSize += zoomDir * Time.deltaTime * zoomSpeed;
-        _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, 8f, 50f);
+        _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, 8f, 80f);
     }
 }

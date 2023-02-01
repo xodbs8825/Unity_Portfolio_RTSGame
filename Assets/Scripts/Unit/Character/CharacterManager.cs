@@ -7,7 +7,7 @@ public class CharacterManager : UnitManager
 {
     public NavMeshAgent agent;
 
-    private Character _character;
+    private Character _character = null;
 
     private Ray _ray;
     private RaycastHit _raycastHit;
@@ -18,12 +18,9 @@ public class CharacterManager : UnitManager
         set { _character = value is Character ? (Character)value : null; }
     }
 
-    private void Update()
+    private void Start()
     {
-        zoomSize = 50 / Camera.main.orthographicSize;
-
-        if (healthBar != null)
-            base.SetHPBar(healthBar.GetComponent<HealthBar>(), _collider, zoomSize);
+        _character.Place();
     }
 
     public void MoveTo(Vector3 targetPosition)
