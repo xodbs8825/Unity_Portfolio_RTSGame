@@ -134,8 +134,8 @@ public class UnitManager : MonoBehaviour
 
     private IEnumerator ScalingFOV(float size)
     {
-        float r = 0f, t = 0f, step = 0.02f;
-        float scaleUpTime = 0.3f;
+        float r = 0f, t = 0f, step = 0.05f;
+        float scaleUpTime = 0.35f;
         Vector3 _startScale = fov.transform.localScale;
         Vector3 _endScale = size * Vector3.one;
         _endScale.z = 1f;

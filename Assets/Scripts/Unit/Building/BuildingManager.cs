@@ -75,15 +75,9 @@ public class BuildingManager : UnitManager
         int invalidCornersCount = 0;
 
         foreach (Vector3 corner in bottomCorners)
-        {
-            if (!Physics.Raycast(
-                p + corner,
-                Vector3.up * -1f,
-                2f,
-                Globals.TERRAIN_LAYER_MASK
-            ))
+            if (!Physics.Raycast(p + corner, Vector3.up * -1f, 2f, Globals.TERRAIN_LAYER_MASK))
                 invalidCornersCount++;
-        }
+
         return invalidCornersCount < 3;
     }
 

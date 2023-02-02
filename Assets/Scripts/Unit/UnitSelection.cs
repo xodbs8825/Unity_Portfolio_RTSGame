@@ -31,6 +31,8 @@ public class UnitSelection : MonoBehaviour
 
     void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             _isDraggingMouseBox = true;
@@ -38,8 +40,6 @@ public class UnitSelection : MonoBehaviour
         }
 
         if (Input.GetMouseButtonUp(0)) _isDraggingMouseBox = false;
-
-        if (EventSystem.current.IsPointerOverGameObject()) return;
 
         if (_isDraggingMouseBox && _dragStartPosition != Input.mousePosition)
         {
