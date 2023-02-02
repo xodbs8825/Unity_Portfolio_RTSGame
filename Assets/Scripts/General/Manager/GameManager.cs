@@ -7,8 +7,9 @@ public class GameManager : MonoBehaviour
 {
     private Ray _ray;
     private RaycastHit _raycastHit;
-
     public Vector3 startPosition;
+
+    public GameParameters gameParameters;
 
     private static GameManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
@@ -36,6 +37,8 @@ public class GameManager : MonoBehaviour
         Globals.UpdateNevMeshSurface();
 
         GetStartPosition();
+
+        //GameObject.Find("FogOfWar").SetActive(gameParameters.enableFOV);
     }
 
     private void Update()

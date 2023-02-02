@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2022593426793173258}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 4, z: 0}
-  m_LocalScale: {x: 10, y: 8, z: 10}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_Children: []
   m_Father: {fileID: 1254950749798464501}
   m_RootOrder: 0
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 8956385912809676950}
   - component: {fileID: 3420467302588390511}
   - component: {fileID: 5313976192596105406}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: FOV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,7 +297,7 @@ Transform:
   m_GameObject: {fileID: 5691737486483354373}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 12, y: 12, z: 1}
+  m_LocalScale: {x: 28, y: 28, z: 1}
   m_Children: []
   m_Father: {fileID: 1254950749798464501}
   m_RootOrder: 1

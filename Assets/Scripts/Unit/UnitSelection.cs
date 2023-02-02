@@ -15,18 +15,18 @@ public class UnitSelection : MonoBehaviour
 
     private Dictionary<int, List<UnitManager>> _selectionGroups = new Dictionary<int, List<UnitManager>>();
 
-    private Dictionary<int, KeyCode> _unitNumbering = new Dictionary<int, KeyCode>
+    private KeyCode[] _unitNumbering = new KeyCode[]
     {
-        {0, KeyCode.Alpha0 },
-        {1, KeyCode.Alpha1 },
-        {2, KeyCode.Alpha2 },
-        {3, KeyCode.Alpha3 },
-        {4, KeyCode.Alpha4 },
-        {5, KeyCode.Alpha5 },
-        {6, KeyCode.Alpha6 },
-        {7, KeyCode.Alpha7 },
-        {8, KeyCode.Alpha8 },
-        {9, KeyCode.Alpha9 }
+        KeyCode.Alpha0,
+        KeyCode.Alpha1,
+        KeyCode.Alpha2,
+        KeyCode.Alpha3,
+        KeyCode.Alpha4,
+        KeyCode.Alpha5,
+        KeyCode.Alpha6,
+        KeyCode.Alpha7,
+        KeyCode.Alpha8,
+        KeyCode.Alpha9
     };
 
     void Update()
@@ -54,7 +54,7 @@ public class UnitSelection : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < _unitNumbering.Count; i++)
+        for (int i = 0; i < _unitNumbering.Length; i++)
         {
             if (Input.GetKey(KeyCode.LeftControl))
                 UnitNumbering(1, i);

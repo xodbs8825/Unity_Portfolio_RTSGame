@@ -74,4 +74,18 @@ public static class Utils
             return hit.point;
         return Vector3.zero;
     }
+
+    public static Vector3[] ScreenCornersToWorldPoints() { return ScreenCornersToWorld(Camera.main); }
+    public static Vector3[] ScreenCornersToWorld(Camera cam)
+    {
+        Vector3[] corners = new Vector3[4];
+        RaycastHit hit;
+        for (int i = 0; i < 4; i++)
+        {
+            Ray ray = cam.ScreenPointToRay(new Vector2((i % 2) * Screen.width, (int)(i / 2) * Screen.height));
+            if (Physics.Raycast(ray, out hit, 1000f, Globals.FLAT_TERRAIN_LAYER_MASK))
+                corners[i] = hit.point;
+        }
+        return corners;
+    }
 }

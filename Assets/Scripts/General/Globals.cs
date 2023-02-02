@@ -6,9 +6,9 @@ using UnityEngine.AI;
 public static class Globals
 {
     public static int TERRAIN_LAYER_MASK = 1 << 8;
+    public static int FLAT_TERRAIN_LAYER_MASK = 1 << 10;
 
     public static UnitData[] UNIT_DATA;
-
     public static BuildingData[] BUILDING_DATA;
 
     public static Dictionary<string, GameResource> GAME_RESOURCES = new Dictionary<string, GameResource>()

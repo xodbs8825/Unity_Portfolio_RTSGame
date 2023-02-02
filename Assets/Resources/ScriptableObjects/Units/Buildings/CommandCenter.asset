@@ -20,6 +20,6 @@ MonoBehaviour:
   cost:
   - code: mineral
     amount: 400
-  fieldOfView: 50
+  fieldOfView: 100
   skills:
   - {fileID: 11400000, guid: cd816dfedbc04054aaa587cca3521453, type: 2}

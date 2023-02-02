@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\General\Manager\EventManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Character\Skill\SkillManager.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitData.cs" />
+    <Compile Include="Assets\Scripts\General\GameParameters.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Shaders\AlphaProjection.shader" />

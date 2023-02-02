@@ -7,6 +7,8 @@ TagManager:
   - Terrain
   - Unit
   - Building
+  - FOV
+  - MiniMapCam
   layers:
   - Default
   - TransparentFX
@@ -17,9 +19,9 @@ TagManager:
   - Unit
   - 
   - Terrain
-  - 
   - FOV
-  - 
+  - FlatTerrain
+  - MiniMap
   - 
   - 
   - 
