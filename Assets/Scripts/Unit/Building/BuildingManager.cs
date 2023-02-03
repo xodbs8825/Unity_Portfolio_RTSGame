@@ -5,12 +5,11 @@ using UnityEngine;
 public class BuildingManager : UnitManager
 {
     private Building _building = null;
-    public override Unit Unit 
+    public override Unit Unit
     {
         get { return _building; }
         set { _building = value is Building ? (Building)value : null; }
     }
-
 
     private int _nCollisions = 0;
 
@@ -24,7 +23,7 @@ public class BuildingManager : UnitManager
     {
         if (other.tag == "Terrain") return;
 
-        _nCollisions++;
+        _nCollisions--;
         CheckPlacement();
     }
 
@@ -32,7 +31,7 @@ public class BuildingManager : UnitManager
     {
         if (other.tag == "Terrain") return;
 
-        _nCollisions--;
+        _nCollisions++;
         CheckPlacement();
     }
 
@@ -44,13 +43,10 @@ public class BuildingManager : UnitManager
         bool validPlacement = HasValidPlacement();
 
         if (!validPlacement)
-        {
             _building.SetMaterials(BuildingPlacement.INVALID);
-        }
         else
-        {
             _building.SetMaterials(BuildingPlacement.VALID);
-        }
+
         return validPlacement;
     }
 

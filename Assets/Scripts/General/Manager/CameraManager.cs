@@ -6,7 +6,7 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     private float translationSpeed = 160f;
-    private float altitude = 40f;
+    private float altitude = 60f;
     private float zoomSpeed = 1000f;
 
     private Camera _camera;
@@ -26,6 +26,8 @@ public class CameraManager : MonoBehaviour
     private float _miniMapIndicatorStrokeWidth = 0.1f;
     private Transform _miniMapIndicator;
     private Mesh _miniMapIndicatorMesh;
+
+    private float _maxZoomSize = 60f;
 
     private void Awake()
     {
@@ -87,7 +89,7 @@ public class CameraManager : MonoBehaviour
     private void Zoom(int zoomDir)
     {
         _camera.orthographicSize += zoomDir * Time.deltaTime * zoomSpeed;
-        _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, 8f, 60f);
+        _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, 8f, _maxZoomSize);
 
         ComputeMiniMapIndicator(true);
     }

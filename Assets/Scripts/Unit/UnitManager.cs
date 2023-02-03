@@ -28,7 +28,7 @@ public class UnitManager : MonoBehaviour
         if (healthBar != null)
             SetHPBar(healthBar.GetComponent<HealthBar>(), _collider, zoomSize);
 
-        zoomSize = 80f / Camera.main.orthographicSize;
+        zoomSize = 60f / Camera.main.orthographicSize;
     }
 
     private void OnMouseDown()
@@ -65,19 +65,20 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    public void SetHPBar(HealthBar hpBar, BoxCollider collider, float zoomSize)
+    private void SetHPBar(HealthBar hpBar, BoxCollider collider, float zoomSize)
     {
         SetHPBarPosition(hpBar, collider.size.z * zoomSize);
 
         hpBar.SetHPUISize(collider.size.x * 10 * zoomSize);
     }
 
-    public void SetHPBarPosition(HealthBar hpBar, float colliderZSize)
+    private void SetHPBarPosition(HealthBar hpBar, float colliderZSize)
     {
         Vector3 hpPos = hpBar.GetComponent<RectTransform>().position;
         hpPos = Camera.main.WorldToScreenPoint(transform.position - Vector3.up);
         hpPos.y -= colliderZSize * 3;
         hpBar.GetComponent<RectTransform>().position = hpPos;
+
     }
 
     public void Select() { Select(false, false); }

@@ -23,6 +23,7 @@ public class BuildingPlacer : MonoBehaviour
 
     void Update()
     {
+
         if (_placedBuilding != null)
         {
             isAbleToBuild = false;
@@ -31,7 +32,7 @@ public class BuildingPlacer : MonoBehaviour
                 CancelPlacedBuilding();
                 return;
             }
-
+            
             _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(_ray, out _raycastHit, 1000f, Globals.TERRAIN_LAYER_MASK))
@@ -43,7 +44,6 @@ public class BuildingPlacer : MonoBehaviour
 
                 _lastPlacementPosition = _raycastHit.point;
             }
-
 
             if (_placedBuilding.HasValidPlacement && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
