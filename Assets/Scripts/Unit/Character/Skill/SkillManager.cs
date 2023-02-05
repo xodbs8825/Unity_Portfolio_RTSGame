@@ -11,10 +11,16 @@ public class SkillManager : MonoBehaviour
     private Button _button;
     private bool _ready;
 
+    private AudioSource _sourceContextualSource;
+
     public void Initialize(SkillData skill, GameObject source)
     {
         this.skill = skill;
         _source = source;
+
+        UnitManager um = source.GetComponent<UnitManager>();
+        if (um != null)
+            _sourceContextualSource = um.contextualSource;
     }
 
     public void Trigger(GameObject target = null)
@@ -32,6 +38,9 @@ public class SkillManager : MonoBehaviour
     private IEnumerator WrappedTrigger(GameObject target)
     {
         yield return new WaitForSeconds(skill.castTime);
+
+        if (_sourceContextualSource != null && skill.sound)
+            _sourceContextualSource.PlayOneShot(skill.sound);
 
         skill.Trigger(_source, target);
         SetReady(false);

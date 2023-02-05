@@ -16,6 +16,14 @@ public class UnitData : ScriptableObject
     public List<ResourceValue> cost;
     public float fieldOfView;
 
+    public List<SkillData> skills = new List<SkillData>();
+
+    [Header("General Sounds")]
+    public AudioClip selectSound;
+
+    [Header("Unit Sound")]
+    public AudioClip[] interactSound;
+
     public bool CanBuy()
     {
         foreach (ResourceValue resource in cost)
@@ -26,5 +34,4 @@ public class UnitData : ScriptableObject
         return true;
     }
 
-    public List<SkillData> skills = new List<SkillData>();
 }

@@ -16,6 +16,11 @@ public class UnitManager : MonoBehaviour
 
     public GameObject fov;
 
+    public AudioSource contextualSource;
+
+    public bool isSelected = false;
+    private bool _isSelectSoundEnded = true;
+
     public virtual Unit Unit { get; set; }
 
     private void Awake()
@@ -50,6 +55,13 @@ public class UnitManager : MonoBehaviour
         HealthBarSetting();
 
         EventManager.TriggerEvent("SelectUnit", Unit);
+
+        if (_isSelectSoundEnded)
+        {
+            _isSelectSoundEnded = false;
+            contextualSource.PlayOneShot(Unit.Data.selectSound);
+            StartCoroutine(SelectSoundEnded(Unit.Data.selectSound.length));
+        }
     }
 
     private void HealthBarSetting()
@@ -61,40 +73,49 @@ public class UnitManager : MonoBehaviour
 
             HealthBar _healthBar = healthBar.GetComponent<HealthBar>();
 
+            Rect boundingBox = Utils.GetBoundingBoxOnScreen(transform.Find("Mesh").GetComponent<Renderer>().bounds, Camera.main);
+
             SetHPBar(_healthBar, _collider, zoomSize);
         }
     }
 
     private void SetHPBar(HealthBar hpBar, BoxCollider collider, float zoomSize)
     {
-        SetHPBarPosition(hpBar, collider.size.z * zoomSize);
+        SetHPBarPosition(hpBar, collider.size.y * zoomSize);
 
-        hpBar.SetHPUISize(collider.size.x * 10 * zoomSize);
+        hpBar.SetHPUISize(collider.size.x * 15 * zoomSize);
     }
 
-    private void SetHPBarPosition(HealthBar hpBar, float colliderZSize)
+    private void SetHPBarPosition(HealthBar hpBar, float colliderYSize)
     {
         Vector3 hpPos = hpBar.GetComponent<RectTransform>().position;
         hpPos = Camera.main.WorldToScreenPoint(transform.position - Vector3.up);
-        hpPos.y -= colliderZSize * 3;
+        hpPos.y -= colliderYSize * 5;
         hpBar.GetComponent<RectTransform>().position = hpPos;
-
     }
 
     public void Select() { Select(false, false); }
-    public void Select(bool singleClick, bool holdingShift)
+    public virtual void Select(bool singleClick, bool holdingShift)
     {
         if (!singleClick)
         {
             SelectUtils();
+            isSelected = true;
             return;
         }
 
         if (holdingShift) // 쉬프트를 누른 상태에서 유닛을 선택한 경우:
         {
             if (Globals.SELECTED_UNITS.Contains(this)) // 1. 선택된 유닛을 선택한 경우 셀렉이 된 그룹에서 제외
+            {
                 Deselect();
-            else SelectUtils(); // 2. 선택되지 않은 유닛을 선택한 경우 셀렉 그룹에 추가
+                isSelected = false;
+            }
+            else // 2. 선택되지 않은 유닛을 선택한 경우 셀렉 그룹에 추가
+            {
+                SelectUtils();
+                isSelected = true;
+            }
         }
         else // 쉬프트를 누르지 않은 경우 무조건 클릭한 유닛만 선택
         {
@@ -105,6 +126,7 @@ public class UnitManager : MonoBehaviour
             }
 
             SelectUtils();
+            isSelected = true;
         }
     }
 
@@ -117,6 +139,7 @@ public class UnitManager : MonoBehaviour
         healthBar = null;
 
         EventManager.TriggerEvent("DeselectUnit", Unit);
+        isSelected = false;
     }
 
     public void Initialize(Unit unit)
@@ -148,5 +171,13 @@ public class UnitManager : MonoBehaviour
             r = t / scaleUpTime;
             yield return new WaitForSecondsRealtime(step);
         } while (r < 1f);
+    }
+
+    public virtual void PlaySound() { }
+
+    private IEnumerator SelectSoundEnded(float seconds)
+    {
+        yield return new WaitForSecondsRealtime(seconds);
+        _isSelectSoundEnded = true;
     }
 }

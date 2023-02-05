@@ -29,11 +29,15 @@ public class CameraManager : MonoBehaviour
 
     private float _maxZoomSize = 60f;
 
+    public Transform groundTarget;
+
     private void Awake()
     {
         _camera = GetComponent<Camera>();
         _mouseOnScreenBorder = -1;
         PrepareMapIndicator();
+
+        groundTarget.position = Utils.MiddleOfScreenPointToWorld();
     }
 
     private void Update()
@@ -136,6 +140,8 @@ public class CameraManager : MonoBehaviour
     private void ComputeMiniMapIndicator(bool zooming)
     {
         Vector3 middle = Utils.MiddleOfScreenPointToWorld();
+        groundTarget.position = middle;
+
         // if zooming: recompute the indicator mesh
         if (zooming)
         {

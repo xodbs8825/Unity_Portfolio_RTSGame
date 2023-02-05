@@ -56,7 +56,7 @@ public class BuildingPlacer : MonoBehaviour
     private void Start()
     {
         // 게임 시작에 생산 건물 Instantiate
-        _placedBuilding = new Building(GameManager.instance.gameParameters.initialBuilding);
+        _placedBuilding = new Building(GameManager.instance.gameGlobalParameters.initialBuilding);
         _placedBuilding.SetPosition(GameManager.instance.startPosition);
 
         // 건물 데이터와 매니저 연동
@@ -101,6 +101,8 @@ public class BuildingPlacer : MonoBehaviour
         Globals.UpdateNevMeshSurface();
 
         isAbleToBuild = true;
+
+        EventManager.TriggerEvent("PlaySoundByName", "buildingPlacedSound");
     }
 
     public void SelectPlacedBuilding(int buildingDataIndex)

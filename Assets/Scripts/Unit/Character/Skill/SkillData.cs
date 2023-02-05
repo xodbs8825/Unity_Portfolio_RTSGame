@@ -20,6 +20,8 @@ public class SkillData : ScriptableObject
     public float cooldown;
     public Sprite sprite;
 
+    public AudioClip sound;
+
     public void Trigger(GameObject source, GameObject target = null)
     {
         switch (type)

@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     private RaycastHit _raycastHit;
     public Vector3 startPosition;
 
-    public GameParameters gameParameters;
+    public GameGlobalParameters gameGlobalParameters;
 
     private static GameManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
@@ -36,9 +36,9 @@ public class GameManager : MonoBehaviour
         Globals.NAV_MESH_SURFACE = GameObject.Find("Terrain").GetComponent<NavMeshSurface>();
         Globals.UpdateNevMeshSurface();
 
-        GetStartPosition();
+        GameObject.Find("FogOfWar").SetActive(gameGlobalParameters.enableFOV);
 
-        //GameObject.Find("FogOfWar").SetActive(gameParameters.enableFOV);
+        GetStartPosition();
     }
 
     private void Update()
@@ -49,6 +49,15 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         _instance = this;
+
+        GameParameters[] gameParametersList = Resources.LoadAll<GameParameters>("ScriptableObjects/Parameters");
+        foreach (GameParameters parameters in gameParametersList)
+        {
+            Debug.Log(parameters.GetParametersName());
+            Debug.Log("> Fields shown in-game : ");
+            foreach (string fieldName in parameters.FieldsToShowInGame)
+                Debug.Log($"    {fieldName}");
+        }
     }
 
     private void CheckUnitsNavigations()

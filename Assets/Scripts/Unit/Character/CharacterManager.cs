@@ -9,8 +9,9 @@ public class CharacterManager : UnitManager
 
     private Character _character = null;
 
-    private Ray _ray;
-    private RaycastHit _raycastHit;
+    private AudioClip[] _characterInteractSound;
+    private float maxSoundClipsSize;
+    private bool _isAbleToPlaySound = true;
 
     public override Unit Unit
     {
@@ -21,10 +22,39 @@ public class CharacterManager : UnitManager
     private void Start()
     {
         _character.Place();
+        _characterInteractSound = (Unit.Data).interactSound;
+        maxSoundClipsSize = (Unit.Data).interactSound.Length;
+    }
+
+    public override void Select(bool singleClick, bool holdingShift)
+    {
+        base.Select(singleClick, holdingShift);
+        if (base.isSelected)
+            PlaySound();
     }
 
     public void MoveTo(Vector3 targetPosition)
     {
         agent.destination = targetPosition;
+
+        PlaySound();
+    }
+
+    public override void PlaySound()
+    {
+        int _randomNumber = (int)Random.Range(0, maxSoundClipsSize);
+
+        if (_isAbleToPlaySound)
+        {
+            _isAbleToPlaySound = false;
+            contextualSource.PlayOneShot(_characterInteractSound[_randomNumber]);
+            StartCoroutine(SoundPlayDelay(_characterInteractSound[_randomNumber].length));
+        }
+    }
+
+    private IEnumerator SoundPlayDelay(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        _isAbleToPlaySound = true;
     }
 }

@@ -50,7 +50,7 @@ public class UIManager : MonoBehaviour
             _resourcesTexts[pair.Key] = display.transform.Find("Text").GetComponent<Text>();
             SetResourceText(pair.Key, pair.Value.Amount);
 
-            display.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Textures/GameResources/{pair.Key}");
+            display.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Imports/GameResources/{pair.Key}");
         }
 
         // 건물 건설을 위한 버튼 생성
@@ -220,7 +220,7 @@ public class UIManager : MonoBehaviour
                 t = g.transform;
 
                 t.Find("Text").GetComponent<Text>().text = resource.amount.ToString();
-                t.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Textures/GameResources/{resource.code}");
+                t.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Imports/GameResources/{resource.code}");
             }
         }
     }

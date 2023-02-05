@@ -22,3 +22,12 @@ MonoBehaviour:
     amount: 50
   fieldOfView: 30
   skills: []
+  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
+  interactSound:
+  - {fileID: 8300000, guid: 94a7cc749f0d39e48b020744ce1f5c20, type: 3}
+  - {fileID: 8300000, guid: 1dca85e67df76724a9993e7406f33b83, type: 3}
+  - {fileID: 8300000, guid: 87b96a10783fa474da5baaa39486bd7d, type: 3}
+  - {fileID: 8300000, guid: c3dd67ab0342883419ac0241434fe027, type: 3}
+  - {fileID: 8300000, guid: e41fcd567ba76304cab0568083552b5f, type: 3}
+  - {fileID: 8300000, guid: 65ec287f1bd989e468dcf7ed524ab128, type: 3}
+  - {fileID: 8300000, guid: 688b9d1342268664f89cdba11cca8d18, type: 3}
