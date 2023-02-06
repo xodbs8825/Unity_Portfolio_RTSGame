@@ -23,6 +23,7 @@ public class BuildingPlacer : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.instance.gameIsPaused) return;
 
         if (_placedBuilding != null)
         {

@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,42 +6,66 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    #region Building
     private BuildingPlacer _buildingPlacer;
 
     public GameObject buildingMenu;
     public GameObject buildingButtonPrefab;
 
     public GameObject cancelMenu;
+    #endregion
 
-    public Transform resourcesUIParent;
-    public GameObject gameResourceDisplayPrefab;
-
+    #region UnitSelection
     public Transform selectedUnitsListParent;
     public GameObject selectedUnitsDisplayPrefab;
+
     public Transform selectionGroupsParent;
 
     private Unit _selectedUnit;
-    public GameObject unitSkillButtonPrefab;
-
-    private Dictionary<string, Text> _resourcesTexts;
-    private Dictionary<string, Button> _buildingButtons;
-
-    public GameObject infoPanel;
-    private Text _infoPanelTitleText;
-    private Text _infoPanelDescriptionText;
-    private Transform _infoPanelResourcesCostParent;
-
-    public GameObject gameResourceCostPrefab;
     public GameObject selectedUnitMenu;
     private Text _selectedUnitTitleText;
 
     public GameObject selectedUnitActionButtonsParent;
     private Transform _selectedUnitActionButtonsParent;
+    #endregion
+
+    #region Resources
+    public Transform resourcesUIParent;
+    public GameObject gameResourceDisplayPrefab;
+
+    private Dictionary<string, Text> _resourcesTexts;
+    private Dictionary<string, Button> _buildingButtons;
+    #endregion
+
+    #region InfoPanel
+    public GameObject infoPanel;
+    private Text _infoPanelTitleText;
+    private Text _infoPanelDescriptionText;
+
+    public GameObject gameResourceCostPrefab;
+    private Transform _infoPanelResourcesCostParent;
+    #endregion
+
+    #region GameMenu
+    public GameObject gameMenuPanel;
+    public GameObject gameOptionsPanel;
+    public Transform gameOptionsMenusParent;
+    public Text gameOptionsContentName;
+    public Transform gameOptionsContentParent;
+    public GameObject gameOptionsMenuButtonPrefab;
+    public GameObject gameOptionsParameterPrefab;
+    public GameObject sliderPrefab;
+    public GameObject togglePrefab;
+    private Dictionary<string, GameParameters> _gameParameters;
+    #endregion
+
+    public GameObject unitSkillButtonPrefab;
 
     private void Awake()
     {
         ShowPanel(selectedUnitActionButtonsParent, false);
 
+        #region 인게임 자원 생성
         // 인게임 자원 텍스트 생성
         _resourcesTexts = new Dictionary<string, Text>();
         foreach (KeyValuePair<string, GameResource> pair in Globals.GAME_RESOURCES)
@@ -52,7 +77,9 @@ public class UIManager : MonoBehaviour
 
             display.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Imports/GameResources/{pair.Key}");
         }
+        #endregion
 
+        #region 건물 생성
         // 건물 건설을 위한 버튼 생성
         _buildingPlacer = GetComponent<BuildingPlacer>();
         _buildingButtons = new Dictionary<string, Button>();
@@ -82,13 +109,17 @@ public class UIManager : MonoBehaviour
 
         Button cancelButton = cancelMenu.transform.Find("CancelButton").GetComponent<Button>();
         CancelButtonListener(cancelButton);
+        #endregion
 
+        #region 정보 창
         Transform infoPanelTransform = infoPanel.transform;
         _infoPanelTitleText = infoPanelTransform.Find("Content/Title").GetComponent<Text>();
         _infoPanelDescriptionText = infoPanelTransform.Find("Content/Description").GetComponent<Text>();
         _infoPanelResourcesCostParent = infoPanelTransform.Find("Content/ResourcesCost");
         ShowPanel(infoPanel, false);
+        #endregion
 
+        #region 유닛 선택
         for (int i = 1; i <= 9; i++)
             ToggleSelectionGroupButton(i, false);
 
@@ -96,9 +127,24 @@ public class UIManager : MonoBehaviour
         _selectedUnitTitleText = selectedUnitMenuTransform.Find("Content/Title").GetComponent<Text>();
 
         _selectedUnitActionButtonsParent = selectedUnitActionButtonsParent.transform;
+        #endregion
+
+        #region 게임 메뉴 창
+        gameMenuPanel.SetActive(false);
+
+        GameParameters[] gameParametersList = Resources.LoadAll<GameParameters>("ScriptableObjects/Parameters");
+        _gameParameters = new Dictionary<string, GameParameters>();
+
+        foreach (GameParameters p in gameParametersList)
+            _gameParameters[p.GetParametersName()] = p;
+
+        SetupGameOptionsPanel();
+        #endregion
     }
 
-    [System.Obsolete]
+    // 더 이상 사용하지 않거나 그럴 예정인 클래스나 함수, 변수에 붙히면 더 이상 사용하지 않는다는 경고가 뜸
+    // 베이스 작업자는 코드 작업만으로 다른 작업자에게 코드가 변경되었음을 알림과 동시에 그에 대한 해결책도 전해줄 수 있음
+    [System.Obsolete] 
     private void Update()
     {
         ShowPanel(cancelMenu, !_buildingPlacer.IsAbleToBuild);
@@ -314,5 +360,109 @@ public class UIManager : MonoBehaviour
     private void AddUnitSkillButtonListener(Button b, int i)
     {
         b.onClick.AddListener(() => _selectedUnit.TriggerSkill(i));
+    }
+
+    public void ToggleGameSetiingPanel()
+    {
+        bool showPanel = !gameMenuPanel.activeSelf;
+        gameMenuPanel.SetActive(showPanel);
+        EventManager.TriggerEvent(showPanel ? "PauseGame" : "ResumeGame");
+    }
+
+    private void SetupGameOptionsPanel()
+    {
+        GameObject g;
+        string n;
+        List<string> availableMenus = new List<string>();
+
+        foreach (GameParameters parameters in _gameParameters.Values)
+        {
+            if (parameters.FieldsToShowInGame.Count == 0) continue;
+
+            g = GameObject.Instantiate(gameOptionsMenuButtonPrefab, gameOptionsMenusParent);
+            n = parameters.GetParametersName();
+
+            g.transform.Find("Text").GetComponent<Text>().text = n;
+
+            AddGameOptionsPanelMenuListener(g.GetComponent<Button>(), n);
+            availableMenus.Add(n);
+        }
+
+        if (availableMenus.Count > 0)
+            SetGameOptionsContent(availableMenus[0]);
+    }
+
+    private void AddGameOptionsPanelMenuListener(Button b, string menu)
+    {
+        b.onClick.AddListener(() => SetGameOptionsContent(menu));
+    }
+
+    private void SetGameOptionsContent(string menu)
+    {
+        gameOptionsContentName.text = menu;
+
+        foreach (Transform child in gameOptionsContentParent)
+            Destroy(child.gameObject);
+
+        GameParameters parameters = _gameParameters[menu];
+        System.Type ParametersType = parameters.GetType();
+        
+        GameObject gWrapper, gEditor;
+        RectTransform rtWrapper, rtEditor;
+        int i = 0;
+        float contentWidth = 534f;
+        float parameterNameWidth = 200f;
+        float fieldHeight = 32f;
+
+        foreach (string fieldName in parameters.FieldsToShowInGame)
+        {
+            gWrapper = GameObject.Instantiate(gameOptionsParameterPrefab, gameOptionsContentParent);
+            //gWrapper.transform.Find("Text").GetComponent<Text>().text = Utils.CapitalizeWords(fieldName);
+
+            gEditor = null;
+            FieldInfo field = ParametersType.GetField(fieldName);
+
+            if (field.FieldType == typeof(bool))
+            {
+                gEditor = Instantiate(togglePrefab);
+                Toggle t = gEditor.GetComponent<Toggle>();
+                t.isOn = (bool)field.GetValue(parameters);
+            }
+            else if (field.FieldType == typeof(int) || field.FieldType == typeof(float))
+            {
+                bool isRange = System.Attribute.IsDefined(field, typeof(RangeAttribute), false);
+                if (isRange)
+                {
+                    RangeAttribute attr = (RangeAttribute)System.Attribute.GetCustomAttribute(field, typeof(RangeAttribute));
+
+                    gEditor = Instantiate(sliderPrefab);
+                    Slider s = gEditor.GetComponent<Slider>();
+
+                    s.minValue = attr.min;
+                    s.maxValue = attr.max;
+                    s.wholeNumbers = field.FieldType == typeof(int);
+                    s.value = field.FieldType == typeof(int) ? (int)field.GetValue(parameters) : (float)field.GetValue(parameters);
+                }
+            }
+
+            rtWrapper = gWrapper.GetComponent<RectTransform>();
+            rtWrapper.anchoredPosition = new Vector2(0f, -i * fieldHeight);
+            rtWrapper.sizeDelta = new Vector2(contentWidth, fieldHeight);
+
+            if (gEditor != null)
+            {
+                gEditor.transform.SetParent(gWrapper.transform);
+                rtEditor = gEditor.GetComponent<RectTransform>();
+                rtEditor.anchoredPosition = new Vector2((parameterNameWidth + 16f), 0f);
+                rtEditor.sizeDelta = new Vector2(rtWrapper.sizeDelta.x - (parameterNameWidth + 16f), fieldHeight);
+            }
+
+            i++;
+        }
+
+        RectTransform rt = gameOptionsContentParent.GetComponent<RectTransform>();
+        Vector2 size = rt.sizeDelta;
+        size.y = i * fieldHeight;
+        rt.sizeDelta = size;
     }
 }

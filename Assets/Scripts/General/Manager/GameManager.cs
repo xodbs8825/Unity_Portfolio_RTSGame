@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
 
     public GameGlobalParameters gameGlobalParameters;
 
+    [HideInInspector]
+    public bool gameIsPaused;
+
     private static GameManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
     public static GameManager instance
@@ -39,10 +42,13 @@ public class GameManager : MonoBehaviour
         GameObject.Find("FogOfWar").SetActive(gameGlobalParameters.enableFOV);
 
         GetStartPosition();
+
+        gameIsPaused = false;
     }
 
     private void Update()
     {
+        if (gameIsPaused) return;
         CheckUnitsNavigations();
     }
 
@@ -77,5 +83,29 @@ public class GameManager : MonoBehaviour
     private void GetStartPosition()
     {
         startPosition = Utils.MiddleOfScreenPointToWorld();
+    }
+
+    private void OnEnable()
+    {
+        EventManager.AddListener("PauseGame", OnPauseGame);
+        EventManager.AddListener("ResumeGame", OnResumeGame);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.RemoveListener("PauseGame", OnPauseGame);
+        EventManager.RemoveListener("ResumeGame", OnResumeGame);
+    }
+
+    private void OnPauseGame()
+    {
+        gameIsPaused = true;
+        Time.timeScale = 0;
+    }
+
+    private void OnResumeGame()
+    {
+        gameIsPaused = false;
+        Time.timeScale = 1;
     }
 }
