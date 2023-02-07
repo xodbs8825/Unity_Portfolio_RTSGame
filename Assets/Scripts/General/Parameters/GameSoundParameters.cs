@@ -10,9 +10,9 @@ public class GameSoundParameters : GameParameters
     [Header("Ambient sounds")]
     public AudioClip buildingPlacedSound;
 
-    [Range(0, 100)]
+    [Range(-80, -12)]
     public int musicVolume;
 
-    [Range(0, 100)]
+    [Range(-80, 0)]
     public int sfxVolume;
 }

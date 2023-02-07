@@ -48,7 +48,6 @@ public class UIManager : MonoBehaviour
 
     #region GameMenu
     public GameObject gameMenuPanel;
-    public GameObject gameOptionsPanel;
     public Transform gameOptionsMenusParent;
     public Text gameOptionsContentName;
     public Transform gameOptionsContentParent;
@@ -417,7 +416,7 @@ public class UIManager : MonoBehaviour
         foreach (string fieldName in parameters.FieldsToShowInGame)
         {
             gWrapper = GameObject.Instantiate(gameOptionsParameterPrefab, gameOptionsContentParent);
-            //gWrapper.transform.Find("Text").GetComponent<Text>().text = Utils.CapitalizeWords(fieldName);
+            gWrapper.transform.Find("Text").GetComponent<Text>().text = Utils.CapitalizeWords(fieldName);
 
             gEditor = null;
             FieldInfo field = ParametersType.GetField(fieldName);
@@ -427,6 +426,10 @@ public class UIManager : MonoBehaviour
                 gEditor = Instantiate(togglePrefab);
                 Toggle t = gEditor.GetComponent<Toggle>();
                 t.isOn = (bool)field.GetValue(parameters);
+                t.onValueChanged.AddListener(delegate
+                {
+                    OnGameOptionsToggleValueChanged(parameters, field, field.Name, t);
+                });
             }
             else if (field.FieldType == typeof(int) || field.FieldType == typeof(float))
             {
@@ -442,6 +445,10 @@ public class UIManager : MonoBehaviour
                     s.maxValue = attr.max;
                     s.wholeNumbers = field.FieldType == typeof(int);
                     s.value = field.FieldType == typeof(int) ? (int)field.GetValue(parameters) : (float)field.GetValue(parameters);
+                    s.onValueChanged.AddListener(delegate
+                    {
+                        OnGameOptionsSliderValueChanged(parameters, field, fieldName, s);
+                    });
                 }
             }
 
@@ -464,5 +471,21 @@ public class UIManager : MonoBehaviour
         Vector2 size = rt.sizeDelta;
         size.y = i * fieldHeight;
         rt.sizeDelta = size;
+    }
+
+    private void OnGameOptionsToggleValueChanged(GameParameters parameters, FieldInfo field, string gameParameters, Toggle change)
+    {
+        field.SetValue(parameters, change.isOn);
+        EventManager.TriggerEvent($"UpdateGameParameter:{gameParameters}", change.isOn);
+    }
+
+    private void OnGameOptionsSliderValueChanged(GameParameters parameters, FieldInfo field, string gameParameters, Slider change)
+    {
+        if (field.FieldType == typeof(int))
+            field.SetValue(parameters, (int)change.value);
+        else
+            field.SetValue(parameters, change.value);
+
+        EventManager.TriggerEvent($"UpdateGameParameter:{gameParameters}", change.value);
     }
 }

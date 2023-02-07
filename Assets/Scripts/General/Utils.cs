@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public static class Utils
@@ -121,5 +122,20 @@ public static class Utils
                 corners[i] = hit.point;
         }
         return corners;
+    }
+
+    static Regex camelCaseRegex = new Regex(@"(?:[a-z]+|[A-Z]+|^)([a-z]|\d)*", RegexOptions.Compiled);
+    public static string CapitalizeWords(string str)
+    {
+        List<string> words = new List<string>();
+        MatchCollection matches = camelCaseRegex.Matches(str);
+        string word;
+        foreach (Match match in matches)
+        {
+            word = match.Groups[0].Value;
+            word = word[0].ToString().ToUpper() + word.Substring(1);
+            words.Add(word);
+        }
+        return string.Join(" ", words);
     }
 }

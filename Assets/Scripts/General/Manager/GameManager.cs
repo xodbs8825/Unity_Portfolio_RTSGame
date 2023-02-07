@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool gameIsPaused;
 
+    public GameObject fov;
+
     private static GameManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
     public static GameManager instance
@@ -44,6 +46,8 @@ public class GameManager : MonoBehaviour
         GetStartPosition();
 
         gameIsPaused = false;
+
+        fov.SetActive(gameGlobalParameters.enableFOV);
     }
 
     private void Update()
@@ -89,12 +93,14 @@ public class GameManager : MonoBehaviour
     {
         EventManager.AddListener("PauseGame", OnPauseGame);
         EventManager.AddListener("ResumeGame", OnResumeGame);
+        EventManager.AddListener("UpdateGameParameter:enableFOV", OnUpdateFOV);
     }
 
     private void OnDisable()
     {
         EventManager.RemoveListener("PauseGame", OnPauseGame);
         EventManager.RemoveListener("ResumeGame", OnResumeGame);
+        EventManager.RemoveListener("UpdateGameParameter:enableFOV", OnUpdateFOV);
     }
 
     private void OnPauseGame()
@@ -107,5 +113,11 @@ public class GameManager : MonoBehaviour
     {
         gameIsPaused = false;
         Time.timeScale = 1;
+    }
+
+    private void OnUpdateFOV(object data)
+    {
+        bool fovIsOn = (bool)data;
+        fov.SetActive(fovIsOn);
     }
 }

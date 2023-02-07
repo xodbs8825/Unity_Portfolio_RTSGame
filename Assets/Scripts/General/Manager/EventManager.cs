@@ -10,6 +10,7 @@ public class TypedEvent : UnityEvent<object> { }
 
 public class EventManager : MonoBehaviour
 {
+
     private Dictionary<string, UnityEvent> _events;
     private Dictionary<string, TypedEvent> _typedEvents;
     private static EventManager _eventManager;
@@ -55,7 +56,6 @@ public class EventManager : MonoBehaviour
             instance._events.Add(eventName, evt);
         }
     }
-
     public static void AddListener(string eventName, UnityAction<object> listener)
     {
         TypedEvent evt = null;
@@ -78,7 +78,6 @@ public class EventManager : MonoBehaviour
         if (instance._events.TryGetValue(eventName, out evt))
             evt.RemoveListener(listener);
     }
-
     public static void RemoveListener(string eventName, UnityAction<object> listener)
     {
         if (_eventManager == null) return;
@@ -93,7 +92,6 @@ public class EventManager : MonoBehaviour
         if (instance._events.TryGetValue(eventName, out evt))
             evt.Invoke();
     }
-
     public static void TriggerEvent(string eventName, object data)
     {
         TypedEvent evt = null;
