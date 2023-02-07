@@ -10,6 +10,12 @@ public class SoundManager : MonoBehaviour
     public GameSoundParameters soundParameters;
     public AudioMixer masterMixer;
 
+    private void Start()
+    {
+        masterMixer.SetFloat("musicVol", soundParameters.musicVolume);
+        masterMixer.SetFloat("sfxVol", soundParameters.sfxVolume);
+    }
+
     private void OnEnable()
     {
         EventManager.AddListener("PlaySoundByName", OnPlaySoundByName);
@@ -59,5 +65,10 @@ public class SoundManager : MonoBehaviour
     {
         float volume = (float)data;
         masterMixer.SetFloat("sfxVol", volume);
+    }
+
+    private void OnPauseGame()
+    {
+
     }
 }

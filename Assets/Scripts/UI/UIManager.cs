@@ -48,11 +48,12 @@ public class UIManager : MonoBehaviour
 
     #region GameMenu
     public GameObject gameMenuPanel;
-    public Transform gameOptionsMenusParent;
+    public GameObject optionsPanel;
+    public GameObject gameSettingsMenuButtonPrefab;
+    public Transform gameSettingsMenuParent;
     public Text gameOptionsContentName;
-    public Transform gameOptionsContentParent;
-    public GameObject gameOptionsMenuButtonPrefab;
-    public GameObject gameOptionsParameterPrefab;
+    public Transform gameSettingsContentParent;
+    public GameObject gameSettingsParameterPrefab;
     public GameObject sliderPrefab;
     public GameObject togglePrefab;
     private Dictionary<string, GameParameters> _gameParameters;
@@ -155,6 +156,9 @@ public class UIManager : MonoBehaviour
             ShowPanel(buildingMenu, true);
         else
             ShowPanel(buildingMenu, false);
+
+        if (Input.GetKeyDown(KeyCode.F10))
+            ToggleGameSetiingPanel();
     }
 
     private void OnEnable()
@@ -378,7 +382,7 @@ public class UIManager : MonoBehaviour
         {
             if (parameters.FieldsToShowInGame.Count == 0) continue;
 
-            g = GameObject.Instantiate(gameOptionsMenuButtonPrefab, gameOptionsMenusParent);
+            g = GameObject.Instantiate(gameSettingsMenuButtonPrefab, gameSettingsMenuParent);
             n = parameters.GetParametersName();
 
             g.transform.Find("Text").GetComponent<Text>().text = n;
@@ -400,7 +404,7 @@ public class UIManager : MonoBehaviour
     {
         gameOptionsContentName.text = menu;
 
-        foreach (Transform child in gameOptionsContentParent)
+        foreach (Transform child in gameSettingsContentParent)
             Destroy(child.gameObject);
 
         GameParameters parameters = _gameParameters[menu];
@@ -415,7 +419,7 @@ public class UIManager : MonoBehaviour
 
         foreach (string fieldName in parameters.FieldsToShowInGame)
         {
-            gWrapper = GameObject.Instantiate(gameOptionsParameterPrefab, gameOptionsContentParent);
+            gWrapper = GameObject.Instantiate(gameSettingsParameterPrefab, gameSettingsContentParent);
             gWrapper.transform.Find("Text").GetComponent<Text>().text = Utils.CapitalizeWords(fieldName);
 
             gEditor = null;
@@ -467,7 +471,7 @@ public class UIManager : MonoBehaviour
             i++;
         }
 
-        RectTransform rt = gameOptionsContentParent.GetComponent<RectTransform>();
+        RectTransform rt = gameSettingsContentParent.GetComponent<RectTransform>();
         Vector2 size = rt.sizeDelta;
         size.y = i * fieldHeight;
         rt.sizeDelta = size;
@@ -487,5 +491,23 @@ public class UIManager : MonoBehaviour
             field.SetValue(parameters, change.value);
 
         EventManager.TriggerEvent($"UpdateGameParameter:{gameParameters}", change.value);
+    }
+
+    public void ToggleGameMenuSettings(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                gameMenuPanel.SetActive(false);
+                optionsPanel.SetActive(false);
+                EventManager.TriggerEvent("ResumeGame");
+                break;
+            case 3:
+                gameMenuPanel.SetActive(false);
+                optionsPanel.SetActive(true);
+                break;
+            default:
+                break;
+        }
     }
 }

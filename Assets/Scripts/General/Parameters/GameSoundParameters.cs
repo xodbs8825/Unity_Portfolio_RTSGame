@@ -7,12 +7,12 @@ public class GameSoundParameters : GameParameters
 {
     public override string GetParametersName() => "Sound";
 
-    [Header("Ambient sounds")]
-    public AudioClip buildingPlacedSound;
-
     [Range(-80, -12)]
     public int musicVolume;
 
     [Range(-80, 0)]
     public int sfxVolume;
+
+    [Header("Ambient sounds")]
+    public AudioClip buildingPlacedSound;
 }

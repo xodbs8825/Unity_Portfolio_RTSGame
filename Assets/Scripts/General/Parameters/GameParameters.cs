@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class GameParameters : ScriptableObject
+public abstract class GameParameters : JSONSerializableScriptableObject
 {
     public abstract string GetParametersName();
 

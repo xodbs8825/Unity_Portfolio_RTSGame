@@ -60,14 +60,14 @@ public class GameManager : MonoBehaviour
     {
         _instance = this;
 
-        GameParameters[] gameParametersList = Resources.LoadAll<GameParameters>("ScriptableObjects/Parameters");
-        foreach (GameParameters parameters in gameParametersList)
-        {
-            Debug.Log(parameters.GetParametersName());
-            Debug.Log("> Fields shown in-game : ");
-            foreach (string fieldName in parameters.FieldsToShowInGame)
-                Debug.Log($"    {fieldName}");
-        }
+        //GameParameters[] gameParametersList = Resources.LoadAll<GameParameters>("ScriptableObjects/Parameters");
+        //foreach (GameParameters parameters in gameParametersList)
+        //{
+        //    Debug.Log(parameters.GetParametersName());
+        //    Debug.Log("> Fields shown in-game : ");
+        //    foreach (string fieldName in parameters.FieldsToShowInGame)
+        //        Debug.Log($"    {fieldName}");
+        //}
     }
 
     private void CheckUnitsNavigations()
@@ -119,5 +119,12 @@ public class GameManager : MonoBehaviour
     {
         bool fovIsOn = (bool)data;
         fov.SetActive(fovIsOn);
+    }
+
+    private void OnApplicationQuit()
+    {
+#if !UNITY_EDITOR
+        DataHandler.SaveGameData();
+#endif
     }
 }
