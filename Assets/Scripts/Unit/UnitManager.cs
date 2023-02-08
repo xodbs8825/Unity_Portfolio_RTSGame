@@ -21,6 +21,8 @@ public class UnitManager : MonoBehaviour
     public bool isSelected = false;
     private bool _isSelectSoundEnded = true;
 
+    public int ownerMatrialSlotIndex = 0;
+
     public virtual Unit Unit { get; set; }
 
     private void Awake()
@@ -38,13 +40,18 @@ public class UnitManager : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (IsActive())
+        if (IsActive() && IsMyUnit())
             Select(true, Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift));
     }
 
     protected virtual bool IsActive()
     {
         return true;
+    }
+
+    private bool IsMyUnit()
+    {
+        return Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID;
     }
 
     private void SelectUtils()
@@ -179,5 +186,13 @@ public class UnitManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(seconds);
         _isSelectSoundEnded = true;
+    }
+
+    public void SetOwnerMaterial(int owner)
+    {
+        Color playerColor = GameManager.instance.gamePlayersParameters.players[owner].color;
+        Material[] materials = transform.Find("Mesh").GetComponent<Renderer>().materials;
+        materials[ownerMatrialSlotIndex].color = playerColor;
+        transform.Find("Mesh").GetComponent<Renderer>().materials = materials;
     }
 }

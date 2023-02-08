@@ -63,12 +63,34 @@ public class SoundManager : MonoBehaviour
 
     private void OnUpdateSfxVolume(object data)
     {
+        if (GameManager.instance.gameIsPaused) return;
         float volume = (float)data;
         masterMixer.SetFloat("sfxVol", volume);
     }
 
     private void OnPauseGame()
     {
+        StartCoroutine(TransitioningVolume("musicVol", soundParameters.musicVolume, soundParameters.musicVolume - 6, 0.5f));
+        StartCoroutine(TransitioningVolume("sfxVol", soundParameters.sfxVolume, soundParameters.sfxVolume - 80, 0.5f));
+    }
 
+    private void OnResumeGame()
+    {
+        StartCoroutine(TransitioningVolume("musicVol", soundParameters.musicVolume - 6, soundParameters.musicVolume, 0.5f));
+        StartCoroutine(TransitioningVolume("sfxVol", soundParameters.sfxVolume - 80, soundParameters.sfxVolume, 0.5f));
+    }
+
+    private IEnumerator TransitioningVolume(string volumeParamter, float from, float to, float delay)
+    {
+        float t = 0;
+
+        while (t < delay)
+        {
+            masterMixer.SetFloat(volumeParamter, Mathf.Lerp(from, to, t / delay));
+            t += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        masterMixer.SetFloat(volumeParamter, to);
     }
 }

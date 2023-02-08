@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public Vector3 startPosition;
 
     public GameGlobalParameters gameGlobalParameters;
+    public GamePlayersParameters gamePlayersParameters;
 
     [HideInInspector]
     public bool gameIsPaused;

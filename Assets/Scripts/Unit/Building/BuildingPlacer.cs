@@ -33,7 +33,7 @@ public class BuildingPlacer : MonoBehaviour
                 CancelPlacedBuilding();
                 return;
             }
-            
+
             _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(_ray, out _raycastHit, 1000f, Globals.TERRAIN_LAYER_MASK))
@@ -56,24 +56,54 @@ public class BuildingPlacer : MonoBehaviour
 
     private void Start()
     {
-        // 게임 시작에 생산 건물 Instantiate
-        _placedBuilding = new Building(GameManager.instance.gameGlobalParameters.initialBuilding);
-        _placedBuilding.SetPosition(GameManager.instance.startPosition);
+        SpawnBuilding(GameManager.instance.gameGlobalParameters.initialBuilding, 0, (Vector3.right + Vector3.forward) * 120);
+    }
 
-        // 건물 데이터와 매니저 연동
-        _placedBuilding.Transform.GetComponent<BuildingManager>().Initialize(_placedBuilding);
+    public void SpawnBuilding(BuildingData data, int owner, Vector3 position)
+    {
+        SpawnBuilding(data, owner, position, new List<ResourceValue>() { });
+    }
+    public void SpawnBuilding(BuildingData data, int owner, Vector3 position, List<ResourceValue> production)
+    {
+        Building prevPlacedBuilding = _placedBuilding;
+
+        // 건물 Instantiate
+        _placedBuilding = new Building(data, owner, production);
+        _placedBuilding.SetPosition(position);
+
         PlaceBuilding();
 
-        // 시작하자마자 선택 된 유닛이 없도록
         CancelPlacedBuilding();
+
+        _placedBuilding = prevPlacedBuilding;
+    }
+
+    private void PlaceBuilding(bool canChain = true)
+    {
+        _placedBuilding.Place();
+        if (canChain)
+        {
+            if (_placedBuilding.CanBuy())
+                PreparePlacedBuilding(_placedBuilding.DataIndex);
+            else
+            {
+                EventManager.TriggerEvent("PlaceBuildingOff");
+                _placedBuilding = null;
+            }
+        }
     }
 
     void PreparePlacedBuilding(int buildingDataIndex)
     {
-        Building building = new Building(Globals.BUILDING_DATA[buildingDataIndex]);
-        building.Transform.GetComponent<BuildingManager>().Initialize(building);
+        if (_placedBuilding != null && !_placedBuilding.IsFixed)
+            Destroy(_placedBuilding.Transform.gameObject);
+
+        Building building = new Building(Globals.BUILDING_DATA[buildingDataIndex], GameManager.instance.gamePlayersParameters.myPlayerID); ;
+
         _placedBuilding = building;
         _lastPlacementPosition = Vector3.zero;
+
+        EventManager.TriggerEvent("PlaceBuildingOn");
     }
 
     public void CancelPlacedBuilding()
