@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 6696960079498690400}
   - component: {fileID: 2652150892722941767}
   - component: {fileID: 3809577253786904848}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,8 +204,8 @@ GameObject:
   - component: {fileID: 6574352906636015292}
   - component: {fileID: -4382769534839316523}
   - component: {fileID: 934806741444922542}
-  m_Layer: 6
-  m_Name: Tower
+  m_Layer: 12
+  m_Name: Factory
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -274,6 +274,8 @@ MonoBehaviour:
   zoomSize: 0
   fov: {fileID: 32534467491557152}
   contextualSource: {fileID: 934806741444922542}
+  isSelected: 0
+  ownerMatrialSlotIndex: 0
 --- !u!114 &-4382769534839316523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,7 +396,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4152624556232650119}
   - component: {fileID: 5294555967242094883}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: SelectionCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

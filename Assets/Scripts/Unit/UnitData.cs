@@ -16,6 +16,8 @@ public class UnitData : ScriptableObject
     public List<ResourceValue> cost;
     public float fieldOfView;
 
+    public InGameResource[] canProduce;
+
     public List<SkillData> skills = new List<SkillData>();
 
     [Header("General Sounds")]

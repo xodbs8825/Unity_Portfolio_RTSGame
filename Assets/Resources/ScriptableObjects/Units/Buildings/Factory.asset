@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66fdca5b6dc1a0d42909c7167a4b0ea2, type: 3}
-  m_Name: Tower
+  m_Name: Factory
   m_EditorClassIdentifier: 
   code: factory
   unitName: Factory

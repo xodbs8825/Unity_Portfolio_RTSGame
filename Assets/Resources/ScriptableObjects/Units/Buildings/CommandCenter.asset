@@ -18,9 +18,10 @@ MonoBehaviour:
   healthPoint: 4000
   prefab: {fileID: 5542380815447981279, guid: c25759ed314c4364c82bce295f224bdb, type: 3}
   cost:
-  - code: mineral
+  - code: 0
     amount: 400
   fieldOfView: 100
+  canProduce: 0000000001000000
   skills:
   - {fileID: 11400000, guid: cd816dfedbc04054aaa587cca3521453, type: 2}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}

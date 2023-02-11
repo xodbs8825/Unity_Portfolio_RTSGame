@@ -20,6 +20,10 @@ public class BuildingManager : UnitManager
     {
         _collider = GetComponent<BoxCollider>();
         _building = building;
+    }
+
+    private void Start()
+    {
         _buildingInteractSound = Unit.Data.interactSound[0];
     }
 

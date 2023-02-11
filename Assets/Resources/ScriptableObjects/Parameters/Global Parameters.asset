@@ -16,3 +16,7 @@ MonoBehaviour:
   - enableFOV
   initialBuilding: {fileID: 11400000, guid: 070c39f8fab990249a1fd86a1b65119c, type: 2}
   enableFOV: 1
+  baseMineralProduction: 5
+  bonusMineralProductionPreBuilding: 2
+  mineralBonusRange: 10
+  gasProductionRange: 10

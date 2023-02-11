@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector]
     public bool gameIsPaused;
+    public List<Unit> ownedProductingUnits = new List<Unit>();
+    private float _producingRate = 3f;
+    private Coroutine _producingResourcesCoroutine = null;
 
     public GameObject fov;
 
@@ -61,14 +64,7 @@ public class GameManager : MonoBehaviour
     {
         _instance = this;
 
-        //GameParameters[] gameParametersList = Resources.LoadAll<GameParameters>("ScriptableObjects/Parameters");
-        //foreach (GameParameters parameters in gameParametersList)
-        //{
-        //    Debug.Log(parameters.GetParametersName());
-        //    Debug.Log("> Fields shown in-game : ");
-        //    foreach (string fieldName in parameters.FieldsToShowInGame)
-        //        Debug.Log($"    {fieldName}");
-        //}
+        _producingResourcesCoroutine = StartCoroutine("ProducingResources");
     }
 
     private void CheckUnitsNavigations()
@@ -108,12 +104,21 @@ public class GameManager : MonoBehaviour
     {
         gameIsPaused = true;
         Time.timeScale = 0;
+
+        if (_producingResourcesCoroutine != null)
+        {
+            StopCoroutine(_producingResourcesCoroutine);
+            _producingResourcesCoroutine = null;
+        }
     }
 
     private void OnResumeGame()
     {
         gameIsPaused = false;
         Time.timeScale = 1;
+
+        if (_producingResourcesCoroutine == null)
+            _producingResourcesCoroutine = StartCoroutine("ProducingResources");
     }
 
     private void OnUpdateFOV(object data)
@@ -127,5 +132,18 @@ public class GameManager : MonoBehaviour
 #if !UNITY_EDITOR
         DataHandler.SaveGameData();
 #endif
+    }
+
+    private IEnumerator ProducingResources()
+    {
+        while (true)
+        {
+            foreach (Unit unit in ownedProductingUnits)
+                unit.ProduceResources();
+
+            EventManager.TriggerEvent("UpdateResourceTexts");
+
+            yield return new WaitForSeconds(_producingRate);
+        }
     }
 }

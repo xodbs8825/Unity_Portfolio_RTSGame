@@ -56,7 +56,17 @@ public class BuildingPlacer : MonoBehaviour
 
     private void Start()
     {
-        SpawnBuilding(GameManager.instance.gameGlobalParameters.initialBuilding, 0, (Vector3.right + Vector3.forward) * 120);
+        SpawnBuilding
+        (
+            GameManager.instance.gameGlobalParameters.initialBuilding, 
+            GameManager.instance.gamePlayersParameters.myPlayerID, 
+            GameManager.instance.startPosition,
+            new List<ResourceValue>()
+            { 
+                new ResourceValue(InGameResource.Mineral, 5),
+                new ResourceValue(InGameResource.Gas, 2)
+            }
+        );
     }
 
     public void SpawnBuilding(BuildingData data, int owner, Vector3 position)
@@ -80,6 +90,7 @@ public class BuildingPlacer : MonoBehaviour
 
     private void PlaceBuilding(bool canChain = true)
     {
+        _placedBuilding.ComputeProduction();
         _placedBuilding.Place();
         if (canChain)
         {

@@ -27,13 +27,15 @@ public class UIManager : MonoBehaviour
 
     public GameObject selectedUnitActionButtonsParent;
     private Transform _selectedUnitActionButtonsParent;
+
+    private Transform _selectedUnitResourcesProductionParent;
     #endregion
 
     #region Resources
     public Transform resourcesUIParent;
     public GameObject gameResourceDisplayPrefab;
 
-    private Dictionary<string, Text> _resourcesTexts;
+    private Dictionary<InGameResource, Text> _resourcesTexts;
     private Dictionary<string, Button> _buildingButtons;
     #endregion
 
@@ -67,15 +69,15 @@ public class UIManager : MonoBehaviour
 
         #region 인게임 자원 생성
         // 인게임 자원 텍스트 생성
-        _resourcesTexts = new Dictionary<string, Text>();
-        foreach (KeyValuePair<string, GameResource> pair in Globals.GAME_RESOURCES)
+        _resourcesTexts = new Dictionary<InGameResource, Text>();
+        foreach (KeyValuePair<InGameResource, GameResource> pair in Globals.GAME_RESOURCES)
         {
             GameObject display = Instantiate(gameResourceDisplayPrefab, resourcesUIParent);
-            display.name = pair.Key;
+            display.name = pair.Key.ToString();
             _resourcesTexts[pair.Key] = display.transform.Find("Text").GetComponent<Text>();
-            SetResourceText(pair.Key, pair.Value.Amount);
-
             display.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Imports/GameResources/{pair.Key}");
+
+            SetResourceText(pair.Key, pair.Value.Amount);
         }
         #endregion
 
@@ -125,8 +127,8 @@ public class UIManager : MonoBehaviour
 
         Transform selectedUnitMenuTransform = selectedUnitMenu.transform;
         _selectedUnitTitleText = selectedUnitMenuTransform.Find("Content/Title").GetComponent<Text>();
-
         _selectedUnitActionButtonsParent = selectedUnitActionButtonsParent.transform;
+        _selectedUnitResourcesProductionParent = selectedUnitMenuTransform.Find("Resources/Production");
         #endregion
 
         #region 게임 메뉴 창
@@ -144,7 +146,7 @@ public class UIManager : MonoBehaviour
 
     // 더 이상 사용하지 않거나 그럴 예정인 클래스나 함수, 변수에 붙히면 더 이상 사용하지 않는다는 경고가 뜸
     // 베이스 작업자는 코드 작업만으로 다른 작업자에게 코드가 변경되었음을 알림과 동시에 그에 대한 해결책도 전해줄 수 있음
-    [System.Obsolete] 
+    [System.Obsolete]
     private void Update()
     {
         ShowPanel(cancelMenu, !_buildingPlacer.IsAbleToBuild);
@@ -279,17 +281,9 @@ public class UIManager : MonoBehaviour
         panel.SetActive(show);
     }
 
-    private void SetResourceText(string resource, int value)
+    private void SetResourceText(InGameResource resource, int value)
     {
         _resourcesTexts[resource].text = value.ToString();
-    }
-
-    public void UpdateResourceTexts()
-    {
-        foreach (KeyValuePair<string, GameResource> pair in Globals.GAME_RESOURCES)
-        {
-            SetResourceText(pair.Key, pair.Value.Amount);
-        }
     }
 
     private void AddBuildingButtonListener(Button b, int i)
@@ -302,17 +296,9 @@ public class UIManager : MonoBehaviour
         b.onClick.AddListener(() => _buildingPlacer.CancelPlacedBuilding());
     }
 
-    public void CheckBuildingButtons()
-    {
-        foreach (UnitData data in Globals.BUILDING_DATA)
-        {
-            _buildingButtons[data.code].interactable = data.CanBuy();
-        }
-    }
-
     private void OnUpdateResourceTexts()
     {
-        foreach (KeyValuePair<string, GameResource> pair in Globals.GAME_RESOURCES)
+        foreach (KeyValuePair<InGameResource, GameResource> pair in Globals.GAME_RESOURCES)
             SetResourceText(pair.Key, pair.Value.Amount);
     }
 
@@ -358,6 +344,21 @@ public class UIManager : MonoBehaviour
                 AddUnitSkillButtonListener(b, i);
             }
         }
+
+        if (unit.Production.Count > 0)
+        {
+            GameObject g;
+            Transform t;
+
+            foreach (KeyValuePair<InGameResource, int> resource in unit.Production)
+            {
+                g = Instantiate(gameResourceCostPrefab, _selectedUnitResourcesProductionParent);
+                t = g.transform;
+
+                t.Find("Text").GetComponent<Text>().text = $"+{resource.Value}";
+                t.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Imports/GameResources/{resource.Key}");
+            }
+        }
     }
 
     private void AddUnitSkillButtonListener(Button b, int i)
@@ -387,7 +388,10 @@ public class UIManager : MonoBehaviour
 
             g.transform.Find("Text").GetComponent<Text>().text = n;
 
-            AddGameOptionsPanelMenuListener(g.GetComponent<Button>(), n);
+            Transform unselected = g.transform.Find("Unselected").GetComponent<Transform>();
+            Transform selected = g.transform.Find("Selected").GetComponent<Transform>();
+
+            AddGameOptionsPanelMenuListener(g.GetComponent<Button>(), n, unselected, selected);
             availableMenus.Add(n);
         }
 
@@ -395,7 +399,7 @@ public class UIManager : MonoBehaviour
             SetGameOptionsContent(availableMenus[0]);
     }
 
-    private void AddGameOptionsPanelMenuListener(Button b, string menu)
+    private void AddGameOptionsPanelMenuListener(Button b, string menu, Transform unselected, Transform selected)
     {
         b.onClick.AddListener(() => SetGameOptionsContent(menu));
     }
@@ -409,7 +413,7 @@ public class UIManager : MonoBehaviour
 
         GameParameters parameters = _gameParameters[menu];
         System.Type ParametersType = parameters.GetType();
-        
+
         GameObject gWrapper, gEditor;
         RectTransform rtWrapper, rtEditor;
         int i = 0;
@@ -510,4 +514,18 @@ public class UIManager : MonoBehaviour
                 break;
         }
     }
+
+    //private void GameSettingsMenuButtonController(bool state, Transform unselected, Transform selected)
+    //{
+    //    if (!state)
+    //    {
+    //        unselected.gameObject.SetActive(false);
+    //        selected.gameObject.SetActive(true);
+    //    }
+    //    else
+    //    {
+    //        unselected.gameObject.SetActive(true);
+    //        selected.gameObject.SetActive(false);
+    //    }
+    //}
 }

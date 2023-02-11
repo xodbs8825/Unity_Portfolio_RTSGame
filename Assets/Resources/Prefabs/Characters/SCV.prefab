@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6696960079498690400}
   - component: {fileID: 2652150892722941767}
   - component: {fileID: 3809577253786904848}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 6502414843547705010}
   - component: {fileID: 7685098514072550793}
   - component: {fileID: 5946203730686990114}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: SCV
   m_TagString: Unit
   m_Icon: {fileID: 0}
@@ -275,6 +275,8 @@ MonoBehaviour:
   zoomSize: 0
   fov: {fileID: 4520306534344358836}
   contextualSource: {fileID: 5946203730686990114}
+  isSelected: 0
+  ownerMatrialSlotIndex: 0
   agent: {fileID: 6502414843547705010}
 --- !u!195 &6502414843547705010
 NavMeshAgent:
@@ -418,7 +420,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4152624556232650119}
   - component: {fileID: 5294555967242094883}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: SelectionCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
