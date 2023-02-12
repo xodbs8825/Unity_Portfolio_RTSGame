@@ -65,9 +65,6 @@ public class Unit
 
             foreach (ResourceValue resource in _data.cost)
                 Globals.GAME_RESOURCES[resource.code].AddAmount(-resource.amount);
-
-            if (_production.Count > 0)
-                GameManager.instance.ownedProductingUnits.Add(this);
         }
     }
 

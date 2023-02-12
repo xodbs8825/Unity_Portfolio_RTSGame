@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6696960079498690400}
   - component: {fileID: 2652150892722941767}
   - component: {fileID: 3809577253786904848}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -420,7 +420,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4152624556232650119}
   - component: {fileID: 5294555967242094883}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: SelectionCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

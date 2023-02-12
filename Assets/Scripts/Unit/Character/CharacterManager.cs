@@ -29,15 +29,15 @@ public class CharacterManager : UnitManager
     public override void Select(bool singleClick, bool holdingShift)
     {
         base.Select(singleClick, holdingShift);
-        if (base.isSelected)
+        if (base.IsSelected)
             PlaySound();
     }
 
-    public void MoveTo(Vector3 targetPosition)
+    public bool MoveTo(Vector3 targetPosition)
     {
         agent.destination = targetPosition;
-
         PlaySound();
+        return true;
     }
 
     public override void PlaySound()

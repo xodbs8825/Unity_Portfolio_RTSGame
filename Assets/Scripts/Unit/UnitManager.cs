@@ -18,7 +18,8 @@ public class UnitManager : MonoBehaviour
 
     public AudioSource contextualSource;
 
-    public bool isSelected = false;
+    private bool _selected = false;
+    public bool IsSelected { get => _selected; }
     private bool _isSelectSoundEnded = true;
 
     public int ownerMatrialSlotIndex = 0;
@@ -107,7 +108,7 @@ public class UnitManager : MonoBehaviour
         if (!singleClick)
         {
             SelectUtils();
-            isSelected = true;
+            _selected = true;
             return;
         }
 
@@ -116,12 +117,12 @@ public class UnitManager : MonoBehaviour
             if (Globals.SELECTED_UNITS.Contains(this)) // 1. 선택된 유닛을 선택한 경우 셀렉이 된 그룹에서 제외
             {
                 Deselect();
-                isSelected = false;
+                _selected = false;
             }
             else // 2. 선택되지 않은 유닛을 선택한 경우 셀렉 그룹에 추가
             {
                 SelectUtils();
-                isSelected = true;
+                _selected = true;
             }
         }
         else // 쉬프트를 누르지 않은 경우 무조건 클릭한 유닛만 선택
@@ -133,7 +134,7 @@ public class UnitManager : MonoBehaviour
             }
 
             SelectUtils();
-            isSelected = true;
+            _selected = true;
         }
     }
 
@@ -146,7 +147,7 @@ public class UnitManager : MonoBehaviour
         healthBar = null;
 
         EventManager.TriggerEvent("DeselectUnit", Unit);
-        isSelected = false;
+        _selected = false;
     }
 
     public void Initialize(Unit unit)

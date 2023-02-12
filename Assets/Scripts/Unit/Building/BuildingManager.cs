@@ -30,7 +30,7 @@ public class BuildingManager : UnitManager
     public override void Select(bool singleClick, bool holdingShift)
     {
         base.Select(singleClick, holdingShift);
-        if (base.isSelected && _buildingInteractSound != null)
+        if (base.IsSelected && _buildingInteractSound != null)
             PlaySound();
     }
 

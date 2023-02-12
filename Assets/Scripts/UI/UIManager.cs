@@ -128,7 +128,7 @@ public class UIManager : MonoBehaviour
         Transform selectedUnitMenuTransform = selectedUnitMenu.transform;
         _selectedUnitTitleText = selectedUnitMenuTransform.Find("Content/Title").GetComponent<Text>();
         _selectedUnitActionButtonsParent = selectedUnitActionButtonsParent.transform;
-        _selectedUnitResourcesProductionParent = selectedUnitMenuTransform.Find("Resources/Production");
+        _selectedUnitResourcesProductionParent = selectedUnitMenuTransform.Find("ResourcesProduction");
         #endregion
 
         #region 게임 메뉴 창
@@ -344,6 +344,9 @@ public class UIManager : MonoBehaviour
                 AddUnitSkillButtonListener(b, i);
             }
         }
+
+        foreach (Transform child in _selectedUnitResourcesProductionParent)
+            Destroy(child.gameObject);
 
         if (unit.Production.Count > 0)
         {
