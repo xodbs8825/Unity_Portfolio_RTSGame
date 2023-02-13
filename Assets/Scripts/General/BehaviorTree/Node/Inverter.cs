@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace BehaviorTree
 {
@@ -12,7 +10,6 @@ namespace BehaviorTree
         public override NodeState Evaluate()
         {
             if (!HasChildren) return NodeState.FAILURE;
-
             switch (children[0].Evaluate())
             {
                 case NodeState.FAILURE:

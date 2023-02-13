@@ -23,8 +23,7 @@ public class CheckEnemyInFOVRange : Node
     {
         _pos = _manager.transform.position;
         IEnumerable<Collider> enemiesInRange =
-            Physics.OverlapSphere(_pos, _fovRadius, Globals.UNIT_MASK)
-            .Where(delegate (Collider c)
+            Physics.OverlapSphere(_pos, _fovRadius, Globals.UNIT_MASK).Where(delegate (Collider c)
             {
                 UnitManager um = c.GetComponent<UnitManager>();
                 if (um == null) return false;

@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace BehaviorTree
 {
@@ -27,7 +25,6 @@ namespace BehaviorTree
                         continue;
                 }
             }
-
             _state = NodeState.FAILURE;
             return _state;
         }

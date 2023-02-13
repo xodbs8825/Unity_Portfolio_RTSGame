@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace BehaviorTree
 {
@@ -18,7 +16,8 @@ namespace BehaviorTree
 
         private Node _parent;
         protected List<Node> children = new List<Node>();
-        private Dictionary<string, object> _dataContext = new Dictionary<string, object>();
+        private Dictionary<string, object> _dataContext =
+            new Dictionary<string, object>();
 
         public Node() { _parent = null; }
         public Node(List<Node> children) : this()
@@ -58,10 +57,8 @@ namespace BehaviorTree
                 value = node.GetData(key);
                 if (value != null)
                     return value;
-
                 node = node._parent;
             }
-
             return null;
         }
 
@@ -79,10 +76,8 @@ namespace BehaviorTree
                 bool cleared = node.ClearData(key);
                 if (cleared)
                     return true;
-
                 node = node._parent;
             }
-
             return false;
         }
 

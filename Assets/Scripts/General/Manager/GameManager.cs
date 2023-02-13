@@ -56,26 +56,11 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (gameIsPaused) return;
-        CheckUnitsNavigations();
     }
 
     public void Start()
     {
         _instance = this;
-    }
-
-    private void CheckUnitsNavigations()
-    {
-        if (Globals.SELECTED_UNITS.Count > 0 && Input.GetMouseButtonUp(1))
-        {
-            _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(_ray, out _raycastHit, 1000f, Globals.TERRAIN_LAYER_MASK))
-            {
-                foreach (UnitManager um in Globals.SELECTED_UNITS)
-                    if (um.GetType() == typeof(CharacterManager))
-                        ((CharacterManager)um).MoveTo(_raycastHit.point);
-            }
-        }
     }
 
     private void GetStartPosition()

@@ -1,7 +1,5 @@
-using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
 
 namespace BehaviorTree
 {
@@ -11,7 +9,7 @@ namespace BehaviorTree
 
         public Sequence() : base() { _isRandom = false; }
         public Sequence(bool isRandom) : base() { _isRandom = isRandom; }
-        public Sequence(List<Node> children, bool isRandom = false) : base()
+        public Sequence(List<Node> children, bool isRandom = false) : base(children)
         {
             _isRandom = isRandom;
         }
@@ -25,7 +23,7 @@ namespace BehaviorTree
         public override NodeState Evaluate()
         {
             bool anyChildIsRunning = false;
-            if (!_isRandom)
+            if (_isRandom)
                 children = Shuffle(children);
 
             foreach (Node node in children)
@@ -45,7 +43,6 @@ namespace BehaviorTree
                         return _state;
                 }
             }
-
             _state = anyChildIsRunning ? NodeState.RUNNING : NodeState.SUCCESS;
             return _state;
         }

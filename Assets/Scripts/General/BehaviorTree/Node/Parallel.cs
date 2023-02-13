@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace BehaviorTree
 {
@@ -13,7 +11,6 @@ namespace BehaviorTree
         {
             bool anyChildIsRunning = false;
             int nFailedChildren = 0;
-
             foreach (Node node in children)
             {
                 switch (node.Evaluate())
@@ -31,12 +28,10 @@ namespace BehaviorTree
                         return _state;
                 }
             }
-
             if (nFailedChildren == children.Count)
                 _state = NodeState.FAILURE;
             else
                 _state = anyChildIsRunning ? NodeState.RUNNING : NodeState.SUCCESS;
-
             return _state;
         }
     }

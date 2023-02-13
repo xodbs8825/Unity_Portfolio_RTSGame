@@ -18,9 +18,13 @@ MonoBehaviour:
   healthPoint: 50
   prefab: {fileID: 5542380815447981279, guid: f294de0d17cb791459e18eb4754e5c06, type: 3}
   cost:
-  - code: mineral
+  - code: 0
     amount: 50
   fieldOfView: 30
+  attackRange: 2
+  attackDamage: 20
+  attackRate: 1
+  canProduce: 
   skills: []
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound:

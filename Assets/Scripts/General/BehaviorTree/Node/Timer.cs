@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace BehaviorTree
 {
@@ -18,7 +17,8 @@ namespace BehaviorTree
             _time = _delay;
             this.onTickEnded = onTickEnded;
         }
-        public Timer(float delay, List<Node> children, TickEnded onTickEnded = null) : base(children)
+        public Timer(float delay, List<Node> children, TickEnded onTickEnded = null)
+            : base(children)
         {
             _delay = delay;
             _time = _delay;
@@ -28,15 +28,12 @@ namespace BehaviorTree
         public override NodeState Evaluate()
         {
             if (!HasChildren) return NodeState.FAILURE;
-
             if (_time <= 0)
             {
                 _time = _delay;
                 _state = children[0].Evaluate();
-
                 if (onTickEnded != null)
                     onTickEnded();
-
                 _state = NodeState.SUCCESS;
             }
             else
@@ -44,7 +41,6 @@ namespace BehaviorTree
                 _time -= Time.deltaTime;
                 _state = NodeState.RUNNING;
             }
-
             return _state;
         }
     }
