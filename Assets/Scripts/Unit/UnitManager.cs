@@ -8,7 +8,7 @@ public class UnitManager : MonoBehaviour
     public GameObject selectionCircle;
 
     private Transform _healthBarParent;
-    public GameObject healthBar;
+    private GameObject _healthBar;
 
     protected BoxCollider _collider;
 
@@ -33,10 +33,11 @@ public class UnitManager : MonoBehaviour
 
     private void Update()
     {
-        if (healthBar != null)
-            SetHPBar(healthBar.GetComponent<HealthBar>(), _collider, zoomSize);
+        if (_healthBar != null)
+            SetHPBar(_healthBar.GetComponent<HealthBar>(), _collider, zoomSize);
 
         zoomSize = 60f / Camera.main.orthographicSize;
+        Debug.Log(Unit.HP);
     }
 
     private void OnMouseDown()
@@ -70,20 +71,23 @@ public class UnitManager : MonoBehaviour
             contextualSource.PlayOneShot(Unit.Data.selectSound);
             StartCoroutine(SelectSoundEnded(Unit.Data.selectSound.length));
         }
+
+        if (_healthBar == null)
+            UpdateHealthBar();
     }
 
     private void HealthBarSetting()
     {
-        if (healthBar == null)
+        if (_healthBar == null)
         {
-            healthBar = GameObject.Instantiate(Resources.Load("Prefabs/UI/HealthBar")) as GameObject;
-            healthBar.transform.SetParent(_healthBarParent);
+            this._healthBar = GameObject.Instantiate(Resources.Load("Prefabs/UI/HealthBar")) as GameObject;
+            this._healthBar.transform.SetParent(_healthBarParent);
 
-            HealthBar _healthBar = healthBar.GetComponent<HealthBar>();
+            HealthBar healthBar = _healthBar.GetComponent<HealthBar>();
 
             Rect boundingBox = Utils.GetBoundingBoxOnScreen(transform.Find("Mesh").GetComponent<Renderer>().bounds, Camera.main);
 
-            SetHPBar(_healthBar, _collider, zoomSize);
+            SetHPBar(healthBar, _collider, zoomSize);
         }
     }
 
@@ -143,8 +147,8 @@ public class UnitManager : MonoBehaviour
         Globals.SELECTED_UNITS.Remove(this);
         selectionCircle.SetActive(false);
 
-        Destroy(healthBar);
-        healthBar = null;
+        Destroy(_healthBar);
+        _healthBar = null;
 
         EventManager.TriggerEvent("DeselectUnit", Unit);
         _selected = false;
@@ -195,5 +199,33 @@ public class UnitManager : MonoBehaviour
         Material[] materials = transform.Find("Mesh").GetComponent<Renderer>().materials;
         materials[ownerMatrialSlotIndex].color = playerColor;
         transform.Find("Mesh").GetComponent<Renderer>().materials = materials;
+    }
+
+    public void Attack(Transform target)
+    {
+        UnitManager um = target.GetComponent<UnitManager>();
+        if (um == null) return;
+        um.TakeHit(Unit.Data.attackDamage);
+    }
+
+    public void TakeHit(int attackPoints)
+    {
+        Unit.HP -= attackPoints;
+        UpdateHealthBar();
+        if (Unit.HP <= 0) Die();
+    }
+
+    private void Die()
+    {
+        if (_selected)
+            Deselect();
+        Destroy(gameObject);
+    }
+
+    private void UpdateHealthBar()
+    {
+        if (!_healthBar) return;
+        Transform fill = _healthBar.transform.Find("HPGauge");
+        fill.GetComponent<UnityEngine.UI.Image>().fillAmount = Unit.HP / (float)Unit.MaxHP;
     }
 }

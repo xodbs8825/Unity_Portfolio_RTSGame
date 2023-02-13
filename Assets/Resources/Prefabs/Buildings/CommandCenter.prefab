@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4993598292174066862}
   - component: {fileID: 2652150892722941767}
   - component: {fileID: 3809577253786904848}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ Transform:
   m_GameObject: {fileID: 3984321103765743795}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 1}
+  m_LocalScale: {x: 50, y: 50, z: 1}
   m_Children: []
   m_Father: {fileID: 1254950749798464501}
   m_RootOrder: 2
@@ -201,6 +201,7 @@ GameObject:
   - component: {fileID: 1254950749798464501}
   - component: {fileID: 5423030078882362668}
   - component: {fileID: 1223314886921998545}
+  - component: {fileID: 4641890822374261852}
   - component: {fileID: 6574352906636015292}
   - component: {fileID: 3973277504088045961}
   - component: {fileID: 5472681719910744038}
@@ -257,6 +258,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4641890822374261852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5542380815447981279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e6593d04d9253549af73a06d8a2d0da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6574352906636015292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,11 +283,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionCircle: {fileID: 5691737486483354373}
-  healthBar: {fileID: 0}
   zoomSize: 0
   fov: {fileID: 3984321103765743795}
   contextualSource: {fileID: 5472681719910744038}
-  isSelected: 0
   ownerMatrialSlotIndex: 0
 --- !u!114 &3973277504088045961
 MonoBehaviour:
@@ -396,7 +407,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3373840795197370534}
   - component: {fileID: 4546714968376364447}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SelectionCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -14,11 +14,14 @@ public class Building : Unit
     private BuildingManager _buildingManager;
     private BuildingPlacement _placement;
     private List<Material> _materials;
+    private BuildingBT _bt;
 
     public Building(BuildingData data, int owner) : this(data, owner, new List<ResourceValue>() { }) { }
     public Building(BuildingData data, int owner, List<ResourceValue> production) : base(data, owner, production)
     {
         _buildingManager = _transform.GetComponent<BuildingManager>();
+        _bt = _transform.GetComponent<BuildingBT>();
+        _bt.enabled = true;
 
         _materials = new List<Material>();
         foreach (Material material in _transform.Find("Mesh").GetComponent<Renderer>().materials)

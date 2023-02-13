@@ -18,7 +18,7 @@ namespace BehaviorTree
             _time = _delay;
             this.onTickEnded = onTickEnded;
         }
-        public Timer(float delay, List<Node> children, TickEnded onTickEnded) : base(children)
+        public Timer(float delay, List<Node> children, TickEnded onTickEnded = null) : base(children)
         {
             _delay = delay;
             _time = _delay;
@@ -37,7 +37,7 @@ namespace BehaviorTree
                 if (onTickEnded != null)
                     onTickEnded();
 
-                _state = NodeState.RUNNING;
+                _state = NodeState.SUCCESS;
             }
             else
             {

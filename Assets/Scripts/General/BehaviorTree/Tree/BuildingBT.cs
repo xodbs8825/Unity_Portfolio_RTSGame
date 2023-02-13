@@ -14,22 +14,43 @@ public class BuildingBT : Tree
     protected override Node SetupTree()
     {
         Node _root;
+        _root = new Parallel();
 
-        _root = new Sequence(new List<Node>
+        if (manager.Unit.Data.attackDamage > 0)
+        {
+            Sequence attackSequence = new Sequence(new List<Node> 
+            {
+                new CheckEnemyInAttackRange(manager),
+                new Timer
+                (
+                    manager.Unit.Data.attackRate,
+                    new List<Node>()
+                    {
+                        new TaskAttack(manager),
+                    }
+                ),
+            });
+
+            _root.Attach(attackSequence);
+            _root.Attach(new CheckEnemyInFOVRange(manager));
+        }
+
+        _root.Attach(new Sequence(new List<Node> 
         {
             new CheckUnitIsMine(manager),
             new Timer
             (
-                GameManager.instance.producingRate, new List<Node>()
+                GameManager.instance.producingRate,
+                new List<Node>()
                 {
                     new TaskProduceResources(manager)
                 },
                 delegate
                 {
-                    EventManager.TriggerEvent("UpdateResourcesTexts");
+                    EventManager.TriggerEvent("UpdateResourceTexts");
                 }
             )
-        });
+        }));
 
         return _root;
     }

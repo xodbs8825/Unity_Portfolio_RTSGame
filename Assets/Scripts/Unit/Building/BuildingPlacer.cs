@@ -67,6 +67,13 @@ public class BuildingPlacer : MonoBehaviour
                 new ResourceValue(InGameResource.Gas, 2)
             }
         );
+
+        SpawnBuilding
+        (
+            GameManager.instance.gameGlobalParameters.initialBuilding,
+            1 - GameManager.instance.gamePlayersParameters.myPlayerID,
+            GameManager.instance.startPosition + new Vector3(0f, 0f, 100f)
+        );
     }
 
     public void SpawnBuilding(BuildingData data, int owner, Vector3 position)
@@ -86,22 +93,6 @@ public class BuildingPlacer : MonoBehaviour
         CancelPlacedBuilding();
 
         _placedBuilding = prevPlacedBuilding;
-    }
-
-    private void PlaceBuilding(bool canChain = true)
-    {
-        _placedBuilding.ComputeProduction();
-        _placedBuilding.Place();
-        if (canChain)
-        {
-            if (_placedBuilding.CanBuy())
-                PreparePlacedBuilding(_placedBuilding.DataIndex);
-            else
-            {
-                EventManager.TriggerEvent("PlaceBuildingOff");
-                _placedBuilding = null;
-            }
-        }
     }
 
     void PreparePlacedBuilding(int buildingDataIndex)
