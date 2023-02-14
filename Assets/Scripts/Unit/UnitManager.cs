@@ -37,8 +37,12 @@ public class UnitManager : MonoBehaviour
             SetHPBar(_healthBar.GetComponent<HealthBar>(), _collider, zoomSize);
 
         if (_selected)
+        {
             if (Globals.CanBuy(Unit.GetAttackUpgradeCost()))
                 Unit.Upgrade();
+
+            Debug.Log(Unit.AttackDamage);
+        }
 
         zoomSize = 60f / Camera.main.orthographicSize;
     }

@@ -5,7 +5,9 @@ using UnityEngine.AI;
 
 public enum SkillType
 {
-    INSTANTIATE_CHARACTER
+    INSTANTIATE_CHARACTER,
+    UPGRADE_ATTACKDAMAGE,
+    RESEARCH_ATTACKRANGE
 }
 
 [CreateAssetMenu(fileName = "Skill", menuName = "Scriptable Objects/Skill", order = 4)]
@@ -43,6 +45,17 @@ public class SkillData : ScriptableObject
                     Character character = new Character(data, sourceUnitManager.Unit.Owner);
                     character.ComputeProduction();
                     character.Transform.GetComponent<NavMeshAgent>().Warp(instantiatePosition);
+                }
+                break;
+            case SkillType.UPGRADE_ATTACKDAMAGE:
+                {
+                    //CharacterData data = (CharacterData)unitData;
+                    //data.attackDamage += 5;
+                }
+                break;
+            case SkillType.RESEARCH_ATTACKRANGE:
+                {
+
                 }
                 break;
             default:

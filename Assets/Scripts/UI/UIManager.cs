@@ -6,49 +6,46 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    #region Building
+    #region 건물
+    [Header("Building")]
     private BuildingPlacer _buildingPlacer;
-
     public GameObject buildingMenu;
     public GameObject buildingButtonPrefab;
-
     public GameObject cancelMenu;
     #endregion
 
-    #region UnitSelection
+    #region 유닛 선택
+    [Header("UnitSelection")]
     public Transform selectedUnitsListParent;
     public GameObject selectedUnitsDisplayPrefab;
-
     public Transform selectionGroupsParent;
-
     private Unit _selectedUnit;
     public GameObject selectedUnitMenu;
     private Text _selectedUnitTitleText;
-
     public GameObject selectedUnitActionButtonsParent;
     private Transform _selectedUnitActionButtonsParent;
-
     private Transform _selectedUnitResourcesProductionParent;
     #endregion
 
-    #region Resources
+    #region 자원
+    [Header("Resources")]
     public Transform resourcesUIParent;
     public GameObject gameResourceDisplayPrefab;
-
     private Dictionary<InGameResource, Text> _resourcesTexts;
     private Dictionary<string, Button> _buildingButtons;
     #endregion
 
-    #region InfoPanel
+    #region 정보 창
+    [Header("InfoPanel")]
     public GameObject infoPanel;
     private Text _infoPanelTitleText;
     private Text _infoPanelDescriptionText;
-
     public GameObject gameResourceCostPrefab;
     private Transform _infoPanelResourcesCostParent;
     #endregion
 
-    #region GameMenu
+    #region 게임 메뉴
+    [Header("GameMenu")]
     public GameObject gameMenuPanel;
     public GameObject optionsPanel;
     public GameObject gameSettingsMenuButtonPrefab;
@@ -62,6 +59,7 @@ public class UIManager : MonoBehaviour
     #endregion
 
     public GameObject unitSkillButtonPrefab;
+    private List<ResourceValue> _selectedUnitNextUpgradeCost;
 
     private void Awake()
     {
@@ -282,7 +280,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-
     public void ShowPanel(GameObject panel, bool show)
     {
         panel.SetActive(show);
@@ -325,6 +322,7 @@ public class UIManager : MonoBehaviour
         ShowPanel(selectedUnitActionButtonsParent, true);
 
         _selectedUnit = unit;
+        _selectedUnitNextUpgradeCost = _selectedUnit.GetAttackUpgradeCost();
 
         // 텍스트 업데이트
         _selectedUnitTitleText.text = unit.Data.unitName;
@@ -524,18 +522,4 @@ public class UIManager : MonoBehaviour
                 break;
         }
     }
-
-    //private void GameSettingsMenuButtonController(bool state, Transform unselected, Transform selected)
-    //{
-    //    if (!state)
-    //    {
-    //        unselected.gameObject.SetActive(false);
-    //        selected.gameObject.SetActive(true);
-    //    }
-    //    else
-    //    {
-    //        unselected.gameObject.SetActive(true);
-    //        selected.gameObject.SetActive(false);
-    //    }
-    //}
 }

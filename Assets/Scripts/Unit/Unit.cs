@@ -40,7 +40,8 @@ public class Unit
         _transform.GetComponent<UnitManager>().Initialize(this);
 
         _uid = System.Guid.NewGuid().ToString();
-        _production = production.ToDictionary(ResourceValue => ResourceValue.code, ResourceValue => ResourceValue.amount); ;
+        _production = production
+            .ToDictionary(ResourceValue => ResourceValue.code, ResourceValue => ResourceValue.amount);
 
         _fieldOfView = data.fieldOfView;
 
@@ -57,12 +58,12 @@ public class Unit
         _owner = owner;
 
         _attackDamage = data.attackDamage;
-        _attackDamageUpgrade = 0;
         _attackDamageUpgradeMaxedOut = false;
+        _attackDamageUpgrade = 0;
 
         _attackRange = data.attackRange;
-        _attackRangeUpgrade = 0;
         _attackRangeUpgradeMaxedOut = false;
+        _attackRangeUpgrade = 0;
     }
 
     public void Upgrade()
@@ -74,6 +75,9 @@ public class Unit
             if (_attackDamageUpgradeMaxedOut) return;
 
             AttackDamageUpgrade();
+
+            foreach (ResourceValue resource in GetAttackUpgradeCost())
+                Globals.GAME_RESOURCES[resource.code].AddAmount(-resource.amount);
         }
 
         if (Input.GetKeyDown(KeyCode.U))
@@ -87,7 +91,21 @@ public class Unit
         _attackRangeUpgradeMaxedOut = _attackRangeUpgrade == p.UnitMaxLevel();
     }
 
-    private void AttackDamageUpgrade()
+    public void UG()
+    {
+        GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
+
+        if (_attackDamageUpgradeMaxedOut) return;
+
+        AttackDamageUpgrade();
+
+        foreach (ResourceValue resource in GetAttackUpgradeCost())
+            Globals.GAME_RESOURCES[resource.code].AddAmount(-resource.amount);
+
+        _attackDamageUpgradeMaxedOut = _attackDamageUpgrade == p.UnitMaxLevel();
+    }
+
+    public void AttackDamageUpgrade()
     {
         _attackDamageUpgrade += 1;
         _attackDamage += 5;
