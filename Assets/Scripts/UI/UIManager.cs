@@ -254,18 +254,24 @@ public class UIManager : MonoBehaviour
 
     public void SetInfoPanel(UnitData data)
     {
+        SetInfoPanel(data.unitName, data.description, data.cost);
+    }
+
+    public void SetInfoPanel(string title, string description, List<ResourceValue> resourcesCosts)
+    {
         // 텍스트 업데이트
-        if (data.code != "") _infoPanelTitleText.text = data.unitName;
-        if (data.description != "") _infoPanelDescriptionText.text = data.description;
+        _infoPanelTitleText.text = title;
+        _infoPanelDescriptionText.text = description;
 
         // 자원 코스트 지우고 다시 Instatiate
-        foreach (Transform child in _infoPanelResourcesCostParent) Destroy(child.gameObject);
+        foreach (Transform child in _infoPanelResourcesCostParent)
+            Destroy(child.gameObject);
 
-        if (data.cost.Count > 0)
+        if (resourcesCosts.Count > 0)
         {
             GameObject g;
             Transform t;
-            foreach (ResourceValue resource in data.cost)
+            foreach (ResourceValue resource in resourcesCosts)
             {
                 g = GameObject.Instantiate(gameResourceCostPrefab, _infoPanelResourcesCostParent);
                 t = g.transform;
@@ -275,6 +281,7 @@ public class UIManager : MonoBehaviour
             }
         }
     }
+
 
     public void ShowPanel(GameObject panel, bool show)
     {

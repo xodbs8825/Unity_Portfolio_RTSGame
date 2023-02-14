@@ -36,8 +36,11 @@ public class UnitManager : MonoBehaviour
         if (_healthBar != null)
             SetHPBar(_healthBar.GetComponent<HealthBar>(), _collider, zoomSize);
 
+        if (_selected)
+            if (Globals.CanBuy(Unit.GetAttackUpgradeCost()))
+                Unit.Upgrade();
+
         zoomSize = 60f / Camera.main.orthographicSize;
-        Debug.Log(Unit.HP);
     }
 
     private void OnMouseDown()
@@ -205,7 +208,7 @@ public class UnitManager : MonoBehaviour
     {
         UnitManager um = target.GetComponent<UnitManager>();
         if (um == null) return;
-        um.TakeHit(Unit.Data.attackDamage);
+        um.TakeHit(Unit.AttackDamage);
     }
 
     public void TakeHit(int attackPoints)

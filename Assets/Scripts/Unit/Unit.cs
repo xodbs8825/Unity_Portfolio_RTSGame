@@ -10,7 +10,6 @@ public class Unit
     protected int _currentHealth;
 
     protected string _uid;
-    protected int _level;
 
     protected List<SkillManager> _skillManagers;
 
@@ -19,6 +18,15 @@ public class Unit
     protected int _owner;
 
     protected Dictionary<InGameResource, int> _production;
+
+    #region 유닛 업그레이드
+    protected int _attackDamage;
+    protected int _attackDamageUpgrade;
+    protected bool _attackDamageUpgradeMaxedOut;
+    protected float _attackRange;
+    protected int _attackRangeUpgrade;
+    protected bool _attackRangeUpgradeMaxedOut;
+    #endregion
 
     public Unit(UnitData data, int owner) : this(data, owner, new List<ResourceValue>() { }) { }
     public Unit(UnitData data, int owner, List<ResourceValue> production)
@@ -32,7 +40,6 @@ public class Unit
         _transform.GetComponent<UnitManager>().Initialize(this);
 
         _uid = System.Guid.NewGuid().ToString();
-        _level = 1;
         _production = production.ToDictionary(ResourceValue => ResourceValue.code, ResourceValue => ResourceValue.amount); ;
 
         _fieldOfView = data.fieldOfView;
@@ -48,6 +55,59 @@ public class Unit
         }
 
         _owner = owner;
+
+        _attackDamage = data.attackDamage;
+        _attackDamageUpgrade = 0;
+        _attackDamageUpgradeMaxedOut = false;
+
+        _attackRange = data.attackRange;
+        _attackRangeUpgrade = 0;
+        _attackRangeUpgradeMaxedOut = false;
+    }
+
+    public void Upgrade()
+    {
+        GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            if (_attackDamageUpgradeMaxedOut) return;
+
+            AttackDamageUpgrade();
+        }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            if (_attackRangeUpgradeMaxedOut) return;
+
+            AttackRangeUpgrade();
+        }
+
+        _attackDamageUpgradeMaxedOut = _attackDamageUpgrade == p.UnitMaxLevel();
+        _attackRangeUpgradeMaxedOut = _attackRangeUpgrade == p.UnitMaxLevel();
+    }
+
+    private void AttackDamageUpgrade()
+    {
+        _attackDamageUpgrade += 1;
+        _attackDamage += 5;
+
+        Debug.Log("Attack Damage Upgrade : " + _attackDamageUpgrade);
+        Debug.Log("Attack Damage : " + _attackDamage);
+    }
+
+    private void AttackRangeUpgrade()
+    {
+        _attackRangeUpgrade += 1;
+        _attackRange += 5.0f;
+        Debug.Log("Attack Range Upgrade : " + _attackRangeUpgrade);
+        Debug.Log("Attack Range : " + _attackRange);
+    }
+
+    public List<ResourceValue> GetAttackUpgradeCost()
+    {
+        int upgradeCost = _attackDamageUpgrade + 1;
+        return Globals.ConvertUpgradeCostToGameResources(upgradeCost, Data.cost.Select(v => v.code));
     }
 
     public void SetPosition(Vector3 position)
@@ -71,11 +131,6 @@ public class Unit
     public bool CanBuy()
     {
         return _data.CanBuy();
-    }
-
-    public void LevelUp()
-    {
-        _level += 1;
     }
 
     public void ProduceResources()
@@ -109,8 +164,8 @@ public class Unit
                 })
                 .Count();
 
-            _production[InGameResource.Mineral] = 
-                globalParameters.baseMineralProduction + 
+            _production[InGameResource.Mineral] =
+                globalParameters.baseMineralProduction +
                 bonusBuildingsCount * globalParameters.bonusMineralProductionPerBuilding;
         }
 
@@ -133,8 +188,11 @@ public class Unit
     public int HP { get => _currentHealth; set => _currentHealth = value; }
     public int MaxHP { get => _data.healthPoint; }
     public string Uid { get => _uid; }
-    public int Level { get => _level; }
     public Dictionary<InGameResource, int> Production { get => _production; }
     public List<SkillManager> SkillManagers { get => _skillManagers; }
     public int Owner { get => _owner; }
+    public int AttackDamage { get => _attackDamage; }
+    public bool AttackDamageUpgradeMaxedOut { get => _attackDamageUpgradeMaxedOut; }
+    public float AttackRange { get => _attackRange; }
+    public bool AttackRangeUpgradeMaxedOut { get => _attackRangeUpgradeMaxedOut; }
 }

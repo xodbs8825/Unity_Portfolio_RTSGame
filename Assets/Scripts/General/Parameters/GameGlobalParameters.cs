@@ -26,4 +26,8 @@ public class GameGlobalParameters : GameParameters
     {
         return Mathf.CeilToInt(10 * 1f / distance);
     };
+    public int UnitMaxLevel()
+    {
+        return 3;
+    }
 }
