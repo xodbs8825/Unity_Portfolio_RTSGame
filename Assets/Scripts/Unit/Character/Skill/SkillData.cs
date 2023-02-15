@@ -49,8 +49,10 @@ public class SkillData : ScriptableObject
                 break;
             case SkillType.UPGRADE_ATTACKDAMAGE:
                 {
-                    //CharacterData data = (CharacterData)unitData;
-                    //data.attackDamage += 5;
+                    UnitManager um = source.GetComponent<UnitManager>();
+                    Unit unit = new Unit(unitData, um.Unit.Owner);
+
+                    unit.Upgrade();
                 }
                 break;
             case SkillType.RESEARCH_ATTACKRANGE:

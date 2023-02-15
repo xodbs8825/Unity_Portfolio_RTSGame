@@ -22,9 +22,12 @@ public class UIManager : MonoBehaviour
     private Unit _selectedUnit;
     public GameObject selectedUnitMenu;
     private Text _selectedUnitTitleText;
+    private Text _selectedUnitAttackDamageUpgradeLevelText;
     public GameObject selectedUnitActionButtonsParent;
     private Transform _selectedUnitActionButtonsParent;
     private Transform _selectedUnitResourcesProductionParent;
+    private Transform _selectedUnitAttackParametersParent;
+    public GameObject upgradeAttackDamageText;
     #endregion
 
     #region 자원
@@ -59,7 +62,6 @@ public class UIManager : MonoBehaviour
     #endregion
 
     public GameObject unitSkillButtonPrefab;
-    private List<ResourceValue> _selectedUnitNextUpgradeCost;
 
     private void Awake()
     {
@@ -125,8 +127,10 @@ public class UIManager : MonoBehaviour
 
         Transform selectedUnitMenuTransform = selectedUnitMenu.transform;
         _selectedUnitTitleText = selectedUnitMenuTransform.Find("Content/Title").GetComponent<Text>();
+        _selectedUnitAttackDamageUpgradeLevelText = selectedUnitMenuTransform.Find("AttackParameters/Value").GetComponent<Text>();
         _selectedUnitActionButtonsParent = selectedUnitActionButtonsParent.transform;
         _selectedUnitResourcesProductionParent = selectedUnitMenuTransform.Find("ResourcesProduction");
+        _selectedUnitAttackParametersParent = selectedUnitMenuTransform.Find("AttackParameters/Content");
         #endregion
 
         #region 게임 메뉴 창
@@ -159,6 +163,9 @@ public class UIManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F10))
             ToggleGameSetiingPanel();
+
+        if (_selectedUnit != null)
+            UpdateSelectedUnitUpgradeInfoPanel();
     }
 
     private void OnEnable()
@@ -317,12 +324,19 @@ public class UIManager : MonoBehaviour
         ShowPanel(selectionGroupsParent.Find(index.ToString()).gameObject, on);
     }
 
+    private void UpdateSelectedUnitUpgradeInfoPanel()
+    {
+        SetSelectedUnitUpgradeText($"{_selectedUnit.AttackDamageUpgradeValue}");
+        SetSelectedUnitUpgrade($"{_selectedUnit.AttackDamage}");
+    }
+
     private void SetSelectedUnitMenu(Unit unit)
     {
         ShowPanel(selectedUnitActionButtonsParent, true);
 
         _selectedUnit = unit;
-        _selectedUnitNextUpgradeCost = _selectedUnit.GetAttackUpgradeCost();
+
+        bool unitIsMine = unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID;
 
         // 텍스트 업데이트
         _selectedUnitTitleText.text = unit.Data.unitName;
@@ -367,6 +381,27 @@ public class UIManager : MonoBehaviour
                 t.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Imports/GameResources/{resource.Key}");
             }
         }
+
+        SetSelectedUnitUpgradeText($"{unit.AttackDamageUpgradeValue}");
+
+        if (unitIsMine)
+            SetSelectedUnitUpgrade($"{ unit.AttackDamage}");
+    }
+
+    private void SetSelectedUnitUpgrade(string attackDamage)
+    {
+
+        foreach (Transform child in _selectedUnitAttackParametersParent)
+            Destroy(child.gameObject);
+
+        GameObject g;
+        g = GameObject.Instantiate(upgradeAttackDamageText, _selectedUnitAttackParametersParent);
+        g.GetComponent<Text>().text = attackDamage;
+    }
+
+    private void SetSelectedUnitUpgradeText(string upgradeValue)
+    {
+        _selectedUnitAttackDamageUpgradeLevelText.text = upgradeValue;
     }
 
     private void AddUnitSkillButtonListener(Button b, int i)

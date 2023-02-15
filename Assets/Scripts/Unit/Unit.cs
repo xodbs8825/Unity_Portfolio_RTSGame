@@ -3,6 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct UnitUpgradeData
+{
+    public List<ResourceValue> cost;
+    public Dictionary<InGameResource, int> newProduction;
+    public int newAttackDamage;
+    public float newAttackRange;
+
+    public UnitUpgradeData(List<ResourceValue> cost, Dictionary<InGameResource, int> newProduction,
+        int newAttackDamage, float newAttackRange)
+    {
+        this.cost = cost;
+        this.newProduction = newProduction;
+        this.newAttackDamage = newAttackDamage;
+        this.newAttackRange = newAttackRange;
+    }
+}
+
 public class Unit
 {
     protected UnitData _data;
@@ -18,6 +35,7 @@ public class Unit
     protected int _owner;
 
     protected Dictionary<InGameResource, int> _production;
+    protected UnitUpgradeData _upgradeData;
 
     #region 유닛 업그레이드
     protected int _attackDamage;
@@ -64,62 +82,47 @@ public class Unit
         _attackRange = data.attackRange;
         _attackRangeUpgradeMaxedOut = false;
         _attackRangeUpgrade = 0;
+
+        _upgradeData = GetUpgradeData();
     }
 
     public void Upgrade()
     {
-        GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            if (_attackDamageUpgradeMaxedOut) return;
-
-            AttackDamageUpgrade();
-
-            foreach (ResourceValue resource in GetAttackUpgradeCost())
-                Globals.GAME_RESOURCES[resource.code].AddAmount(-resource.amount);
-        }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            if (_attackRangeUpgradeMaxedOut) return;
-
-            AttackRangeUpgrade();
-        }
-
-        _attackDamageUpgradeMaxedOut = _attackDamageUpgrade == p.UnitMaxLevel();
-        _attackRangeUpgradeMaxedOut = _attackRangeUpgrade == p.UnitMaxLevel();
-    }
-
-    public void UG()
-    {
-        GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
-
         if (_attackDamageUpgradeMaxedOut) return;
 
-        AttackDamageUpgrade();
+        _attackDamageUpgrade += 1;
 
-        foreach (ResourceValue resource in GetAttackUpgradeCost())
+        GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
+
+        _production = _upgradeData.newProduction;
+
+        _attackDamage = _upgradeData.newAttackDamage;
+        _attackRange = _upgradeData.newAttackRange;
+
+        foreach (ResourceValue resource in _upgradeData.cost)
             Globals.GAME_RESOURCES[resource.code].AddAmount(-resource.amount);
 
+        EventManager.TriggerEvent("UpdateResourceTexts");
+
         _attackDamageUpgradeMaxedOut = _attackDamageUpgrade == p.UnitMaxLevel();
+
+        _upgradeData = GetUpgradeData();
     }
 
-    public void AttackDamageUpgrade()
+    private UnitUpgradeData GetUpgradeData()
     {
-        _attackDamageUpgrade += 1;
-        _attackDamage += 5;
+        GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
 
-        Debug.Log("Attack Damage Upgrade : " + _attackDamageUpgrade);
-        Debug.Log("Attack Damage : " + _attackDamage);
-    }
+        List<InGameResource> prodResources = _production.Keys.ToList();
+        Dictionary<InGameResource, int> newProduction = new Dictionary<InGameResource, int>();
 
-    private void AttackRangeUpgrade()
-    {
-        _attackRangeUpgrade += 1;
-        _attackRange += 5.0f;
-        Debug.Log("Attack Range Upgrade : " + _attackRangeUpgrade);
-        Debug.Log("Attack Range : " + _attackRange);
+        foreach (InGameResource r in prodResources)
+            newProduction[r] = Mathf.CeilToInt(_production[r]);
+
+        int newAttackDamage = _attackDamage + 5;
+        float newAttackRange = _attackRange + 5.0f;
+
+        return new UnitUpgradeData(GetAttackUpgradeCost(), newProduction, newAttackDamage, newAttackRange);
     }
 
     public List<ResourceValue> GetAttackUpgradeCost()
@@ -197,6 +200,8 @@ public class Unit
             _production[InGameResource.Gas] = gasScore;
         }
 
+        _upgradeData = GetUpgradeData();
+
         return _production;
     }
 
@@ -209,8 +214,11 @@ public class Unit
     public Dictionary<InGameResource, int> Production { get => _production; }
     public List<SkillManager> SkillManagers { get => _skillManagers; }
     public int Owner { get => _owner; }
+    public int AttackDamageUpgradeValue { get => _attackDamageUpgrade; }
     public int AttackDamage { get => _attackDamage; }
     public bool AttackDamageUpgradeMaxedOut { get => _attackDamageUpgradeMaxedOut; }
     public float AttackRange { get => _attackRange; }
     public bool AttackRangeUpgradeMaxedOut { get => _attackRangeUpgradeMaxedOut; }
+
+    public UnitUpgradeData UpgradeData { get => _upgradeData; }
 }
