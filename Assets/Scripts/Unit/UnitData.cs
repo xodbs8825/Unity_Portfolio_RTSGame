@@ -34,5 +34,4 @@ public class UnitData : ScriptableObject
     {
         return Globals.CanBuy(cost);
     }
-
 }

@@ -18,6 +18,8 @@ public class UnitManager : MonoBehaviour
 
     public AudioSource contextualSource;
 
+    public int initDamage;
+
     private bool _selected = false;
     public bool IsSelected { get => _selected; }
     private bool _isSelectSoundEnded = true;
@@ -29,6 +31,7 @@ public class UnitManager : MonoBehaviour
     private void Awake()
     {
         _healthBarParent = GameObject.Find("HealthBarParent").transform;
+        InitializeUpgradeParameters();
     }
 
     private void Update()
@@ -36,12 +39,15 @@ public class UnitManager : MonoBehaviour
         if (_healthBar != null)
             SetHPBar(_healthBar.GetComponent<HealthBar>(), _collider, zoomSize);
 
-        if (_selected && Input.GetKeyDown(KeyCode.W))
+        //if (_selected && Input.GetKeyDown(KeyCode.W))
         {
             if (Globals.CanBuy(Unit.GetAttackUpgradeCost()))
-                Unit.Upgrade();
+            {
+                //Unit.Upgrade();
+                Unit.Up();
+            }
 
-            Debug.Log($"{Unit.AttackDamage} : {Unit.AttackDamageUpgradeValue}");
+            //Debug.Log($"{Unit.AttackDamage} : {Unit.AttackDamageUpgradeValue}");
         }
 
         zoomSize = 60f / Camera.main.orthographicSize;
@@ -51,6 +57,11 @@ public class UnitManager : MonoBehaviour
     {
         if (IsActive() && IsMyUnit())
             Select(true, Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift));
+    }
+
+    private void InitializeUpgradeParameters()
+    {
+        initDamage = Unit.AttackDamage;
     }
 
     protected virtual bool IsActive()

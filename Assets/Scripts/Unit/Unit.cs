@@ -109,6 +109,11 @@ public class Unit
         _upgradeData = GetUpgradeData();
     }
 
+    public void Up()
+    {
+        _attackDamage = _data.attackDamage;
+    }
+
     private UnitUpgradeData GetUpgradeData()
     {
         GameGlobalParameters p = GameManager.instance.gameGlobalParameters;

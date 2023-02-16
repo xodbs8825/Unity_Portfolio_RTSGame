@@ -22,7 +22,7 @@ MonoBehaviour:
     amount: 50
   fieldOfView: 30
   attackRange: 2
-  attackDamage: 20
+  attackDamage: 5
   attackRate: 1
   canProduce: 
   skills: []
