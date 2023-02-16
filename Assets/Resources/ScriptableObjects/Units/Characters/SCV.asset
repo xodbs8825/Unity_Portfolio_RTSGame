@@ -21,8 +21,12 @@ MonoBehaviour:
   - code: 0
     amount: 50
   fieldOfView: 30
-  attackRange: 2
+  initialAttackRange: 10
+  attackRange: 25
+  initialAttackDamage: 5
+  initialAttackDamageUpgradeValue: 0
   attackDamage: 5
+  attackDamageUpgradeValue: 0
   attackRate: 1
   canProduce: 
   skills: []

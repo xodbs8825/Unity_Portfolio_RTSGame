@@ -35,7 +35,16 @@ public class CharacterManager : UnitManager
 
     public bool MoveTo(Vector3 targetPosition)
     {
+        NavMeshPath path = new NavMeshPath();
+        agent.CalculatePath(targetPosition, path);
+        if (path.status == NavMeshPathStatus.PathInvalid)
+        {
+            Debug.Log("Invalid Path");
+            return false;
+        }
+
         agent.destination = targetPosition;
+
         PlaySound();
         return true;
     }

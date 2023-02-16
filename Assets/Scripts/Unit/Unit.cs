@@ -7,16 +7,11 @@ public struct UnitUpgradeData
 {
     public List<ResourceValue> cost;
     public Dictionary<InGameResource, int> newProduction;
-    public int newAttackDamage;
-    public float newAttackRange;
 
-    public UnitUpgradeData(List<ResourceValue> cost, Dictionary<InGameResource, int> newProduction,
-        int newAttackDamage, float newAttackRange)
+    public UnitUpgradeData(List<ResourceValue> cost, Dictionary<InGameResource, int> newProduction)
     {
         this.cost = cost;
         this.newProduction = newProduction;
-        this.newAttackDamage = newAttackDamage;
-        this.newAttackRange = newAttackRange;
     }
 }
 
@@ -39,11 +34,10 @@ public class Unit
 
     #region 유닛 업그레이드
     protected int _attackDamage;
-    protected int _attackDamageUpgrade;
-    protected bool _attackDamageUpgradeMaxedOut;
+    protected int _attackDamageUpgradeValue;
+    protected bool _attackDamageUpgradeComplete;
     protected float _attackRange;
-    protected int _attackRangeUpgrade;
-    protected bool _attackRangeUpgradeMaxedOut;
+    protected bool _attackRangeResearchComplete;
     #endregion
 
     public Unit(UnitData data, int owner) : this(data, owner, new List<ResourceValue>() { }) { }
@@ -76,42 +70,42 @@ public class Unit
         _owner = owner;
 
         _attackDamage = data.attackDamage;
-        _attackDamageUpgradeMaxedOut = false;
-        _attackDamageUpgrade = 0;
+        _attackDamageUpgradeComplete = false;
+        _attackDamageUpgradeValue = data.attackDamageUpgradeValue;
 
         _attackRange = data.attackRange;
-        _attackRangeUpgradeMaxedOut = false;
-        _attackRangeUpgrade = 0;
+        _attackRangeResearchComplete = false;
 
         _upgradeData = GetUpgradeData();
     }
 
-    public void Upgrade()
+    public void UpgradeCost()
     {
-        if (_attackDamageUpgradeMaxedOut) return;
-
-        _attackDamageUpgrade += 1;
-
-        GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
-
         _production = _upgradeData.newProduction;
-
-        _attackDamage = _upgradeData.newAttackDamage;
-        _attackRange = _upgradeData.newAttackRange;
 
         foreach (ResourceValue resource in _upgradeData.cost)
             Globals.GAME_RESOURCES[resource.code].AddAmount(-resource.amount);
 
         EventManager.TriggerEvent("UpdateResourceTexts");
 
-        _attackDamageUpgradeMaxedOut = _attackDamageUpgrade == p.UnitMaxLevel();
-
         _upgradeData = GetUpgradeData();
     }
 
-    public void Up()
+    public void UpdateUpgradeParameters()
     {
         _attackDamage = _data.attackDamage;
+        _attackDamageUpgradeValue = _data.attackDamageUpgradeValue;
+        _attackRange = _data.attackRange;
+    }
+
+    public void AttackDamageUpgradeComplete()
+    {
+        _attackDamageUpgradeComplete = true;
+    }
+
+    public void AttackRangeResearchComplete()
+    {
+        _attackRangeResearchComplete = true;
     }
 
     private UnitUpgradeData GetUpgradeData()
@@ -124,15 +118,12 @@ public class Unit
         foreach (InGameResource r in prodResources)
             newProduction[r] = Mathf.CeilToInt(_production[r]);
 
-        int newAttackDamage = _attackDamage + 5;
-        float newAttackRange = _attackRange + 5.0f;
-
-        return new UnitUpgradeData(GetAttackUpgradeCost(), newProduction, newAttackDamage, newAttackRange);
+        return new UnitUpgradeData(GetAttackUpgradeCost(), newProduction);
     }
 
     public List<ResourceValue> GetAttackUpgradeCost()
     {
-        int upgradeCost = _attackDamageUpgrade + 1;
+        int upgradeCost = _attackDamageUpgradeValue + 1;
         return Globals.ConvertUpgradeCostToGameResources(upgradeCost, Data.cost.Select(v => v.code));
     }
 
@@ -219,11 +210,9 @@ public class Unit
     public Dictionary<InGameResource, int> Production { get => _production; }
     public List<SkillManager> SkillManagers { get => _skillManagers; }
     public int Owner { get => _owner; }
-    public int AttackDamageUpgradeValue { get => _attackDamageUpgrade; }
+    public int AttackDamageUpgradeValue { get => _attackDamageUpgradeValue; }
     public int AttackDamage { get => _attackDamage; }
-    public bool AttackDamageUpgradeMaxedOut { get => _attackDamageUpgradeMaxedOut; }
+    public bool AttackDamageUpgradeCompleted { get => _attackDamageUpgradeComplete; }
     public float AttackRange { get => _attackRange; }
-    public bool AttackRangeUpgradeMaxedOut { get => _attackRangeUpgradeMaxedOut; }
-
-    public UnitUpgradeData UpgradeData { get => _upgradeData; }
+    public bool AttackRangeResearchCompleted { get => _attackRangeResearchComplete; }
 }

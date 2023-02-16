@@ -16,8 +16,18 @@ public class UnitData : ScriptableObject
     public List<ResourceValue> cost;
     public float fieldOfView;
 
+    [Header("Attack Parameters")]
     public float attackRange;
     public int attackDamage;
+    public int attackDamageUpgradeValue;
+
+    [HideInInspector]
+    public float initialAttackRange;
+    [HideInInspector]
+    public int initialAttackDamage;
+    [HideInInspector]
+    public int initialAttackDamageUpgradeValue;
+
     public float attackRate;
 
     public InGameResource[] canProduce;

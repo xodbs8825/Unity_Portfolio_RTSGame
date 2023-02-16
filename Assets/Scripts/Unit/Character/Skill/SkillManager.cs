@@ -13,6 +13,11 @@ public class SkillManager : MonoBehaviour
 
     private AudioSource _sourceContextualSource;
 
+    private void Start()
+    {
+        skill.InitializeUpgrade();
+    }
+
     public void Initialize(SkillData skill, GameObject source)
     {
         this.skill = skill;

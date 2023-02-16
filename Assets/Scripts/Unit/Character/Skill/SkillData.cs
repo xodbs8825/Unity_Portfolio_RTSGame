@@ -34,7 +34,7 @@ public class SkillData : ScriptableObject
                     Vector3 instantiatePosition = new Vector3
                         (
                         source.transform.position.x - coll.size.x * 2f,
-                        source.transform.position.y,
+                        0,
                         source.transform.position.z - coll.size.z * 2f
                         );
 
@@ -55,17 +55,50 @@ public class SkillData : ScriptableObject
 
                     Unit unit = um.Unit;
 
-                    data.attackDamage += 5;
-                    um.Unit.Up();
+                    if (Globals.CanBuy(unit.GetAttackUpgradeCost()))
+                    {
+                        GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
+
+                        bool upgradeMaxedOut = data.attackDamageUpgradeValue == p.UnitMaxLevel();
+                        if (upgradeMaxedOut) return;
+
+                        data.attackDamageUpgradeValue += 1;
+                        data.attackDamage += 5;
+                        unit.UpgradeCost();
+
+                        if (data.attackDamageUpgradeValue == p.UnitMaxLevel())
+                            unit.AttackDamageUpgradeComplete();
+                    }
                 }
                 break;
             case SkillType.RESEARCH_ATTACKRANGE:
                 {
+                    CharacterData data = (CharacterData)unitData;
+                    UnitManager um = source.GetComponent<UnitManager>();
+                    if (um == null) return;
 
+                    Unit unit = um.Unit;
+
+                    if (Globals.CanBuy(unit.GetAttackUpgradeCost()))
+                    {
+                        data.attackRange += 5;
+                        unit.UpgradeCost();
+                        unit.AttackRangeResearchComplete();
+                    }
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    public void InitializeUpgrade()
+    {
+        CharacterData data = (CharacterData)unitData;
+        if (data == null) return;
+
+        data.attackDamage = data.initialAttackDamage;
+        data.attackDamageUpgradeValue = data.initialAttackDamageUpgradeValue;
+        data.attackRange = data.initialAttackRange;
     }
 }

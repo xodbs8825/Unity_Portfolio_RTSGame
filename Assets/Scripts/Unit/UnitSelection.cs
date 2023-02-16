@@ -31,21 +31,6 @@ public class UnitSelection : MonoBehaviour
 
     void Update()
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            _isDraggingMouseBox = true;
-            _dragStartPosition = Input.mousePosition;
-        }
-
-        if (Input.GetMouseButtonUp(0)) _isDraggingMouseBox = false;
-
-        if (_isDraggingMouseBox && _dragStartPosition != Input.mousePosition)
-        {
-            SelectUnitsInDraggingBox();
-        }
-
         if (Globals.SELECTED_UNITS.Count > 0)
         {
             if (Input.GetMouseButtonDown(0))
@@ -60,6 +45,21 @@ public class UnitSelection : MonoBehaviour
                 UnitNumbering(1, i);
             else
                 UnitNumbering(2, i);
+        }
+
+        if (Input.GetMouseButtonUp(0)) _isDraggingMouseBox = false;
+
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            _isDraggingMouseBox = true;
+            _dragStartPosition = Input.mousePosition;
+        }
+
+        if (_isDraggingMouseBox && _dragStartPosition != Input.mousePosition)
+        {
+            SelectUnitsInDraggingBox();
         }
     }
 

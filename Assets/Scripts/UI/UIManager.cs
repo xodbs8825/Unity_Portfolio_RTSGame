@@ -199,7 +199,7 @@ public class UIManager : MonoBehaviour
     private void OnDeselectUnit(object data)
     {
         Unit unit = (Unit)data;
-        RemoveSelectedUnitToUILIst(unit.Code);
+        RemoveSelectedUnitToUIList(unit.Code);
 
         if (Globals.SELECTED_UNITS.Count == 0)
             ShowPanel(selectedUnitMenu, false);
@@ -230,7 +230,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void RemoveSelectedUnitToUILIst(string code)
+    public void RemoveSelectedUnitToUIList(string code)
     {
         Transform listItem = selectedUnitsListParent.Find(code);
         if (listItem == null) return;
@@ -338,31 +338,7 @@ public class UIManager : MonoBehaviour
 
         bool unitIsMine = unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID;
 
-        // 텍스트 업데이트
-        _selectedUnitTitleText.text = unit.Data.unitName;
-
-        // clear skills and reinstantiate new ones
-        foreach (Transform child in _selectedUnitActionButtonsParent)
-            Destroy(child.gameObject);
-
-        if (unit.SkillManagers.Count > 0)
-        {
-            GameObject g;
-            Transform t;
-            Button b;
-
-            for (int i = 0; i < unit.SkillManagers.Count; i++)
-            {
-                g = GameObject.Instantiate(unitSkillButtonPrefab, _selectedUnitActionButtonsParent);
-                t = g.transform;
-                b = g.GetComponent<Button>();
-
-                unit.SkillManagers[i].SetButton(b);
-                t.Find("Text").GetComponent<Text>().text = unit.SkillManagers[i].skill.skillName;
-
-                AddUnitSkillButtonListener(b, i);
-            }
-        }
+        UpdateSelectedUnitSKill(unit);
 
         foreach (Transform child in _selectedUnitResourcesProductionParent)
             Destroy(child.gameObject);
@@ -390,7 +366,6 @@ public class UIManager : MonoBehaviour
 
     private void SetSelectedUnitUpgrade(string attackDamage)
     {
-
         foreach (Transform child in _selectedUnitAttackParametersParent)
             Destroy(child.gameObject);
 
@@ -404,9 +379,65 @@ public class UIManager : MonoBehaviour
         _selectedUnitAttackDamageUpgradeLevelText.text = upgradeValue;
     }
 
-    private void AddUnitSkillButtonListener(Button b, int i)
+    private void UpdateSelectedUnitSKill(Unit unit)
     {
-        b.onClick.AddListener(() => _selectedUnit.TriggerSkill(i));
+        // 텍스트 업데이트
+        if (_selectedUnitTitleText != null)
+            _selectedUnitTitleText.text = unit.Data.unitName;
+
+        // clear skills and reinstantiate new ones
+        foreach (Transform child in _selectedUnitActionButtonsParent)
+            Destroy(child.gameObject);
+
+        if (unit.SkillManagers.Count > 0)
+        {
+            GameObject g;
+            Transform t;
+            Button b;
+
+            for (int i = 0; i < unit.SkillManagers.Count; i++)
+            {
+                g = GameObject.Instantiate(unitSkillButtonPrefab, _selectedUnitActionButtonsParent);
+                t = g.transform;
+                b = g.GetComponent<Button>();
+
+                unit.SkillManagers[i].SetButton(b);
+                t.Find("Text").GetComponent<Text>().text = unit.SkillManagers[i].skill.skillName;
+
+                AddUnitSkillButtonListener(g, t, unit, b, i);
+                DestroySkillButton(g, t, unit, i);
+            }
+        }
+    }
+
+    private void AddUnitSkillButtonListener(GameObject g, Transform t, Unit unit, Button b, int i)
+    {
+        b.onClick.AddListener(() =>
+        {
+            DestroySkillButton(g, t, unit, i);
+            _selectedUnit.TriggerSkill(i);
+        });
+    }
+
+    private void DestroySkillButton(GameObject g, Transform t, Unit unit, int i)
+    {
+        if (unit.AttackDamageUpgradeCompleted)
+        {
+            if (t.Find("Text").GetComponent<Text>().text == "Upgrade Attack Damage")
+            {
+                if (g != null)
+                    Destroy(g);
+            }
+        }
+
+        if (unit.AttackRangeResearchCompleted)
+        {
+            if (t.Find("Text").GetComponent<Text>().text == "Research Attack Range")
+            {
+                if (g != null)
+                    Destroy(g);
+            }
+        }
     }
 
     public void ToggleGameSetiingPanel()
