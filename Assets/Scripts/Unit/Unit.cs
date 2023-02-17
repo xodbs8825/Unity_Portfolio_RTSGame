@@ -3,18 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct UnitUpgradeData
-{
-    public List<ResourceValue> cost;
-    public Dictionary<InGameResource, int> newProduction;
-
-    public UnitUpgradeData(List<ResourceValue> cost, Dictionary<InGameResource, int> newProduction)
-    {
-        this.cost = cost;
-        this.newProduction = newProduction;
-    }
-}
-
 public class Unit
 {
     protected UnitData _data;
@@ -30,7 +18,11 @@ public class Unit
     protected int _owner;
 
     protected Dictionary<InGameResource, int> _production;
-    protected UnitUpgradeData _upgradeData;
+
+    protected bool _uIndicator;
+    protected bool _rIndicator;
+
+    private int i;
 
     #region 유닛 업그레이드
     protected int _attackDamage;
@@ -76,19 +68,31 @@ public class Unit
         _attackRange = data.attackRange;
         _attackRangeResearchComplete = false;
 
-        _upgradeData = GetUpgradeData();
+        i = _attackDamageUpgradeValue;
+
+        _uIndicator = false;
     }
 
     public void UpgradeCost()
     {
-        _production = _upgradeData.newProduction;
+        List<ResourceValue> cost = Globals.UPGRADECOST_ATTACKDAMAGE[i];
 
-        foreach (ResourceValue resource in _upgradeData.cost)
+        foreach (ResourceValue resource in cost)
             Globals.GAME_RESOURCES[resource.code].AddAmount(-resource.amount);
 
         EventManager.TriggerEvent("UpdateResourceTexts");
 
-        _upgradeData = GetUpgradeData();
+        i++;
+    }
+
+    public void ResearchCost()
+    {
+        List<ResourceValue> cost = Globals.UPGRADECOST_ATTACKDAMAGE[1];
+
+        foreach (ResourceValue resource in cost)
+            Globals.GAME_RESOURCES[resource.code].AddAmount(-resource.amount);
+
+        EventManager.TriggerEvent("UpdateResourceTexts");
     }
 
     public void UpdateUpgradeParameters()
@@ -106,25 +110,6 @@ public class Unit
     public void AttackRangeResearchComplete()
     {
         _attackRangeResearchComplete = true;
-    }
-
-    private UnitUpgradeData GetUpgradeData()
-    {
-        GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
-
-        List<InGameResource> prodResources = _production.Keys.ToList();
-        Dictionary<InGameResource, int> newProduction = new Dictionary<InGameResource, int>();
-
-        foreach (InGameResource r in prodResources)
-            newProduction[r] = Mathf.CeilToInt(_production[r]);
-
-        return new UnitUpgradeData(GetAttackUpgradeCost(), newProduction);
-    }
-
-    public List<ResourceValue> GetAttackUpgradeCost()
-    {
-        int upgradeCost = _attackDamageUpgradeValue + 1;
-        return Globals.ConvertUpgradeCostToGameResources(upgradeCost, Data.cost.Select(v => v.code));
     }
 
     public void SetPosition(Vector3 position)
@@ -196,9 +181,18 @@ public class Unit
             _production[InGameResource.Gas] = gasScore;
         }
 
-        _upgradeData = GetUpgradeData();
 
         return _production;
+    }
+
+    public void UpgradeCompleteIndicator(bool indicator)
+    {
+        _uIndicator = indicator;
+    }
+
+    public void ResearchCompleteIndicator(bool indicator)
+    {
+        _rIndicator = indicator;
     }
 
     public UnitData Data { get => _data; }
@@ -215,4 +209,6 @@ public class Unit
     public bool AttackDamageUpgradeCompleted { get => _attackDamageUpgradeComplete; }
     public float AttackRange { get => _attackRange; }
     public bool AttackRangeResearchCompleted { get => _attackRangeResearchComplete; }
+    public bool UpgradeIndicator { get => _uIndicator; }
+    public bool ResearchIndicator { get => _uIndicator; }
 }

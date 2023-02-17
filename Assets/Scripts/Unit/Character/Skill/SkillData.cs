@@ -24,6 +24,8 @@ public class SkillData : ScriptableObject
 
     public AudioClip sound;
 
+    private int counter;
+
     public void Trigger(GameObject source, GameObject target = null)
     {
         switch (type)
@@ -49,13 +51,17 @@ public class SkillData : ScriptableObject
                 break;
             case SkillType.UPGRADE_ATTACKDAMAGE:
                 {
+                    counter++;
+
                     CharacterData data = (CharacterData)unitData;
                     UnitManager um = source.GetComponent<UnitManager>();
                     if (um == null) return;
 
                     Unit unit = um.Unit;
 
-                    if (Globals.CanBuy(unit.GetAttackUpgradeCost()))
+                    if (counter == 2) unit.UpgradeCompleteIndicator(true);
+
+                    if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[data.attackDamageUpgradeValue + 1]))
                     {
                         GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
 
@@ -79,10 +85,10 @@ public class SkillData : ScriptableObject
 
                     Unit unit = um.Unit;
 
-                    if (Globals.CanBuy(unit.GetAttackUpgradeCost()))
+                    if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[1]))
                     {
                         data.attackRange += 5;
-                        unit.UpgradeCost();
+                        unit.ResearchCost();
                         unit.AttackRangeResearchComplete();
                     }
                 }
@@ -100,5 +106,7 @@ public class SkillData : ScriptableObject
         data.attackDamage = data.initialAttackDamage;
         data.attackDamageUpgradeValue = data.initialAttackDamageUpgradeValue;
         data.attackRange = data.initialAttackRange;
+
+        counter = 0;
     }
 }

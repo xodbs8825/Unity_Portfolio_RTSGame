@@ -405,7 +405,12 @@ public class UIManager : MonoBehaviour
                 t.Find("Text").GetComponent<Text>().text = unit.SkillManagers[i].skill.skillName;
 
                 AddUnitSkillButtonListener(g, t, unit, b, i);
-                DestroySkillButton(g, t, unit, i);
+                DestroyUpgradeSkillButton(g, t, unit);
+
+                if (unit.AttackRangeResearchCompleted)
+                {
+                    DestroyResearchSkillButton(g, t);
+                }
             }
         }
     }
@@ -414,14 +419,15 @@ public class UIManager : MonoBehaviour
     {
         b.onClick.AddListener(() =>
         {
-            DestroySkillButton(g, t, unit, i);
+            DestroyUpgradeSkillButton(g, t, unit);
+            DestroyResearchSkillButton(g, t);
             _selectedUnit.TriggerSkill(i);
         });
     }
 
-    private void DestroySkillButton(GameObject g, Transform t, Unit unit, int i)
+    private void DestroyUpgradeSkillButton(GameObject g, Transform t, Unit unit)
     {
-        if (unit.AttackDamageUpgradeCompleted)
+        if (unit.UpgradeIndicator)
         {
             if (t.Find("Text").GetComponent<Text>().text == "Upgrade Attack Damage")
             {
@@ -429,14 +435,14 @@ public class UIManager : MonoBehaviour
                     Destroy(g);
             }
         }
+    }
 
-        if (unit.AttackRangeResearchCompleted)
+    private void DestroyResearchSkillButton(GameObject g, Transform t)
+    {
+        if (t.Find("Text").GetComponent<Text>().text == "Research Attack Range")
         {
-            if (t.Find("Text").GetComponent<Text>().text == "Research Attack Range")
-            {
-                if (g != null)
-                    Destroy(g);
-            }
+            if (g != null)
+                Destroy(g);
         }
     }
 

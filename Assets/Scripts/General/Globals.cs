@@ -30,60 +30,18 @@ public static class Globals
 
     public static NavMeshSurface NAV_MESH_SURFACE;
 
-
-    //public static Dictionary<int, Dictionary<InGameResource, int>> UPGRADECOST_ATTACKDAMAGE = new Dictionary<int, Dictionary<InGameResource, int>>()
-    //{
-    //    {1, new Dictionary<InGameResource, int>()
-    //        {
-    //            {InGameResource.Mineral, 100 },
-    //            {InGameResource.Gas, 100}
-    //        }
-    //    },
-    //    {2, new Dictionary<InGameResource, int>()
-    //        {
-    //            {InGameResource.Mineral, 200 },
-    //            {InGameResource.Gas, 200}
-    //        }
-    //    },
-    //    {3, new Dictionary<InGameResource, int>()
-    //        {
-    //            {InGameResource.Mineral, 300 },
-    //            {InGameResource.Gas, 300}
-    //        }
-    //    }
-    //};
-    public static Dictionary<InGameResource, int> UPGRADECOST_ATTACKDAMAGE = new Dictionary<InGameResource, int>()
+    public static Dictionary<int, List<ResourceValue>> UPGRADECOST_ATTACKDAMAGE = new Dictionary<int, List<ResourceValue>>()
     {
-        {InGameResource.Mineral, 100 },
-        {InGameResource.Gas, 100}
+        {1, new List<ResourceValue>(){
+                new ResourceValue(InGameResource.Mineral, 100),
+                new ResourceValue(InGameResource.Gas, 100)}},
+        {2, new List<ResourceValue>(){
+                new ResourceValue(InGameResource.Mineral, 200),
+                new ResourceValue(InGameResource.Gas, 200)}},
+        {3, new List<ResourceValue>(){
+                new ResourceValue(InGameResource.Mineral, 300),
+                new ResourceValue(InGameResource.Gas, 300)}},
     };
-
-    public static List<ResourceValue> ConvertUpgradeCostToGameResources(int upgradeCost, IEnumerable<InGameResource> allowedResources)
-    {
-        List<InGameResource> sortedResources = allowedResources
-            .OrderBy(r => UPGRADECOST_ATTACKDAMAGE[r]).ToList();
-        int n = sortedResources.Count();
-
-        Dictionary<InGameResource, int> upgradeCostToResources = new Dictionary<InGameResource, int>();
-        foreach (InGameResource resource in sortedResources)
-        {
-            if (upgradeCost == 0) break;
-            upgradeCostToResources[resource] = 1;
-            upgradeCost--;
-        }
-
-        int i = 0;
-        while (upgradeCost > 0)
-        {
-            upgradeCostToResources[sortedResources[i]]++;
-            upgradeCost--;
-            i = (i + 1) % n;
-        }
-
-        return upgradeCostToResources
-            .Select(pair => new ResourceValue(pair.Key, pair.Value * UPGRADECOST_ATTACKDAMAGE[pair.Key]))
-            .ToList();
-    }
 
     public static void UpdateNevMeshSurface()
     {
