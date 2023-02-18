@@ -14,7 +14,9 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector]
     public bool gameIsPaused;
+    [HideInInspector]
     public List<Unit> ownedProductingUnits = new List<Unit>();
+    [HideInInspector]
     public float producingRate = 3f;
 
     public GameObject fov;

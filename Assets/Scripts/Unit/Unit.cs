@@ -75,14 +75,13 @@ public class Unit
 
     public void UpgradeCost()
     {
+        i++;
         List<ResourceValue> cost = Globals.UPGRADECOST_ATTACKDAMAGE[i];
 
         foreach (ResourceValue resource in cost)
             Globals.GAME_RESOURCES[resource.code].AddAmount(-resource.amount);
 
         EventManager.TriggerEvent("UpdateResourceTexts");
-
-        i++;
     }
 
     public void ResearchCost()
@@ -190,11 +189,6 @@ public class Unit
         _uIndicator = indicator;
     }
 
-    public void ResearchCompleteIndicator(bool indicator)
-    {
-        _rIndicator = indicator;
-    }
-
     public UnitData Data { get => _data; }
     public string Code { get => _data.code; }
     public Transform Transform { get => _transform; }
@@ -210,5 +204,4 @@ public class Unit
     public float AttackRange { get => _attackRange; }
     public bool AttackRangeResearchCompleted { get => _attackRangeResearchComplete; }
     public bool UpgradeIndicator { get => _uIndicator; }
-    public bool ResearchIndicator { get => _uIndicator; }
 }
