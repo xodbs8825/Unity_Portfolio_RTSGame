@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class UIManager : MonoBehaviour
     public GameObject buildingMenu;
     public GameObject buildingButtonPrefab;
     public GameObject cancelMenu;
+    private Dictionary<string, Button> _buildingButtons;
     #endregion
 
     #region 유닛 선택
@@ -35,7 +37,6 @@ public class UIManager : MonoBehaviour
     public Transform resourcesUIParent;
     public GameObject gameResourceDisplayPrefab;
     private Dictionary<InGameResource, Text> _resourcesTexts;
-    private Dictionary<string, Button> _buildingButtons;
     #endregion
 
     #region 정보 창
@@ -153,9 +154,6 @@ public class UIManager : MonoBehaviour
     {
         ShowPanel(cancelMenu, !_buildingPlacer.IsAbleToBuild);
 
-        if (!buildingMenu.active)
-            ShowPanel(infoPanel, false);
-
         if (!cancelMenu.active && !selectedUnitActionButtonsParent.active)
             ShowPanel(buildingMenu, true);
         else
@@ -174,6 +172,8 @@ public class UIManager : MonoBehaviour
         EventManager.AddListener("CheckBuildingButtons", OnCheckBuildingButtons);
         EventManager.AddListener("HoverBuildingButton", OnHoverBuildingButton);
         EventManager.AddListener("UnhoverBuildingButton", OnUnhoverBuildingButton);
+        EventManager.AddListener("HoverSkillButton", OnHoverSkillButton);
+        EventManager.AddListener("UnhoverSkillButton", OnUnhoverSkillButton);
         EventManager.AddListener("SelectUnit", OnSelectUnit);
         EventManager.AddListener("DeselectUnit", OnDeselectUnit);
     }
@@ -184,6 +184,8 @@ public class UIManager : MonoBehaviour
         EventManager.RemoveListener("CheckBuildingButtons", OnCheckBuildingButtons);
         EventManager.RemoveListener("HoverBuildingButton", OnHoverBuildingButton);
         EventManager.RemoveListener("UnhoverBuildingButton", OnUnhoverBuildingButton);
+        EventManager.RemoveListener("HoverSkillButton", OnHoverSkillButton);
+        EventManager.RemoveListener("UnhoverSkillButton", OnUnhoverSkillButton);
         EventManager.RemoveListener("SelectUnit", OnSelectUnit);
         EventManager.RemoveListener("DeselectUnit", OnDeselectUnit);
     }
@@ -257,6 +259,35 @@ public class UIManager : MonoBehaviour
         ShowPanel(infoPanel, false);
     }
 
+    private void OnHoverSkillButton(object data)
+    {
+        SetSkillPanel((SkillData)data);
+        ShowPanel(infoPanel, true);
+    }
+
+    private void OnUnhoverSkillButton()
+    {
+        ShowPanel(infoPanel, false);
+    }
+
+    public void SetSkillPanel(SkillData data)
+    {
+        List<ResourceValue> cost;
+        switch (data.skillName)
+        {
+            case "Upgrade Attack Damage":
+                cost = Globals.UPGRADECOST_ATTACKDAMAGE[data.unitData.attackDamageUpgradeValue + 1];
+                break;
+            case "Research Attack Range":
+                cost = Globals.UPGRADECOST_ATTACKDAMAGE[1];
+                break;
+            default:
+                cost = data.unitData.cost;
+                break;
+        }
+        SetInfoPanel(data.skillName, data.description, cost);
+    }
+
     public void SetInfoPanel(UnitData data)
     {
         SetInfoPanel(data.unitName, data.description, data.cost);
@@ -299,7 +330,11 @@ public class UIManager : MonoBehaviour
 
     private void AddBuildingButtonListener(Button b, int i)
     {
-        b.onClick.AddListener(() => _buildingPlacer.SelectPlacedBuilding(i));
+        b.onClick.AddListener(() =>
+        {
+            _buildingPlacer.SelectPlacedBuilding(i);
+            EventManager.TriggerEvent("UnhoverBuildingButton");
+        });
     }
 
     private void CancelButtonListener(Button b)
@@ -391,8 +426,6 @@ public class UIManager : MonoBehaviour
 
         if (unit.SkillManagers.Count > 0)
         {
-            //InstantiateUpgradeButton(unit);
-            //InstantiateResearchButton(unit);
             for (int i = 0; i < unit.SkillManagers.Count; i++)
             {
                 InstantiateSkillButton(unit, unit.SkillManagers[i].skill.skillName, i);
@@ -439,51 +472,9 @@ public class UIManager : MonoBehaviour
                 break;
         }
 
+        b.GetComponent<SkillButton>().InitializeSkillButton(unit.SkillManagers[index].skill);
+
         AddUnitSkillButtonListener(g, t, unit, b, index);
-        DestroyUpgradeSkillButton(g, t, unit);
-
-        if (unit.AttackRangeResearchCompleted)
-            DestroyResearchSkillButton(g, t);
-    }
-
-    private void InstantiateUpgradeButton(Unit unit)
-    {
-        GameObject g;
-        Transform t;
-        Button b;
-
-        if (unit.SkillManagers[0].skill.unitData.attackDamageUpgradeValue == 3 || unit.SkillManagers[0].skill.skillName != "Upgrade Attack Damage") return;
-        g = GameObject.Instantiate(unitSkillButtonPrefab, _selectedUnitActionButtonsParent);
-        t = g.transform;
-        b = g.GetComponent<Button>();
-
-        unit.SkillManagers[0].SetButton(b);
-        g.name = unit.SkillManagers[0].skill.skillName;
-        t.Find("Text").GetComponent<Text>().text = unit.SkillManagers[0].skill.skillName;
-
-        AddUnitSkillButtonListener(g, t, unit, b, 1);
-        DestroyUpgradeSkillButton(g, t, unit);
-
-        if (unit.AttackRangeResearchCompleted)
-            DestroyResearchSkillButton(g, t);
-    }
-
-    private void InstantiateResearchButton(Unit unit)
-    {
-        GameObject g;
-        Transform t;
-        Button b;
-
-        if (unit.SkillManagers[1].skill.unitData.attackRange == 15 || unit.SkillManagers[1].skill.skillName != "Research Attack Range") return;
-        g = GameObject.Instantiate(unitSkillButtonPrefab, _selectedUnitActionButtonsParent);
-        t = g.transform;
-        b = g.GetComponent<Button>();
-
-        unit.SkillManagers[1].SetButton(b);
-        g.name = unit.SkillManagers[0].skill.skillName;
-        t.Find("Text").GetComponent<Text>().text = unit.SkillManagers[1].skill.skillName;
-
-        AddUnitSkillButtonListener(g, t, unit, b, 1);
         DestroyUpgradeSkillButton(g, t, unit);
 
         if (unit.AttackRangeResearchCompleted)
@@ -497,6 +488,7 @@ public class UIManager : MonoBehaviour
             DestroyUpgradeSkillButton(g, t, unit);
             DestroyResearchSkillButton(g, t);
             _selectedUnit.TriggerSkill(i);
+            EventManager.TriggerEvent("UnhoverSkillButton");
         });
     }
 
