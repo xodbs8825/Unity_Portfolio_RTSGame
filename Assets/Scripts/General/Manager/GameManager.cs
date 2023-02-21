@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     public GameGlobalParameters gameGlobalParameters;
     public GamePlayersParameters gamePlayersParameters;
+    public GameInputParameters gameInputParameters;
 
     [HideInInspector]
     public bool gameIsPaused;
@@ -18,6 +19,10 @@ public class GameManager : MonoBehaviour
     public List<Unit> ownedProductingUnits = new List<Unit>();
     [HideInInspector]
     public float producingRate = 3f;
+    [HideInInspector]
+    public bool waitingForInput;
+    [HideInInspector]
+    public string pressedKey;
 
     public GameObject fov;
 
@@ -57,7 +62,24 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (gameIsPaused) return;
+        if (Input.anyKeyDown)
+        {
+            if (waitingForInput)
+            {
+                if (Input.GetMouseButtonDown(0))
+                    pressedKey = "mouse 0";
+                else if (Input.GetMouseButtonDown(1))
+                    pressedKey = "mouse 1";
+                else if (Input.GetMouseButtonDown(2))
+                    pressedKey = "mouse 2";
+                else
+                    pressedKey = Input.inputString;
+
+                waitingForInput = false;
+            }
+            else
+                gameInputParameters.CheckForInput();
+        }
     }
 
     public void Start()

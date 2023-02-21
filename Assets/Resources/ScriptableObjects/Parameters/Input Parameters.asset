@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8dbdd4d358502c4e963f19d5ac7f0e8, type: 3}
+  m_Name: Input Parameters
+  m_EditorClassIdentifier: 
+  _fieldsToShowInGame:
+  - bindings
+  bindings:
+  - displayName: Build Command Center
+    key: c
+    inputEvent: Build:commandCenter
+  - displayName: Build Engineering Bay
+    key: e
+    inputEvent: Build:engineeringBay
+  - displayName: Build Factory
+    key: f
+    inputEvent: Build:factory
