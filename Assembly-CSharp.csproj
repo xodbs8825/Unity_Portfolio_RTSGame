@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\Unit\Character\CharacterData.cs" />
     <Compile Include="Assets\Scripts\Unit\Character\Character.cs" />
     <Compile Include="Assets\Scripts\General\GameData\GameResource.cs" />
+    <Compile Include="Assets\Scripts\General\GameSystems\Input\InputBindingDrawer.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Sequence.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitManager.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Tree\BuildingBT.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Check\CheckUnitIsMine.cs" />
     <Compile Include="Assets\Scripts\General\Utils.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Timer.cs" />
+    <Compile Include="Assets\Scripts\General\Parameters\GameInputParameters.cs" />
     <Compile Include="Assets\Scripts\UI\SkillButton.cs" />
     <Compile Include="Assets\Scripts\JSon\JSONSerializableScriptableObject.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Check\CheckHasTarget.cs" />
@@ -111,8 +113,7 @@
     <Compile Include="Assets\Scripts\Player\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Unit\Character\Skill\SkillManager.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitData.cs" />
-    <Compile Include="Assets\Scripts\General\Parameters\GameInputParameters.cs" />
-    <Compile Include="Assets\Scripts\General\GameSystems\Input\InputBindingDrawer.cs" />
+    <Compile Include="Assets\Resources\ScriptableObjects\Instance\ExampleAsset.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Shaders\AlphaProjection.shader" />

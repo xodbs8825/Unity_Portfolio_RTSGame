@@ -1,13 +1,14 @@
-using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class GameManager : MonoBehaviour
 {
-    private Ray _ray;
-    private RaycastHit _raycastHit;
     public Vector3 startPosition;
+
+    public Canvas canvas;
+    public float canvasScaleFactor;
 
     public GameGlobalParameters gameGlobalParameters;
     public GamePlayersParameters gamePlayersParameters;
@@ -46,6 +47,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        canvasScaleFactor = canvas.scaleFactor;
+
         DataHandler.LoadGameData();
 
         Globals.NAV_MESH_SURFACE = GameObject.Find("Terrain").GetComponent<NavMeshSurface>();
@@ -58,6 +61,8 @@ public class GameManager : MonoBehaviour
         gameIsPaused = false;
 
         fov.SetActive(gameGlobalParameters.enableFOV);
+
+        Globals.InitializeGameResources(gamePlayersParameters.players.Length);
     }
 
     private void Update()
@@ -86,6 +91,24 @@ public class GameManager : MonoBehaviour
     {
         _instance = this;
     }
+
+#if UNITY_EDITOR
+    private void OnGUI()
+    {
+        GUILayout.BeginArea(new Rect(0f, 40f, 100f, 100f));
+
+        int newPlayerID = GUILayout.SelectionGrid(gamePlayersParameters.myPlayerID,
+            gamePlayersParameters.players.Select((p, i) => i.ToString()).ToArray(), gamePlayersParameters.players.Length);
+
+        GUILayout.EndArea();
+
+        if (newPlayerID != gamePlayersParameters.myPlayerID)
+        {
+            gamePlayersParameters.myPlayerID = newPlayerID;
+            EventManager.TriggerEvent("SetPlayer", newPlayerID);
+        }
+    }
+#endif
 
     private void GetStartPosition()
     {

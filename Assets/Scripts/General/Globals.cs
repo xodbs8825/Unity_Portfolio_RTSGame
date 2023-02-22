@@ -20,11 +20,7 @@ public static class Globals
     public static UnitData[] UNIT_DATA;
     public static BuildingData[] BUILDING_DATA;
 
-    public static Dictionary<InGameResource, GameResource> GAME_RESOURCES = new Dictionary<InGameResource, GameResource>()
-    {
-        {InGameResource.Mineral, new GameResource("Mineral", 9999999) },
-        {InGameResource.Gas, new GameResource("Gas", 9999999) }
-    };
+    public static Dictionary<InGameResource, GameResource>[] GAME_RESOURCES;
 
     public static List<UnitManager> SELECTED_UNITS = new List<UnitManager>();
 
@@ -43,6 +39,19 @@ public static class Globals
                 new ResourceValue(InGameResource.Gas, 300)}},
     };
 
+    public static void InitializeGameResources(int nPlayers)
+    {
+        GAME_RESOURCES = new Dictionary<InGameResource, GameResource>[nPlayers];
+        for (int i = 0; i < nPlayers; i++)
+        {
+            GAME_RESOURCES[i] = new Dictionary<InGameResource, GameResource>()
+            {
+                { InGameResource.Mineral, new GameResource("Mineral", 999999) },
+                { InGameResource.Gas, new GameResource("Gas", 999999) }
+            };
+        }
+    }
+
     public static void UpdateNevMeshSurface()
     {
         NAV_MESH_SURFACE.UpdateNavMesh(NAV_MESH_SURFACE.navMeshData);
@@ -50,11 +59,15 @@ public static class Globals
 
     public static bool CanBuy(List<ResourceValue> cost)
     {
+        return CanBuy(GameManager.instance.gamePlayersParameters.myPlayerID, cost);
+    }
+
+    public static bool CanBuy(int playerID, List<ResourceValue> cost)
+    {
         foreach (ResourceValue resource in cost)
-        {
-            if (Globals.GAME_RESOURCES[resource.code].Amount < resource.amount)
+            if (GAME_RESOURCES[playerID][resource.code].Amount < resource.amount)
                 return false;
-        }
+
         return true;
     }
 }

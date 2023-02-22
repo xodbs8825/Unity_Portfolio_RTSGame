@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,8 +39,9 @@ public class UnitData : ScriptableObject
     [Header("Unit Sound")]
     public AudioClip[] interactSound;
 
-    public bool CanBuy()
+    public bool CanBuy(int owner)
     {
-        return Globals.CanBuy(cost);
+        return Globals.CanBuy(owner, cost);
     }
+
 }

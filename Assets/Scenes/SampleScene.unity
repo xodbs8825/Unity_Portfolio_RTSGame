@@ -3547,6 +3547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrainSize: {x: 1000, y: 1000}
+  minimapContainerRectTransform: {fileID: 699485096}
 --- !u!1 &741917851
 GameObject:
   m_ObjectHideFlags: 0
@@ -4457,6 +4458,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
+  canvas: {fileID: 1375138123}
+  canvasScaleFactor: 0
   gameGlobalParameters: {fileID: 11400000, guid: 66fc366d9341d08438fa2e22bafcd777, type: 2}
   gamePlayersParameters: {fileID: 11400000, guid: 5595b05d2d6150f468429e718bb79dfb, type: 2}
   gameInputParameters: {fileID: 11400000, guid: d99f65c0f66ad8d4aaa96fec826f3f19, type: 2}

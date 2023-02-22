@@ -34,11 +34,8 @@ public class SkillData : ScriptableObject
                 {
                     BoxCollider coll = source.GetComponent<BoxCollider>();
                     Vector3 instantiatePosition = new Vector3
-                        (
-                        source.transform.position.x - coll.size.x * 2f,
-                        0,
-                        source.transform.position.z - coll.size.z * 2f
-                        );
+                        (source.transform.position.x - coll.size.x * 2f, 0,
+                        source.transform.position.z - coll.size.z * 2f);
 
                     CharacterData data = (CharacterData)unitData;
                     UnitManager sourceUnitManager = source.GetComponent<UnitManager>();
@@ -51,14 +48,13 @@ public class SkillData : ScriptableObject
                 break;
             case SkillType.UPGRADE_ATTACKDAMAGE:
                 {
-                    counter++;
-
                     CharacterData data = (CharacterData)unitData;
                     UnitManager um = source.GetComponent<UnitManager>();
                     if (um == null) return;
 
                     Unit unit = um.Unit;
 
+                    counter++;
                     if (counter == 2) unit.UpgradeCompleteIndicator(true);
 
                     if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[data.attackDamageUpgradeValue + 1]))

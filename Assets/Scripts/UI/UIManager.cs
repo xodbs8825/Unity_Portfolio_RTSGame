@@ -69,24 +69,11 @@ public class UIManager : MonoBehaviour
     #endregion
 
     public GameObject unitSkillButtonPrefab;
+    private int _myPlayerID;
 
     private void Awake()
     {
         ShowPanel(selectedUnitActionButtonsParent, false);
-
-        #region 인게임 자원 생성
-        // 인게임 자원 텍스트 생성
-        _resourcesTexts = new Dictionary<InGameResource, Text>();
-        foreach (KeyValuePair<InGameResource, GameResource> pair in Globals.GAME_RESOURCES)
-        {
-            GameObject display = Instantiate(gameResourceDisplayPrefab, resourcesUIParent);
-            display.name = pair.Key.ToString();
-            _resourcesTexts[pair.Key] = display.transform.Find("Text").GetComponent<Text>();
-            display.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Imports/GameResources/{pair.Key}");
-
-            SetResourceText(pair.Key, pair.Value.Amount);
-        }
-        #endregion
 
         #region 건물 생성
         // 건물 건설을 위한 버튼 생성
@@ -108,10 +95,6 @@ public class UIManager : MonoBehaviour
             AddBuildingButtonListener(b, i);
 
             _buildingButtons[data.code] = b;
-            if (!Globals.BUILDING_DATA[i].CanBuy())
-            {
-                b.interactable = false;
-            }
 
             button.GetComponent<BuildingButton>().Initialize(Globals.BUILDING_DATA[i]);
         }
@@ -153,6 +136,26 @@ public class UIManager : MonoBehaviour
         #endregion
     }
 
+    private void Start()
+    {
+        _myPlayerID = GameManager.instance.gamePlayersParameters.myPlayerID;
+        Color c = GameManager.instance.gamePlayersParameters.players[_myPlayerID].color;
+
+        #region 인게임 자원 생성
+        // 인게임 자원 텍스트 생성
+        _resourcesTexts = new Dictionary<InGameResource, Text>();
+        foreach (KeyValuePair<InGameResource, GameResource> pair in Globals.GAME_RESOURCES[_myPlayerID])
+        {
+            GameObject display = Instantiate(gameResourceDisplayPrefab, resourcesUIParent);
+            display.name = pair.Key.ToString();
+            _resourcesTexts[pair.Key] = display.transform.Find("Text").GetComponent<Text>();
+            display.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Imports/GameResources/{pair.Key}");
+
+            SetResourceText(pair.Key, pair.Value.Amount);
+        }
+        #endregion
+    }
+
     // 더 이상 사용하지 않거나 그럴 예정인 클래스나 함수, 변수에 붙히면 더 이상 사용하지 않는다는 경고가 뜸
     // 베이스 작업자는 코드 작업만으로 다른 작업자에게 코드가 변경되었음을 알림과 동시에 그에 대한 해결책도 전해줄 수 있음
     [System.Obsolete]
@@ -182,6 +185,7 @@ public class UIManager : MonoBehaviour
         EventManager.AddListener("UnhoverSkillButton", OnUnhoverSkillButton);
         EventManager.AddListener("SelectUnit", OnSelectUnit);
         EventManager.AddListener("DeselectUnit", OnDeselectUnit);
+        EventManager.AddListener("SetPlayer", OnSetPlayer);
     }
 
     private void OnDisable()
@@ -194,6 +198,15 @@ public class UIManager : MonoBehaviour
         EventManager.RemoveListener("UnhoverSkillButton", OnUnhoverSkillButton);
         EventManager.RemoveListener("SelectUnit", OnSelectUnit);
         EventManager.RemoveListener("DeselectUnit", OnDeselectUnit);
+        EventManager.RemoveListener("SetPlayer", OnSetPlayer);
+    }
+
+    private void OnSetPlayer(object data)
+    {
+        int playerID = (int)data;
+        _myPlayerID = playerID;
+        Color c = GameManager.instance.gamePlayersParameters.players[_myPlayerID].color;
+        OnUpdateResourceTexts();
     }
 
     private void OnSelectUnit(object data)
@@ -350,14 +363,14 @@ public class UIManager : MonoBehaviour
 
     private void OnUpdateResourceTexts()
     {
-        foreach (KeyValuePair<InGameResource, GameResource> pair in Globals.GAME_RESOURCES)
+        foreach (KeyValuePair<InGameResource, GameResource> pair in Globals.GAME_RESOURCES[_myPlayerID])
             SetResourceText(pair.Key, pair.Value.Amount);
     }
 
     private void OnCheckBuildingButtons()
     {
         foreach (UnitData data in Globals.BUILDING_DATA)
-            _buildingButtons[data.code].interactable = data.CanBuy();
+            _buildingButtons[data.code].interactable = data.CanBuy(_myPlayerID);
     }
 
     public void ToggleSelectionGroupButton(int index, bool on)

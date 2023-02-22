@@ -79,7 +79,7 @@ public class Unit
         List<ResourceValue> cost = Globals.UPGRADECOST_ATTACKDAMAGE[i];
 
         foreach (ResourceValue resource in cost)
-            Globals.GAME_RESOURCES[resource.code].AddAmount(-resource.amount);
+            Globals.GAME_RESOURCES[_owner][resource.code].AddAmount(-resource.amount);
 
         EventManager.TriggerEvent("UpdateResourceTexts");
     }
@@ -89,7 +89,7 @@ public class Unit
         List<ResourceValue> cost = Globals.UPGRADECOST_ATTACKDAMAGE[1];
 
         foreach (ResourceValue resource in cost)
-            Globals.GAME_RESOURCES[resource.code].AddAmount(-resource.amount);
+            Globals.GAME_RESOURCES[_owner][resource.code].AddAmount(-resource.amount);
 
         EventManager.TriggerEvent("UpdateResourceTexts");
     }
@@ -120,24 +120,22 @@ public class Unit
     {
         _transform.GetComponent<BoxCollider>().isTrigger = false;
 
-        if (_owner == GameManager.instance.gamePlayersParameters.myPlayerID)
-        {
-            _transform.GetComponent<UnitManager>().EnableFOV(_fieldOfView);
+        foreach (ResourceValue resource in _data.cost)
+            Globals.GAME_RESOURCES[_owner][resource.code].AddAmount(-resource.amount);
 
-            foreach (ResourceValue resource in _data.cost)
-                Globals.GAME_RESOURCES[resource.code].AddAmount(-resource.amount);
-        }
+        if (_owner == GameManager.instance.gamePlayersParameters.myPlayerID)
+            _transform.GetComponent<UnitManager>().EnableFOV(_fieldOfView);
     }
 
     public bool CanBuy()
     {
-        return _data.CanBuy();
+        return _data.CanBuy(_owner);
     }
 
     public void ProduceResources()
     {
         foreach (KeyValuePair<InGameResource, int> resource in _production)
-            Globals.GAME_RESOURCES[resource.Key].AddAmount(resource.Value);
+            Globals.GAME_RESOURCES[_owner][resource.Key].AddAmount(resource.Value);
     }
 
     public void TriggerSkill(int index, GameObject target = null)

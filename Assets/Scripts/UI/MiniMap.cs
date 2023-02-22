@@ -12,6 +12,8 @@ public class MiniMap : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private Vector2 _lastPointerPosition;
     private bool _dragging = false;
 
+    public RectTransform minimapContainerRectTransform;
+
     void Start()
     {
         _uiSize = GetComponent<RectTransform>().sizeDelta;
@@ -27,7 +29,7 @@ public class MiniMap : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (delta.magnitude > Mathf.Epsilon)
         {
-            Vector2 uiPos = Input.mousePosition;
+            Vector2 uiPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y) / GameManager.instance.canvasScaleFactor;
             Vector3 realPos = new Vector3(uiPos.x / _uiSize.x * terrainSize.x, 0f, uiPos.y / _uiSize.y * terrainSize.y);
 
             EventManager.TriggerEvent("MoveCamera", realPos);
