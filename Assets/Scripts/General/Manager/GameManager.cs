@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject fov;
 
+    public TestScriptableObject testScriptableObject;
+
     private static GameManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
     public static GameManager instance
@@ -147,8 +149,6 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-#if !UNITY_EDITOR
         DataHandler.SaveGameData();
-#endif
     }
 }

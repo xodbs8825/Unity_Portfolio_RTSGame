@@ -4468,6 +4468,7 @@ MonoBehaviour:
   waitingForInput: 0
   pressedKey: 
   fov: {fileID: 1367729982302063229}
+  testScriptableObject: {fileID: 11400000, guid: d962bcb8786a33945ac1c22beebaf919, type: 2}
 --- !u!114 &798003931
 MonoBehaviour:
   m_ObjectHideFlags: 0

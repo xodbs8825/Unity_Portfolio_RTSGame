@@ -28,17 +28,26 @@ public class GameParametersEditor : Editor
             EditorGUILayout.BeginHorizontal();
 
             // 1. 커스텀 토글 버튼 디스플레이
-            EditorGUILayout.BeginVertical(GUILayout.Width(20f));
+            EditorGUILayout.BeginVertical(GUILayout.Width(40f));
             bool hasHeader = System.Attribute.IsDefined(field, typeof(HeaderAttribute), false);
 
             if (hasHeader)
                 GUILayout.FlexibleSpace();
+
+            EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button(parameters.ShowsField(field.Name) ? "-" : "+", GUILayout.Width(20f)))
             {
                 parameters.ToggleShowField(field.Name);
                 EditorUtility.SetDirty(parameters);
                 AssetDatabase.SaveAssets();
             }
+            if (GUILayout.Button(parameters.SerializesField(field.Name) ? "-" : "+", GUILayout.Width(20f)))
+            {
+                parameters.ToggleShowField(field.Name);
+                EditorUtility.SetDirty(parameters);
+                AssetDatabase.SaveAssets();
+            }
+            EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.EndVertical();
 
