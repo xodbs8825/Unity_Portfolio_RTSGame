@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8dbdd4d358502c4e963f19d5ac7f0e8, type: 3}
   m_Name: Input Parameters
   m_EditorClassIdentifier: 
+  _fieldsToSerialize: []
   _fieldsToShowInGame:
   - bindings
   bindings:
@@ -24,3 +25,6 @@ MonoBehaviour:
   - displayName: Build Factory
     key: f
     inputEvent: Build:factory
+  - displayName: Show Debug Console
+    key: '`'
+    inputEvent: ShowDebugConsole

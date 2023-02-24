@@ -72,6 +72,7 @@
     <Compile Include="Assets\Resources\ScriptableObjects\Instance\ExampleAsset.cs" />
     <Compile Include="Assets\Scripts\General\Manager\CameraManager.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitSelection.cs" />
+    <Compile Include="Assets\Scripts\Tools\BinarySerializableScriptableObject.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node.cs" />
     <Compile Include="Assets\Scripts\General\Parameters\GamePlayersParameters.cs" />
     <Compile Include="Assets\Scripts\General\GameData\ResourceValue.cs" />
@@ -94,12 +95,14 @@
     <Compile Include="Assets\Scripts\General\BehaviorTree\Tree.cs" />
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
     <Compile Include="Assets\Scripts\UI\MiniMap.cs" />
+    <Compile Include="Assets\Scripts\Tools\BinarySerializable.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Check\CheckUnitIsMine.cs" />
     <Compile Include="Assets\Scripts\General\Utils.cs" />
+    <Compile Include="Assets\Scripts\Tools\BinarySerializableData.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Timer.cs" />
     <Compile Include="Assets\Scripts\General\Parameters\GameInputParameters.cs" />
     <Compile Include="Assets\Scripts\UI\SkillButton.cs" />
-    <Compile Include="Assets\Scripts\JSon\JSONSerializableScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\Tools\JSONSerializableScriptableObject.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Check\CheckHasTarget.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Inverter.cs" />
     <Compile Include="Assets\Scripts\UI\BuildingButton.cs" />
@@ -114,10 +117,8 @@
     <Compile Include="Assets\Scripts\Player\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Unit\Character\Skill\SkillManager.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitData.cs" />
-    <Compile Include="Assets\Scripts\JSon\BinarySerializableData.cs" />
-    <Compile Include="Assets\Scripts\JSon\TestScriptableObject.cs" />
-    <Compile Include="Assets\Scripts\JSon\BinarySerializableScriptableObject.cs" />
-    <Compile Include="Assets\Scripts\JSon\BinarySerializable.cs" />
+    <Compile Include="Assets\Scripts\DebugConsole\DebugConsole.cs" />
+    <Compile Include="Assets\Scripts\DebugConsole\DebugCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Shaders\AlphaProjection.shader" />

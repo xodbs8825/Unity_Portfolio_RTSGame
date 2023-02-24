@@ -3,6 +3,8 @@ using UnityEditor;
 
 public class ExampleAsset : UnitData
 {
+    
+
     public static void CreateExampleAssetInstance()
     {
         var exampleAsset = CreateInstance<ExampleAsset>();

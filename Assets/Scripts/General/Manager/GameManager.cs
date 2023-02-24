@@ -26,8 +26,7 @@ public class GameManager : MonoBehaviour
     public string pressedKey;
 
     public GameObject fov;
-
-    public TestScriptableObject testScriptableObject;
+    public ExampleAsset test;
 
     private static GameManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티

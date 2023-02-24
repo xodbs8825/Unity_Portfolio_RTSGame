@@ -77,8 +77,6 @@ public class BinarySerializableScriptableObject : ScriptableObject
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(filePath, FileMode.Open);
 
-        TestScriptableObject d;
-
         Dictionary<string, object> properties = null;
         try
         {
