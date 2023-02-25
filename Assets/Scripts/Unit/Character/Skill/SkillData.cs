@@ -7,7 +7,7 @@ public enum SkillType
 {
     INSTANTIATE_CHARACTER,
     UPGRADE_ATTACKDAMAGE,
-    RESEARCH_ATTACKRANGE
+    RESEARCH_ATTACKRANGE,
 }
 
 [CreateAssetMenu(fileName = "Skill", menuName = "Scriptable Objects/Skill", order = 4)]
@@ -44,39 +44,32 @@ public class SkillData : ScriptableObject
                     Character character = new Character(data, sourceUnitManager.Unit.Owner);
                     character.ComputeProduction();
                     character.Transform.GetComponent<NavMeshAgent>().Warp(instantiatePosition);
+
+                    character.Transform.SetParent(GameObject.Find($"Units/Units_{GameManager.instance.gamePlayersParameters.myPlayerID}").transform);
                 }
                 break;
             case SkillType.UPGRADE_ATTACKDAMAGE:
                 {
-                    CharacterData myData = new CharacterData();
-                    CharacterData enemyData = new CharacterData();
+                    CharacterData data = (CharacterData)unitData;
+                    UnitManager um = source.GetComponent<UnitManager>();
+                    if (um == null) return;
 
-                    myData = (CharacterData)unitData;
-                    enemyData = (CharacterData)unitData;
+                    Unit unit = um.Unit;
 
-                    //CharacterData data = (CharacterData)unitData;
-                    //UnitManager um = source.GetComponent<UnitManager>();
-                    //if (um == null) return;
+                    counter++;
+                    if (counter == 3) unit.UpgradeCompleteIndicator(true);
 
-                    //Unit unit = um.Unit;
+                    if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[data.attackDamageUpgradeValue + 1]))
+                    {
+                        GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
 
-                    //counter++;
-                    //if (counter == 2) unit.UpgradeCompleteIndicator(true);
+                        bool upgradeMaxedOut = data.attackDamageUpgradeValue == p.UnitMaxLevel();
+                        if (upgradeMaxedOut) return;
 
-                    //if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[data.attackDamageUpgradeValue + 1]))
-                    //{
-                    //    GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
-
-                    //    bool upgradeMaxedOut = data.attackDamageUpgradeValue == p.UnitMaxLevel();
-                    //    if (upgradeMaxedOut) return;
-
-                    //    data.attackDamageUpgradeValue += 1;
-                    //    data.attackDamage += 5;
-                    //    unit.UpgradeCost();
-
-                    //    if (data.attackDamageUpgradeValue == p.UnitMaxLevel())
-                    //        unit.AttackDamageUpgradeComplete();
-                    //}
+                        data.attackDamageUpgradeValue += 1;
+                        data.attackDamage += 5;
+                        unit.UpgradeCost();
+                    }
                 }
                 break;
             case SkillType.RESEARCH_ATTACKRANGE:

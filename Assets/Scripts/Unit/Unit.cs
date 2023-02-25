@@ -27,7 +27,6 @@ public class Unit
     #region 유닛 업그레이드
     protected int _attackDamage;
     protected int _attackDamageUpgradeValue;
-    protected bool _attackDamageUpgradeComplete;
     protected float _attackRange;
     protected bool _attackRangeResearchComplete;
     #endregion
@@ -62,7 +61,6 @@ public class Unit
         _owner = owner;
 
         _attackDamage = data.attackDamage;
-        _attackDamageUpgradeComplete = false;
         _attackDamageUpgradeValue = data.attackDamageUpgradeValue;
 
         _attackRange = data.attackRange;
@@ -99,11 +97,6 @@ public class Unit
         _attackDamage = _data.attackDamage;
         _attackDamageUpgradeValue = _data.attackDamageUpgradeValue;
         _attackRange = _data.attackRange;
-    }
-
-    public void AttackDamageUpgradeComplete()
-    {
-        _attackDamageUpgradeComplete = true;
     }
 
     public void AttackRangeResearchComplete()
@@ -187,6 +180,11 @@ public class Unit
         _uIndicator = indicator;
     }
 
+    public void SetAttackDamage(int damage)
+    {
+        _attackDamage = damage;
+    }
+
     public UnitData Data { get => _data; }
     public string Code { get => _data.code; }
     public Transform Transform { get => _transform; }
@@ -196,9 +194,8 @@ public class Unit
     public Dictionary<InGameResource, int> Production { get => _production; }
     public List<SkillManager> SkillManagers { get => _skillManagers; }
     public int Owner { get => _owner; }
-    public int AttackDamageUpgradeValue { get => _attackDamageUpgradeValue; }
     public int AttackDamage { get => _attackDamage; }
-    public bool AttackDamageUpgradeCompleted { get => _attackDamageUpgradeComplete; }
+    public int AttackDamageUpgradeValue { get => _attackDamageUpgradeValue; }
     public float AttackRange { get => _attackRange; }
     public bool AttackRangeResearchCompleted { get => _attackRangeResearchComplete; }
     public bool UpgradeIndicator { get => _uIndicator; }

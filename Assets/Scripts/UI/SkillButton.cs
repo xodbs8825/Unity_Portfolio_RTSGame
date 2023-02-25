@@ -15,7 +15,8 @@ public class SkillButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        EventManager.TriggerEvent("HoverSkillButton", _skill);
+        if (gameObject.GetComponent<Button>().IsInteractable())
+            EventManager.TriggerEvent("HoverSkillButton", _skill);
     }
 
     public void OnPointerExit(PointerEventData eventData)

@@ -71,6 +71,8 @@ public class UIManager : MonoBehaviour
     public GameObject unitSkillButtonPrefab;
     private int _myPlayerID;
 
+    private Unit _unit;
+
     private void Awake()
     {
         ShowPanel(selectedUnitActionButtonsParent, false);
@@ -173,6 +175,23 @@ public class UIManager : MonoBehaviour
 
         if (_selectedUnit != null)
             UpdateSelectedUnitUpgradeInfoPanel();
+
+        UpdateSkillButtonInteractable();
+    }
+
+    private void UpdateSkillButtonInteractable()
+    {
+        if (_unit != null)
+        {
+            if (_unit.UpgradeIndicator)
+            {
+                selectedUnitActionButtonsParent.transform.GetChild(0).GetComponent<Button>().interactable = false;
+            }
+            if (_unit.AttackRangeResearchCompleted)
+            {
+                selectedUnitActionButtonsParent.transform.GetChild(1).GetComponent<Button>().interactable = false;
+            }
+        }
     }
 
     private void OnEnable()
@@ -212,6 +231,7 @@ public class UIManager : MonoBehaviour
     private void OnSelectUnit(object data)
     {
         Unit unit = (Unit)data;
+        _unit = unit;
         AddSelectedUnitToUIList(unit);
         SetSelectedUnitMenu(unit);
         ShowPanel(selectedUnitMenu, true);
@@ -295,7 +315,8 @@ public class UIManager : MonoBehaviour
         switch (data.skillName)
         {
             case "Upgrade Attack Damage":
-                cost = Globals.UPGRADECOST_ATTACKDAMAGE[data.unitData.attackDamageUpgradeValue + 1];
+                if (data.unitData.attackDamageUpgradeValue == 3) cost = Globals.UPGRADECOST_ATTACKDAMAGE[3];
+                else cost = Globals.UPGRADECOST_ATTACKDAMAGE[data.unitData.attackDamageUpgradeValue + 1];
                 break;
             case "Research Attack Range":
                 cost = Globals.UPGRADECOST_ATTACKDAMAGE[1];
@@ -454,76 +475,29 @@ public class UIManager : MonoBehaviour
 
     private void InstantiateSkillButton(Unit unit, string skill, int index)
     {
-        GameObject g;
-        Transform t;
-        Button b;
-
-        switch (skill)
-        {
-            case "Upgrade Attack Damage":
-                if (unit.SkillManagers[index].skill.unitData.attackDamageUpgradeValue == 3 || unit.SkillManagers[index].skill.skillName != "Upgrade Attack Damage") return;
-                g = GameObject.Instantiate(unitSkillButtonPrefab, _selectedUnitActionButtonsParent);
-                t = g.transform;
-                b = g.GetComponent<Button>();
-
-                unit.SkillManagers[index].SetButton(b);
-                g.name = unit.SkillManagers[index].skill.skillName;
-                t.Find("Text").GetComponent<Text>().text = unit.SkillManagers[index].skill.skillName;
-                break;
-            case "Research Attack Range":
-                if (unit.SkillManagers[index].skill.unitData.attackRange == 15 || unit.SkillManagers[index].skill.skillName != "Research Attack Range") return;
-                g = GameObject.Instantiate(unitSkillButtonPrefab, _selectedUnitActionButtonsParent);
-                t = g.transform;
-                b = g.GetComponent<Button>();
-
-                unit.SkillManagers[index].SetButton(b);
-                g.name = unit.SkillManagers[index].skill.skillName;
-                t.Find("Text").GetComponent<Text>().text = unit.SkillManagers[index].skill.skillName;
-                break;
-            default:
-                g = GameObject.Instantiate(unitSkillButtonPrefab, _selectedUnitActionButtonsParent);
-                t = g.transform;
-                b = g.GetComponent<Button>();
-
-                unit.SkillManagers[index].SetButton(b);
-                g.name = unit.SkillManagers[index].skill.skillName;
-                t.Find("Text").GetComponent<Text>().text = unit.SkillManagers[index].skill.skillName;
-                break;
-        }
-
+        GameObject g = GameObject.Instantiate(unitSkillButtonPrefab, _selectedUnitActionButtonsParent);
+        Button b = g.GetComponent<Button>();
+        
+        if (unit.SkillManagers[index].skill.skillName != skill) return;
+        SetSkill(unit, index, g);
         b.GetComponent<SkillButton>().InitializeSkillButton(unit.SkillManagers[index].skill);
-
-        AddUnitSkillButtonListener(g, t, unit, b, index);
-        DestroyUpgradeSkillButton(g, t, unit);
-
-        if (unit.AttackRangeResearchCompleted)
-            DestroyResearchSkillButton(g, t);
+        AddUnitSkillButtonListener(b, index);
     }
 
-    private void AddUnitSkillButtonListener(GameObject g, Transform t, Unit unit, Button b, int i)
+    private void SetSkill(Unit unit, int index, GameObject g)
+    {
+        unit.SkillManagers[index].SetButton(g.GetComponent<Button>());
+        g.name = unit.SkillManagers[index].skill.skillName;
+        g.GetComponent<Transform>().Find("Text").GetComponent<Text>().text = unit.SkillManagers[index].skill.skillName;
+    }
+
+    private void AddUnitSkillButtonListener(Button b, int i)
     {
         b.onClick.AddListener(() =>
         {
-            DestroyUpgradeSkillButton(g, t, unit);
-            DestroyResearchSkillButton(g, t);
             _selectedUnit.TriggerSkill(i);
             EventManager.TriggerEvent("UnhoverSkillButton");
         });
-    }
-
-    private void DestroyUpgradeSkillButton(GameObject g, Transform t, Unit unit)
-    {
-        if (unit.UpgradeIndicator)
-            if (t.Find("Text").GetComponent<Text>().text == "Upgrade Attack Damage")
-                if (g != null)
-                    Destroy(g);
-    }
-
-    private void DestroyResearchSkillButton(GameObject g, Transform t)
-    {
-        if (t.Find("Text").GetComponent<Text>().text == "Research Attack Range")
-            if (g != null)
-                Destroy(g);
     }
 
     public void ToggleGameSetiingPanel()
