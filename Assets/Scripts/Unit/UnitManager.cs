@@ -24,6 +24,9 @@ public class UnitManager : MonoBehaviour
 
     public int ownerMatrialSlotIndex = 0;
 
+    private int _selectIndex = -1;
+    public int SelectIndex { get => _selectIndex; }
+
     public virtual Unit Unit { get; set; }
 
     private void Awake()
@@ -57,8 +60,10 @@ public class UnitManager : MonoBehaviour
         return Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID;
     }
 
-    private void _Select()
+    public void _Select()
     {
+        if (Globals.SELECTED_UNITS.Contains(this)) return;
+
         Globals.SELECTED_UNITS.Add(this);
         selectionCircle.SetActive(true);
 
@@ -80,6 +85,8 @@ public class UnitManager : MonoBehaviour
 
         if (_healthBar == null)
             UpdateHealthBar();
+
+        _selectIndex = Globals.SELECTED_UNITS.Count - 1;
     }
 
     private void HealthBarSetting()
@@ -158,6 +165,8 @@ public class UnitManager : MonoBehaviour
 
         EventManager.TriggerEvent("DeselectUnit", Unit);
         _selected = false;
+
+        _selectIndex = -1;
     }
 
     public void Initialize(Unit unit)

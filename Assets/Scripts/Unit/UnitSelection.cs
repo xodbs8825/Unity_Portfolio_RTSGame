@@ -31,6 +31,8 @@ public class UnitSelection : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.instance.gameIsPaused) return;
+
         if (Globals.SELECTED_UNITS.Count > 0)
         {
             if (Input.GetMouseButtonDown(0))
@@ -65,24 +67,25 @@ public class UnitSelection : MonoBehaviour
 
     private void SelectUnitsInDraggingBox()
     {
-        Bounds selectionBounds = Utils.GetViewportBounds(
-            Camera.main,
-            _dragStartPosition,
-            Input.mousePosition
-            );
+        Bounds selectionBounds = Utils.GetViewportBounds(Camera.main, _dragStartPosition, Input.mousePosition);
 
         GameObject[] selectableUnits = GameObject.FindGameObjectsWithTag("Unit");
 
         bool inBounds;
         foreach (GameObject unit in selectableUnits)
         {
-            inBounds = selectionBounds.Contains(
-                Camera.main.WorldToViewportPoint(unit.transform.position)
-            );
+            inBounds = selectionBounds.Contains(Camera.main.WorldToViewportPoint(unit.transform.position));
 
-            if (inBounds) unit.GetComponent<UnitManager>().Select();
-            else unit.GetComponent<UnitManager>().Deselect();
+            if (inBounds)
+            {
+                unit.GetComponent<UnitManager>().Select();
+            }
+            else
+            {
+                unit.GetComponent<UnitManager>().Deselect();
+            }
         }
+
     }
 
     private void OnGUI()

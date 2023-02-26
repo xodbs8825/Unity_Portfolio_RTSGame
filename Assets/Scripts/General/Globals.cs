@@ -19,6 +19,7 @@ public static class Globals
 
     public static UnitData[] UNIT_DATA;
     public static BuildingData[] BUILDING_DATA;
+    public static Dictionary<string, CharacterData> CHARACTER_DATA = new Dictionary<string, CharacterData>();
 
     public static Dictionary<InGameResource, GameResource>[] GAME_RESOURCES;
 
