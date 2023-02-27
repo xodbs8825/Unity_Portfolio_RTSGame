@@ -15,13 +15,17 @@ public class Building : Unit
     private BuildingPlacement _placement;
     private List<Material> _materials;
     private BuildingBT _bt;
+    private float _constructionRatio;
+    private bool _isAlive;
 
     public Building(BuildingData data, int owner) : this(data, owner, new List<ResourceValue>() { }) { }
     public Building(BuildingData data, int owner, List<ResourceValue> production) : base(data, owner, production)
     {
         _buildingManager = _transform.GetComponent<BuildingManager>();
         _bt = _transform.GetComponent<BuildingBT>();
-        _bt.enabled = true;
+        _bt.enabled = false;
+        _constructionRatio = 0f;
+        _isAlive = false;
 
         _materials = new List<Material>();
         foreach (Material material in _transform.Find("Mesh").GetComponent<Renderer>().materials)
@@ -65,6 +69,27 @@ public class Building : Unit
         base.Place();
         _placement = BuildingPlacement.FIXED;
         SetMaterials();
+        SetConstructionRatio(0);
+    }
+
+    public void SetConstructionRatio(float constructionRatio)
+    {
+        if (_isAlive) return;
+
+        _constructionRatio = constructionRatio;
+        if (_constructionRatio >= 1)
+            SetAlive();
+    }
+
+    private void SetAlive()
+    {
+        _isAlive = true;
+        _bt.enabled = true;
+        ComputeProduction();
+
+        EventManager.TriggerEvent("PlaySoundByName", "buildingPlacedSound");
+
+        Globals.UpdateNevMeshSurface();
     }
 
     public void CheckValidPlacement()
@@ -77,9 +102,6 @@ public class Building : Unit
             : BuildingPlacement.INVALID;
     }
 
-    public bool HasValidPlacement { get => _placement == BuildingPlacement.VALID; }
-    public bool IsFixed { get => _placement == BuildingPlacement.FIXED; }
-
     public int DataIndex
     {
         get
@@ -91,4 +113,9 @@ public class Building : Unit
             return -1;
         }
     }
+
+    public bool HasValidPlacement { get => _placement == BuildingPlacement.VALID; }
+    public bool IsFixed { get => _placement == BuildingPlacement.FIXED; }
+    public float ConstructionRatio { get => _constructionRatio; }
+    public override bool IsAlive { get => _isAlive; }
 }

@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public enum SkillType
 {
     INSTANTIATE_CHARACTER,
+    INSTANTIATE_BUILDING,
     UPGRADE_ATTACKDAMAGE,
     RESEARCH_ATTACKRANGE,
 }
@@ -46,6 +47,14 @@ public class SkillData : ScriptableObject
                     character.Transform.GetComponent<NavMeshAgent>().Warp(instantiatePosition);
 
                     character.Transform.SetParent(GameObject.Find($"Units/Units_{GameManager.instance.gamePlayersParameters.myPlayerID}").transform);
+                }
+                break;
+            case SkillType.INSTANTIATE_BUILDING:
+                {
+                    UnitManager unitManager = source.GetComponent<UnitManager>();
+                    if (unitManager == null) return;
+
+                    BuildingPlacer.instance.SelectPlacedBuilding((BuildingData)unitData, unitManager);
                 }
                 break;
             case SkillType.UPGRADE_ATTACKDAMAGE:

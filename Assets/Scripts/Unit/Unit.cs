@@ -111,10 +111,10 @@ public class Unit
 
     public virtual void Place()
     {
-        _transform.GetComponent<BoxCollider>().isTrigger = false;
-
         foreach (ResourceValue resource in _data.cost)
             Globals.GAME_RESOURCES[_owner][resource.code].AddAmount(-resource.amount);
+
+        EventManager.TriggerEvent("UpdateResourceTexts");
 
         if (_owner == GameManager.instance.gamePlayersParameters.myPlayerID)
             _transform.GetComponent<UnitManager>().EnableFOV(_fieldOfView);
@@ -184,6 +184,8 @@ public class Unit
     {
         _attackDamage = damage;
     }
+
+    public virtual bool IsAlive { get => true; }
 
     public UnitData Data { get => _data; }
     public string Code { get => _data.code; }

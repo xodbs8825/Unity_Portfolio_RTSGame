@@ -107,4 +107,10 @@ public class CharacterBT : Tree
         List<UnityEngine.Vector3> targetPositions = (List<UnityEngine.Vector3>)data;
         _trySetDestinationOrTargetNode.SetFormationTargetPosition(targetPositions);
     }
+
+    public void StartBuildingConstruction(UnityEngine.Transform buildingTransform)
+    {
+        _trySetDestinationOrTargetNode.SetFormationTargetOffset(new List<UnityEngine.Vector2>() 
+            { UnityEngine.Vector2.zero }, buildingTransform);
+    }
 }

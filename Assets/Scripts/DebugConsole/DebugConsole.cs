@@ -40,7 +40,7 @@ public class DebugConsole : MonoBehaviour
             EventManager.TriggerEvent("UpdateResourceTexts");
         });
 
-        new DebugCommand<string, int>("Instnatiate Characters",
+        new DebugCommand<string, int>("Instnatiate characters",
             "Instantiate multiple instance of a character unit (by reference code), using a Poisson disc sampling for random positioning.",
             "Instantiate Characters_<code>_<amount>", (code, amount) =>
         {
@@ -56,6 +56,16 @@ public class DebugConsole : MonoBehaviour
                 character.Transform.GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(pos);
             }
         });
+
+        new DebugCommand<float>("Set construction ratio", "Sets the selected unit construction ratio.",
+            "Set construction ratio_<ratio>", (x) =>
+            {
+                if (Globals.SELECTED_UNITS.Count == 0) return;
+                Building b = (Building)Globals.SELECTED_UNITS[0].GetComponent<BuildingManager>().Unit;
+
+                if (b == null) return;
+                b.SetConstructionRatio(x);
+            });
     }
 
     private void OnEnable()
@@ -182,6 +192,19 @@ public class DebugConsole : MonoBehaviour
                     if (int.TryParse(mainKeyword, out i))
                     {
                         debugCommandInt.Invoke(i);
+                    }
+                }
+                if (command is DebugCommand<float> debugCommandFloat)
+                {
+                    float f;
+                    if (float.TryParse(inputParts[1], out f))
+                    {
+                        debugCommandFloat.Invoke(f);
+                    }
+                    else
+                    {
+                        Debug.LogError($"'{command.ID}' requires a float parameters!");
+                        return;
                     }
                 }
                 if (command is DebugCommand<string, int> debugCommandStringInt)

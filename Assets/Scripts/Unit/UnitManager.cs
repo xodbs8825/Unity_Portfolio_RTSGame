@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(BoxCollider))]
 public class UnitManager : MonoBehaviour
@@ -8,7 +9,7 @@ public class UnitManager : MonoBehaviour
     public GameObject selectionCircle;
 
     private Transform _healthBarParent;
-    private GameObject _healthBar;
+    protected GameObject healthBar;
 
     protected BoxCollider _collider;
 
@@ -36,8 +37,8 @@ public class UnitManager : MonoBehaviour
 
     private void Update()
     {
-        if (_healthBar != null)
-            SetHPBar(_healthBar.GetComponent<HealthBar>(), _collider, zoomSize);
+        if (healthBar != null)
+            SetHPBar(healthBar.GetComponent<HealthBar>(), _collider, zoomSize);
 
         Unit.UpdateUpgradeParameters();
 
@@ -60,7 +61,7 @@ public class UnitManager : MonoBehaviour
         return Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID;
     }
 
-    public void _Select()
+    private void _Select()
     {
         if (Globals.SELECTED_UNITS.Contains(this)) return;
 
@@ -83,7 +84,7 @@ public class UnitManager : MonoBehaviour
             StartCoroutine(SelectSoundEnded(Unit.Data.selectSound.length));
         }
 
-        if (_healthBar == null)
+        if (healthBar == null)
             UpdateHealthBar();
 
         _selectIndex = Globals.SELECTED_UNITS.Count - 1;
@@ -91,16 +92,16 @@ public class UnitManager : MonoBehaviour
 
     private void HealthBarSetting()
     {
-        if (_healthBar == null)
+        if (healthBar == null)
         {
-            this._healthBar = GameObject.Instantiate(Resources.Load("Prefabs/UI/HealthBar")) as GameObject;
-            this._healthBar.transform.SetParent(_healthBarParent);
+            this.healthBar = GameObject.Instantiate(Resources.Load("Prefabs/UI/HealthBar")) as GameObject;
+            this.healthBar.transform.SetParent(_healthBarParent);
 
-            HealthBar healthBar = _healthBar.GetComponent<HealthBar>();
+            HealthBar hpBar = healthBar.GetComponent<HealthBar>();
 
             Rect boundingBox = Utils.GetBoundingBoxOnScreen(transform.Find("Mesh").GetComponent<Renderer>().bounds, Camera.main);
 
-            SetHPBar(healthBar, _collider, zoomSize);
+            SetHPBar(hpBar, _collider, zoomSize);
         }
     }
 
@@ -160,8 +161,8 @@ public class UnitManager : MonoBehaviour
         Globals.SELECTED_UNITS.Remove(this);
         selectionCircle.SetActive(false);
 
-        Destroy(_healthBar);
-        _healthBar = null;
+        Destroy(healthBar);
+        healthBar = null;
 
         EventManager.TriggerEvent("DeselectUnit", Unit);
         _selected = false;
@@ -237,10 +238,10 @@ public class UnitManager : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void UpdateHealthBar()
+    protected virtual void UpdateHealthBar()
     {
-        if (!_healthBar) return;
-        Transform fill = _healthBar.transform.Find("HPGauge");
-        fill.GetComponent<UnityEngine.UI.Image>().fillAmount = Unit.HP / (float)Unit.MaxHP;
+        if (!healthBar) return;
+        Transform fill = healthBar.transform.Find("HPGauge");
+        fill.GetComponent<Image>().fillAmount = Unit.HP / (float)Unit.MaxHP;
     }
 }

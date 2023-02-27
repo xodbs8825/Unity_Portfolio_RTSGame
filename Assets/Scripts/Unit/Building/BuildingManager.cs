@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildingManager : UnitManager
 {
@@ -111,5 +112,16 @@ public class BuildingManager : UnitManager
     {
         yield return new WaitForSeconds(seconds);
         _isAbleToPlaySound = true;
+    }
+
+    protected override void UpdateHealthBar()
+    {
+        if (!healthBar) return;
+        Transform fill = healthBar.transform.GetChild(1);
+
+        if (IsActive() && !_building.IsAlive)
+            fill.GetComponent<Image>().fillAmount = _building.ConstructionRatio;
+        else
+            fill.GetComponent<Image>().fillAmount = Unit.HP / (float)Unit.MaxHP;
     }
 }

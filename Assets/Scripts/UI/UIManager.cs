@@ -233,8 +233,12 @@ public class UIManager : MonoBehaviour
         Unit unit = (Unit)data;
         _unit = unit;
         AddSelectedUnitToUIList(unit);
-        SetSelectedUnitMenu(unit);
-        ShowPanel(selectedUnitMenu, true);
+
+        //if (unit.IsAlive)
+        {
+            SetSelectedUnitMenu(unit);
+            ShowPanel(selectedUnitMenu, true);
+        }
     }
 
     private void OnDeselectUnit(object data)
@@ -477,7 +481,7 @@ public class UIManager : MonoBehaviour
     {
         GameObject g = GameObject.Instantiate(unitSkillButtonPrefab, _selectedUnitActionButtonsParent);
         Button b = g.GetComponent<Button>();
-        
+
         if (unit.SkillManagers[index].skill.skillName != skill) return;
         SetSkill(unit, index, g);
         b.GetComponent<SkillButton>().InitializeSkillButton(unit.SkillManagers[index].skill);

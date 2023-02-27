@@ -8,12 +8,15 @@ public class BuildingPlacer : MonoBehaviour
 {
     private UIManager _uiManager;
     private Building _placedBuilding = null;
+    private UnitManager _builderManager;
 
     private Ray _ray;
     private RaycastHit _raycastHit;
     private Vector3 _lastPlacementPosition;
 
     private bool isAbleToBuild;
+
+    public static BuildingPlacer instance;
 
     private void Awake()
     {
@@ -56,13 +59,15 @@ public class BuildingPlacer : MonoBehaviour
 
     private void Start()
     {
+        instance = this;
+
         SpawnBuilding
         (
-            GameManager.instance.gameGlobalParameters.initialBuilding, 
-            GameManager.instance.gamePlayersParameters.myPlayerID, 
+            GameManager.instance.gameGlobalParameters.initialBuilding,
+            GameManager.instance.gamePlayersParameters.myPlayerID,
             GameManager.instance.startPosition,
             new List<ResourceValue>()
-            { 
+            {
                 new ResourceValue(InGameResource.Mineral, 5),
                 new ResourceValue(InGameResource.Gas, 2)
             }
@@ -113,22 +118,37 @@ public class BuildingPlacer : MonoBehaviour
 
         PlaceBuilding();
 
-        CancelPlacedBuilding();
-
+        _placedBuilding.SetConstructionRatio(1);
         _placedBuilding = prevPlacedBuilding;
     }
 
-    void PreparePlacedBuilding(int buildingDataIndex)
+    private void PreparePlacedBuilding(int buildingDataIndex)
+    {
+        PreparePlacedBuilding(Globals.BUILDING_DATA[buildingDataIndex]);
+    }
+
+    private void PreparePlacedBuilding(BuildingData buildingData)
     {
         if (_placedBuilding != null && !_placedBuilding.IsFixed)
             Destroy(_placedBuilding.Transform.gameObject);
 
-        Building building = new Building(Globals.BUILDING_DATA[buildingDataIndex], GameManager.instance.gamePlayersParameters.myPlayerID); ;
+        Building building = new Building(buildingData, GameManager.instance.gamePlayersParameters.myPlayerID); ;
 
         _placedBuilding = building;
         _lastPlacementPosition = Vector3.zero;
 
         EventManager.TriggerEvent("PlaceBuildingOn");
+    }
+
+    public void SelectPlacedBuilding(BuildingData buildingData, UnitManager builderManager)
+    {
+        _builderManager = builderManager;
+        PreparePlacedBuilding(buildingData);
+    }
+
+    public void SelectPlacedBuilding(int buildingDataIndex)
+    {
+        PreparePlacedBuilding(buildingDataIndex);
     }
 
     public void CancelPlacedBuilding()
@@ -141,29 +161,33 @@ public class BuildingPlacer : MonoBehaviour
 
     void PlaceBuilding()
     {
-        _placedBuilding.Place();
-
-        if (_placedBuilding.CanBuy())
-            PreparePlacedBuilding(_placedBuilding.DataIndex);
-        else
+        if (_builderManager != null)
         {
+            _builderManager.Select();
+            _builderManager.GetComponent<CharacterBT>().StartBuildingConstruction(_placedBuilding.Transform);
+            _builderManager = null;
+
+            _placedBuilding.Place();
+
             EventManager.TriggerEvent("PlaceBuildingOff");
             _placedBuilding = null;
         }
+        else
+        {
+            _placedBuilding.Place();
 
-        EventManager.TriggerEvent("UpdateResourceTexts");
-        EventManager.TriggerEvent("CheckBuildingButtons");
-
-        Globals.UpdateNevMeshSurface();
+            if (_placedBuilding.CanBuy())
+            {
+                PreparePlacedBuilding(_placedBuilding.DataIndex);
+            }
+            else
+            {
+                EventManager.TriggerEvent("PlaceBuildingOff");
+                _placedBuilding = null;
+            }
+        }
 
         isAbleToBuild = true;
-
-        EventManager.TriggerEvent("PlaySoundByName", "buildingPlacedSound");
-    }
-
-    public void SelectPlacedBuilding(int buildingDataIndex)
-    {
-        PreparePlacedBuilding(buildingDataIndex);
     }
 
     public bool IsAbleToBuild { get => isAbleToBuild; }

@@ -21,15 +21,16 @@ MonoBehaviour:
   - code: 0
     amount: 50
   fieldOfView: 30
-  initialAttackRange: 10
   attackRange: 25
-  initialAttackDamage: 5
-  initialAttackDamageUpgradeValue: 0
   attackDamage: 5
   attackDamageUpgradeValue: 0
+  initialAttackRange: 10
+  initialAttackDamage: 5
+  initialAttackDamageUpgradeValue: 0
   attackRate: 1
   canProduce: 
-  skills: []
+  skills:
+  - {fileID: 11400000, guid: bce3e4190f4e92d48a7dd039129cacef, type: 2}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound:
   - {fileID: 8300000, guid: 94a7cc749f0d39e48b020744ce1f5c20, type: 3}
