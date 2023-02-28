@@ -153,6 +153,7 @@ public class BuildingPlacer : MonoBehaviour
 
     public void CancelPlacedBuilding()
     {
+        if (_placedBuilding == null) return;
         Destroy(_placedBuilding.Transform.gameObject);
         _placedBuilding = null;
 

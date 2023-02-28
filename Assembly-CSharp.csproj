@@ -63,7 +63,7 @@
     <Compile Include="Assets\Scripts\Unit\Building\BuildingData.cs" />
     <Compile Include="Assets\Scripts\Unit\Building\BuildingManager.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Check\CheckHasDestination.cs" />
-    <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Check\CheckEnemyInAttackRange.cs" />
+    <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Check\CheckUnitInRange.cs" />
     <Compile Include="Assets\Scripts\General\GameSystems\FogRendererToggler.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Selector.cs" />
     <Compile Include="Assets\Scripts\UI\GameSettingMenuController.cs" />
@@ -119,6 +119,7 @@
     <Compile Include="Assets\Scripts\Player\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Unit\Character\Skill\SkillManager.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitData.cs" />
+    <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Task\TaskBuild.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Shaders\AlphaProjection.shader" />

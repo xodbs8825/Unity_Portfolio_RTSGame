@@ -60,38 +60,54 @@ public class SkillData : ScriptableObject
             case SkillType.UPGRADE_ATTACKDAMAGE:
                 {
                     CharacterData data = (CharacterData)unitData;
-                    UnitManager um = source.GetComponent<UnitManager>();
-                    if (um == null) return;
+                    UnitManager manager = source.GetComponent<UnitManager>();
+                    if (manager == null) return;
 
-                    Unit unit = um.Unit;
+                    Unit unit = manager.Unit;
 
                     counter++;
-                    if (counter == 3) unit.UpgradeCompleteIndicator(true);
+                    if (counter == 3) manager.Unit.UpgradeCompleteIndicator(true);
 
-                    if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[data.attackDamageUpgradeValue + 1]))
+                    if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[data.myAttackDamageLevel + 1]))
                     {
                         GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
 
-                        bool upgradeMaxedOut = data.attackDamageUpgradeValue == p.UnitMaxLevel();
-                        if (upgradeMaxedOut) return;
+                        bool upgradeMaxedOut;
 
-                        data.attackDamageUpgradeValue += 1;
-                        data.attackDamage += 5;
-                        unit.UpgradeCost();
+                        if (manager.Unit.Owner == 0)
+                        {
+                            upgradeMaxedOut = data.myAttackDamageLevel == p.UnitMaxLevel();
+                            if (upgradeMaxedOut) return;
+
+                            data.myAttackDamageLevel++;
+                            unit.UpgradeCost(data.myAttackDamageLevel);
+                        }
+                        else if (manager.Unit.Owner == 1)
+                        {
+                            upgradeMaxedOut = data.enemyAttackDamageLevel == p.UnitMaxLevel();
+                            if (upgradeMaxedOut) return;
+
+                            data.enemyAttackDamageLevel++;
+                            unit.UpgradeCost(data.enemyAttackDamageLevel);
+                        }
                     }
                 }
                 break;
             case SkillType.RESEARCH_ATTACKRANGE:
                 {
                     CharacterData data = (CharacterData)unitData;
-                    UnitManager um = source.GetComponent<UnitManager>();
-                    if (um == null) return;
+                    UnitManager manager = source.GetComponent<UnitManager>();
+                    if (manager == null) return;
 
-                    Unit unit = um.Unit;
+                    Unit unit = manager.Unit;
 
                     if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[1]))
                     {
-                        data.attackRange += 5;
+                        if (manager.Unit.Owner == 0)
+                            data.myAttackRangeResearchComplete = true;
+                        else if (manager.Unit.Owner == 1)
+                            data.enemyAttackRangeResearchComplete = true;
+
                         unit.ResearchCost();
                         unit.AttackRangeResearchComplete();
                     }
@@ -104,13 +120,12 @@ public class SkillData : ScriptableObject
 
     public void InitializeUpgrade()
     {
-        CharacterData data = (CharacterData)unitData;
-        if (data == null) return;
-
-        data.attackDamage = data.initialAttackDamage;
-        data.attackDamageUpgradeValue = data.initialAttackDamageUpgradeValue;
-        data.attackRange = data.initialAttackRange;
+        if (unitData == null) return;
 
         counter = 0;
+        unitData.myAttackDamageLevel = 0;
+        unitData.enemyAttackDamageLevel = 0;
+        unitData.myAttackRangeResearchComplete = false;
+        unitData.enemyAttackRangeResearchComplete = false;
     }
 }

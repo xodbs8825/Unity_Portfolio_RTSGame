@@ -43,6 +43,11 @@ public class UnitManager : MonoBehaviour
         Unit.UpdateUpgradeParameters();
 
         zoomSize = 60f / Camera.main.orthographicSize;
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Debug.Log(Unit.AttackRange);
+        }
     }
 
     private void OnMouseDown()

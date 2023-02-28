@@ -21,13 +21,13 @@ MonoBehaviour:
   - code: 0
     amount: 50
   fieldOfView: 30
-  attackRange: 25
+  attackRange: 10
   attackDamage: 5
-  attackDamageUpgradeValue: 0
-  initialAttackRange: 10
-  initialAttackDamage: 5
-  initialAttackDamageUpgradeValue: 0
   attackRate: 1
+  myAttackDamageLevel: 0
+  enemyAttackDamageLevel: 0
+  upgrade:
+    attackDamage: 050000000a0000000f00000014000000
   canProduce: 
   skills:
   - {fileID: 11400000, guid: bce3e4190f4e92d48a7dd039129cacef, type: 2}
@@ -40,3 +40,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e41fcd567ba76304cab0568083552b5f, type: 3}
   - {fileID: 8300000, guid: 65ec287f1bd989e468dcf7ed524ab128, type: 3}
   - {fileID: 8300000, guid: 688b9d1342268664f89cdba11cca8d18, type: 3}
+  buildRate: 1.2
+  buildRange: 2
+  buildPower: 1

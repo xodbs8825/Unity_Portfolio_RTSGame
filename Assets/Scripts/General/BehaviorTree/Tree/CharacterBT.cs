@@ -30,41 +30,41 @@ public class CharacterBT : Tree
             new TaskMoveToDestination(manager),
         });
 
+        Selector attackOrBuildSelector = new Selector();
+        if (manager.Unit.Data.attackDamage > 0)
+        {
+            Sequence attackSequence = new Sequence(new List<Node>()
+            {
+                new Inverter(new List<Node>() { new CheckUnitIsMine(manager) }),
+                new CheckUnitInRange(manager, true),
+                new Timer(manager.Unit.Data.attackRate, new List<Node>() { new TaskAttack(manager) })
+            });
 
+            attackOrBuildSelector.Attach(attackSequence);
+        }
+
+        CharacterData characterData = (CharacterData)manager.Unit.Data;
+        if (characterData.buildPower > 0)
+        {
+            Sequence buildSequence = new Sequence(new List<Node>
+            {
+                new CheckTargetIsMine(manager),
+                new CheckUnitInRange(manager, false),
+                new Timer(characterData.buildRate, new List<Node>() { new TaskBuild(manager) })
+            });
+
+            attackOrBuildSelector.Attach(buildSequence);
+        }
 
         Sequence moveToTargetSequence = new Sequence(new List<Node>
         {
-            new CheckHasTarget()
+            new CheckHasTarget(),
+            new Selector(new List<Node>()
+            {
+                attackOrBuildSelector,
+                new TaskFollow(manager)
+            })
         });
-        if (manager.Unit.Data.attackDamage > 0)
-        {
-            Sequence attackSequence = new Sequence(new List<Node>
-            {
-                new Inverter(new List<Node>
-                {
-                    new CheckTargetIsMine(manager),
-                }),
-                new CheckEnemyInAttackRange(manager),
-                new Timer
-                (
-                    manager.Unit.Data.attackRate,
-                    new List<Node>()
-                    {
-                        new TaskAttack(manager)
-                    }
-                ),
-            });
-
-            moveToTargetSequence.Attach(new Selector(new List<Node>
-            {
-                attackSequence,
-                new TaskFollow(manager),
-            }));
-        }
-        else
-        {
-            moveToTargetSequence.Attach(new TaskFollow(manager));
-        }
 
         // ... then stitch them together under the root
         _root = new Selector(new List<Node>
@@ -110,7 +110,7 @@ public class CharacterBT : Tree
 
     public void StartBuildingConstruction(UnityEngine.Transform buildingTransform)
     {
-        _trySetDestinationOrTargetNode.SetFormationTargetOffset(new List<UnityEngine.Vector2>() 
+        _trySetDestinationOrTargetNode.SetFormationTargetOffset(new List<UnityEngine.Vector2>()
             { UnityEngine.Vector2.zero }, buildingTransform);
     }
 }

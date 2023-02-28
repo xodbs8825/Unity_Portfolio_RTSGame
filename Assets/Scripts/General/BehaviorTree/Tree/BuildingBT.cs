@@ -20,7 +20,7 @@ public class BuildingBT : Tree
         {
             Sequence attackSequence = new Sequence(new List<Node> 
             {
-                new CheckEnemyInAttackRange(manager),
+                new CheckUnitInRange(manager, true),
                 new Timer
                 (
                     manager.Unit.Data.attackRate,

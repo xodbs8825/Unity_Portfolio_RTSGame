@@ -124,4 +124,11 @@ public class BuildingManager : UnitManager
         else
             fill.GetComponent<Image>().fillAmount = Unit.HP / (float)Unit.MaxHP;
     }
+
+    public bool Build()
+    {
+        _building.SetConstructionRatio(_building.ConstructionRatio);
+        UpdateHealthBar();
+        return _building.IsAlive;
+    }
 }

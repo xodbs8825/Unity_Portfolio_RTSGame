@@ -15,7 +15,7 @@ MonoBehaviour:
   code: upgrade_attackDamage
   skillName: Upgrade Attack Damage
   description: Increase attack damage
-  type: 1
+  type: 2
   unitData: {fileID: 11400000, guid: 219740ede27913f4796fbe973448b082, type: 2}
   castTime: 0
   cooldown: 0

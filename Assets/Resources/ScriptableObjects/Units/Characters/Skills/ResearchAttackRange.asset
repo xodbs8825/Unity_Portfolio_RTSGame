@@ -15,7 +15,7 @@ MonoBehaviour:
   code: research_attackRange
   skillName: Research Attack Range
   description: Increase attack range
-  type: 2
+  type: 3
   unitData: {fileID: 11400000, guid: 219740ede27913f4796fbe973448b082, type: 2}
   castTime: 0
   cooldown: 0

@@ -18,16 +18,14 @@ public class UnitData : ScriptableObject
     [Header("Attack Parameters")]
     public float attackRange;
     public int attackDamage;
-    public int attackDamageUpgradeValue;
-
-    [HideInInspector]
-    public float initialAttackRange;
-    [HideInInspector]
-    public int initialAttackDamage;
-    [HideInInspector]
-    public int initialAttackDamageUpgradeValue;
-
     public float attackRate;
+
+    [Header("Upgrade System")]
+    public int myAttackDamageLevel;
+    public int enemyAttackDamageLevel;
+    public bool myAttackRangeResearchComplete;
+    public bool enemyAttackRangeResearchComplete;
+    public UpgradeSystem upgrade;
 
     public InGameResource[] canProduce;
 
@@ -43,5 +41,11 @@ public class UnitData : ScriptableObject
     {
         return Globals.CanBuy(owner, cost);
     }
+}
 
+[System.Serializable]
+public class UpgradeSystem
+{
+    public List<int> attackDamage;
+    public List<float> attackRange;
 }

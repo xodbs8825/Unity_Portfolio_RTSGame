@@ -319,8 +319,8 @@ public class UIManager : MonoBehaviour
         switch (data.skillName)
         {
             case "Upgrade Attack Damage":
-                if (data.unitData.attackDamageUpgradeValue == 3) cost = Globals.UPGRADECOST_ATTACKDAMAGE[3];
-                else cost = Globals.UPGRADECOST_ATTACKDAMAGE[data.unitData.attackDamageUpgradeValue + 1];
+                if (data.unitData.myAttackDamageLevel == 3) cost = Globals.UPGRADECOST_ATTACKDAMAGE[3];
+                else cost = Globals.UPGRADECOST_ATTACKDAMAGE[data.unitData.myAttackDamageLevel + 1];
                 break;
             case "Research Attack Range":
                 cost = Globals.UPGRADECOST_ATTACKDAMAGE[1];
