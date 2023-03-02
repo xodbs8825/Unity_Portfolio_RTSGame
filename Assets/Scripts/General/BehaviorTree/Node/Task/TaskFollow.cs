@@ -6,19 +6,36 @@ public class TaskFollow : Node
 {
     CharacterManager _manager;
     Vector3 _lastTargetPosition;
+    float _range;
+
+    Transform _lastTarget;
+    float _targetSize;
 
     public TaskFollow(CharacterManager manager) : base()
     {
         _manager = manager;
         _lastTargetPosition = Vector3.zero;
+        _lastTarget = null;
     }
 
     public override NodeState Evaluate()
     {
         object currentTarget = GetData("currentTarget");
         Vector2 currentTargetOffset = (Vector2)GetData("currentTargetOffset");
-        Vector3 targetPosition = GetTargetPosition((Transform)currentTarget, currentTargetOffset);
+        Transform target = (Transform)currentTarget;
 
+        if (target != _lastTarget)
+        {
+            Vector3 s = target.Find("Mesh").localScale;
+            _targetSize = Mathf.Max(s.x, s.z);
+
+            int targetOwner = target.GetComponent<UnitManager>().Unit.Owner;
+            _range = (targetOwner != GameManager.instance.gamePlayersParameters.myPlayerID) ? _manager.Unit.AttackRange
+                : ((CharacterData)_manager.Unit.Data).buildRange;
+            _lastTarget = target;
+        }
+
+        Vector3 targetPosition = GetTargetPosition(target, currentTargetOffset);
         if (targetPosition != _lastTargetPosition)
         {
             _manager.MoveTo(targetPosition);
@@ -29,11 +46,21 @@ public class TaskFollow : Node
         float distance = Vector3.Distance(_manager.transform.position, _manager.agent.destination);
         if (distance <= _manager.agent.stoppingDistance)
         {
-            int targetOwner = ((Transform)currentTarget).GetComponent<UnitManager>().Unit.Owner;
+            Unit unit = ((Transform)currentTarget).GetComponent<UnitManager>().Unit;
+            int targetOwner = unit.Owner;
             if (targetOwner != GameManager.instance.gamePlayersParameters.myPlayerID)
             {
                 ClearData("currentTarget");
                 ClearData("currentTargetOffset");
+            }
+            else
+            {
+                int buildPower = ((CharacterData)_manager.Unit.Data).buildPower;
+                if (unit is Building building && !building.IsAlive)
+                {
+                    ClearData("currentTarget");
+                    ClearData("currentTargetOffset");
+                }
             }
 
             _state = NodeState.SUCCESS;
@@ -46,14 +73,11 @@ public class TaskFollow : Node
 
     private Vector3 GetTargetPosition(Transform target, Vector2 offset)
     {
-        Vector3 s = target.Find("Mesh").localScale;
-        float targetSize = Mathf.Max(s.x, s.z);
-
         Vector3 p = _manager.transform.position;
-        Vector3 t = new Vector3(target.position.x + offset.x, target.position.y, target.position.z + offset.y);
+        Vector3 t = new Vector3(target.position.x + offset.x, target.position.y, target.position.z + offset.y) - p;
 
         // (add a little offset to avoid bad collisions)
-        float d = targetSize + _manager.Unit.Data.attackRange - 0.2f;
+        float d = _targetSize + _range - 0.05f;
         float r = d / t.magnitude;
         return p + t * (1 - r);
     }

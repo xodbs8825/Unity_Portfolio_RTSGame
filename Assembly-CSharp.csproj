@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Task\TaskAttack.cs" />
+    <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Task\TaskBuild.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Task\TaskMoveToDestination.cs" />
     <Compile Include="Assets\Scripts\Unit\Building\Building.cs" />
     <Compile Include="Assets\Scripts\Unit\Building\BuildingData.cs" />
@@ -119,7 +120,6 @@
     <Compile Include="Assets\Scripts\Player\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Unit\Character\Skill\SkillManager.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitData.cs" />
-    <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Task\TaskBuild.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Shaders\AlphaProjection.shader" />

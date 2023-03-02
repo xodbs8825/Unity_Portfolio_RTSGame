@@ -89,8 +89,11 @@ public class UnitManager : MonoBehaviour
             StartCoroutine(SelectSoundEnded(Unit.Data.selectSound.length));
         }
 
-        if (healthBar == null)
+        if (healthBar)
+        {
+            healthBar.SetActive(true);
             UpdateHealthBar();
+        }
 
         _selectIndex = Globals.SELECTED_UNITS.Count - 1;
     }

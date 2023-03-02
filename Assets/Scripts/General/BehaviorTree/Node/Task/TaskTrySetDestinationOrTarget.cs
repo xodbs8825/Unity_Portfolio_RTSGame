@@ -28,6 +28,7 @@ public class TaskTrySetDestinationOrTarget : Node
                 UnitManager um = _raycastHit.collider.GetComponent<UnitManager>();
                 if (um != null)
                 {
+                    
                     Parent.Parent.SetData("currentTarget", _raycastHit.transform);
 
                     if (_manager.SelectIndex == 0)
@@ -36,7 +37,6 @@ public class TaskTrySetDestinationOrTarget : Node
                         EventManager.TriggerEvent("TargetFormationOffsets", targetOffsets);
                     }
 
-                    //ClearData("destinationPoint");
                     _state = NodeState.SUCCESS;
                     return _state;
                 }
@@ -49,8 +49,6 @@ public class TaskTrySetDestinationOrTarget : Node
                     EventManager.TriggerEvent("TargetFormationPositions", targetPositions);
                 }
 
-                ClearData("currentTarget");
-                Parent.Parent.SetData("destinationPoint", _raycastHit.point);
                 _state = NodeState.SUCCESS;
                 return _state;
             }
@@ -105,6 +103,6 @@ public class TaskTrySetDestinationOrTarget : Node
 
         ClearData("currentTarget");
         ClearData("currentTargetOffset");
-        Parent.Parent.SetData("destinationPoin", targetPositions[i]);
+        Parent.Parent.SetData("destinationPoint", targetPositions[i]);
     }
 }

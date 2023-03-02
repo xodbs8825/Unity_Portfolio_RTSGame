@@ -5,12 +5,18 @@ using BehaviorTree;
 public class CheckUnitInRange : Node
 {
     UnitManager _manager;
-    float _attackRange;
+    bool _checkAttack;
+    float _range;
+
+    Transform _lastTarget;
+    float _targetSize;
 
     public CheckUnitInRange(UnitManager manager, bool checkAttack) : base()
     {
         _manager = manager;
-        _attackRange = checkAttack ? _manager.Unit.AttackRange : ((CharacterData)_manager.Unit.Data).buildRange;
+        _checkAttack = checkAttack;
+        _range = checkAttack ? _manager.Unit.AttackRange : ((CharacterData)_manager.Unit.Data).buildRange;
+        _lastTarget = null;
     }
 
     public override NodeState Evaluate()
@@ -23,6 +29,12 @@ public class CheckUnitInRange : Node
         }
 
         Transform target = (Transform)currentTarget;
+        if (target != _lastTarget)
+        {
+            Vector3 s = target.Find("Mesh").localScale;
+            _targetSize = Mathf.Max(s.x, s.z);
+            _lastTarget = target;
+        }
 
         // (in case the target object is gone - for example it died
         // and we haven't cleared it from the data yet)
@@ -34,12 +46,26 @@ public class CheckUnitInRange : Node
             return _state;
         }
 
-        Vector3 s = target.Find("Mesh").localScale;
-        float targetSize = Mathf.Max(s.x, s.z) * 1.2f;
-
         float d = Vector3.Distance(_manager.transform.position, target.position);
-        bool isInRange = (d - targetSize) <= _attackRange;
+        bool isInRange = (d - _targetSize) <= _range;
         _state = isInRange ? NodeState.SUCCESS : NodeState.FAILURE;
+        
+        if (isInRange)
+        {
+            Unit unit = ((Transform)currentTarget).GetComponent<UnitManager>().Unit;
+            int targetOwner = unit.Owner;
+
+            if (targetOwner == GameManager.instance.gamePlayersParameters.myPlayerID)
+            {
+                CharacterManager manager = (CharacterManager)_manager;
+                int buildPower = ((CharacterData)manager.Unit.Data).buildPower;
+
+                Parent.ClearData("currentTarget");
+                Parent.ClearData("currentTargetOffset");
+                _state = NodeState.FAILURE;
+                return _state;
+            }
+        }
         return _state;
     }
 }

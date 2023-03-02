@@ -6,5 +6,5 @@ public class CharacterData : UnitData
     [Header("Build")]
     public float buildRate;
     public float buildRange;
-    public float buildPower;
+    public int buildPower;
 }

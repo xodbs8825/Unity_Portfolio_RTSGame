@@ -25,7 +25,8 @@ public class SkillData : ScriptableObject
 
     public AudioClip sound;
 
-    private int counter;
+    private int _myCounter;
+    private int _enemyCounter;
 
     public void Trigger(GameObject source, GameObject target = null)
     {
@@ -45,8 +46,6 @@ public class SkillData : ScriptableObject
                     Character character = new Character(data, sourceUnitManager.Unit.Owner);
                     character.ComputeProduction();
                     character.Transform.GetComponent<NavMeshAgent>().Warp(instantiatePosition);
-
-                    character.Transform.SetParent(GameObject.Find($"Units/Units_{GameManager.instance.gamePlayersParameters.myPlayerID}").transform);
                 }
                 break;
             case SkillType.INSTANTIATE_BUILDING:
@@ -64,26 +63,33 @@ public class SkillData : ScriptableObject
                     if (manager == null) return;
 
                     Unit unit = manager.Unit;
-
-                    counter++;
-                    if (counter == 3) manager.Unit.UpgradeCompleteIndicator(true);
-
-                    if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[data.myAttackDamageLevel + 1]))
+                    if (manager.Unit.Owner == 0)
                     {
-                        GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
+                        _myCounter++;
+                        if (_myCounter == 3) manager.Unit.UpgradeCompleteIndicator(true);
 
-                        bool upgradeMaxedOut;
-
-                        if (manager.Unit.Owner == 0)
+                        if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[data.myAttackDamageLevel + 1]))
                         {
+                            GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
+
+                            bool upgradeMaxedOut;
                             upgradeMaxedOut = data.myAttackDamageLevel == p.UnitMaxLevel();
                             if (upgradeMaxedOut) return;
 
                             data.myAttackDamageLevel++;
                             unit.UpgradeCost(data.myAttackDamageLevel);
                         }
-                        else if (manager.Unit.Owner == 1)
+                    }
+                    else if (manager.Unit.Owner == 1)
+                    {
+                        _enemyCounter++;
+                        if (_enemyCounter == 3) manager.Unit.UpgradeCompleteIndicator(true);
+
+                        if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[data.enemyAttackDamageLevel + 1]))
                         {
+                            GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
+
+                            bool upgradeMaxedOut;
                             upgradeMaxedOut = data.enemyAttackDamageLevel == p.UnitMaxLevel();
                             if (upgradeMaxedOut) return;
 
@@ -122,7 +128,8 @@ public class SkillData : ScriptableObject
     {
         if (unitData == null) return;
 
-        counter = 0;
+        _myCounter = 0;
+        _enemyCounter = 0;
         unitData.myAttackDamageLevel = 0;
         unitData.enemyAttackDamageLevel = 0;
         unitData.myAttackRangeResearchComplete = false;

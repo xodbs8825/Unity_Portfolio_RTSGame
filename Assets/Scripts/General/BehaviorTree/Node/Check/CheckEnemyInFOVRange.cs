@@ -33,6 +33,7 @@ public class CheckEnemyInFOVRange : Node
         {
             Parent.SetData("currentTarget", enemiesInRange
                 .OrderBy(x => (x.transform.position - _pos).sqrMagnitude).First().transform);
+            Parent.SetData("currentTargetOffset", Vector2.zero);
             _state = NodeState.SUCCESS;
             return _state;
         }

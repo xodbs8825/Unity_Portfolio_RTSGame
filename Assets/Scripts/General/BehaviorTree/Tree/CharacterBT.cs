@@ -33,9 +33,9 @@ public class CharacterBT : Tree
         Selector attackOrBuildSelector = new Selector();
         if (manager.Unit.Data.attackDamage > 0)
         {
-            Sequence attackSequence = new Sequence(new List<Node>()
+            Sequence attackSequence = new Sequence(new List<Node>
             {
-                new Inverter(new List<Node>() { new CheckUnitIsMine(manager) }),
+                new Inverter(new List<Node>() { new CheckTargetIsMine(manager) }),
                 new CheckUnitInRange(manager, true),
                 new Timer(manager.Unit.Data.attackRate, new List<Node>() { new TaskAttack(manager) })
             });
@@ -44,17 +44,17 @@ public class CharacterBT : Tree
         }
 
         CharacterData characterData = (CharacterData)manager.Unit.Data;
-        if (characterData.buildPower > 0)
+        Sequence buildSequence = new Sequence(new List<Node>
         {
-            Sequence buildSequence = new Sequence(new List<Node>
-            {
-                new CheckTargetIsMine(manager),
-                new CheckUnitInRange(manager, false),
-                new Timer(characterData.buildRate, new List<Node>() { new TaskBuild(manager) })
-            });
+            new CheckTargetIsMine(manager),
+            new CheckUnitInRange(manager, false),
+        });
+        Timer buildTimer = new Timer(characterData.buildRate, new List<Node> { new TaskBuild(manager) });
 
-            attackOrBuildSelector.Attach(buildSequence);
-        }
+        if (characterData.buildPower > 0)
+            buildSequence.Attach(buildTimer);
+
+        attackOrBuildSelector.Attach(buildSequence);
 
         Sequence moveToTargetSequence = new Sequence(new List<Node>
         {

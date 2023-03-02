@@ -118,7 +118,7 @@ public class BuildingPlacer : MonoBehaviour
 
         PlaceBuilding();
 
-        _placedBuilding.SetConstructionRatio(1);
+        _placedBuilding.SetConstructionRatio(_placedBuilding.MaxHP);
         _placedBuilding = prevPlacedBuilding;
     }
 

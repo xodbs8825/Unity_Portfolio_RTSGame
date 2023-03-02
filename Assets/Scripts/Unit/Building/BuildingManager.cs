@@ -117,7 +117,7 @@ public class BuildingManager : UnitManager
     protected override void UpdateHealthBar()
     {
         if (!healthBar) return;
-        Transform fill = healthBar.transform.GetChild(1);
+        Transform fill = healthBar.transform.Find("HPGauge");
 
         if (IsActive() && !_building.IsAlive)
             fill.GetComponent<Image>().fillAmount = _building.ConstructionRatio;
@@ -125,9 +125,9 @@ public class BuildingManager : UnitManager
             fill.GetComponent<Image>().fillAmount = Unit.HP / (float)Unit.MaxHP;
     }
 
-    public bool Build()
+    public bool Build(int buildPower)
     {
-        _building.SetConstructionRatio(_building.ConstructionRatio);
+        _building.SetConstructionRatio(_building.ConstructionRatio + buildPower);
         UpdateHealthBar();
         return _building.IsAlive;
     }
