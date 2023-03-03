@@ -10,10 +10,8 @@ public class UIManager : MonoBehaviour
     #region 건물
     [Header("Building")]
     private BuildingPlacer _buildingPlacer;
-    public GameObject buildingMenu;
-    public GameObject buildingButtonPrefab;
-    public GameObject cancelMenu;
-    private Dictionary<string, Button> _buildingButtons;
+    //public RectTransform placedBuildingProductionRectTransform;
+    //public GameObject cancelMenu;
     #endregion
 
     #region 유닛 선택
@@ -80,29 +78,10 @@ public class UIManager : MonoBehaviour
         #region 건물 생성
         // 건물 건설을 위한 버튼 생성
         _buildingPlacer = GetComponent<BuildingPlacer>();
-        _buildingButtons = new Dictionary<string, Button>();
-        for (int i = 0; i < Globals.BUILDING_DATA.Length; i++)
-        {
-            UnitData data = Globals.BUILDING_DATA[i];
+        //placedBuildingProductionRectTransform.gameObject.SetActive(false);
 
-            GameObject button = GameObject.Instantiate(buildingButtonPrefab, buildingMenu.transform);
-            button.name = data.unitName;
-
-            Text t = button.transform.Find("Text").GetComponent<Text>();
-            t.text = data.unitName;
-            t.fontSize = 20;
-
-            Button b = button.GetComponent<Button>();
-
-            AddBuildingButtonListener(b, i);
-
-            _buildingButtons[data.code] = b;
-
-            button.GetComponent<BuildingButton>().Initialize(Globals.BUILDING_DATA[i]);
-        }
-
-        Button cancelButton = cancelMenu.transform.Find("CancelButton").GetComponent<Button>();
-        CancelButtonListener(cancelButton);
+        //Button cancelButton = cancelMenu.transform.Find("CancelButton").GetComponent<Button>();
+        //CancelButtonListener(cancelButton);
         #endregion
 
         #region 정보 창
@@ -163,12 +142,7 @@ public class UIManager : MonoBehaviour
     [System.Obsolete]
     private void Update()
     {
-        ShowPanel(cancelMenu, !_buildingPlacer.IsAbleToBuild);
-
-        if (!cancelMenu.active && !selectedUnitActionButtonsParent.active)
-            ShowPanel(buildingMenu, true);
-        else
-            ShowPanel(buildingMenu, false);
+        //ShowPanel(cancelMenu, !_buildingPlacer.IsAbleToBuild);
 
         if (Input.GetKeyDown(KeyCode.F10))
             ToggleGameSetiingPanel();
@@ -197,11 +171,9 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.AddListener("UpdateResourceTexts", OnUpdateResourceTexts);
-        EventManager.AddListener("CheckBuildingButtons", OnCheckBuildingButtons);
-        EventManager.AddListener("HoverBuildingButton", OnHoverBuildingButton);
-        EventManager.AddListener("UnhoverBuildingButton", OnUnhoverBuildingButton);
         EventManager.AddListener("HoverSkillButton", OnHoverSkillButton);
         EventManager.AddListener("UnhoverSkillButton", OnUnhoverSkillButton);
+        //EventManager.AddListener("PlaceBuildingOff", OnPlaceBuildingOff);
         EventManager.AddListener("SelectUnit", OnSelectUnit);
         EventManager.AddListener("DeselectUnit", OnDeselectUnit);
         EventManager.AddListener("SetPlayer", OnSetPlayer);
@@ -210,11 +182,9 @@ public class UIManager : MonoBehaviour
     private void OnDisable()
     {
         EventManager.RemoveListener("UpdateResourceTexts", OnUpdateResourceTexts);
-        EventManager.RemoveListener("CheckBuildingButtons", OnCheckBuildingButtons);
-        EventManager.RemoveListener("HoverBuildingButton", OnHoverBuildingButton);
-        EventManager.RemoveListener("UnhoverBuildingButton", OnUnhoverBuildingButton);
         EventManager.RemoveListener("HoverSkillButton", OnHoverSkillButton);
         EventManager.RemoveListener("UnhoverSkillButton", OnUnhoverSkillButton);
+        //EventManager.RemoveListener("PlaceBuildingOff", OnPlaceBuildingOff);
         EventManager.RemoveListener("SelectUnit", OnSelectUnit);
         EventManager.RemoveListener("DeselectUnit", OnDeselectUnit);
         EventManager.RemoveListener("SetPlayer", OnSetPlayer);
@@ -234,7 +204,7 @@ public class UIManager : MonoBehaviour
         _unit = unit;
         AddSelectedUnitToUIList(unit);
 
-        //if (unit.IsAlive)
+        if (unit.IsAlive)
         {
             SetSelectedUnitMenu(unit);
             ShowPanel(selectedUnitMenu, true);
@@ -253,6 +223,11 @@ public class UIManager : MonoBehaviour
 
         ShowPanel(selectedUnitActionButtonsParent, false);
     }
+
+    //private void OnPlaceBuildingOff()
+    //{
+    //    placedBuildingProductionRectTransform.gameObject.SetActive(false);
+    //}
 
     public void AddSelectedUnitToUIList(Unit unit)
     {
@@ -289,17 +264,6 @@ public class UIManager : MonoBehaviour
             DestroyImmediate(listItem.gameObject);
         else
             t.text = count.ToString();
-    }
-
-    private void OnHoverBuildingButton(object data)
-    {
-        SetInfoPanel((UnitData)data);
-        ShowPanel(infoPanel, true);
-    }
-
-    private void OnUnhoverBuildingButton()
-    {
-        ShowPanel(infoPanel, false);
     }
 
     private void OnHoverSkillButton(object data)
@@ -380,30 +344,15 @@ public class UIManager : MonoBehaviour
         _resourcesTexts[resource].text = value.ToString();
     }
 
-    private void AddBuildingButtonListener(Button b, int i)
-    {
-        b.onClick.AddListener(() =>
-        {
-            _buildingPlacer.SelectPlacedBuilding(i);
-            EventManager.TriggerEvent("UnhoverBuildingButton");
-        });
-    }
-
-    private void CancelButtonListener(Button b)
-    {
-        b.onClick.AddListener(() => _buildingPlacer.CancelPlacedBuilding());
-    }
+    //private void CancelButtonListener(Button b)
+    //{
+    //    b.onClick.AddListener(() => _buildingPlacer.CancelPlacedBuilding());
+    //}
 
     private void OnUpdateResourceTexts()
     {
         foreach (KeyValuePair<InGameResource, GameResource> pair in Globals.GAME_RESOURCES[_myPlayerID])
             SetResourceText(pair.Key, pair.Value.Amount);
-    }
-
-    private void OnCheckBuildingButtons()
-    {
-        foreach (UnitData data in Globals.BUILDING_DATA)
-            _buildingButtons[data.code].interactable = data.CanBuy(_myPlayerID);
     }
 
     public void ToggleSelectionGroupButton(int index, bool on)

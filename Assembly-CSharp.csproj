@@ -108,7 +108,6 @@
     <Compile Include="Assets\Scripts\Tools\JSONSerializableScriptableObject.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Check\CheckHasTarget.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Inverter.cs" />
-    <Compile Include="Assets\Scripts\UI\BuildingButton.cs" />
     <Compile Include="Assets\Scripts\General\GameData\DataHandler.cs" />
     <Compile Include="Assets\Scripts\General\Parameters\GameParameters.cs" />
     <Compile Include="Assets\Scripts\Unit\Building\BuildingPlacer.cs" />
@@ -772,6 +771,9 @@
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

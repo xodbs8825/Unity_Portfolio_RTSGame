@@ -127,7 +127,7 @@ public class BuildingManager : UnitManager
 
     public bool Build(int buildPower)
     {
-        _building.SetConstructionRatio(_building.ConstructionRatio + buildPower);
+        _building.SetConstructionRatio(_building.ConstructionRatio + buildPower / 10f);
         UpdateHealthBar();
         return _building.IsAlive;
     }

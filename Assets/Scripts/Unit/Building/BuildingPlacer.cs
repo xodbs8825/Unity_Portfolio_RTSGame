@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 
 public class BuildingPlacer : MonoBehaviour
 {
-    private UIManager _uiManager;
     private Building _placedBuilding = null;
     private UnitManager _builderManager;
 
@@ -20,7 +19,6 @@ public class BuildingPlacer : MonoBehaviour
 
     private void Awake()
     {
-        _uiManager = GetComponent<UIManager>();
         isAbleToBuild = true;
     }
 
@@ -72,13 +70,6 @@ public class BuildingPlacer : MonoBehaviour
                 new ResourceValue(InGameResource.Gas, 2)
             }
         );
-
-        SpawnBuilding
-        (
-            GameManager.instance.gameGlobalParameters.initialBuilding,
-            1 - GameManager.instance.gamePlayersParameters.myPlayerID,
-            GameManager.instance.startPosition + new Vector3(0f, 0f, 100f)
-        );
     }
 
     private void OnEnable()
@@ -118,7 +109,7 @@ public class BuildingPlacer : MonoBehaviour
 
         PlaceBuilding();
 
-        _placedBuilding.SetConstructionRatio(_placedBuilding.MaxHP);
+        _placedBuilding.SetConstructionRatio(1);
         _placedBuilding = prevPlacedBuilding;
     }
 
@@ -170,7 +161,7 @@ public class BuildingPlacer : MonoBehaviour
 
             _placedBuilding.Place();
 
-            EventManager.TriggerEvent("PlaceBuildingOff");
+            //EventManager.TriggerEvent("PlaceBuildingOff");
             _placedBuilding = null;
         }
         else
@@ -183,10 +174,11 @@ public class BuildingPlacer : MonoBehaviour
             }
             else
             {
-                EventManager.TriggerEvent("PlaceBuildingOff");
+                //EventManager.TriggerEvent("PlaceBuildingOff");
                 _placedBuilding = null;
             }
         }
+        EventManager.TriggerEvent("UpdateResourcesTexts");
 
         isAbleToBuild = true;
     }

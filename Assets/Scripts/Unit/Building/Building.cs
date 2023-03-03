@@ -14,6 +14,7 @@ public class Building : Unit
     private BuildingManager _buildingManager;
     private BuildingPlacement _placement;
     private List<Material> _materials;
+
     private BuildingBT _bt;
     private float _constructionRatio;
     private bool _isAlive;
@@ -22,17 +23,18 @@ public class Building : Unit
     public Building(BuildingData data, int owner, List<ResourceValue> production) : base(data, owner, production)
     {
         _buildingManager = _transform.GetComponent<BuildingManager>();
-        _bt = _transform.GetComponent<BuildingBT>();
-        _bt.enabled = false;
-        _constructionRatio = 0f;
-        _isAlive = false;
-
+       
         _materials = new List<Material>();
         foreach (Material material in _transform.Find("Mesh").GetComponent<Renderer>().materials)
             _materials.Add(new Material(material));
 
         _placement = BuildingPlacement.VALID;
         SetMaterials();
+
+        _bt = _transform.GetComponent<BuildingBT>();
+        _bt.enabled = false;
+        _constructionRatio = 0f;
+        _isAlive = false;
     }
 
     public void SetMaterials() { SetMaterials(_placement); }
