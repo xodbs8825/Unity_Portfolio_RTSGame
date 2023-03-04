@@ -49,7 +49,7 @@ public class CheckUnitInRange : Node
         float d = Vector3.Distance(_manager.transform.position, target.position);
         bool isInRange = (d - _targetSize) <= _range;
         _state = isInRange ? NodeState.SUCCESS : NodeState.FAILURE;
-        
+
         if (isInRange)
         {
             Unit unit = ((Transform)currentTarget).GetComponent<UnitManager>().Unit;
@@ -60,10 +60,17 @@ public class CheckUnitInRange : Node
                 CharacterManager manager = (CharacterManager)_manager;
                 int buildPower = ((CharacterData)manager.Unit.Data).buildPower;
 
-                Parent.ClearData("currentTarget");
-                Parent.ClearData("currentTargetOffset");
-                _state = NodeState.FAILURE;
-                return _state;
+                if (buildPower > 0)
+                {
+
+                }
+                else
+                {
+                    Parent.ClearData("currentTarget");
+                    Parent.ClearData("currentTargetOffset");
+                    _state = NodeState.FAILURE;
+                    return _state;
+                }
             }
         }
         return _state;

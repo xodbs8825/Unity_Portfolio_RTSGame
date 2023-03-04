@@ -72,6 +72,7 @@ public class Building : Unit
         _placement = BuildingPlacement.FIXED;
         SetMaterials();
         SetConstructionRatio(0);
+        EventManager.TriggerEvent("PlaySoundByName", "buildingPlacedSound");
     }
 
     public void SetConstructionRatio(float constructionRatio)
@@ -89,7 +90,7 @@ public class Building : Unit
         _bt.enabled = true;
         ComputeProduction();
 
-        EventManager.TriggerEvent("PlaySoundByName", "buildingPlacedSound");
+        EventManager.TriggerEvent("PlaySoundByName", "buildingFinishedSound");
 
         Globals.UpdateNevMeshSurface();
     }

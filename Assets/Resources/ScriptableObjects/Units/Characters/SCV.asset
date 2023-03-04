@@ -26,8 +26,11 @@ MonoBehaviour:
   attackRate: 1
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
+  myAttackRangeResearchComplete: 0
+  enemyAttackRangeResearchComplete: 0
   upgrade:
     attackDamage: 050000000a0000000f00000014000000
+    attackRange: []
   canProduce: 
   skills:
   - {fileID: 11400000, guid: bce3e4190f4e92d48a7dd039129cacef, type: 2}
@@ -42,4 +45,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 688b9d1342268664f89cdba11cca8d18, type: 3}
   buildRate: 1.2
   buildRange: 2
-  buildPower: 1
+  buildPower: 20

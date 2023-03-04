@@ -107,7 +107,7 @@ public class BuildingPlacer : MonoBehaviour
         _placedBuilding = new Building(data, owner, production);
         _placedBuilding.SetPosition(position);
 
-        PlaceBuilding();
+        PlaceBuilding(false);
 
         _placedBuilding.SetConstructionRatio(1);
         _placedBuilding = prevPlacedBuilding;
@@ -151,7 +151,7 @@ public class BuildingPlacer : MonoBehaviour
         isAbleToBuild = true;
     }
 
-    void PlaceBuilding()
+    void PlaceBuilding(bool canChain = false)
     {
         if (_builderManager != null)
         {
@@ -168,17 +168,20 @@ public class BuildingPlacer : MonoBehaviour
         {
             _placedBuilding.Place();
 
-            if (_placedBuilding.CanBuy())
+            if (canChain)
             {
-                PreparePlacedBuilding(_placedBuilding.DataIndex);
-            }
-            else
-            {
-                //EventManager.TriggerEvent("PlaceBuildingOff");
-                _placedBuilding = null;
+                if (_placedBuilding.CanBuy())
+                {
+                    PreparePlacedBuilding(_placedBuilding.DataIndex);
+                }
+                else
+                {
+                    //EventManager.TriggerEvent("PlaceBuildingOff");
+                    _placedBuilding = null;
+                }
             }
         }
-        EventManager.TriggerEvent("UpdateResourcesTexts");
+        //EventManager.TriggerEvent("UpdateResourcesTexts");
 
         isAbleToBuild = true;
     }

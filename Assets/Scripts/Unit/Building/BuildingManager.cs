@@ -122,12 +122,12 @@ public class BuildingManager : UnitManager
         if (IsActive() && !_building.IsAlive)
             fill.GetComponent<Image>().fillAmount = _building.ConstructionRatio;
         else
-            fill.GetComponent<Image>().fillAmount = Unit.HP / (float)Unit.MaxHP;
+            fill.GetComponent<Image>().fillAmount = (float)Unit.HP / (float)Unit.MaxHP;
     }
 
     public bool Build(int buildPower)
     {
-        _building.SetConstructionRatio(_building.ConstructionRatio + buildPower / 10f);
+        _building.SetConstructionRatio(_building.ConstructionRatio + (float)buildPower / (float)Unit.MaxHP);
         UpdateHealthBar();
         return _building.IsAlive;
     }

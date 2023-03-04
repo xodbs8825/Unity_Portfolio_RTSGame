@@ -55,12 +55,12 @@ public class TaskFollow : Node
             }
             else
             {
-                int buildPower = ((CharacterData)_manager.Unit.Data).buildPower;
-                if (unit is Building building && !building.IsAlive)
-                {
-                    ClearData("currentTarget");
-                    ClearData("currentTargetOffset");
-                }
+                //int buildPower = ((CharacterData)_manager.Unit.Data).buildPower;
+                //if (unit is Building building && !building.IsAlive)
+                //{
+                //    ClearData("currentTarget");
+                //    ClearData("currentTargetOffset");
+                //}
             }
 
             _state = NodeState.SUCCESS;

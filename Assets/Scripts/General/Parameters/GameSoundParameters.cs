@@ -15,4 +15,5 @@ public class GameSoundParameters : GameParameters
 
     [Header("Ambient sounds")]
     public AudioClip buildingPlacedSound;
+    public AudioClip buildingFinishedSound;
 }

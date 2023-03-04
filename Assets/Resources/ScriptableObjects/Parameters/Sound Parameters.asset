@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d7a90163c3b654f856187ded99d4d0, type: 3}
   m_Name: Sound Parameters
   m_EditorClassIdentifier: 
+  _fieldsToSerialize: []
   _fieldsToShowInGame:
   - musicVolume
   - sfxVolume
   musicVolume: -12
   sfxVolume: 0
   buildingPlacedSound: {fileID: 8300000, guid: 60d64185f84c28a45ae95eaef8dbc331, type: 3}
+  buildingFinishedSound: {fileID: 8300000, guid: ef412dc7bd7d0124484ff2566c6942a6, type: 3}
