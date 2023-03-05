@@ -280,6 +280,8 @@ MonoBehaviour:
   contextualSource: {fileID: 5946203730686990114}
   ownerMatrialSlotIndex: 0
   agent: {fileID: 6502414843547705010}
+  characterRenderer: {fileID: 2652150892722941767}
+  characterCollider: {fileID: 5423030078882362668}
 --- !u!195 &6502414843547705010
 NavMeshAgent:
   m_ObjectHideFlags: 0

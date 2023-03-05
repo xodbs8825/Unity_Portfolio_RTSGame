@@ -38,7 +38,7 @@ public class UnitManager : MonoBehaviour
     private void Update()
     {
         if (healthBar != null)
-            SetHPBar(healthBar.GetComponent<HealthBar>(), _collider, zoomSize);
+            SetHPBar(healthBar.GetComponent<HealthBar>(), transform.GetChild(0), zoomSize);
 
         Unit.UpdateUpgradeParameters();
 
@@ -52,8 +52,7 @@ public class UnitManager : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (IsActive() && IsMyUnit())
-            Select(true, Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift));
+        Select(true, Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift));
     }
 
     protected virtual bool IsActive()
@@ -109,15 +108,15 @@ public class UnitManager : MonoBehaviour
 
             Rect boundingBox = Utils.GetBoundingBoxOnScreen(transform.Find("Mesh").GetComponent<Renderer>().bounds, Camera.main);
 
-            SetHPBar(hpBar, _collider, zoomSize);
+            SetHPBar(hpBar, transform.GetChild(0), zoomSize);
         }
     }
 
-    private void SetHPBar(HealthBar hpBar, BoxCollider collider, float zoomSize)
+    private void SetHPBar(HealthBar hpBar, Transform meshSize, float zoomSize)
     {
-        SetHPBarPosition(hpBar, collider.size.y * zoomSize);
+        SetHPBarPosition(hpBar, meshSize.localScale.y * zoomSize);
 
-        hpBar.SetHPUISize(collider.size.x * 15 * zoomSize);
+        hpBar.SetHPUISize(meshSize.localScale.x * 15 * zoomSize);
     }
 
     private void SetHPBarPosition(HealthBar hpBar, float colliderYSize)
@@ -131,6 +130,7 @@ public class UnitManager : MonoBehaviour
     public void Select() { Select(false, false); }
     public virtual void Select(bool singleClick, bool holdingShift)
     {
+        if (!IsActive()) return;
         if (!singleClick)
         {
             SelectUtils();
@@ -138,20 +138,20 @@ public class UnitManager : MonoBehaviour
             return;
         }
 
-        if (holdingShift) // ½¬ÇÁÆ®¸¦ ´©¸¥ »óÅÂ¿¡¼­ À¯´ÖÀ» ¼±ÅÃÇÑ °æ¿ì:
+        if (holdingShift) // ì‰¬í”„íŠ¸ë¥¼ ëˆ„ë¥¸ ìƒíƒœì—ì„œ ìœ ë‹›ì„ ì„ íƒí•œ ê²½ìš°:
         {
-            if (Globals.SELECTED_UNITS.Contains(this)) // 1. ¼±ÅÃµÈ À¯´ÖÀ» ¼±ÅÃÇÑ °æ¿ì ¼¿·ºÀÌ µÈ ±×·ì¿¡¼­ Á¦¿Ü
+            if (Globals.SELECTED_UNITS.Contains(this)) // 1. ì„ íƒëœ ìœ ë‹›ì„ ì„ íƒí•œ ê²½ìš° ì…€ë ‰ì´ ëœ ê·¸ë£¹ì—ì„œ ì œì™¸
             {
                 Deselect();
                 _selected = false;
             }
-            else // 2. ¼±ÅÃµÇÁö ¾ÊÀº À¯´ÖÀ» ¼±ÅÃÇÑ °æ¿ì ¼¿·º ±×·ì¿¡ Ãß°¡
+            else // 2. ì„ íƒë˜ì§€ ì•Šì€ ìœ ë‹›ì„ ì„ íƒí•œ ê²½ìš° ì…€ë ‰ ê·¸ë£¹ì— ì¶”ê°€
             {
                 SelectUtils();
                 _selected = true;
             }
         }
-        else // ½¬ÇÁÆ®¸¦ ´©¸£Áö ¾ÊÀº °æ¿ì ¹«Á¶°Ç Å¬¸¯ÇÑ À¯´Ö¸¸ ¼±ÅÃ
+        else // ì‰¬í”„íŠ¸ë¥¼ ëˆ„ë¥´ì§€ ì•Šì€ ê²½ìš° ë¬´ì¡°ê±´ í´ë¦­í•œ ìœ ë‹›ë§Œ ì„ íƒ
         {
             List<UnitManager> selectedUnits = new List<UnitManager>(Globals.SELECTED_UNITS);
             foreach (UnitManager unitManager in selectedUnits)

@@ -26,7 +26,7 @@ public class TaskFollow : Node
 
         if (target != _lastTarget)
         {
-            Vector3 s = target.Find("Mesh").localScale;
+            Vector3 s = target.Find("Mesh").GetComponent<MeshFilter>().sharedMesh.bounds.size / 2;
             _targetSize = Mathf.Max(s.x, s.z);
 
             int targetOwner = target.GetComponent<UnitManager>().Unit.Owner;
@@ -55,12 +55,22 @@ public class TaskFollow : Node
             }
             else
             {
-                //int buildPower = ((CharacterData)_manager.Unit.Data).buildPower;
-                //if (unit is Building building && !building.IsAlive)
-                //{
-                //    ClearData("currentTarget");
-                //    ClearData("currentTargetOffset");
-                //}
+                if (unit is Building building)
+                {
+                    if (building.HasConstructorsFull)
+                    {
+                        ClearData("currentTarget");
+                        ClearData("currentTargetOffset");
+                    }
+                    else if (!_manager.IsConstructor)
+                    {
+                        building.AddConstructor(_manager);
+                        _manager.SetIsConstructor(true);
+                        _manager.SetRendererVisibilty(false);
+                        _manager.agent.Warp(target.position +
+                            Quaternion.Euler(0f, Random.Range(0f, 360f), 0f) * Vector3.right * _targetSize * 0.8f);
+                    }
+                }
             }
 
             _state = NodeState.SUCCESS;

@@ -7,11 +7,17 @@ public class CharacterManager : UnitManager
 {
     public NavMeshAgent agent;
 
+    public Renderer characterRenderer;
+    public BoxCollider characterCollider;
+
     private Character _character = null;
 
     private AudioClip[] _characterInteractSound;
     private float maxSoundClipsSize;
     private bool _isAbleToPlaySound = true;
+
+    private bool _isConstructor = false;
+    public bool IsConstructor => _isConstructor;
 
     public override Unit Unit
     {
@@ -65,5 +71,30 @@ public class CharacterManager : UnitManager
     {
         yield return new WaitForSeconds(seconds);
         _isAbleToPlaySound = true;
+    }
+
+    public void SetRendererVisibilty(bool on)
+    {
+        if (on && !characterRenderer.enabled)
+        {
+            characterRenderer.enabled = true;
+            characterCollider.enabled = true;
+        }
+        else if (!on && characterRenderer.enabled)
+        {
+            characterRenderer.enabled = false;
+            characterCollider.enabled = false;
+        }
+    }
+
+    public void SetIsConstructor(bool on)
+    {
+        _isConstructor = on;
+        if (_isConstructor) Deselect();
+    }
+
+    protected override bool IsActive()
+    {
+        return !_isConstructor;
     }
 }

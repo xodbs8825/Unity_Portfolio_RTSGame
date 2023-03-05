@@ -21,8 +21,9 @@ public class TaskBuild : Node
         bool finishedBuilding = manager.Build(_buildPower);
         if (finishedBuilding)
         {
+            _manager.SetIsConstructor(false);
+            _manager.SetRendererVisibilty(true);
             ClearData("currentTarget");
-            //ClearData("currentTargetOffset");
         }
 
         _state = NodeState.SUCCESS;

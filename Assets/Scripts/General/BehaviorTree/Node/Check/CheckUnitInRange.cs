@@ -31,7 +31,7 @@ public class CheckUnitInRange : Node
         Transform target = (Transform)currentTarget;
         if (target != _lastTarget)
         {
-            Vector3 s = target.Find("Mesh").localScale;
+            Vector3 s = target.Find("Mesh").GetComponent<MeshFilter>().sharedMesh.bounds.size / 2;
             _targetSize = Mathf.Max(s.x, s.z);
             _lastTarget = target;
         }

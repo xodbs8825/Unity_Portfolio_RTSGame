@@ -19,13 +19,16 @@ public class Building : Unit
     private float _constructionRatio;
     private bool _isAlive;
 
+    private List<CharacterManager> _constructors;
+
     public Building(BuildingData data, int owner) : this(data, owner, new List<ResourceValue>() { }) { }
     public Building(BuildingData data, int owner, List<ResourceValue> production) : base(data, owner, production)
     {
         _buildingManager = _transform.GetComponent<BuildingManager>();
        
         _materials = new List<Material>();
-        foreach (Material material in _transform.Find("Mesh").GetComponent<Renderer>().materials)
+        Transform mesh = _transform.Find("Mesh");
+        foreach (Material material in mesh.GetComponent<Renderer>().materials)
             _materials.Add(new Material(material));
 
         _placement = BuildingPlacement.VALID;
@@ -35,6 +38,8 @@ public class Building : Unit
         _bt.enabled = false;
         _constructionRatio = 0f;
         _isAlive = false;
+
+        _constructors = new List<CharacterManager>();
     }
 
     public void SetMaterials() { SetMaterials(_placement); }
@@ -80,6 +85,7 @@ public class Building : Unit
         if (_isAlive) return;
 
         _constructionRatio = constructionRatio;
+
         if (_constructionRatio >= 1)
             SetAlive();
     }
@@ -93,6 +99,16 @@ public class Building : Unit
         EventManager.TriggerEvent("PlaySoundByName", "buildingFinishedSound");
 
         Globals.UpdateNevMeshSurface();
+    }
+
+    public void AddConstructor(CharacterManager manager)
+    {
+        _constructors.Add(manager);
+    }
+
+    public void RemoveConstructor(int index)
+    {
+        _constructors.RemoveAt(index);
     }
 
     public void CheckValidPlacement()
@@ -121,4 +137,6 @@ public class Building : Unit
     public bool IsFixed { get => _placement == BuildingPlacement.FIXED; }
     public float ConstructionRatio { get => _constructionRatio; }
     public override bool IsAlive { get => _isAlive; }
+    public List<CharacterManager> Constructors { get => _constructors; }
+    public bool HasConstructorsFull { get => _constructors.Count == 3; }
 }
