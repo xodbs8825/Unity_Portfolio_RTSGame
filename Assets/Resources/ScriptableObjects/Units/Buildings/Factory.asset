@@ -25,11 +25,14 @@ MonoBehaviour:
   fieldOfView: 100
   attackRange: 0
   attackDamage: 0
-  attackDamageUpgradeValue: 0
-  initialAttackRange: 0
-  initialAttackDamage: 0
-  initialAttackDamageUpgradeValue: 0
   attackRate: 0
+  myAttackDamageLevel: 0
+  enemyAttackDamageLevel: 0
+  myAttackRangeResearchComplete: 0
+  enemyAttackRangeResearchComplete: 0
+  upgrade:
+    attackDamage: 
+    attackRange: []
   canProduce: 
   skills: []
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
