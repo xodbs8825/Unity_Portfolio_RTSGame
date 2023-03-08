@@ -7,12 +7,20 @@ public class GameManager : MonoBehaviour
 {
     public Vector3 startPosition;
 
+    [Header("Canvas")]
     public Canvas canvas;
     public float canvasScaleFactor;
 
+    [Header("Parameters")]
     public GameGlobalParameters gameGlobalParameters;
     public GamePlayersParameters gamePlayersParameters;
     public GameInputParameters gameInputParameters;
+
+    [Header("FOV")]
+    public GameObject fov;
+
+    [Header("Minimap")]
+    public Collider mapWrapperCollider;
 
     [HideInInspector]
     public bool gameIsPaused;
@@ -24,8 +32,6 @@ public class GameManager : MonoBehaviour
     public bool waitingForInput;
     [HideInInspector]
     public string pressedKey;
-
-    public GameObject fov;
 
     private static GameManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티

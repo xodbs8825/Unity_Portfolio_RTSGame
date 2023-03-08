@@ -5,6 +5,18 @@ using UnityEngine;
 
 public static class Utils
 {
+    static Camera _mainCamera;
+    public static Camera MainCamera
+    {
+        get
+        {
+            if (_mainCamera == null)
+            {
+                _mainCamera = Camera.main;
+            }
+            return _mainCamera;
+        }
+    }
     static Texture2D _whiteTexture;
     public static Texture2D WhiteTexture
     {
@@ -177,5 +189,35 @@ public static class Utils
         }
 
         return positions;
+    }
+
+    public static (Vector3, Vector3) GetCameraWorldBounds()
+    {
+        Vector3 bottomLeftCorner = new Vector3(0f, 0f);
+        Vector3 topRightCorner = new Vector3(1f, 1f);
+        float distance = 1000f;
+
+        Ray ray;
+        RaycastHit hit;
+
+        ray = MainCamera.ViewportPointToRay(bottomLeftCorner);
+        Vector3 bottomLeft = GameManager.instance.mapWrapperCollider.Raycast(ray, out hit, distance)
+            ? hit.point : new Vector3();
+
+        ray = MainCamera.ViewportPointToRay(topRightCorner);
+        Vector3 topRight = GameManager.instance.mapWrapperCollider.Raycast(ray, out hit, distance)
+            ? hit.point : new Vector3();
+
+        return (bottomLeft, topRight);
+    }
+
+    public static Vector3 ProjectOnTerrain(Vector3 pos)
+    {
+        RaycastHit hit;
+        Vector3 initialPos = pos + Vector3.up * 1000f;
+        if (Physics.Raycast(initialPos, Vector3.down, out hit, 2000f, Globals.FLAT_TERRAIN_LAYER_MASK))
+            pos = hit.point;
+
+        return pos;
     }
 }
