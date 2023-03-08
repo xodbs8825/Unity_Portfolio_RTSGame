@@ -4392,6 +4392,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b50b37a36cb28c541bf32ff8d4868220, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingMenu: {fileID: 1123618835}
+  buildingButtonPrefab: {fileID: 3431803492444634260, guid: 6d7a54520659d9948bb3f0ae5ea0dd3b, type: 3}
+  cancelMenu: {fileID: 362976752}
   selectedUnitsListParent: {fileID: 2052983209}
   selectedUnitsDisplayPrefab: {fileID: 1493252497444894578, guid: ca104d8006900474fa8f489db9117f3a, type: 3}
   selectionGroupsParent: {fileID: 1440567000}
@@ -10235,7 +10238,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2138642238}
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 115, y: 60, z: 15}
+  m_LocalPosition: {x: 115, y: 60, z: 50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

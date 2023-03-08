@@ -22,7 +22,7 @@ public class TaskBuild : Node
         if (finishedBuilding)
         {
             _manager.SetIsConstructor(false);
-            //_manager.SetRendererVisibilty(true);
+            _manager.SetRendererVisibilty(true);
             ClearData("currentTarget");
         }
 

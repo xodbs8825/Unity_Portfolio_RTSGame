@@ -20,17 +20,14 @@ MonoBehaviour:
   cost:
   - code: 0
     amount: 400
-  fieldOfView: 30
+  fieldOfView: 100
   attackRange: 0
   attackDamage: 0
   attackRate: 0
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
-  myAttackRangeResearchComplete: 0
-  enemyAttackRangeResearchComplete: 0
   upgrade:
     attackDamage: 
-    attackRange: []
   canProduce: 0000000001000000
   skills:
   - {fileID: 11400000, guid: cd816dfedbc04054aaa587cca3521453, type: 2}

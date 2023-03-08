@@ -12,8 +12,6 @@ public class CameraManager : MonoBehaviour
     private Camera _camera;
     private RaycastHit _hit;
     private Ray _ray;
-    private Vector3 _spawnPoint1 = new Vector3(115f, 60f, 15f);
-    private Vector3 _spawnPoint2 = new Vector3(885f, 60f, 775f);
 
     private int _mouseOnScreenBorder;
     private KeyCode[] _cameraTranslationKeyCode = new KeyCode[]
@@ -55,12 +53,6 @@ public class CameraManager : MonoBehaviour
 
         if (Mathf.Abs(Input.mouseScrollDelta.y) > 0f)
             Zoom(Input.mouseScrollDelta.y > 0f ? -1 : 1);
-
-        transform.position = new Vector3(Mathf.Clamp(Camera.main.transform.position.x, _spawnPoint1.x, _spawnPoint2.x),
-            60f, Mathf.Clamp(Camera.main.transform.position.z, _spawnPoint1.z, _spawnPoint2.z));
-
-        _miniMapIndicator.position = new Vector3(Mathf.Clamp(_miniMapIndicator.position.x, 115f, 885f), 0.1f,
-            Mathf.Clamp(_miniMapIndicator.position.z, 118f, 887f));
     }
 
     private void TranslateCamera(int dir)

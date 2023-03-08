@@ -24,7 +24,6 @@ public class MiniMap : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (!_dragging) return;
 
-
         Vector2 delta = (Vector2)Input.mousePosition - _lastPointerPosition;
         _lastPointerPosition = Input.mousePosition;
 
