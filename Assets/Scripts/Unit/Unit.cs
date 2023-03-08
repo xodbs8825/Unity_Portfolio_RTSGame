@@ -73,11 +73,6 @@ public class Unit
         i = _attackDamageUpgradeValue;
 
         _uIndicator = false;
-
-        GamePlayersParameters parameter = GameManager.instance.gamePlayersParameters;
-        Color c = parameter.players[owner].color;
-        Transform minimapIcon = _transform.Find("Mesh/MinimapIcon");
-        minimapIcon.GetComponent<Renderer>().material.color = c;
     }
 
     public void UpgradeCost(int i)

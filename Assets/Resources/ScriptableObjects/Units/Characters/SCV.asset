@@ -20,7 +20,7 @@ MonoBehaviour:
   cost:
   - code: 0
     amount: 50
-  fieldOfView: 50
+  fieldOfView: 30
   attackRange: 10
   attackDamage: 5
   attackRate: 1

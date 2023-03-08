@@ -96,12 +96,10 @@
     <Compile Include="Assets\Scripts\Unit\UnitManager.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Tree\BuildingBT.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Tree.cs" />
-    <Compile Include="Assets\Scripts\UI\MiniMap\MinimapManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
-    <Compile Include="Assets\Scripts\UI\MiniMap\Minimap.cs" />
+    <Compile Include="Assets\Scripts\UI\MiniMap.cs" />
     <Compile Include="Assets\Scripts\Tools\BinarySerializable.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Check\CheckUnitIsMine.cs" />
-    <Compile Include="Assets\Scripts\UI\MiniMap\MinimapCapture.cs" />
     <Compile Include="Assets\Scripts\General\Utils.cs" />
     <Compile Include="Assets\Scripts\Tools\BinarySerializableData.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Timer.cs" />
@@ -116,7 +114,6 @@
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Task\TaskProduceResources.cs" />
     <Compile Include="Assets\Scripts\General\Manager\EventManager.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Tree\CharacterBT.cs" />
-    <Compile Include="Assets\Scripts\UI\MiniMap\MinimapCaptureWindow.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Task\TaskTrySetDestinationOrTarget.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Parallel.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerData.cs" />

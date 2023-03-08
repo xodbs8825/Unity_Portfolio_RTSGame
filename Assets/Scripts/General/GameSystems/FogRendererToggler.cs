@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FogRendererToggler : MonoBehaviour
 {
-    public GameObject mesh;
+    public Renderer myRenderer;
     [Range(0f, 1f)] public float threshold = 0.1f;
 
     private Camera _camera;
@@ -15,18 +15,6 @@ public class FogRendererToggler : MonoBehaviour
 
     private void Awake()
     {
-        if (!GameManager.instance.gameGlobalParameters.enableFOV)
-        {
-            this.enabled = false;
-            return;
-        }
-
-        if (!mesh)
-        {
-            this.enabled = false;
-            return;
-        }
-
         _camera = GameObject.Find("FogOfWar/UnexploredAreasCam").GetComponent<Camera>();
     }
 
@@ -64,10 +52,12 @@ public class FogRendererToggler : MonoBehaviour
 
     private void LateUpdate()
     {
-        bool active = GetColorAtPosition().grayscale >= threshold;
-        if (mesh.activeSelf != active)
+        if (!myRenderer)
         {
-            mesh.SetActive(active);
+            this.enabled = false;
+            return;
         }
+
+        myRenderer.enabled = GetColorAtPosition().grayscale >= threshold;
     }
 }
