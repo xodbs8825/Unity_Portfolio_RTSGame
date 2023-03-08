@@ -5682,7 +5682,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1094546877}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd2b20a04ce4eb4459d34b8bfaed5c82, type: 3}
   m_Name: 
@@ -10365,6 +10365,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f5e4312045b924bb08c63c21e9c92c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  translationSpeed: 160
+  miniMapIndicatorMaterial: {fileID: 2100000, guid: ab9742d0811f0cb49a87c95fd228c7f3, type: 2}
   groundTarget: {fileID: 778536940}
   autoAdaptAltitude: 0
 --- !u!20 &1367729982265587525

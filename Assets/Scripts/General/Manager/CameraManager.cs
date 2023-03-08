@@ -16,17 +16,12 @@ public class CameraManager : MonoBehaviour
     private Vector3 _spawnPoint0 = new Vector3(115f, 60f, 15f);
     private Vector3 _spawnPoint1 = new Vector3(885f, 60f, 775f);
 
-    private float _minX;
-    private float _minZ;
-    private float _maxX;
-    private float _maxZ;
-
-    private float _distance = 500f;
-    private float _camMinimapBuffer = 5f;
-
     private Vector3 _forwardDir;
-    private Vector3 _camOffset;
-    private Vector3 _camHalfViewZone;
+
+    public Material miniMapIndicatorMaterial;
+    private float _miniMapIndicatorStrokeWidth = 0.1f;
+    private Transform _miniMapIndicator;
+    private Mesh _miniMapIndicatorMesh;
 
     private int _mouseOnScreenBorder;
     private KeyCode[] _cameraTranslationKeyCode = new KeyCode[]
@@ -47,20 +42,10 @@ public class CameraManager : MonoBehaviour
         _camera = GetComponent<Camera>();
         _mouseOnScreenBorder = -1;
 
+        PrepareMapIndicator();
+
         groundTarget.position = Utils.MiddleOfScreenPointToWorld();
         _forwardDir = Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized;
-    }
-
-    private void Start()
-    {
-        _minX = 0f;
-        _minZ = 0f;
-        _maxX = 1000f;
-        _maxZ = 1000f;
-
-        (Vector3 minWorldPoint, Vector3 maxWorldPoint) = Utils.GetCameraWorldBounds();
-        _camOffset = transform.position - (maxWorldPoint + minWorldPoint) / 2f;
-        _camHalfViewZone = (maxWorldPoint - minWorldPoint) / 2f + Vector3.one * _camMinimapBuffer;
     }
 
     private void Update()
@@ -79,6 +64,9 @@ public class CameraManager : MonoBehaviour
 
         transform.position = new Vector3(Mathf.Clamp(Camera.main.transform.position.x, _spawnPoint0.x, _spawnPoint1.x),
             60f, Mathf.Clamp(Camera.main.transform.position.z, _spawnPoint0.z, _spawnPoint1.z));
+
+        _miniMapIndicator.position = new Vector3(Mathf.Clamp(_miniMapIndicator.position.x, 115f, 885f), 0.1f,
+            Mathf.Clamp(_miniMapIndicator.position.z, 118f, 887f));
     }
 
     public void SetPosition(int playerID)
@@ -86,24 +74,21 @@ public class CameraManager : MonoBehaviour
         transform.position = playerID == 0 ? _spawnPoint0 : _spawnPoint1;
     }
 
-    public void SetPosition(Vector3 pos)
-    {
-        transform.position = pos - _distance * transform.forward;
-    }
-
     private void TranslateCamera(int dir)
     {
-        if (dir == 0/* && transform.position.z - _camOffset.z + _camHalfViewZone.z <= _maxZ*/)          // top
+        if (dir == 0)
             transform.Translate(_forwardDir * Time.deltaTime * translationSpeed, Space.World);
-        else if (dir == 1/* && transform.position.x + _camHalfViewZone.x <= _maxX*/)                    // right
+        else if (dir == 1)
             transform.Translate(transform.right * Time.deltaTime * translationSpeed);
-        else if (dir == 2/* && transform.position.z - _camOffset.z - _camHalfViewZone.z >= _minZ*/)     // bottom
+        else if (dir == 2)     
             transform.Translate(-_forwardDir * Time.deltaTime * translationSpeed, Space.World);
-        else if (dir == 3/* && transform.position.x - _camHalfViewZone.x >= _minX*/)                    // left
+        else if (dir == 3)                    
             transform.Translate(-transform.right * Time.deltaTime * translationSpeed);
 
         if (autoAdaptAltitude)
             FixAltitude();
+
+        ComputeMiniMapIndicator(false);
     }
 
     private void FixAltitude()
@@ -129,27 +114,7 @@ public class CameraManager : MonoBehaviour
         _camera.orthographicSize += zoomDir * Time.deltaTime * _zoomSpeed;
         _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, 8f, _maxZoomSize);
 
-        (Vector3 minWorldPoint, Vector3 maxWorldPoint) = Utils.GetCameraWorldBounds();
-        _camOffset = transform.position - (maxWorldPoint + minWorldPoint) / 2f;
-        _camHalfViewZone = (maxWorldPoint - minWorldPoint) / 2f + Vector3.one * _camMinimapBuffer;
-
-        Vector3 pos = Utils.MiddleOfScreenPointToWorld();
-        pos = FixBounds(pos);
-        SetPosition(pos);
-    }
-
-    private Vector3 FixBounds(Vector3 pos)
-    {
-        if (pos.x - _camHalfViewZone.x < _minX) 
-            pos.x = _minX + _camHalfViewZone.x;
-        if (pos.x + _camHalfViewZone.x > _maxX) 
-            pos.x = _maxX - _camHalfViewZone.x;
-        if (pos.z - _camHalfViewZone.z < _minZ) 
-            pos.z = _minZ + _camHalfViewZone.z;
-        if (pos.z + _camHalfViewZone.z > _maxZ) 
-            pos.z = _maxZ - _camHalfViewZone.z;
-
-        return pos;
+        ComputeMiniMapIndicator(true);
     }
 
     private void OnEnable()
@@ -164,10 +129,104 @@ public class CameraManager : MonoBehaviour
 
     private void OnMoveCamera(object data)
     {
-        Vector3 pos = FixBounds((Vector3)data);
-        SetPosition(pos);
+        Vector3 pos = (Vector3)data;
+        float indicatorWidth = _miniMapIndicatorMesh.vertices[1].x - _miniMapIndicatorMesh.vertices[0].x;
+        float indicatorHeight = _miniMapIndicatorMesh.vertices[2].z - _miniMapIndicatorMesh.vertices[0].z;
 
-        if (autoAdaptAltitude)
-            FixAltitude();
+        pos.x -= indicatorWidth / 2f;
+        pos.z -= indicatorHeight / 2f;
+
+        Vector3 off = transform.position - Utils.MiddleOfScreenPointToWorld();
+        Vector3 newPos = pos + off;
+
+        newPos.y = 100f;
+        transform.position = newPos;
+
+        FixAltitude();
+        ComputeMiniMapIndicator(false);
+    }
+
+    private void PrepareMapIndicator()
+    {
+        GameObject g = new GameObject("MiniMapIndicator");
+        _miniMapIndicator = g.transform;
+        g.layer = 11; // put on "Minimap" layer
+        _miniMapIndicator.position = Vector3.zero;
+        _miniMapIndicatorMesh = CreateMiniMapIndicatorMesh();
+
+        MeshFilter mf = g.AddComponent<MeshFilter>();
+        mf.mesh = _miniMapIndicatorMesh;
+
+        MeshRenderer mr = g.AddComponent<MeshRenderer>();
+        mr.material = new Material(miniMapIndicatorMaterial);
+
+        ComputeMiniMapIndicator(true);
+    }
+
+    private Mesh CreateMiniMapIndicatorMesh()
+    {
+        Mesh m = new Mesh();
+
+        Vector3[] vertices = new Vector3[] {
+            Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero,
+            Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero
+        };
+
+        int[] triangles = new int[] {
+            0, 4, 1, 4, 5, 1,
+            0, 2, 6, 6, 4, 0,
+            6, 2, 7, 2, 3, 7,
+            5, 7, 3, 3, 1, 5
+        };
+
+        m.vertices = vertices;
+        m.triangles = triangles;
+
+        return m;
+    }
+
+    private void ComputeMiniMapIndicator(bool zooming)
+    {
+        Vector3 middle = Utils.MiddleOfScreenPointToWorld();
+        groundTarget.position = middle;
+
+        // if zooming: recompute the indicator mesh
+        if (zooming)
+        {
+            Vector3[] viewCorners = Utils.ScreenCornersToWorldPoints();
+
+            float width = viewCorners[1].x - viewCorners[0].x;
+            float height = viewCorners[2].z - viewCorners[0].z;
+
+            for (int i = 0; i < 4; i++)
+            {
+                viewCorners[i].x -= middle.x;
+                viewCorners[i].z -= middle.z;
+            }
+
+            Vector3[] innerCorners = new Vector3[]
+            {
+                new Vector3(viewCorners[0].x + _miniMapIndicatorStrokeWidth * width, 0f, viewCorners[0].z + _miniMapIndicatorStrokeWidth * height),
+                new Vector3(viewCorners[1].x - _miniMapIndicatorStrokeWidth * width, 0f, viewCorners[1].z + _miniMapIndicatorStrokeWidth * height),
+                new Vector3(viewCorners[2].x + _miniMapIndicatorStrokeWidth * width, 0f, viewCorners[2].z - _miniMapIndicatorStrokeWidth * height),
+                new Vector3(viewCorners[3].x - _miniMapIndicatorStrokeWidth * width, 0f, viewCorners[3].z - _miniMapIndicatorStrokeWidth * height)
+            };
+
+            Vector3[] allCorners = new Vector3[]
+            {
+                viewCorners[0], viewCorners[1], viewCorners[2], viewCorners[3],
+                innerCorners[0], innerCorners[1], innerCorners[2], innerCorners[3]
+            };
+
+            for (int i = 0; i < 8; i++)
+                allCorners[i].y = 100f;
+
+            _miniMapIndicatorMesh.vertices = allCorners;
+            _miniMapIndicatorMesh.RecalculateNormals();
+            _miniMapIndicatorMesh.RecalculateBounds();
+        }
+
+        // move the game object at the center of the main camera screen
+        _miniMapIndicator.position = middle;
     }
 }
