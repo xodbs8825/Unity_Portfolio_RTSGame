@@ -57,14 +57,14 @@ public class DebugConsole : MonoBehaviour
             }
         });
 
-        new DebugCommand<float>("Set construction ratio", "Sets the selected unit construction ratio.",
+        new DebugCommand<int>("Set construction ratio", "Sets the selected unit construction ratio.",
             "Set construction ratio_<ratio>", (x) =>
             {
                 if (Globals.SELECTED_UNITS.Count == 0) return;
                 Building b = (Building)Globals.SELECTED_UNITS[0].GetComponent<BuildingManager>().Unit;
 
                 if (b == null) return;
-                b.SetConstructionRatio(x);
+                b.SetConstructionHP(x);
             });
     }
 

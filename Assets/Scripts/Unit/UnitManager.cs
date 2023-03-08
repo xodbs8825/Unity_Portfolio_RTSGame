@@ -38,7 +38,7 @@ public class UnitManager : MonoBehaviour
     private void Update()
     {
         if (healthBar != null)
-            SetHPBar(healthBar.GetComponent<HealthBar>(), transform.GetChild(0), zoomSize);
+            SetHPBar(healthBar.GetComponent<HealthBar>(), transform.GetChild(0));
 
         Unit.UpdateUpgradeParameters();
 
@@ -106,24 +106,27 @@ public class UnitManager : MonoBehaviour
 
             HealthBar hpBar = healthBar.GetComponent<HealthBar>();
 
-            Rect boundingBox = Utils.GetBoundingBoxOnScreen(transform.Find("Mesh").GetComponent<Renderer>().bounds, Camera.main);
 
-            SetHPBar(hpBar, transform.GetChild(0), zoomSize);
+            SetHPBar(hpBar, transform.GetChild(1));
         }
     }
 
-    private void SetHPBar(HealthBar hpBar, Transform meshSize, float zoomSize)
+    private void SetHPBar(HealthBar hpBar, Transform meshSize)
     {
-        SetHPBarPosition(hpBar, meshSize.localScale.y * zoomSize);
+        SetHPBarPosition(hpBar);
 
-        hpBar.SetHPUISize(meshSize.localScale.x * 15 * zoomSize);
+        hpBar.SetHPUISize(meshSize.localScale.x * 20 * zoomSize);
     }
 
-    private void SetHPBarPosition(HealthBar hpBar, float colliderYSize)
+    private void SetHPBarPosition(HealthBar hpBar)
     {
         Vector3 hpPos = hpBar.GetComponent<RectTransform>().position;
         hpPos = Camera.main.WorldToScreenPoint(transform.position - Vector3.up);
-        hpPos.y -= colliderYSize * 5;
+
+        Rect boundingBox = Utils.GetBoundingBoxOnScreen(transform.Find("Mesh").GetComponent<Renderer>().bounds, Camera.main);
+
+        //hpPos.y -= meshYSize * 5;
+        hpPos.y -= boundingBox.height / 3f;
         hpBar.GetComponent<RectTransform>().position = hpPos;
     }
 

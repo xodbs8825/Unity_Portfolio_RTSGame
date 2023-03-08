@@ -84,6 +84,21 @@ public class BuildingPlacer : MonoBehaviour
 
     private void OnBuildInput(object data)
     {
+        if (Globals.SELECTED_UNITS.Count == 0) return;
+
+        UnitManager manager = null;
+        foreach (UnitManager selected in Globals.SELECTED_UNITS)
+        {
+            if (selected is CharacterManager characterManager && ((CharacterData)characterManager.Unit.Data).buildPower > 0)
+            {
+                manager = characterManager;
+                break;
+            }
+        }
+
+        if (manager == null) return;
+        _builderManager = manager;
+
         string buildingCode = (string)data;
         for (int i = 0; i < Globals.BUILDING_DATA.Length; i++)
         {
@@ -109,7 +124,7 @@ public class BuildingPlacer : MonoBehaviour
 
         PlaceBuilding(false);
 
-        _placedBuilding.SetConstructionRatio(1);
+        _placedBuilding.SetConstructionHP(_placedBuilding.MaxHP);
         _placedBuilding = prevPlacedBuilding;
     }
 

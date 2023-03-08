@@ -118,16 +118,14 @@ public class BuildingManager : UnitManager
     {
         if (!healthBar) return;
         Transform fill = healthBar.transform.Find("HPGauge");
+        int hp = (IsActive() && !_building.IsAlive) ? _building.ConstructionHP : Unit.HP;
 
-        if (IsActive() && !_building.IsAlive)
-            fill.GetComponent<Image>().fillAmount = _building.ConstructionRatio;
-        else
-            fill.GetComponent<Image>().fillAmount = (float)Unit.HP / (float)Unit.MaxHP;
+        fill.GetComponent<Image>().fillAmount = (float)hp / (float)Unit.MaxHP;
     }
 
     public bool Build(int buildPower)
     {
-        _building.SetConstructionRatio(_building.ConstructionRatio + (float)buildPower / (float)Unit.MaxHP);
+        _building.SetConstructionHP(_building.ConstructionHP + buildPower);
         UpdateHealthBar();
         return _building.IsAlive;
     }

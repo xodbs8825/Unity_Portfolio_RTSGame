@@ -30,10 +30,14 @@ MonoBehaviour:
   enemyAttackRangeResearchComplete: 0
   upgrade:
     attackDamage: 050000000a0000000f00000014000000
-    attackRange: []
+    attackRange:
+    - 10
+    - 15
   canProduce: 
   skills:
   - {fileID: 11400000, guid: bce3e4190f4e92d48a7dd039129cacef, type: 2}
+  - {fileID: 11400000, guid: be5c337d6ae876c49b5f7ad60538d7ed, type: 2}
+  - {fileID: 11400000, guid: 7f2fb41d84bb3bd46947ba240587c834, type: 2}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound:
   - {fileID: 8300000, guid: 94a7cc749f0d39e48b020744ce1f5c20, type: 3}
@@ -44,5 +48,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 65ec287f1bd989e468dcf7ed524ab128, type: 3}
   - {fileID: 8300000, guid: 688b9d1342268664f89cdba11cca8d18, type: 3}
   buildRate: 1.2
-  buildRange: 2
+  buildRange: 10
   buildPower: 20
