@@ -20,7 +20,13 @@ public class GameManager : MonoBehaviour
     public GameObject fov;
 
     [Header("Minimap")]
+    public Transform minimapAnchor;
+    public Camera minimapCamera;
+    public BoxCollider minimapFOVCollider;
+    public Minimap minimapScript;
+    public int terrainSize;
     public Collider mapWrapperCollider;
+
 
     [HideInInspector]
     public bool gameIsPaused;
@@ -69,6 +75,8 @@ public class GameManager : MonoBehaviour
         fov.SetActive(gameGlobalParameters.enableFOV);
 
         Globals.InitializeGameResources(gamePlayersParameters.players.Length);
+
+        SetupMinimap();
     }
 
     private void Update()
@@ -154,5 +162,19 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         DataHandler.SaveGameData();
+    }
+
+    private void SetupMinimap()
+    {
+        Bounds bounds = GameObject.Find("Terrain").GetComponent<Terrain>().terrainData.bounds;
+
+        terrainSize = (int)bounds.size.x;
+        float p = terrainSize / 2;
+
+        minimapAnchor.position = new Vector3(p, 0, p);
+        minimapCamera.orthographicSize = p;
+        minimapFOVCollider.center = new Vector3(0, bounds.center.y, 0);
+        minimapFOVCollider.size = bounds.size;
+        minimapScript.terrainSize = Vector2.one * terrainSize;
     }
 }

@@ -202,11 +202,11 @@ public static class Utils
 
         ray = MainCamera.ViewportPointToRay(bottomLeftCorner);
         Vector3 bottomLeft = GameManager.instance.mapWrapperCollider.Raycast(ray, out hit, distance)
-            ? hit.point : new Vector3();
+            ? hit.point : Vector3.zero;
 
         ray = MainCamera.ViewportPointToRay(topRightCorner);
         Vector3 topRight = GameManager.instance.mapWrapperCollider.Raycast(ray, out hit, distance)
-            ? hit.point : new Vector3();
+            ? hit.point : Vector3.zero;
 
         return (bottomLeft, topRight);
     }
