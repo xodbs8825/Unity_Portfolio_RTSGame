@@ -63,9 +63,11 @@
     <Compile Include="Assets\Scripts\Unit\Building\Building.cs" />
     <Compile Include="Assets\Scripts\Unit\Building\BuildingData.cs" />
     <Compile Include="Assets\Scripts\Unit\Building\BuildingManager.cs" />
+    <Compile Include="Assets\Scripts\Core\CoreDataHandler.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Check\CheckHasDestination.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Check\CheckUnitInRange.cs" />
     <Compile Include="Assets\Scripts\General\GameSystems\FogRendererToggler.cs" />
+    <Compile Include="Assets\Scripts\Map\MapMetaDataExtractorHierarchyExtensions.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Selector.cs" />
     <Compile Include="Assets\Scripts\UI\GameSettingMenuController.cs" />
     <Compile Include="Assets\Scripts\General\Globals.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="Assets\Scripts\General\Manager\CameraManager.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\PoissonDiscSampling.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitSelection.cs" />
+    <Compile Include="Assets\Scripts\Core\CoreBooter.cs" />
     <Compile Include="Assets\Scripts\Tools\BinarySerializableScriptableObject.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node.cs" />
     <Compile Include="Assets\Scripts\General\Parameters\GamePlayersParameters.cs" />
@@ -110,6 +113,7 @@
     <Compile Include="Assets\Scripts\Tools\JSONSerializableScriptableObject.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Check\CheckHasTarget.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Inverter.cs" />
+    <Compile Include="Assets\Scripts\Map\MapData.cs" />
     <Compile Include="Assets\Scripts\General\GameData\DataHandler.cs" />
     <Compile Include="Assets\Scripts\General\Parameters\GameParameters.cs" />
     <Compile Include="Assets\Scripts\Unit\Building\BuildingPlacer.cs" />
@@ -117,16 +121,13 @@
     <Compile Include="Assets\Scripts\General\Manager\EventManager.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Tree\CharacterBT.cs" />
     <Compile Include="Assets\Scripts\UI\MiniMap\MinimapCaptureWindow.cs" />
+    <Compile Include="Assets\Scripts\Map\MapMetaDataExtractor.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Task\TaskTrySetDestinationOrTarget.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Parallel.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Unit\Character\Skill\SkillManager.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitData.cs" />
-    <Compile Include="Assets\Scripts\Map\MapData.cs" />
-    <Compile Include="Assets\Scripts\Map\MapMetaDataExtractor.cs" />
-    <Compile Include="Assets\Scripts\Map\MapMetaDataExtractorHierarchyExtensions.cs" />
-    <Compile Include="Assets\Scripts\Core\CoreDataHandler.cs" />
-    <Compile Include="Assets\Scripts\Core\CoreBooter.cs" />
+    <Compile Include="Assets\Scripts\UI\MainMenu\MainMenuManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Shaders\AlphaProjection.shader" />

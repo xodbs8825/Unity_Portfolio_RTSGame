@@ -17,7 +17,7 @@ public class CoreBooter : MonoBehaviour
 
     private void Start()
     {
-        LoadMap("Test Map");
+        LoadMap("TestMap");
     }
 
     public void LoadMap(string mapName)

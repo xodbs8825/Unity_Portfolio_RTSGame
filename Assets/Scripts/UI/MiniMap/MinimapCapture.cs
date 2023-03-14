@@ -24,7 +24,7 @@ public static class MinimapCapture
         Object.DestroyImmediate(output);
 
         // 스크린샷 저장 폴더에 파일 저장
-        string folderPath = Application.dataPath + "/MapCaptures";
+        string folderPath = Application.dataPath + "/Resources/MapCaptures";
         if (!Directory.Exists(folderPath))
         {
             Directory.CreateDirectory(folderPath);

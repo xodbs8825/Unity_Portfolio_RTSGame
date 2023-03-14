@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     public GameObject fov;
 
     [Header("Minimap")]
-    public Transform minimapAnchor;
     public Camera minimapCamera;
     public BoxCollider minimapFOVCollider;
     public Minimap minimapScript;
@@ -171,7 +170,6 @@ public class GameManager : MonoBehaviour
         terrainSize = (int)bounds.size.x;
         float p = terrainSize / 2;
 
-        minimapAnchor.position = new Vector3(p, 0, p);
         minimapCamera.orthographicSize = p;
         minimapFOVCollider.center = new Vector3(0, bounds.center.y, 0);
         minimapFOVCollider.size = bounds.size;
