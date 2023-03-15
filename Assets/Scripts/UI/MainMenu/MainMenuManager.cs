@@ -21,6 +21,7 @@ public class MainMenuManager : MonoBehaviour
     {
         Color.red, Color.blue, Color.yellow, Color.green, Color.cyan, Color.magenta, Color.white, Color.gray
     };
+    private List<Color> _availableColors;
 
     void Start()
     {
@@ -49,6 +50,7 @@ public class MainMenuManager : MonoBehaviour
     
     private void SelectMap(MapData map, Sprite mapSprite)
     {
+        _availableColors = new List<Color>(_playerColors);
         _selectedMap = map;
 
         foreach (Transform child in newGamePlayersList)
@@ -76,6 +78,12 @@ public class MainMenuManager : MonoBehaviour
 
             player.Find("Color/Content").GetComponent<Button>().onClick.AddListener(() =>
             {
+                for (int j = 0; j < _playerColors.Length; j++)
+                {
+                    picker = colorPicker.Find("Background").GetChild(j);
+                    picker.GetComponent<Button>().interactable = _availableColors.Contains(_playerColors[j]);
+                }
+
                 colorPicker.gameObject.SetActive(true);
             });
 
@@ -89,10 +97,41 @@ public class MainMenuManager : MonoBehaviour
 
     }
 
-    private void SetPlayerColor(Color color, int i, Image colorSprite)
+    private void SetPlayerColor(Color color, int i, Image colorSprite, bool autoAdd = true)
     {
+        if (autoAdd && _playerData[i].color != null)
+        {
+            _availableColors.Add(_playerData[i].color);
+        }
+        _availableColors.Remove(color);
+
         _playerData[i].color = color;
         colorSprite.color = color;
+    }
+
+    private void TogglePlayer(Transform t, int i)
+    {
+        bool active = true;
+        Color c = _playerData[i].color;
+
+        if (active)
+        {
+            if (_availableColors.Contains(c))
+            {
+                _availableColors.Remove(c);
+            }
+            else
+            {
+                SetPlayerColor(_availableColors[0], i, t.Find("Color/Content").GetComponent<Image>(), false);
+            }
+        }
+        else
+        {
+            if (!_availableColors.Contains(c))
+            {
+                _availableColors.Add(c);
+            }
+        }
     }
 
     private void AddScenePickPlayerColorListener(Transform colorPicker, Image colorSprite, Button b, int i, int j)
