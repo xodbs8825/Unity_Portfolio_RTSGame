@@ -9,14 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14623c883eb903d44ba947947d1f9561, type: 3}
-  m_Name: Players Parameters
+  m_Script: {fileID: 11500000, guid: 6c549f104d6bbca4faa9a7d7046ada38, type: 3}
+  m_Name: TestMap1
   m_EditorClassIdentifier: 
-  _fieldsToSerialize: []
-  _fieldsToShowInGame: []
-  players:
-  - name: Player
-    color: {r: 0, g: 1, b: 0, a: 1}
-  - name: Enemy 1
-    color: {r: 1, g: 0, b: 0, a: 1}
-  myPlayerID: 0
+  mapName: TestMap1
+  mapSize: 200
+  maxPlayers: 3
+  sceneName: TestMap1

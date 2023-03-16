@@ -38,18 +38,21 @@ public class BinarySerializableScriptableObject : ScriptableObject
             _fieldsToSerialize.Add(fieldName);
     }
 
-    public void SaveToFile()
+    public void SaveToFile(string fileName = null, bool serializeAll = false)
     {
         string dirPath = Path.Combine(Application.persistentDataPath, _scriptableObjectsDataDirectory);
-        string filePath = Path.Combine(dirPath, $"{name}.data");
+        string filePath = Path.Combine(dirPath, $"{(fileName == null ? name : fileName)}.data");
+        string fullDirPath = Path.GetDirectoryName(filePath);
 
-        if (!Directory.Exists(dirPath))
-            Directory.CreateDirectory(dirPath);
+        if (!Directory.Exists(fullDirPath))
+        {
+            Directory.CreateDirectory(fullDirPath);
+        }
 
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(filePath, FileMode.Create);
 
-        BinarySerializableData data = new BinarySerializableData(this, _fieldsToSerialize);
+        BinarySerializableData data = new BinarySerializableData(this, _fieldsToSerialize, serializeAll);
         try
         {
             formatter.Serialize(stream, data.properties);
@@ -64,9 +67,10 @@ public class BinarySerializableScriptableObject : ScriptableObject
         }
     }
 
-    public void LoadFromFile()
+    public void LoadFromFile(string fileName = null)
     {
-        string filePath = Path.Combine(Application.persistentDataPath, _scriptableObjectsDataDirectory, $"{name}.data");
+        string filePath = Path.Combine(Application.persistentDataPath, _scriptableObjectsDataDirectory, 
+            $"{(fileName == null ? name : fileName)}.data");
 
         if (!File.Exists(filePath))
         {

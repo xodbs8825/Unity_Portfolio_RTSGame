@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime;
 using UnityEngine;
 
 public class CoreDataHandler : MonoBehaviour
@@ -8,8 +10,11 @@ public class CoreDataHandler : MonoBehaviour
 
     private MapData _mapData;
 
-    public string Scene => _mapData.sceneName;
+    public string Scene => _mapData != null ? _mapData.sceneName : null;
     public float MapSize => _mapData.mapSize;
+
+    private string _gameUserID;
+    public string GameUserID => _gameUserID;
 
     private void Awake()
     {
@@ -22,5 +27,10 @@ public class CoreDataHandler : MonoBehaviour
     public void SetMapData(MapData data)
     {
         _mapData = data;
+    }
+
+    public void SetGameUserID(MapData map)
+    {
+        _gameUserID = $"{map.sceneName}__{Guid.NewGuid().ToString()}";
     }
 }
