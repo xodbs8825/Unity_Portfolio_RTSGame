@@ -159,11 +159,15 @@ public class UIManager : MonoBehaviour
         {
             if (_unit.UpgradeIndicator)
             {
+                if (selectedUnitActionButtonsParent.transform.GetChild(0).name != "Upgrade Attack Damage") return;
                 selectedUnitActionButtonsParent.transform.GetChild(0).GetComponent<Button>().interactable = false;
+                selectedUnitActionButtonsParent.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
             }
             if (_unit.AttackRangeResearchCompleted)
             {
+                if (selectedUnitActionButtonsParent.transform.GetChild(1).name != "Research Attack Range") return;
                 selectedUnitActionButtonsParent.transform.GetChild(1).GetComponent<Button>().interactable = false;
+                selectedUnitActionButtonsParent.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
             }
         }
     }
@@ -285,13 +289,25 @@ public class UIManager : MonoBehaviour
             case "Upgrade Attack Damage":
                 if (_unit.Owner == 0)
                 {
-                    if (data.unitData.myAttackDamageLevel == 3) cost = Globals.UPGRADECOST_ATTACKDAMAGE[3];
-                    cost = Globals.UPGRADECOST_ATTACKDAMAGE[data.unitData.myAttackDamageLevel + 1];
+                    if (data.unitData.myAttackDamageLevel == 3)
+                    {
+                        cost = Globals.UPGRADECOST_ATTACKDAMAGE[3];
+                    }
+                    else
+                    {
+                        cost = Globals.UPGRADECOST_ATTACKDAMAGE[data.unitData.myAttackDamageLevel + 1];
+                    }
                 }
                 else
                 {
-                    if (data.unitData.enemyAttackDamageLevel == 3) cost = Globals.UPGRADECOST_ATTACKDAMAGE[3];
-                    cost = Globals.UPGRADECOST_ATTACKDAMAGE[data.unitData.enemyAttackDamageLevel + 1];
+                    if (data.unitData.enemyAttackDamageLevel == 3)
+                    {
+                        cost = Globals.UPGRADECOST_ATTACKDAMAGE[3];
+                    }
+                    else
+                    {
+                        cost = Globals.UPGRADECOST_ATTACKDAMAGE[data.unitData.enemyAttackDamageLevel + 1];
+                    }
                 }
                 break;
             case "Research Attack Range":
@@ -421,7 +437,6 @@ public class UIManager : MonoBehaviour
         if (_selectedUnitTitleText != null)
             _selectedUnitTitleText.text = unit.Data.unitName;
 
-        // clear skills and reinstantiate new ones
         foreach (Transform child in _selectedUnitActionButtonsParent)
             Destroy(child.gameObject);
 

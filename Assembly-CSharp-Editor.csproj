@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\General\Editor\GameParametersEditor.cs" />
     <Compile Include="Assets\Scripts\General\Editor\PlayerDataDrawer.cs" />
+    <Compile Include="Assets\Scripts\General\Editor\NamedArrayAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

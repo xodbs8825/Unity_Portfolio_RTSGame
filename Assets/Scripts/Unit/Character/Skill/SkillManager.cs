@@ -16,7 +16,6 @@ public class SkillManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         skill.InitializeUpgrade();
-
     }
 
     public void Initialize(SkillData skill, GameObject source)

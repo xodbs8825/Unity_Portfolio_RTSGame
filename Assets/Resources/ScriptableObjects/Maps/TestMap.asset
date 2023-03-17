@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c549f104d6bbca4faa9a7d7046ada38, type: 3}
   m_Name: TestMap
   m_EditorClassIdentifier: 
-  mapName: Test Map
-  mapSize: 200
+  mapName: TestMap
+  mapSize: 1000
   maxPlayers: 2
   sceneName: TestMap

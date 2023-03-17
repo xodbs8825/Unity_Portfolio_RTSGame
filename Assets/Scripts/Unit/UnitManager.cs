@@ -101,7 +101,7 @@ public class UnitManager : MonoBehaviour
     {
         if (healthBar == null)
         {
-            this.healthBar = GameObject.Instantiate(Resources.Load("Prefabs/UI/HealthBar")) as GameObject;
+            this.healthBar = GameObject.Instantiate(Resources.Load("Prefabs/UI/GameScene/HealthBar")) as GameObject;
             this.healthBar.transform.SetParent(_healthBarParent);
 
             HealthBar hpBar = healthBar.GetComponent<HealthBar>();
