@@ -34,6 +34,7 @@ MonoBehaviour:
   canProduce: 0000000001000000
   skills:
   - {fileID: 11400000, guid: cd816dfedbc04054aaa587cca3521453, type: 2}
+  TechTree: {fileID: 0}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound:
   - {fileID: 0}

@@ -22,8 +22,6 @@ public class Unit
     protected bool _uIndicator;
     protected bool _rIndicator;
 
-    private int i;
-
     #region 유닛 업그레이드
     protected int _attackDamage;
     protected int _attackDamageUpgradeValue;
@@ -34,6 +32,8 @@ public class Unit
     protected bool _myAttackDamageUpgradeComplete;
     protected bool _enemyAttackDamageUpgradeComplete;
     protected int enemylvl;
+
+    protected TechnologyTree _techTree;
 
     public Unit(UnitData data, int owner) : this(data, owner, new List<ResourceValue>() { }) { }
     public Unit(UnitData data, int owner, List<ResourceValue> production)
@@ -70,9 +70,9 @@ public class Unit
         _attackRange = data.attackRange;
         _attackRangeResearchComplete = false;
 
-        i = _attackDamageUpgradeValue;
-
         _uIndicator = false;
+
+        _techTree = data.techTree;
 
         GamePlayersParameters parameter = GameManager.instance.gamePlayersParameters;
         Color c = parameter.players[owner].color;
@@ -222,4 +222,5 @@ public class Unit
     public float AttackRange { get => _attackRange; }
     public bool AttackRangeResearchCompleted { get => _attackRangeResearchComplete; }
     public bool UpgradeIndicator { get => _uIndicator; }
+    public TechnologyTree TechTree { get => _techTree; }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,6 +32,8 @@ public class UnitData : ScriptableObject
 
     public List<SkillData> skills = new List<SkillData>();
 
+    public TechnologyTree techTree;
+
     [Header("General Sounds")]
     public AudioClip selectSound;
 
@@ -43,7 +46,7 @@ public class UnitData : ScriptableObject
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class UpgradeSystem
 {
     public List<int> attackDamage;
