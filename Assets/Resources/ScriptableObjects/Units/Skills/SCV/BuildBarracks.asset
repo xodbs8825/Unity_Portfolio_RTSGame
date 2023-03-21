@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
-  m_Name: BuildFactory
+  m_Name: BuildBarracks
   m_EditorClassIdentifier: 
-  code: build_Factory
-  skillName: Build Factory
-  description: Build Factory
+  code: build_Barracks
+  skillName: Build Barracks
+  description: Build Barracks
   type: 1
-  unitData: {fileID: 11400000, guid: ecf9e962d627680488bb8684e01c02af, type: 2}
+  unitData: {fileID: 11400000, guid: 06a86b6958539164e839ad6b281f8c7d, type: 2}
   castTime: 0
   cooldown: 0
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: {fileID: 11400000, guid: 06a86b6958539164e839ad6b281f8c7d, type: 2}
+    requiredBuilding: {fileID: 11400000, guid: 070c39f8fab990249a1fd86a1b65119c, type: 2}
     requiredSkill: []
   techTreeOpen: 0

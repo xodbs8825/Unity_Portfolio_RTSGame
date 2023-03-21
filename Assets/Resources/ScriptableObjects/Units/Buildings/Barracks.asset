@@ -16,7 +16,7 @@ MonoBehaviour:
   unitName: Barracks
   description: Bionic Unit Training Facility
   healthPoint: 300
-  prefab: {fileID: 0}
+  prefab: {fileID: 5542380815447981279, guid: ecc2612e46d755e49840d603b06de593, type: 3}
   cost:
   - code: 0
     amount: 150
@@ -33,6 +33,6 @@ MonoBehaviour:
     attackRange: []
   canProduce: 
   skills: []
-  techTree: {fileID: 0}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
-  interactSound: []
+  interactSound:
+  - {fileID: 0}

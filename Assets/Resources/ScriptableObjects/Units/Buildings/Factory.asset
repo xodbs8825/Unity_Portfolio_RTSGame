@@ -35,6 +35,6 @@ MonoBehaviour:
     attackRange: []
   canProduce: 
   skills: []
-  techTree: {fileID: 0}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
-  interactSound: []
+  interactSound:
+  - {fileID: 0}

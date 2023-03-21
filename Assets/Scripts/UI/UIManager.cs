@@ -169,6 +169,19 @@ public class UIManager : MonoBehaviour
                 selectedUnitActionButtonsParent.transform.GetChild(1).GetComponent<Button>().interactable = false;
                 selectedUnitActionButtonsParent.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
             }
+            for (int i = 0; i < _unit.SkillManagers.Count; i++)
+            {
+                if (_unit.SkillManagers[i].skill.techTreeOpen)
+                {
+                    selectedUnitActionButtonsParent.transform.GetChild(i).GetComponent<Button>().interactable = true;
+                    selectedUnitActionButtonsParent.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                }
+                else
+                {
+                    selectedUnitActionButtonsParent.transform.GetChild(i).GetComponent<Button>().interactable = false;
+                    selectedUnitActionButtonsParent.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                }
+            }
         }
     }
 

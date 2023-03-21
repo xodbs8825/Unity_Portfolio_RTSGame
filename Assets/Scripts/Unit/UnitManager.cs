@@ -19,6 +19,8 @@ public class UnitManager : MonoBehaviour
 
     public AudioSource contextualSource;
 
+    private float hpRatio;
+
     private bool _selected = false;
     public bool IsSelected { get => _selected; }
     private bool _isSelectSoundEnded = true;
@@ -29,6 +31,11 @@ public class UnitManager : MonoBehaviour
     public int SelectIndex { get => _selectIndex; }
 
     public virtual Unit Unit { get; set; }
+
+    private void Start()
+    {
+        hpRatio = 0f;
+    }
 
     private void Awake()
     {
@@ -106,7 +113,6 @@ public class UnitManager : MonoBehaviour
 
             HealthBar hpBar = healthBar.GetComponent<HealthBar>();
 
-
             SetHPBar(hpBar, transform.GetChild(1));
         }
     }
@@ -114,6 +120,8 @@ public class UnitManager : MonoBehaviour
     private void SetHPBar(HealthBar hpBar, Transform meshSize)
     {
         SetHPBarPosition(hpBar);
+
+        
 
         hpBar.SetHPUISize(meshSize.localScale.x * 20 * zoomSize);
     }
@@ -253,6 +261,21 @@ public class UnitManager : MonoBehaviour
     {
         if (!healthBar) return;
         Transform fill = healthBar.transform.Find("HPGauge");
-        fill.GetComponent<Image>().fillAmount = Unit.HP / (float)Unit.MaxHP;
+
+        hpRatio = (float)Unit.HP / (float)Unit.MaxHP;
+        fill.GetComponent<Image>().fillAmount = hpRatio;
+
+        if (hpRatio < 0.3f)
+        {
+            fill.GetComponent<Image>().color = Color.red;
+        }
+        else if (hpRatio >= 0.3f && hpRatio < 0.7f)
+        {
+            fill.GetComponent<Image>().color = Color.yellow;
+        }
+        else if (hpRatio >= 0.7f)
+        {
+            fill.GetComponent<Image>().color = Color.green;
+        }
     }
 }

@@ -11,6 +11,12 @@ public enum SkillType
     RESEARCH_ATTACKRANGE,
 }
 
+[System.Serializable]
+public class TechTree
+{
+    public UnitData requiredBuilding;
+}
+
 [CreateAssetMenu(fileName = "Skill", menuName = "Scriptable Objects/Skill", order = 4)]
 public class SkillData : ScriptableObject
 {
@@ -24,6 +30,9 @@ public class SkillData : ScriptableObject
     public Sprite sprite;
 
     public AudioClip sound;
+
+    public TechTree techTree;
+    public bool techTreeOpen;
 
     private int _myCounter;
     private int _enemyCounter;

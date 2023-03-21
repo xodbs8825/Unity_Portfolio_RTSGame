@@ -13,6 +13,28 @@ public class SkillManager : MonoBehaviour
 
     private AudioSource _sourceContextualSource;
 
+    private void Update()
+    {
+        if (skill.techTree.requiredBuilding == null)
+        {
+            skill.techTreeOpen = true;
+        }
+        else
+        {
+            string n = skill.techTree.requiredBuilding.name + "(Clone)";
+            if (GameObject.Find(n) 
+                && GameObject.Find(n).GetComponent<UnitManager>().Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID
+                && GameObject.Find(n).GetComponent<BuildingBT>().isActiveAndEnabled)
+            {
+                skill.techTreeOpen = true;
+            }
+            else
+            {
+                skill.techTreeOpen = false;
+            }
+        }
+    }
+
     private void OnApplicationQuit()
     {
         skill.InitializeUpgrade();
