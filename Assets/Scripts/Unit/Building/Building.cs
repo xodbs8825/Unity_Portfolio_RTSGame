@@ -68,7 +68,7 @@ public class Building : Unit
         else
             return;
 
-        _transform.Find("Mesh").GetComponent<Renderer>().materials = materials.ToArray();
+        //_transform.Find("Mesh").GetComponent<Renderer>().materials = materials.ToArray();
     }
 
     public override void Place()
