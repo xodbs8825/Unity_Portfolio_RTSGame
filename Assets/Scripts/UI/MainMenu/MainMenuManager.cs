@@ -20,7 +20,9 @@ public class MainMenuManager : MonoBehaviour
     private Dictionary<int, PlayerData> _playerData;
     private static readonly Color[] _playerColors = new Color[]
     {
-        Color.red, Color.blue, Color.yellow, Color.green, Color.cyan, Color.magenta, Color.white, Color.gray
+        new Color32(57, 55, 60, 54), new Color32(49, 89, 173, 104), new Color32(136, 75, 37, 81), new Color32(0, 116, 19, 55),
+        new Color32(189, 89, 184, 131), new Color32(104, 70, 151, 104), new Color32(173, 49, 13, 88), new Color32(206, 102, 11, 102),
+        new Color32(173, 189, 203, 177), new Color32(198, 154, 2, 94)
     };
     private List<Color> _availableColors;
     private List<bool> _activePlayers;

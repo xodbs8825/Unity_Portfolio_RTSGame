@@ -120,7 +120,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         _myPlayerID = GameManager.instance.gamePlayersParameters.myPlayerID;
-        Color c = GameManager.instance.gamePlayersParameters.players[_myPlayerID].color;
+        //Color c = GameManager.instance.gamePlayersParameters.players[_myPlayerID].color;
 
         #region 인게임 자원 생성
         // 인게임 자원 텍스트 생성

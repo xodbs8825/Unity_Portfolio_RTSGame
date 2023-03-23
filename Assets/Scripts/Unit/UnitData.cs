@@ -28,14 +28,14 @@ public class UnitData : ScriptableObject
     public bool enemyAttackRangeResearchComplete;
     public UpgradeSystem upgrade;
 
+    [Header("Skill")]
     public InGameResource[] canProduce;
-
     public List<SkillData> skills = new List<SkillData>();
 
-    [Header("General Sounds")]
-    public AudioClip selectSound;
+    [Header("Material")]
 
-    [Header("Unit Sound")]
+    [Header("Audio")]
+    public AudioClip selectSound;
     public AudioClip[] interactSound;
 
     public bool CanBuy(int owner)

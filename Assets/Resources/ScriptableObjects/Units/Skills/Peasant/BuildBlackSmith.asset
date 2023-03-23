@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
+  m_Name: BuildBlackSmith
+  m_EditorClassIdentifier: 
+  code: build_BlackSmith
+  skillName: Build BlackSmith
+  description: Build BlackSmith
+  type: 1
+  unitData: {fileID: 11400000, guid: 6ad37734c26986847bf00ee626c35d18, type: 2}
+  castTime: 0
+  cooldown: 0
+  sprite: {fileID: 0}
+  sound: {fileID: 0}
+  techTree:
+    requiredBuilding: {fileID: 11400000, guid: 070c39f8fab990249a1fd86a1b65119c, type: 2}
+  techTreeOpen: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   code: barracks
   unitName: Barracks
-  description: Bionic Unit Training Facility
+  description: Base unit training facility
   healthPoint: 300
   prefab: {fileID: 5542380815447981279, guid: ecc2612e46d755e49840d603b06de593, type: 3}
   cost:
