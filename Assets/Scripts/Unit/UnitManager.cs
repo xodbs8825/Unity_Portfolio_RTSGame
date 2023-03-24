@@ -7,6 +7,10 @@ using UnityEngine.UI;
 public class UnitManager : MonoBehaviour
 {
     public GameObject selectionCircle;
+    private bool _selected = false;
+    private int _selectIndex = -1;
+    public bool IsSelected { get => _selected; }
+    public int SelectIndex { get => _selectIndex; }
 
     private Transform _healthBarParent;
     protected GameObject healthBar;
@@ -18,17 +22,19 @@ public class UnitManager : MonoBehaviour
     public GameObject fov;
 
     public AudioSource contextualSource;
-
-    private float hpRatio;
-
-    private bool _selected = false;
-    public bool IsSelected { get => _selected; }
     private bool _isSelectSoundEnded = true;
 
     public int ownerMatrialSlotIndex = 0;
 
-    private int _selectIndex = -1;
-    public int SelectIndex { get => _selectIndex; }
+    private float hpRatio;
+
+    private Transform _canvas;
+
+    public Renderer meshRenderer;
+    private Vector3 _meshSize;
+    public Vector3 MeshSize => _meshSize;
+
+    public Animator animator;
 
     public virtual Unit Unit { get; set; }
 
@@ -39,6 +45,8 @@ public class UnitManager : MonoBehaviour
 
     private void Awake()
     {
+        _canvas = GameObject.Find("Canvas").transform;
+        _meshSize = meshRenderer.GetComponent<Renderer>().bounds.size / 2;
         _healthBarParent = GameObject.Find("HealthBarParent").transform;
     }
 
@@ -138,6 +146,12 @@ public class UnitManager : MonoBehaviour
         hpBar.GetComponent<RectTransform>().position = hpPos;
     }
 
+    public void SetAnimatorBoolVarialbe(string name, bool boolValue)
+    {
+        if (animator == null) return;
+        animator.SetBool(name, boolValue);
+    }
+
     public void Select() { Select(false, false); }
     public virtual void Select(bool singleClick, bool holdingShift)
     {
@@ -230,10 +244,10 @@ public class UnitManager : MonoBehaviour
 
     public void SetOwnerMaterial(int owner)
     {
-        Color playerColor = GameManager.instance.gamePlayersParameters.players[owner].color;
-        Material[] materials = transform.Find("Mesh").GetComponent<Renderer>().materials;
-        materials[ownerMatrialSlotIndex].color = playerColor;
-        transform.Find("Mesh").GetComponent<Renderer>().materials = materials;
+        //Color playerColor = GameManager.instance.gamePlayersParameters.players[owner].color;
+        Material[] materials = Resources.LoadAll<Material>("Materials/Building/BuildingMaterial");
+        if (!transform.Find("Mesh").GetChild(0).GetComponent<Renderer>()) return;
+        transform.Find("Mesh").GetChild(0).GetComponent<Renderer>().material = materials[GameManager.instance.gamePlayersParameters.players[owner].colorIndex];
     }
 
     public void Attack(Transform target)

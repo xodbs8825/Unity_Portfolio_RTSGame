@@ -28,11 +28,11 @@ public class Building : Unit
        
         _materials = new List<Material>();
         Transform mesh = _transform.Find("Mesh");
-        foreach (Material material in mesh.GetComponent<Renderer>().materials)
+        foreach (Material material in _buildingManager.meshRenderer.materials)
             _materials.Add(new Material(material));
 
-        _placement = BuildingPlacement.VALID;
         SetMaterials();
+        _placement = BuildingPlacement.VALID;
 
         _bt = _transform.GetComponent<BuildingBT>();
         _bt.enabled = false;
@@ -68,7 +68,7 @@ public class Building : Unit
         else
             return;
 
-        //_transform.Find("Mesh").GetComponent<Renderer>().materials = materials.ToArray();
+        _buildingManager.meshRenderer.materials = materials.ToArray();
     }
 
     public override void Place()

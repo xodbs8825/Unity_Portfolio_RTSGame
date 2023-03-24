@@ -30,6 +30,7 @@ public class TaskMoveToDestination : Node
         if (d <= _manager.agent.stoppingDistance)
         {
             ClearData("destinationPoint");
+            _manager.SetAnimatorBoolVarialbe("Running", false);
             _state = NodeState.SUCCESS;
             return _state;
         }

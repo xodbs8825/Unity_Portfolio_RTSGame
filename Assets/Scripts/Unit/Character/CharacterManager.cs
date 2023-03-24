@@ -7,7 +7,6 @@ public class CharacterManager : UnitManager
 {
     public NavMeshAgent agent;
 
-    public Renderer characterRenderer;
     public BoxCollider characterCollider;
 
     private Character _character = null;
@@ -50,7 +49,6 @@ public class CharacterManager : UnitManager
         }
 
         agent.destination = targetPosition;
-
         PlaySound();
         return true;
     }
@@ -75,14 +73,14 @@ public class CharacterManager : UnitManager
 
     public void SetRendererVisibilty(bool on)
     {
-        if (on && !characterRenderer.enabled)
+        if (on && !meshRenderer.enabled)
         {
-            characterRenderer.enabled = true;
+            meshRenderer.enabled = true;
             characterCollider.enabled = true;
         }
-        else if (!on && characterRenderer.enabled)
+        else if (!on && meshRenderer.enabled)
         {
-            characterRenderer.enabled = false;
+            meshRenderer.enabled = false;
             characterCollider.enabled = false;
         }
     }
