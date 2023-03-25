@@ -36,7 +36,7 @@ public class TaskFollow : Node
         }
 
         Vector3 targetPosition = GetTargetPosition(target, currentTargetOffset);
-        if (targetPosition != _lastTargetPosition)
+        //if (targetPosition != _lastTargetPosition)
         {
             _manager.MoveTo(targetPosition);
             _lastTargetPosition = targetPosition;
@@ -55,14 +55,15 @@ public class TaskFollow : Node
             }
             else
             {
-                if (unit is Building building)
+                int buildPower = ((CharacterData)_manager.Unit.Data).buildPower;
+                if (unit is Building building && !building.IsAlive)
                 {
                     if (building.HasConstructorsFull)
                     {
                         ClearData("currentTarget");
                         ClearData("currentTargetOffset");
                     }
-                    else if (!_manager.IsConstructor)
+                    else if (!_manager.IsConstructor && buildPower > 0)
                     {
                         building.AddConstructor(_manager);
                         _manager.SetIsConstructor(true);

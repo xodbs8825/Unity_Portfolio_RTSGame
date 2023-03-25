@@ -75,7 +75,7 @@ public class CharacterBT : Tree
                 new Selector(new List<Node>
                 {
                     moveToDestinationSequence,
-                    moveToTargetSequence,
+                    moveToTargetSequence
                 }),
             }),
             new CheckEnemyInFOVRange(manager),

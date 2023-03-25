@@ -18,12 +18,15 @@ public class TaskBuild : Node
         object currentTarget = GetData("currentTarget");
         BuildingManager manager = ((Transform)currentTarget).GetComponent<BuildingManager>();
 
-        bool finishedBuilding = manager.Build(_buildPower);
-        if (finishedBuilding)
+        if (manager != null)
         {
-            _manager.SetIsConstructor(false);
-            //_manager.SetRendererVisibilty(true);
-            ClearData("currentTarget");
+            bool finishedBuilding = manager.Build(_buildPower);
+            if (finishedBuilding)
+            {
+                _manager.SetIsConstructor(false);
+                _manager.SetRendererVisibilty(true);
+                ClearData("currentTarget");
+            }
         }
 
         _state = NodeState.SUCCESS;

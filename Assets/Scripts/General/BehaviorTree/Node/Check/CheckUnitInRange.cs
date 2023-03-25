@@ -63,12 +63,22 @@ public class CheckUnitInRange : Node
 
                 if (buildPower > 0)
                 {
-
+                    if (unit is Building building && !building.IsAlive)
+                    {
+                        if (!manager.IsConstructor)
+                        {
+                            building.AddConstructor(manager);
+                            manager.SetIsConstructor(true);
+                            manager.SetRendererVisibilty(false);
+                            manager.agent.Warp(target.position + Quaternion.Euler(0f, Random.Range(0f, 360f), 0f) * Vector3.right * _targetSize * 0.8f);
+                        }
+                    }
                 }
                 else
                 {
                     Parent.ClearData("currentTarget");
                     Parent.ClearData("currentTargetOffset");
+                    _manager.SetAnimatorBoolVarialbe("Running", false);
                     _state = NodeState.FAILURE;
                     return _state;
                 }

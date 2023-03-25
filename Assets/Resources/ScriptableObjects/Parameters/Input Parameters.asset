@@ -16,15 +16,18 @@ MonoBehaviour:
   _fieldsToShowInGame:
   - bindings
   bindings:
-  - displayName: Build Command Center
+  - displayName: Build Castle
     key: c
-    inputEvent: Build:commandCenter
-  - displayName: Build Engineering Bay
+    inputEvent: Build:castle
+  - displayName: Build BlackSmith
     key: e
-    inputEvent: Build:engineeringBay
-  - displayName: Build Factory
+    inputEvent: Build:blackSmith
+  - displayName: Build Archery
     key: f
-    inputEvent: Build:factory
+    inputEvent: Build:archery
+  - displayName: Build Barracks
+    key: b
+    inputEvent: Build:barracks
   - displayName: Show Debug Console
     key: '`'
     inputEvent: ShowDebugConsole

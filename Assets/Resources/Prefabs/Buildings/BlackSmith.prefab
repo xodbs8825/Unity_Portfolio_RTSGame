@@ -213,7 +213,7 @@ Transform:
   m_GameObject: {fileID: 5542380815447981279}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6112689620521075618}
@@ -281,6 +281,7 @@ MonoBehaviour:
   contextualSource: {fileID: 5472681719910744038}
   ownerMatrialSlotIndex: 0
   meshRenderer: {fileID: 2652150892722941767}
+  animator: {fileID: 0}
 --- !u!114 &3973277504088045961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,7 +575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2534134569844377076, guid: 51c0c94bf42bdf2429eca2f236915a74, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2534134569844377076, guid: 51c0c94bf42bdf2429eca2f236915a74, type: 3}
       propertyPath: m_LocalPosition.z

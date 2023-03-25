@@ -6,8 +6,8 @@ using UnityEngine.AI;
 public class CharacterManager : UnitManager
 {
     public NavMeshAgent agent;
-
     public BoxCollider characterCollider;
+    public GameObject characterModel;
 
     private Character _character = null;
 
@@ -77,11 +77,13 @@ public class CharacterManager : UnitManager
         {
             meshRenderer.enabled = true;
             characterCollider.enabled = true;
+            characterModel.SetActive(true);
         }
         else if (!on && meshRenderer.enabled)
         {
             meshRenderer.enabled = false;
             characterCollider.enabled = false;
+            characterModel.SetActive(false);
         }
     }
 

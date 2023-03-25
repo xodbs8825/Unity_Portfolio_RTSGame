@@ -9,33 +9,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66fdca5b6dc1a0d42909c7167a4b0ea2, type: 3}
-  m_Name: Archery
+  m_Script: {fileID: 11500000, guid: c6c9bc1f5a984e241a01bdb2b77f9fcf, type: 3}
+  m_Name: Archer
   m_EditorClassIdentifier: 
-  code: archery
-  unitName: Archery
-  description: Archer unit training facility
+  code: archer
+  unitName: Archer
+  description: Basic Range Attack Unit
   healthPoint: 50
-  prefab: {fileID: 5542380815447981279, guid: adf0ca5707f2b7442b7d34f87aba61b8, type: 3}
+  prefab: {fileID: 5542380815447981279, guid: ce0d457cc0cf03740a924cd5279ab31d, type: 3}
   cost:
   - code: 0
-    amount: 200
-  - code: 0
-    amount: 100
-  fieldOfView: 100
-  attackRange: 0
-  attackDamage: 0
-  attackRate: 0
+    amount: 50
+  fieldOfView: 50
+  attackRange: 20
+  attackDamage: 5
+  attackRate: 1
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
   enemyAttackRangeResearchComplete: 0
   upgrade:
-    attackDamage: 
-    attackRange: []
+    attackDamage: 050000000a0000000f00000014000000
+    attackRange:
+    - 20
+    - 25
   canProduce: 
-  skills:
-  - {fileID: 11400000, guid: 34feb75e243c9c24484212e6a35bfb59, type: 2}
+  skills: []
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
-  interactSound:
-  - {fileID: 0}
+  interactSound: []
+  buildRate: 0
+  buildRange: 0
+  buildPower: 0

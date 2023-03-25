@@ -32,8 +32,6 @@ public class UnitData : ScriptableObject
     public InGameResource[] canProduce;
     public List<SkillData> skills = new List<SkillData>();
 
-    [Header("Material")]
-
     [Header("Audio")]
     public AudioClip selectSound;
     public AudioClip[] interactSound;
