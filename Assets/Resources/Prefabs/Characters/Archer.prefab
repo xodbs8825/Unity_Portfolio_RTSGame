@@ -282,10 +282,10 @@ MonoBehaviour:
   contextualSource: {fileID: 5946203730686990114}
   ownerMatrialSlotIndex: 0
   meshRenderer: {fileID: 2652150892722941767}
-  animator: {fileID: 0}
+  animator: {fileID: 7649272133993975795}
   agent: {fileID: 6502414843547705010}
   characterCollider: {fileID: 5423030078882362668}
-  characterModel: {fileID: 0}
+  characterModel: {fileID: 7649272134003464433}
 --- !u!195 &6502414843547705010
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -649,6 +649,16 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 1545ba011c3a4264faea258a66e0295f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04c79b5f6e9ebab48af48fdcf7b6d570, type: 3}
+--- !u!95 &7649272133993975795 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9563318, guid: 04c79b5f6e9ebab48af48fdcf7b6d570, type: 3}
+  m_PrefabInstance: {fileID: 7649272134003368773}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7649272134003464433 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 179124, guid: 04c79b5f6e9ebab48af48fdcf7b6d570, type: 3}
+  m_PrefabInstance: {fileID: 7649272134003368773}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7649272134003796027 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 494462, guid: 04c79b5f6e9ebab48af48fdcf7b6d570, type: 3}

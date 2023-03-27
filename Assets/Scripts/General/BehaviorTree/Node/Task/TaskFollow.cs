@@ -36,7 +36,7 @@ public class TaskFollow : Node
         }
 
         Vector3 targetPosition = GetTargetPosition(target, currentTargetOffset);
-        //if (targetPosition != _lastTargetPosition)
+        if (targetPosition != _lastTargetPosition)
         {
             _manager.MoveTo(targetPosition);
             _lastTargetPosition = targetPosition;
@@ -46,8 +46,9 @@ public class TaskFollow : Node
         float distance = Vector3.Distance(_manager.transform.position, _manager.agent.destination);
         if (distance <= _manager.agent.stoppingDistance)
         {
-            Unit unit = ((Transform)currentTarget).GetComponent<UnitManager>().Unit;
-            int targetOwner = unit.Owner;
+            _manager.SetAnimatorBoolVariable("Running", false);
+            Unit targetUnit = ((Transform)currentTarget).GetComponent<UnitManager>().Unit;
+            int targetOwner = targetUnit.Owner;
             if (targetOwner != GameManager.instance.gamePlayersParameters.myPlayerID)
             {
                 ClearData("currentTarget");
@@ -56,7 +57,7 @@ public class TaskFollow : Node
             else
             {
                 int buildPower = ((CharacterData)_manager.Unit.Data).buildPower;
-                if (unit is Building building && !building.IsAlive)
+                if (targetUnit is Building building && !building.IsAlive)
                 {
                     if (building.HasConstructorsFull)
                     {

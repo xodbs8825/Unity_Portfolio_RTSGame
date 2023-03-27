@@ -58,11 +58,6 @@ public class UnitManager : MonoBehaviour
         Unit.UpdateUpgradeParameters();
 
         zoomSize = 60f / Camera.main.orthographicSize;
-
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            Debug.Log(Unit.AttackRange);
-        }
     }
 
     private void OnMouseDown()
@@ -146,7 +141,7 @@ public class UnitManager : MonoBehaviour
         hpBar.GetComponent<RectTransform>().position = hpPos;
     }
 
-    public void SetAnimatorBoolVarialbe(string name, bool boolValue)
+    public void SetAnimatorBoolVariable(string name, bool boolValue)
     {
         if (animator == null) return;
         animator.SetBool(name, boolValue);

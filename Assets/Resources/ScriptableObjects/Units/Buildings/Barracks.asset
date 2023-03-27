@@ -15,7 +15,7 @@ MonoBehaviour:
   code: barracks
   unitName: Barracks
   description: Base unit training facility
-  healthPoint: 300
+  healthPoint: 50
   prefab: {fileID: 5542380815447981279, guid: ecc2612e46d755e49840d603b06de593, type: 3}
   cost:
   - code: 0

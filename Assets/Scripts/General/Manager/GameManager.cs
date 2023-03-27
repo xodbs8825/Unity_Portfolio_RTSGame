@@ -133,6 +133,10 @@ public class GameManager : MonoBehaviour
         EventManager.AddListener("PauseGame", OnPauseGame);
         EventManager.AddListener("ResumeGame", OnResumeGame);
         EventManager.AddListener("UpdateGameParameter:enableFOV", OnUpdateFOV);
+
+        EventManager.AddListener("DebugVector3", OnDebugTargetPosition);
+        EventManager.AddListener("DebugFloat", OnDebugFloat);
+        EventManager.AddListener("DebugBool", OnDebugBool);
     }
 
     private void OnDisable()
@@ -140,6 +144,10 @@ public class GameManager : MonoBehaviour
         EventManager.RemoveListener("PauseGame", OnPauseGame);
         EventManager.RemoveListener("ResumeGame", OnResumeGame);
         EventManager.RemoveListener("UpdateGameParameter:enableFOV", OnUpdateFOV);
+
+        EventManager.RemoveListener("DebugVector3", OnDebugTargetPosition);
+        EventManager.RemoveListener("DebugFloat", OnDebugFloat);
+        EventManager.RemoveListener("DebugBool", OnDebugBool);
     }
 
     private void OnPauseGame()
@@ -156,6 +164,24 @@ public class GameManager : MonoBehaviour
     {
         bool fovIsOn = (bool)data;
         fov.SetActive(fovIsOn);
+    }
+
+    private void OnDebugTargetPosition(object data)
+    {
+        Vector3 pos = (Vector3)data;
+        Debug.Log(pos);
+    }
+
+    private void OnDebugFloat(object data)
+    {
+        float f = (float)data;
+        Debug.Log(f);
+    }
+
+    private void OnDebugBool(object data)
+    {
+        bool b = (bool)data;
+        Debug.Log(b);
     }
 
     private void OnApplicationQuit()

@@ -12,7 +12,7 @@ public class CharacterManager : UnitManager
     private Character _character = null;
 
     private AudioClip[] _characterInteractSound;
-    private float maxSoundClipsSize;
+    private float _maxSoundClipsSize;
     private bool _isAbleToPlaySound = true;
 
     private bool _isConstructor = false;
@@ -28,7 +28,7 @@ public class CharacterManager : UnitManager
     {
         _character.Place();
         _characterInteractSound = (Unit.Data).interactSound;
-        maxSoundClipsSize = (Unit.Data).interactSound.Length;
+        _maxSoundClipsSize = (Unit.Data).interactSound.Length;
     }
 
     public override void Select(bool singleClick, bool holdingShift)
@@ -55,7 +55,9 @@ public class CharacterManager : UnitManager
 
     public override void PlaySound()
     {
-        int _randomNumber = (int)Random.Range(0, maxSoundClipsSize);
+        int _randomNumber = (int)Random.Range(0, _maxSoundClipsSize);
+
+        if (_maxSoundClipsSize == 0) return;
 
         if (_isAbleToPlaySound)
         {

@@ -139,5 +139,5 @@ public class Building : Unit
     public int ConstructionHP { get => _constructionHP; }
     public override bool IsAlive { get => _isAlive; }
     public List<CharacterManager> Constructors { get => _constructors; }
-    public bool HasConstructorsFull { get => _constructors.Count == 3; }
+    public bool HasConstructorsFull { get => _constructors.Count == 1; }
 }
