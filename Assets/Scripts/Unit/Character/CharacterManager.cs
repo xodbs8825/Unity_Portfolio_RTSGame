@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,9 +6,17 @@ using UnityEngine.AI;
 
 public class CharacterManager : UnitManager
 {
+    [Serializable]
+    public struct ColorIndication
+    {
+        public GameObject indicationTarget;
+    }
+
     public NavMeshAgent agent;
     public BoxCollider characterCollider;
     public GameObject characterModel;
+
+    public ColorIndication[] colorIndications;
 
     private Character _character = null;
 
@@ -55,7 +64,7 @@ public class CharacterManager : UnitManager
 
     public override void PlaySound()
     {
-        int _randomNumber = (int)Random.Range(0, _maxSoundClipsSize);
+        int _randomNumber = (int)UnityEngine.Random.Range(0, _maxSoundClipsSize);
 
         if (_maxSoundClipsSize == 0) return;
 

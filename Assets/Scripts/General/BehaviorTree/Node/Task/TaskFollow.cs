@@ -46,7 +46,6 @@ public class TaskFollow : Node
         float distance = Vector3.Distance(_manager.transform.position, _manager.agent.destination);
         if (distance <= _manager.agent.stoppingDistance)
         {
-            _manager.SetAnimatorBoolVariable("Running", false);
             Unit targetUnit = ((Transform)currentTarget).GetComponent<UnitManager>().Unit;
             int targetOwner = targetUnit.Owner;
             if (targetOwner != GameManager.instance.gamePlayersParameters.myPlayerID)
@@ -70,7 +69,7 @@ public class TaskFollow : Node
                         _manager.SetIsConstructor(true);
                         _manager.SetRendererVisibilty(false);
                         _manager.agent.Warp(target.position +
-                            Quaternion.Euler(0f, Random.Range(0f, 360f), 0f) * Vector3.right * _targetSize * 0.8f);
+                            Quaternion.Euler(0f, Random.Range(0f, 360f), 0f) * Vector3.down * _targetSize * 0.8f);
                     }
                 }
             }

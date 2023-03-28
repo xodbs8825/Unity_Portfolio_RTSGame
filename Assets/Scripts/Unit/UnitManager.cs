@@ -124,7 +124,7 @@ public class UnitManager : MonoBehaviour
     {
         SetHPBarPosition(hpBar);
 
-        
+
 
         hpBar.SetHPUISize(meshSize.localScale.x * 20 * zoomSize);
     }
@@ -237,12 +237,31 @@ public class UnitManager : MonoBehaviour
         _isSelectSoundEnded = true;
     }
 
-    public void SetOwnerMaterial(int owner)
+    public virtual void SetOwnerMaterial(int owner)
     {
-        //Color playerColor = GameManager.instance.gamePlayersParameters.players[owner].color;
-        Material[] materials = Resources.LoadAll<Material>("Materials/Building/BuildingMaterial");
-        if (!transform.Find("Mesh").GetChild(0).GetComponent<Renderer>()) return;
-        transform.Find("Mesh").GetChild(0).GetComponent<Renderer>().material = materials[GameManager.instance.gamePlayersParameters.players[owner].colorIndex];
+        Material[] materials;
+
+        if (transform.GetComponent<BuildingManager>())
+        {
+            materials = Resources.LoadAll<Material>("Materials/Unit/Building");
+            if (!transform.Find("Mesh").GetComponent<Renderer>()) return;
+            transform.Find("Mesh").GetComponent<Renderer>().material = materials[GameManager.instance.gamePlayersParameters.players[owner].colorIndex];
+        }
+        else if (transform.GetComponent<CharacterManager>())
+        {
+            materials = Resources.LoadAll<Material>("Materials/Unit/Character");
+            for (int i = 0; i < transform.GetComponent<CharacterManager>().colorIndications.Length; i++)
+            {
+                if (transform.GetComponent<CharacterManager>().colorIndications[i].indicationTarget.GetComponent<Renderer>())
+                {
+                    transform.GetComponent<CharacterManager>().colorIndications[i].indicationTarget.GetComponent<Renderer>().material = materials[GameManager.instance.gamePlayersParameters.players[owner].colorIndex];
+                }
+                else if (transform.GetComponent<CharacterManager>().colorIndications[i].indicationTarget.GetComponent<SkinnedMeshRenderer>())
+                {
+                    transform.GetComponent<CharacterManager>().colorIndications[i].indicationTarget.GetComponent<SkinnedMeshRenderer>().material = materials[GameManager.instance.gamePlayersParameters.players[owner].colorIndex];
+                }
+            }
+        }
     }
 
     public void Attack(Transform target)
