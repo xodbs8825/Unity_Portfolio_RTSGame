@@ -102,7 +102,6 @@ public class UnitManager : MonoBehaviour
     public void Select() { Select(false, false); }
     public virtual void Select(bool singleClick, bool holdingShift)
     {
-        if (!IsActive()) return;
         if (!singleClick)
         {
             SelectUtils();

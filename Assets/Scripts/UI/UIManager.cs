@@ -151,6 +151,11 @@ public class UIManager : MonoBehaviour
             UpdateSelectedUnitUpgradeInfoPanel();
 
         UpdateSkillButtonInteractable();
+
+        if (Globals.SELECTED_UNITS.Count > 1)
+        {
+            ShowPanel(selectedUnitActionButtonsParent, false);
+        }
     }
 
     public void UpdateSkillButtonInteractable()
@@ -169,7 +174,16 @@ public class UIManager : MonoBehaviour
                 selectedUnitActionButtonsParent.transform.GetChild(1).GetComponent<Button>().interactable = false;
                 selectedUnitActionButtonsParent.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
             }
-            if (_unit.IsAlive && Globals.SELECTED_UNITS.Count == 1)
+            
+            if (!_unit.IsAlive)
+            {
+                for (int i = 0; i < _unit.SkillManagers.Count; i++)
+                {
+                    selectedUnitActionButtonsParent.transform.GetChild(i).GetComponent<Button>().interactable = false;
+                    selectedUnitActionButtonsParent.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                }
+            }
+            else if (_unit.IsAlive && Globals.SELECTED_UNITS.Count == 1)
             {
                 for (int i = 0; i < _unit.SkillManagers.Count; i++)
                 {
@@ -183,6 +197,14 @@ public class UIManager : MonoBehaviour
                         selectedUnitActionButtonsParent.transform.GetChild(i).GetComponent<Button>().interactable = false;
                         selectedUnitActionButtonsParent.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
                     }
+                }
+            }
+            else if (_unit.IsAlive)
+            {
+                for (int i = 0; i < _unit.SkillManagers.Count; i++)
+                {
+                    selectedUnitActionButtonsParent.transform.GetChild(i).GetComponent<Button>().interactable = true;
+                    selectedUnitActionButtonsParent.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
                 }
             }
         }
@@ -223,7 +245,9 @@ public class UIManager : MonoBehaviour
         _unit = unit;
         AddSelectedUnitToUIList(unit);
 
-        if (unit.IsAlive)
+        //ShowPanel(selectedUnitActionButtonsParent, true);
+
+        //if (unit.IsAlive)
         {
             SetSelectedUnitMenu(unit);
             ShowPanel(selectedUnitMenu, true);
