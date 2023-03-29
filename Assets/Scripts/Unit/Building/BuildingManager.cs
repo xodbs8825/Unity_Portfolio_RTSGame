@@ -74,7 +74,7 @@ public class BuildingManager : UnitManager
         Vector3 c = _collider.center;
         Vector3 e = _collider.size / 2f;
 
-        float bottomHeight = c.y - e.y + 0.5f;
+        float bottomHeight = Mathf.Abs(c.y - e.y) + 0.5f;
 
         Vector3[] bottomCorners = new Vector3[]
         {
@@ -116,11 +116,12 @@ public class BuildingManager : UnitManager
 
     protected override void UpdateHealthBar()
     {
-        if (!healthBar) return;
-        Transform fill = healthBar.transform.Find("HPGauge");
+        if (!_healthbarRenderer) return;
         int hp = (IsActive() && !_building.IsAlive) ? _building.ConstructionHP : Unit.HP;
-
-        fill.GetComponent<Image>().fillAmount = (float)hp / (float)Unit.MaxHP;
+        _healthbarRenderer.GetPropertyBlock(MaterialPropertyBlock);
+        _healthbarRenderer.material.SetFloat("_Health", hp / (float)Unit.MaxHP);
+        _healthbarRenderer.material.SetFloat("_Width", healthBar.transform.localScale.x);
+        _healthbarRenderer.SetPropertyBlock(MaterialPropertyBlock);
     }
 
     public bool Build(int buildPower)

@@ -21,11 +21,14 @@ public class Building : Unit
 
     private List<CharacterManager> _constructors;
 
+    private MeshFilter _rendererMesh;
+    private Mesh[] _constructionMeshes;
+
     public Building(BuildingData data, int owner) : this(data, owner, new List<ResourceValue>() { }) { }
     public Building(BuildingData data, int owner, List<ResourceValue> production) : base(data, owner, production)
     {
         _buildingManager = _transform.GetComponent<BuildingManager>();
-       
+
         _materials = new List<Material>();
         Transform mesh = _transform.Find("Mesh");
         foreach (Material material in _buildingManager.meshRenderer.materials)
@@ -40,6 +43,9 @@ public class Building : Unit
         _isAlive = false;
 
         _constructors = new List<CharacterManager>();
+
+        _rendererMesh = mesh.GetComponent<MeshFilter>();
+        _constructionMeshes = data.constructionMeshes;
     }
 
     public void SetMaterials() { SetMaterials(_placement); }
@@ -85,7 +91,26 @@ public class Building : Unit
         if (_isAlive) return;
 
         _constructionHP = constructionHP;
-        float constructionRatio = (float)_constructionHP / (float)MaxHP;
+        float constructionRatio = _constructionHP / (float)MaxHP;
+
+        //int meshIndex = Mathf.Max(0, (int)(_constructionMeshes.Length * constructionRatio) - 1);
+
+        int meshIndex = 0;
+        if (constructionRatio < 0.5f)
+        {
+            meshIndex = 0;
+        }
+        else if (constructionRatio >= 0.5f && constructionRatio < 1)
+        {
+            meshIndex = 1;
+        }
+        else if (constructionRatio >= 1)
+        {
+            meshIndex = 2;
+        }
+
+        Mesh mesh = _constructionMeshes[meshIndex];
+        _rendererMesh.sharedMesh = mesh;
 
         if (constructionRatio >= 1)
             SetAlive();

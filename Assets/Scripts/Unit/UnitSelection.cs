@@ -63,6 +63,8 @@ public class UnitSelection : MonoBehaviour
         {
             SelectUnitsInDraggingBox();
         }
+
+        uiManager.UpdateSkillButtonInteractable();
     }
 
     private void SelectUnitsInDraggingBox()

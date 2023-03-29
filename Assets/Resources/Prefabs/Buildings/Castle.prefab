@@ -193,6 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionCircle: {fileID: 5691737486483354373}
+  healthBar: {fileID: 2909936347576416462}
   zoomSize: 0
   fov: {fileID: 3984321103765743795}
   contextualSource: {fileID: 5472681719910744038}
@@ -421,12 +422,16 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2472844647632110668, guid: 092ca2f1eb620684cb9e466b09f96162, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2472844647632110668, guid: 092ca2f1eb620684cb9e466b09f96162, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2472844647632110668, guid: 092ca2f1eb620684cb9e466b09f96162, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2472844647632110668, guid: 092ca2f1eb620684cb9e466b09f96162, type: 3}
       propertyPath: m_LocalPosition.z
@@ -473,6 +478,11 @@ PrefabInstance:
 --- !u!4 &2764354569617767435 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2472844647632110668, guid: 092ca2f1eb620684cb9e466b09f96162, type: 3}
+  m_PrefabInstance: {fileID: 292094950372145223}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2909936347576416462 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3201937836908986505, guid: 092ca2f1eb620684cb9e466b09f96162, type: 3}
   m_PrefabInstance: {fileID: 292094950372145223}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1565549622584594083

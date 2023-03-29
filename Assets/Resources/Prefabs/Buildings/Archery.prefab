@@ -193,6 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionCircle: {fileID: 6264803909695491719}
+  healthBar: {fileID: 1654482303094635568}
   zoomSize: 0
   fov: {fileID: 32534467491557152}
   contextualSource: {fileID: 934806741444922542}
@@ -421,12 +422,16 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2472844647632110668, guid: 092ca2f1eb620684cb9e466b09f96162, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2472844647632110668, guid: 092ca2f1eb620684cb9e466b09f96162, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2472844647632110668, guid: 092ca2f1eb620684cb9e466b09f96162, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 2472844647632110668, guid: 092ca2f1eb620684cb9e466b09f96162, type: 3}
       propertyPath: m_LocalPosition.z
@@ -464,8 +469,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthBar
       objectReference: {fileID: 0}
+    - target: {fileID: 3201937836908986505, guid: 092ca2f1eb620684cb9e466b09f96162, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 092ca2f1eb620684cb9e466b09f96162, type: 3}
+--- !u!1 &1654482303094635568 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3201937836908986505, guid: 092ca2f1eb620684cb9e466b09f96162, type: 3}
+  m_PrefabInstance: {fileID: 4222819112695889081}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1786583829589358837 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2472844647632110668, guid: 092ca2f1eb620684cb9e466b09f96162, type: 3}

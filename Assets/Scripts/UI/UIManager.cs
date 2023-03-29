@@ -153,33 +153,36 @@ public class UIManager : MonoBehaviour
         UpdateSkillButtonInteractable();
     }
 
-    private void UpdateSkillButtonInteractable()
+    public void UpdateSkillButtonInteractable()
     {
         if (_unit != null)
         {
-            if (_unit.UpgradeIndicator)
+            if (_unit.UpgradeIndicator && _unit.UnitName == "BlackSmith")
             {
                 if (selectedUnitActionButtonsParent.transform.GetChild(0).name != "Upgrade Attack Damage") return;
                 selectedUnitActionButtonsParent.transform.GetChild(0).GetComponent<Button>().interactable = false;
                 selectedUnitActionButtonsParent.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
             }
-            if (_unit.AttackRangeResearchCompleted)
+            if (_unit.AttackRangeResearchCompleted && _unit.UnitName == "BlackSmith")
             {
                 if (selectedUnitActionButtonsParent.transform.GetChild(1).name != "Research Attack Range") return;
                 selectedUnitActionButtonsParent.transform.GetChild(1).GetComponent<Button>().interactable = false;
                 selectedUnitActionButtonsParent.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
             }
-            for (int i = 0; i < _unit.SkillManagers.Count; i++)
+            if (_unit.IsAlive && Globals.SELECTED_UNITS.Count == 1)
             {
-                if (_unit.SkillManagers[i].skill.techTreeOpen)
+                for (int i = 0; i < _unit.SkillManagers.Count; i++)
                 {
-                    selectedUnitActionButtonsParent.transform.GetChild(i).GetComponent<Button>().interactable = true;
-                    selectedUnitActionButtonsParent.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
-                }
-                else
-                {
-                    selectedUnitActionButtonsParent.transform.GetChild(i).GetComponent<Button>().interactable = false;
-                    selectedUnitActionButtonsParent.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                    if (_unit.SkillManagers[i].skill.techTreeOpen)
+                    {
+                        selectedUnitActionButtonsParent.transform.GetChild(i).GetComponent<Button>().interactable = true;
+                        selectedUnitActionButtonsParent.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        selectedUnitActionButtonsParent.transform.GetChild(i).GetComponent<Button>().interactable = false;
+                        selectedUnitActionButtonsParent.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                    }
                 }
             }
         }
@@ -211,7 +214,6 @@ public class UIManager : MonoBehaviour
     {
         int playerID = (int)data;
         _myPlayerID = playerID;
-        Color c = GameManager.instance.gamePlayersParameters.players[_myPlayerID].color;
         OnUpdateResourceTexts();
     }
 

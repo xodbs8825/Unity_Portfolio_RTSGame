@@ -12,8 +12,8 @@ public class UnitManager : MonoBehaviour
     public bool IsSelected { get => _selected; }
     public int SelectIndex { get => _selectIndex; }
 
-    private Transform _healthBarParent;
-    protected GameObject healthBar;
+    public GameObject healthBar;
+    protected Renderer _healthbarRenderer;
 
     protected BoxCollider _collider;
 
@@ -26,10 +26,6 @@ public class UnitManager : MonoBehaviour
 
     public int ownerMatrialSlotIndex = 0;
 
-    private float hpRatio;
-
-    private Transform _canvas;
-
     public Renderer meshRenderer;
     private Vector3 _meshSize;
     public Vector3 MeshSize => _meshSize;
@@ -38,23 +34,19 @@ public class UnitManager : MonoBehaviour
 
     public virtual Unit Unit { get; set; }
 
-    private void Start()
-    {
-        hpRatio = 0f;
-    }
-
     private void Awake()
     {
-        _canvas = GameObject.Find("Canvas").transform;
         _meshSize = meshRenderer.GetComponent<Renderer>().bounds.size / 2;
-        _healthBarParent = GameObject.Find("HealthBarParent").transform;
+
+        if (healthBar)
+        {
+            healthBar.SetActive(false);
+            _healthbarRenderer = healthBar.GetComponent<Renderer>();
+        }
     }
 
     private void Update()
     {
-        if (healthBar != null)
-            SetHPBar(healthBar.GetComponent<HealthBar>(), transform.GetChild(0));
-
         Unit.UpdateUpgradeParameters();
 
         zoomSize = 60f / Camera.main.orthographicSize;
@@ -70,26 +62,25 @@ public class UnitManager : MonoBehaviour
         return true;
     }
 
-    private bool IsMyUnit()
-    {
-        return Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID;
-    }
-
-    private void _Select()
-    {
-        if (Globals.SELECTED_UNITS.Contains(this)) return;
-
-        Globals.SELECTED_UNITS.Add(this);
-        selectionCircle.SetActive(true);
-
-        HealthBarSetting();
-
-        EventManager.TriggerEvent("SelectUnit", Unit);
-    }
+    //private bool IsMyUnit()
+    //{
+    //    return Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID;
+    //}
 
     private void SelectUtils()
     {
-        _Select();
+        if (!IsActive()) return;
+        if (Globals.SELECTED_UNITS.Contains(this)) return;
+
+        Globals.SELECTED_UNITS.Add(this);
+        EventManager.TriggerEvent("SelectUnit", Unit);
+
+        selectionCircle.SetActive(true);
+        if (healthBar)
+        {
+            healthBar.SetActive(true);
+            UpdateHealthBar();
+        }
 
         if (_isSelectSoundEnded)
         {
@@ -98,47 +89,8 @@ public class UnitManager : MonoBehaviour
             StartCoroutine(SelectSoundEnded(Unit.Data.selectSound.length));
         }
 
-        if (healthBar)
-        {
-            healthBar.SetActive(true);
-            UpdateHealthBar();
-        }
-
+        _selected = true;
         _selectIndex = Globals.SELECTED_UNITS.Count - 1;
-    }
-
-    private void HealthBarSetting()
-    {
-        if (healthBar == null)
-        {
-            this.healthBar = GameObject.Instantiate(Resources.Load("Prefabs/UI/GameScene/HealthBar")) as GameObject;
-            this.healthBar.transform.SetParent(_healthBarParent);
-
-            HealthBar hpBar = healthBar.GetComponent<HealthBar>();
-
-            SetHPBar(hpBar, transform.GetChild(1));
-        }
-    }
-
-    private void SetHPBar(HealthBar hpBar, Transform meshSize)
-    {
-        SetHPBarPosition(hpBar);
-
-
-
-        hpBar.SetHPUISize(meshSize.localScale.x * 20 * zoomSize);
-    }
-
-    private void SetHPBarPosition(HealthBar hpBar)
-    {
-        Vector3 hpPos = hpBar.GetComponent<RectTransform>().position;
-        hpPos = Camera.main.WorldToScreenPoint(transform.position - Vector3.up);
-
-        Rect boundingBox = Utils.GetBoundingBoxOnScreen(transform.Find("Mesh").GetComponent<Renderer>().bounds, Camera.main);
-
-        //hpPos.y -= meshYSize * 5;
-        hpPos.y -= boundingBox.height / 3f;
-        hpBar.GetComponent<RectTransform>().position = hpPos;
     }
 
     public void SetAnimatorBoolVariable(string name, bool boolValue)
@@ -186,15 +138,18 @@ public class UnitManager : MonoBehaviour
 
     public void Deselect()
     {
+        if (!Globals.SELECTED_UNITS.Contains(this)) return;
         Globals.SELECTED_UNITS.Remove(this);
-        selectionCircle.SetActive(false);
-
-        Destroy(healthBar);
-        healthBar = null;
 
         EventManager.TriggerEvent("DeselectUnit", Unit);
-        _selected = false;
 
+        selectionCircle.SetActive(false);
+        if (healthBar)
+        {
+            healthBar.SetActive(false);
+        }
+
+        _selected = false;
         _selectIndex = -1;
     }
 
@@ -287,23 +242,23 @@ public class UnitManager : MonoBehaviour
 
     protected virtual void UpdateHealthBar()
     {
-        if (!healthBar) return;
-        Transform fill = healthBar.transform.Find("HPGauge");
+        if (!_healthbarRenderer) return;
+        _healthbarRenderer.GetPropertyBlock(MaterialPropertyBlock);
+        _healthbarRenderer.material.SetFloat("_Health", Unit.HP / (float)Unit.MaxHP);
+        _healthbarRenderer.material.SetFloat("_Width", healthBar.transform.localScale.x);
+        _healthbarRenderer.SetPropertyBlock(MaterialPropertyBlock);
+    }
 
-        hpRatio = (float)Unit.HP / (float)Unit.MaxHP;
-        fill.GetComponent<Image>().fillAmount = hpRatio;
-
-        if (hpRatio < 0.3f)
+    protected static MaterialPropertyBlock materialPropertyBlock;
+    protected static MaterialPropertyBlock MaterialPropertyBlock
+    {
+        get
         {
-            fill.GetComponent<Image>().color = Color.red;
-        }
-        else if (hpRatio >= 0.3f && hpRatio < 0.7f)
-        {
-            fill.GetComponent<Image>().color = Color.yellow;
-        }
-        else if (hpRatio >= 0.7f)
-        {
-            fill.GetComponent<Image>().color = Color.green;
+            if (materialPropertyBlock == null)
+            {
+                materialPropertyBlock = new MaterialPropertyBlock();
+            }
+            return materialPropertyBlock;
         }
     }
 }

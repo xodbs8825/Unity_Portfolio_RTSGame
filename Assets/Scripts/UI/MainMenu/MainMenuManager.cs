@@ -119,7 +119,7 @@ public class MainMenuManager : MonoBehaviour
     {
         CoreDataHandler.instance.SetGameUserID(_selectedMap);
 
-        GamePlayersParameters parameters = new GamePlayersParameters();
+        GamePlayersParameters parameters = ScriptableObject.CreateInstance<GamePlayersParameters>();
         parameters.players = _playerData
             .Where((KeyValuePair<int, PlayerData> parameters) => _activePlayers[parameters.Key])
             .Select((KeyValuePair<int, PlayerData> parameters) => parameters.Value).ToArray();

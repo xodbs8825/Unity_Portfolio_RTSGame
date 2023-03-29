@@ -68,7 +68,7 @@ public class TaskFollow : Node
                         building.AddConstructor(_manager);
                         _manager.SetIsConstructor(true);
                         _manager.SetRendererVisibilty(false);
-                        _manager.agent.Warp(target.position +
+                        _manager.agent.Warp(((Transform)currentTarget).position +
                             Quaternion.Euler(0f, Random.Range(0f, 360f), 0f) * Vector3.down * _targetSize * 0.8f);
                     }
                 }

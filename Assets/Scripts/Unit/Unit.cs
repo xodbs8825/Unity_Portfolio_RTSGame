@@ -31,7 +31,9 @@ public class Unit
 
     protected bool _myAttackDamageUpgradeComplete;
     protected bool _enemyAttackDamageUpgradeComplete;
-    protected int enemylvl;
+    protected int _enemylvl;
+
+    protected string _unitName;
 
     public Unit(UnitData data, int owner) : this(data, owner, new List<ResourceValue>() { }) { }
     public Unit(UnitData data, int owner, List<ResourceValue> production)
@@ -74,6 +76,8 @@ public class Unit
         Color c = parameter.players[owner].color;
         Transform minimapIcon = _transform.Find("Mesh/MinimapIcon");
         minimapIcon.GetComponent<Renderer>().material.color = c;
+
+        _unitName = data.unitName;
     }
 
     public void UpgradeCost(int i)
@@ -203,7 +207,6 @@ public class Unit
     }
 
     public virtual bool IsAlive { get => true; }
-
     public UnitData Data { get => _data; }
     public string Code { get => _data.code; }
     public Transform Transform { get => _transform; }
@@ -218,4 +221,5 @@ public class Unit
     public float AttackRange { get => _attackRange; }
     public bool AttackRangeResearchCompleted { get => _attackRangeResearchComplete; }
     public bool UpgradeIndicator { get => _uIndicator; }
+    public string UnitName { get => _unitName; }
 }
