@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
-  m_Name: BuildCastle
+  m_Name: SpawnArcher
   m_EditorClassIdentifier: 
-  code: build_castle
-  skillName: Build Castle
-  description: Build Castle
-  type: 1
-  unitData: {fileID: 11400000, guid: 070c39f8fab990249a1fd86a1b65119c, type: 2}
-  castTime: 0
-  cooldown: 0
+  code: spawn_archer
+  skillName: Spawn Archer
+  description: Spawn Archer
+  type: 0
+  unitData: {fileID: 11400000, guid: 40cfd30adf6ca2b4ba312d5c03ece8f0, type: 2}
+  targetUnit: []
+  castTime: 1
+  cooldown: 1
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:

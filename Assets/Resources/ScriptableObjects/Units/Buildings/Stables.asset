@@ -10,17 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66fdca5b6dc1a0d42909c7167a4b0ea2, type: 3}
-  m_Name: Castle
+  m_Name: Stables
   m_EditorClassIdentifier: 
-  code: castle
-  unitName: Castle
-  description: Base Structure
-  healthPoint: 400
-  prefab: {fileID: 5542380815447981279, guid: c25759ed314c4364c82bce295f224bdb, type: 3}
-  cost:
-  - code: 0
-    amount: 400
-  fieldOfView: 50
+  code: 
+  unitName: 
+  description: 
+  healthPoint: 0
+  prefab: {fileID: 0}
+  cost: []
+  fieldOfView: 0
   attackRange: 0
   attackDamage: 0
   attackRate: 0
@@ -33,9 +31,6 @@ MonoBehaviour:
     attackRange: []
   canProduce: 
   skills: []
-  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
+  selectSound: {fileID: 0}
   interactSound: []
-  constructionMeshes:
-  - {fileID: 4300000, guid: ee920d8c79ea3684abbabe92ec16e8c4, type: 3}
-  - {fileID: 4300000, guid: a65bd061cdf100b4ba4e4379a5ae6aec, type: 3}
-  - {fileID: 4300004, guid: 637b3bb1a53fd584b8b2f29eddb05290, type: 3}
+  constructionMeshes: []

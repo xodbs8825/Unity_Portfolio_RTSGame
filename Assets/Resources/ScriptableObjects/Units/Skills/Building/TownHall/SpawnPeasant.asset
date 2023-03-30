@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
-  m_Name: BuildBlackSmith
+  m_Name: SpawnPeasant
   m_EditorClassIdentifier: 
-  code: build_blackSmith
-  skillName: Build BlackSmith
-  description: Build BlackSmith
-  type: 1
-  unitData: {fileID: 11400000, guid: 6ad37734c26986847bf00ee626c35d18, type: 2}
-  castTime: 0
-  cooldown: 0
+  code: spawn_peasant
+  skillName: Spawn Peasant
+  description: Spawn Peasant
+  type: 0
+  unitData: {fileID: 11400000, guid: 219740ede27913f4796fbe973448b082, type: 2}
+  targetUnit: []
+  castTime: 1
+  cooldown: 1
   sprite: {fileID: 0}
-  sound: {fileID: 0}
+  sound: {fileID: 8300000, guid: 5e0bd8f44ff8d2348a90b30f86753a9d, type: 3}
   techTree:
-    requiredBuilding: {fileID: 11400000, guid: 070c39f8fab990249a1fd86a1b65119c, type: 2}
+    requiredBuilding: {fileID: 0}
   techTreeOpen: 1

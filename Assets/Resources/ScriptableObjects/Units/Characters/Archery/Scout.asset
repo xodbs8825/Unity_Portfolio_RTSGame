@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6c9bc1f5a984e241a01bdb2b77f9fcf, type: 3}
-  m_Name: Archer
+  m_Name: Scout
   m_EditorClassIdentifier: 
-  code: archer
-  unitName: Archer
-  description: Basic Range Attack Unit
-  healthPoint: 50
-  prefab: {fileID: 5542380815447981279, guid: ce0d457cc0cf03740a924cd5279ab31d, type: 3}
+  code: scout
+  unitName: Scout
+  description: Scouting archer unit
+  healthPoint: 30
+  prefab: {fileID: 5542380815447981279, guid: 2c2802d91bce99c4abe7c36fd4e96a1a, type: 3}
   cost:
   - code: 0
     amount: 50
   fieldOfView: 50
   attackRange: 20
-  attackDamage: 5
+  attackDamage: 3
   attackRate: 1
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
   enemyAttackRangeResearchComplete: 0
   upgrade:
-    attackDamage: 050000000a0000000f00000014000000
+    attackDamage: 0300000005000000070000000a000000
     attackRange:
     - 20
     - 25

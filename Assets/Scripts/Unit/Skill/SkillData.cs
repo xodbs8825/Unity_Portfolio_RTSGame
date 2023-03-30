@@ -24,7 +24,10 @@ public class SkillData : ScriptableObject
     public string skillName;
     public string description;
     public SkillType type;
+
     public UnitData unitData;
+    public UnitData[] targetUnit;
+
     public float castTime;
     public float cooldown;
     public Sprite sprite;
@@ -67,7 +70,6 @@ public class SkillData : ScriptableObject
                 break;
             case SkillType.UPGRADE_ATTACKDAMAGE:
                 {
-                    CharacterData data = (CharacterData)unitData;
                     UnitManager manager = source.GetComponent<UnitManager>();
                     if (manager == null) return;
 
@@ -75,42 +77,53 @@ public class SkillData : ScriptableObject
                     if (manager.Unit.Owner == 0)
                     {
                         _myCounter++;
-                        if (_myCounter == 3) manager.Unit.UpgradeCompleteIndicator(true);
+                        if (_myCounter == 3) manager.Unit.AttackDamageUpgradeCompleteIndicator(true);
 
-                        if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[data.myAttackDamageLevel + 1]))
+                        for (int i = 0; i < targetUnit.Length; i++)
                         {
-                            GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
+                            CharacterData data = (CharacterData)targetUnit[i];
+                            if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[data.myAttackDamageLevel + 1]))
+                            {
+                                GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
 
-                            bool upgradeMaxedOut;
-                            upgradeMaxedOut = data.myAttackDamageLevel == p.UnitMaxLevel();
-                            if (upgradeMaxedOut) return;
+                                bool upgradeMaxedOut = data.myAttackDamageLevel == p.UnitMaxLevel();
+                                if (upgradeMaxedOut) return;
 
-                            data.myAttackDamageLevel++;
-                            unit.UpgradeCost(data.myAttackDamageLevel);
+                                data.myAttackDamageLevel++;
+                                if (i == 0)
+                                {
+                                    unit.UpgradeCost(data.myAttackDamageLevel);
+                                }
+                            }
                         }
                     }
                     else if (manager.Unit.Owner == 1)
                     {
                         _enemyCounter++;
-                        if (_enemyCounter == 3) manager.Unit.UpgradeCompleteIndicator(true);
+                        if (_enemyCounter == 3) manager.Unit.AttackDamageUpgradeCompleteIndicator(true);
 
-                        if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[data.enemyAttackDamageLevel + 1]))
+                        for (int i = 0; i < targetUnit.Length; i++)
                         {
-                            GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
+                            CharacterData data = (CharacterData)targetUnit[i];
+                            if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[data.enemyAttackDamageLevel + 1]))
+                            {
+                                GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
 
-                            bool upgradeMaxedOut;
-                            upgradeMaxedOut = data.enemyAttackDamageLevel == p.UnitMaxLevel();
-                            if (upgradeMaxedOut) return;
+                                bool upgradeMaxedOut = data.enemyAttackDamageLevel == p.UnitMaxLevel();
+                                if (upgradeMaxedOut) return;
 
-                            data.enemyAttackDamageLevel++;
-                            unit.UpgradeCost(data.enemyAttackDamageLevel);
+                                data.enemyAttackDamageLevel++;
+                                if (i == 0)
+                                {
+                                    unit.UpgradeCost(data.enemyAttackDamageLevel);
+                                }
+                            }
                         }
                     }
                 }
                 break;
             case SkillType.RESEARCH_ATTACKRANGE:
                 {
-                    CharacterData data = (CharacterData)unitData;
                     UnitManager manager = source.GetComponent<UnitManager>();
                     if (manager == null) return;
 
@@ -118,11 +131,15 @@ public class SkillData : ScriptableObject
 
                     if (Globals.CanBuy(Globals.UPGRADECOST_ATTACKDAMAGE[1]))
                     {
-                        if (manager.Unit.Owner == 0)
-                            data.myAttackRangeResearchComplete = true;
-                        else if (manager.Unit.Owner == 1)
-                            data.enemyAttackRangeResearchComplete = true;
+                        for (int i = 0; i < targetUnit.Length; i++)
+                        {
+                            CharacterData data = (CharacterData)targetUnit[i];
 
+                            if (manager.Unit.Owner == 0)
+                                data.myAttackRangeResearchComplete = true;
+                            else if (manager.Unit.Owner == 1)
+                                data.enemyAttackRangeResearchComplete = true;
+                        }
                         unit.ResearchCost();
                         unit.AttackRangeResearchComplete();
                     }
@@ -135,13 +152,16 @@ public class SkillData : ScriptableObject
 
     public void InitializeUpgrade()
     {
-        if (unitData == null) return;
+        if (targetUnit == null) return;
 
         _myCounter = 0;
         _enemyCounter = 0;
-        unitData.myAttackDamageLevel = 0;
-        unitData.enemyAttackDamageLevel = 0;
-        unitData.myAttackRangeResearchComplete = false;
-        unitData.enemyAttackRangeResearchComplete = false;
+        for (int i = 0; i < targetUnit.Length; i++)
+        {
+            targetUnit[i].myAttackDamageLevel = 0;
+            targetUnit[i].enemyAttackDamageLevel = 0;
+            targetUnit[i].myAttackRangeResearchComplete = false;
+            targetUnit[i].enemyAttackRangeResearchComplete = false;
+        }
     }
 }

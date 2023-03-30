@@ -10,14 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
-  m_Name: UpgradeAttackDamage
+  m_Name: SpawnCrossbowman
   m_EditorClassIdentifier: 
-  code: upgrade_attackDamage
-  skillName: Upgrade Attack Damage
-  description: Increase attack damage
-  type: 2
-  unitData: {fileID: 11400000, guid: 219740ede27913f4796fbe973448b082, type: 2}
-  castTime: 0
-  cooldown: 0
+  code: spawn_crossbowman
+  skillName: Spawn Crossbowman
+  description: Spawn Crossbowman
+  type: 0
+  unitData: {fileID: 11400000, guid: fa32b78e943c1164c9309ee75bc746c1, type: 2}
+  targetUnit: []
+  castTime: 1
+  cooldown: 1
   sprite: {fileID: 0}
-  sound: {fileID: 8300000, guid: 012bcc20c5a29ee40b7f014109eefd79, type: 3}
+  sound: {fileID: 0}
+  techTree:
+    requiredBuilding: {fileID: 0}
+  techTreeOpen: 1

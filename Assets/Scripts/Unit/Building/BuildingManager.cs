@@ -25,7 +25,7 @@ public class BuildingManager : UnitManager
 
     private void Start()
     {
-        _buildingInteractSound = Unit.Data.interactSound[0];
+        //_buildingInteractSound = Unit.Data.interactSound[0];
     }
 
     public override void Select(bool singleClick, bool holdingShift)

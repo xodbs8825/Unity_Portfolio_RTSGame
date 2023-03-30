@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da3f096d8fd2403429d52313f13a8c3e, type: 3}
   m_Name: Global Parameters
   m_EditorClassIdentifier: 
+  _fieldsToSerialize: []
   _fieldsToShowInGame:
   - enableFOV
-  initialBuilding: {fileID: 11400000, guid: 070c39f8fab990249a1fd86a1b65119c, type: 2}
-  enableFOV: 1
+  initialBuilding: {fileID: 11400000, guid: 224258bbcbb188c43932cf415d7a52cd, type: 2}
   baseMineralProduction: 5
-  bonusMineralProductionPreBuilding: 2
+  bonusMineralProductionPerBuilding: 0
   mineralBonusRange: 10
   gasProductionRange: 10
+  enableFOV: 1

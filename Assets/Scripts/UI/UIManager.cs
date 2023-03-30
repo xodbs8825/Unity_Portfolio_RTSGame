@@ -162,15 +162,15 @@ public class UIManager : MonoBehaviour
     {
         if (_unit != null)
         {
-            if (_unit.UpgradeIndicator && _unit.UnitName == "BlackSmith")
+            if (_unit.AttackDamageUpgradeIndicator && _unit.UnitName == "BlackSmith")
             {
-                if (selectedUnitActionButtonsParent.transform.GetChild(0).name != "Upgrade Attack Damage") return;
+                if (selectedUnitActionButtonsParent.transform.GetChild(0).name != "Archer Attack Damage Upgrade") return;
                 selectedUnitActionButtonsParent.transform.GetChild(0).GetComponent<Button>().interactable = false;
                 selectedUnitActionButtonsParent.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
             }
             if (_unit.AttackRangeResearchCompleted && _unit.UnitName == "BlackSmith")
             {
-                if (selectedUnitActionButtonsParent.transform.GetChild(1).name != "Research Attack Range") return;
+                if (selectedUnitActionButtonsParent.transform.GetChild(1).name != "Archer Attack Range Research") return;
                 selectedUnitActionButtonsParent.transform.GetChild(1).GetComponent<Button>().interactable = false;
                 selectedUnitActionButtonsParent.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
             }
@@ -325,7 +325,7 @@ public class UIManager : MonoBehaviour
         List<ResourceValue> cost;
         switch (data.skillName)
         {
-            case "Upgrade Attack Damage":
+            case "Archer Attack Damage Upgrade":
                 if (_unit.Owner == 0)
                 {
                     if (data.unitData.myAttackDamageLevel == 3)
@@ -349,7 +349,7 @@ public class UIManager : MonoBehaviour
                     }
                 }
                 break;
-            case "Research Attack Range":
+            case "Archer Attack Range Research":
                 cost = Globals.UPGRADECOST_ATTACKDAMAGE[1];
                 break;
             default:

@@ -19,7 +19,7 @@ public class Unit
 
     protected Dictionary<InGameResource, int> _production;
 
-    protected bool _uIndicator;
+    protected bool _attackDamageUpgradeIndicator;
     protected bool _rIndicator;
 
     #region 유닛 업그레이드
@@ -70,7 +70,7 @@ public class Unit
         _attackRange = data.attackRange;
         _attackRangeResearchComplete = false;
 
-        _uIndicator = false;
+        _attackDamageUpgradeIndicator = false;
 
         GamePlayersParameters parameter = GameManager.instance.gamePlayersParameters;
         Color c = parameter.players[owner].color;
@@ -201,9 +201,9 @@ public class Unit
         return _production;
     }
 
-    public void UpgradeCompleteIndicator(bool indicator)
+    public void AttackDamageUpgradeCompleteIndicator(bool indicator)
     {
-        _uIndicator = indicator;
+        _attackDamageUpgradeIndicator = indicator;
     }
 
     public virtual bool IsAlive { get => true; }
@@ -218,8 +218,8 @@ public class Unit
     public int Owner { get => _owner; }
     public int AttackDamage { get => _attackDamage; }
     public int AttackDamageUpgradeValue { get => _attackDamageUpgradeValue; }
+    public bool AttackDamageUpgradeIndicator { get => _attackDamageUpgradeIndicator; }
     public float AttackRange { get => _attackRange; }
     public bool AttackRangeResearchCompleted { get => _attackRangeResearchComplete; }
-    public bool UpgradeIndicator { get => _uIndicator; }
     public string UnitName { get => _unitName; }
 }
