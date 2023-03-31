@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6c9bc1f5a984e241a01bdb2b77f9fcf, type: 3}
+  m_Name: Light_Infantry
+  m_EditorClassIdentifier: 
+  code: light_infantry
+  unitName: Light Infantry
+  description: Lightly armed infantry unit
+  healthPoint: 50
+  prefab: {fileID: 5542380815447981279, guid: 922a3cf47f171844e85316d678060ca8, type: 3}
+  cost:
+  - code: 0
+    amount: 50
+  fieldOfView: 50
+  attackRange: 5
+  attackDamage: 5
+  attackRate: 1
+  myAttackDamageLevel: 0
+  enemyAttackDamageLevel: 0
+  myAttackRangeResearchComplete: 0
+  enemyAttackRangeResearchComplete: 0
+  upgrade:
+    attackDamage: 05000000080000000b0000000f000000
+    attackRange: []
+  canProduce: 
+  skills: []
+  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
+  interactSound: []
+  buildRate: 0
+  buildRange: 0
+  buildPower: 0

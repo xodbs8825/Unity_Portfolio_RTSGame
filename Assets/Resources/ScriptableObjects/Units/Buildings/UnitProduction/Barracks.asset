@@ -32,7 +32,10 @@ MonoBehaviour:
     attackDamage: 
     attackRange: []
   canProduce: 
-  skills: []
+  skills:
+  - {fileID: 11400000, guid: 07d6e00ef1222f24594380c7224d4484, type: 2}
+  - {fileID: 11400000, guid: 3b614875ff606dd469106671e9ac25f4, type: 2}
+  - {fileID: 11400000, guid: 2d21bfd2022dc6143b74acf0f4dcfd1f, type: 2}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound:
   - {fileID: 0}
