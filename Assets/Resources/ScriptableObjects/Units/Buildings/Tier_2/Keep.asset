@@ -12,13 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66fdca5b6dc1a0d42909c7167a4b0ea2, type: 3}
   m_Name: Keep
   m_EditorClassIdentifier: 
-  code: 
-  unitName: 
-  description: 
-  healthPoint: 0
-  prefab: {fileID: 0}
-  cost: []
-  fieldOfView: 0
+  code: keep
+  unitName: Keep
+  description: 'Upgraded structure from Town Hall. Enables further upgrades and harder
+    to destroy. '
+  healthPoint: 1800
+  prefab: {fileID: 5542380815447981279, guid: f5b69c3b204f7174ea9f2b751615c859, type: 3}
+  cost:
+  - code: 0
+    amount: 150
+  - code: 1
+    amount: 100
+  fieldOfView: 50
   attackRange: 0
   attackDamage: 0
   attackRate: 0
@@ -30,7 +35,11 @@ MonoBehaviour:
     attackDamage: 
     attackRange: []
   canProduce: 
-  skills: []
-  selectSound: {fileID: 0}
+  skills:
+  - {fileID: 11400000, guid: cd816dfedbc04054aaa587cca3521453, type: 2}
+  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound: []
-  constructionMeshes: []
+  constructionMeshes:
+  - {fileID: 4300000, guid: 9f1a76b274a57c841b1aa03e7c5e5200, type: 3}
+  - {fileID: 4300000, guid: 70a74a7e3a8172e4d9fc5cd02c4800ba, type: 3}
+  - {fileID: 4300004, guid: 003306f67c7bed24b8be307fb52fb0ab, type: 3}

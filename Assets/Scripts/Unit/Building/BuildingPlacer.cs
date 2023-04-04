@@ -133,9 +133,18 @@ public class BuildingPlacer : MonoBehaviour
         _placedBuilding = prevPlacedBuilding;
     }
 
-    public void DespawnBuilding()
+    public void UpgradeBuilding(BuildingData data, int owner, Vector3 position)
     {
-        Destroy(gameObject);
+        UpgradeBuilding(data, owner, position, new List<ResourceValue>() { });
+    }
+    public void UpgradeBuilding(BuildingData data, int owner, Vector3 position, List<ResourceValue> production)
+    {
+        Building _prevPlacedBuilding = _placedBuilding;
+
+        _placedBuilding = new Building(data, owner, production);
+        _placedBuilding.SetPosition(position);
+
+        PlaceBuilding(false);
     }
 
     private void PreparePlacedBuilding(int buildingDataIndex)

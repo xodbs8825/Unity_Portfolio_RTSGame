@@ -142,7 +142,10 @@ public class UnitManager : MonoBehaviour
 
         EventManager.TriggerEvent("DeselectUnit", Unit);
 
-        selectionCircle.SetActive(false);
+        if (selectionCircle)
+        {
+            selectionCircle.SetActive(false);
+        }
         if (healthBar)
         {
             healthBar.SetActive(false);

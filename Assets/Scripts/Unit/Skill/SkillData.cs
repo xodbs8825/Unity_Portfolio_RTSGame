@@ -169,6 +169,8 @@ public class SkillData : ScriptableObject
                     {
                         if (unitData.GetType() == typeof(BuildingData))
                         {
+                            BuildingData buildingData = (BuildingData)unitData;
+                            Destroy(manager.gameObject);
                             BuildingPlacer.instance.SpawnBuilding((BuildingData)unitData, unit.Owner, manager.transform.position);
                         }
                     }

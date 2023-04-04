@@ -31,10 +31,10 @@ MonoBehaviour:
   upgrade:
     attackDamage: 
     attackRange: []
-    upgradeTo: {fileID: 11400000, guid: 49d5e9988cc9f1440ae7752dbf76dd4e, type: 2}
   canProduce: 
   skills:
   - {fileID: 11400000, guid: cd816dfedbc04054aaa587cca3521453, type: 2}
+  - {fileID: 11400000, guid: a71ce5355fe057041a26e16f857ba3ee, type: 2}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound: []
   constructionMeshes:
