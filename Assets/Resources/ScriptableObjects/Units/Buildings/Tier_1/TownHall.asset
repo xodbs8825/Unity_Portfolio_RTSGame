@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   code: townHall
   unitName: Town Hall
-  description: Primary structure, used to train Peasants and receive gathered resources.
-  healthPoint: 1000
+  description: 'Primary structure, used to train Peasants. Produces 50 gold per second. '
+  healthPoint: 1250
   prefab: {fileID: 5542380815447981279, guid: 7e55ab7a884df2e4dbb95ae218eec996, type: 3}
-  cost: []
+  cost:
+  - code: 0
+    amount: 300
   fieldOfView: 50
   attackRange: 0
   attackDamage: 0
@@ -29,6 +31,7 @@ MonoBehaviour:
   upgrade:
     attackDamage: 
     attackRange: []
+    upgradeTo: {fileID: 11400000, guid: 49d5e9988cc9f1440ae7752dbf76dd4e, type: 2}
   canProduce: 
   skills:
   - {fileID: 11400000, guid: cd816dfedbc04054aaa587cca3521453, type: 2}

@@ -133,6 +133,11 @@ public class BuildingPlacer : MonoBehaviour
         _placedBuilding = prevPlacedBuilding;
     }
 
+    public void DespawnBuilding()
+    {
+        Destroy(gameObject);
+    }
+
     private void PreparePlacedBuilding(int buildingDataIndex)
     {
         PreparePlacedBuilding(Globals.BUILDING_DATA[buildingDataIndex]);
