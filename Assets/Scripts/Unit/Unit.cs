@@ -7,7 +7,7 @@ public class Unit
 {
     protected UnitData _data;
     protected Transform _transform;
-    protected int _currentHealth;
+    protected float _currentHealth;
 
     protected string _uid;
 
@@ -210,8 +210,8 @@ public class Unit
     public UnitData Data { get => _data; }
     public string Code { get => _data.code; }
     public Transform Transform { get => _transform; }
-    public int HP { get => _currentHealth; set => _currentHealth = value; }
-    public int MaxHP { get => _data.healthPoint; }
+    public float HP { get => _currentHealth; set => _currentHealth = value; }
+    public float MaxHP { get => _data.healthPoint; }
     public string Uid { get => _uid; }
     public Dictionary<InGameResource, int> Production { get => _production; }
     public List<SkillManager> SkillManagers { get => _skillManagers; }

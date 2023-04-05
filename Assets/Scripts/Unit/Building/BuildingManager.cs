@@ -117,7 +117,7 @@ public class BuildingManager : UnitManager
     protected override void UpdateHealthBar()
     {
         if (!_healthbarRenderer) return;
-        int hp = (IsActive() && !_building.IsAlive) ? _building.ConstructionHP : Unit.HP;
+        float hp = (IsActive() && !_building.IsAlive) ? _building.ConstructionHP : Unit.HP;
         _healthbarRenderer.GetPropertyBlock(MaterialPropertyBlock);
         _healthbarRenderer.material.SetFloat("_Health", hp / (float)Unit.MaxHP);
         _healthbarRenderer.material.SetFloat("_Width", healthBar.transform.localScale.x);
@@ -126,7 +126,7 @@ public class BuildingManager : UnitManager
 
     public bool Build(int buildPower)
     {
-        _building.SetConstructionHP(_building.ConstructionHP + buildPower);
+        _building.SetConstructionHP(_building.ConstructionHP + buildPower * Time.deltaTime);
         UpdateHealthBar();
         return _building.IsAlive;
     }

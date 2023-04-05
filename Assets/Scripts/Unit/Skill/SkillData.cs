@@ -36,6 +36,7 @@ public class SkillData : ScriptableObject
     public UnitData[] targetUnit;
     public SkillCost[] skillCost;
 
+    public float buildTime;
     public float castTime;
     public float cooldown;
     public Sprite sprite;
@@ -47,6 +48,14 @@ public class SkillData : ScriptableObject
 
     private int _myCounter;
     private int _enemyCounter;
+
+    private bool _buildingUpgradeStarted = false;
+    [HideInInspector]
+    public bool BuildingUpgradeStarted { get => _buildingUpgradeStarted; set => _buildingUpgradeStarted = value; }
+
+    private UnitManager _manager;
+    [HideInInspector]
+    public UnitManager UnitManager { get => _manager; }
 
     public void Trigger(GameObject source, GameObject target = null)
     {
@@ -163,15 +172,13 @@ public class SkillData : ScriptableObject
                     UnitManager manager = source.GetComponent<UnitManager>();
                     if (manager == null) return;
 
-                    Unit unit = manager.Unit;
                     List<ResourceValue> cost = SetSkillCost(0);
                     if (Globals.CanBuy(cost))
                     {
                         if (unitData.GetType() == typeof(BuildingData))
                         {
-                            BuildingData buildingData = (BuildingData)unitData;
-                            Destroy(manager.gameObject);
-                            BuildingPlacer.instance.SpawnBuilding((BuildingData)unitData, unit.Owner, manager.transform.position);
+                            _manager = manager;
+                            _buildingUpgradeStarted = true;
                         }
                     }
                 }
@@ -194,6 +201,7 @@ public class SkillData : ScriptableObject
             targetUnit[i].myAttackRangeResearchComplete = false;
             targetUnit[i].enemyAttackRangeResearchComplete = false;
         }
+        _buildingUpgradeStarted = false;
     }
 
     public List<ResourceValue> SetSkillCost(int index)

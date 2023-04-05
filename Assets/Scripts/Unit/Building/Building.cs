@@ -16,7 +16,7 @@ public class Building : Unit
     private List<Material> _materials;
 
     private BuildingBT _bt;
-    private int _constructionHP;
+    private float _constructionHP;
     private bool _isAlive;
 
     private List<CharacterManager> _constructors;
@@ -86,7 +86,7 @@ public class Building : Unit
         EventManager.TriggerEvent("PlaySoundByName", "buildingPlacedSound");
     }
 
-    public void SetConstructionHP(int constructionHP)
+    public void SetConstructionHP(float constructionHP)
     {
         if (_isAlive) return;
 
@@ -114,6 +114,28 @@ public class Building : Unit
 
         if (constructionRatio >= 1)
             SetAlive();
+    }
+
+    public void SetUpgradeConstructionHP(float prevHP, float currentHP, float constructionRatio)
+    {
+        _constructionHP = prevHP + (currentHP - prevHP) * constructionRatio;
+
+        int meshIndex = 0;
+        if (constructionRatio < 0.5f)
+        {
+            meshIndex = 0;
+        }
+        else if (constructionRatio >= 0.5f && constructionRatio < 1)
+        {
+            meshIndex = 1;
+        }
+        else if (constructionRatio >= 1)
+        {
+            meshIndex = 2;
+        }
+
+        Mesh mesh = _constructionMeshes[meshIndex];
+        _rendererMesh.sharedMesh = mesh;
     }
 
     private void SetAlive()
@@ -161,7 +183,7 @@ public class Building : Unit
 
     public bool HasValidPlacement { get => _placement == BuildingPlacement.VALID; }
     public bool IsFixed { get => _placement == BuildingPlacement.FIXED; }
-    public int ConstructionHP { get => _constructionHP; }
+    public float ConstructionHP { get => _constructionHP; }
     public override bool IsAlive { get => _isAlive; }
     public List<CharacterManager> Constructors { get => _constructors; }
     public bool HasConstructorsFull { get => _constructors.Count == 1; }

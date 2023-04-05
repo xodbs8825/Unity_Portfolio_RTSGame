@@ -9,6 +9,7 @@ public class BuildingPlacer : MonoBehaviour
 {
     private Building _placedBuilding = null;
     private UnitManager _builderManager;
+    private Building _building = null;
 
     private Ray _ray;
     private RaycastHit _raycastHit;
@@ -18,9 +19,14 @@ public class BuildingPlacer : MonoBehaviour
 
     public static BuildingPlacer instance;
 
+    private float _upgradeTimer;
+    private Vector3 _position;
+    private Building _prevBuilding;
+
     private void Awake()
     {
         isAbleToBuild = true;
+        _upgradeTimer = 0f;
     }
 
     void Update()
@@ -54,6 +60,52 @@ public class BuildingPlacer : MonoBehaviour
                 CancelPlacedBuilding();
             }
         }
+
+        if (_building != null)
+        {
+            for (int i = 0; i < _building.SkillManagers.Count; i++)
+            {
+                SkillData skill = _building.SkillManagers[i].skill;
+                if (skill.type == SkillType.UPGRADE_UNIT)
+                {
+                    if (skill.BuildingUpgradeStarted)
+                    {
+                        _upgradeTimer += Time.deltaTime;
+                        for (int j = 0; j < GameManager.instance.gamePlayersParameters.players.Length; j++)
+                        {
+                            if (skill.UnitManager != null)
+                            {
+                                if (skill.UnitManager.gameObject)
+                                {
+                                    _position = skill.UnitManager.transform.position;
+                                    _prevBuilding = _building;
+                                    Destroy(skill.UnitManager.gameObject);
+                                }
+                            }
+                            else if (_building == _prevBuilding)
+                            {
+                                _building = new Building((BuildingData)skill.unitData, j, new List<ResourceValue>() { });
+                                _building.SetPosition(_position);
+                                PlaceBuilding(false);
+                            }
+                            else if (_building != _prevBuilding && _upgradeTimer <= skill.buildTime)
+                            {
+                                _building.SetUpgradeConstructionHP(_prevBuilding.MaxHP, _building.MaxHP, _upgradeTimer / skill.buildTime);
+                            }
+                            else if (_upgradeTimer > skill.buildTime)
+                            {
+                                Debug.Log("!");
+                                skill.BuildingUpgradeStarted = false;
+                                _prevBuilding = _building;
+                                _building = _placedBuilding;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Debug.Log(_upgradeTimer);
+
     }
 
     private void Start()
@@ -130,21 +182,27 @@ public class BuildingPlacer : MonoBehaviour
         PlaceBuilding(false);
 
         _placedBuilding.SetConstructionHP(_placedBuilding.MaxHP);
+        _building = _placedBuilding;
         _placedBuilding = prevPlacedBuilding;
     }
 
-    public void UpgradeBuilding(BuildingData data, int owner, Vector3 position)
+    public void UpgradeBuilding(BuildingData data, int owner, Vector3 position, SkillData skill)
     {
-        UpgradeBuilding(data, owner, position, new List<ResourceValue>() { });
+        UpgradeBuilding(data, owner, position, new List<ResourceValue>() { }, skill);
     }
-    public void UpgradeBuilding(BuildingData data, int owner, Vector3 position, List<ResourceValue> production)
+    public void UpgradeBuilding(BuildingData data, int owner, Vector3 position, List<ResourceValue> production, SkillData skill)
     {
-        Building _prevPlacedBuilding = _placedBuilding;
+        Building prevBuilding = _placedBuilding;
 
-        _placedBuilding = new Building(data, owner, production);
-        _placedBuilding.SetPosition(position);
+        if (!skill.UnitManager.gameObject)
+        {
+            _placedBuilding = new Building(data, owner, production);
+            _placedBuilding.SetPosition(position);
+            PlaceBuilding(false);
+        }
 
-        PlaceBuilding(false);
+        _placedBuilding.SetConstructionHP(prevBuilding.MaxHP + _upgradeTimer / skill.buildTime);
+        _building = _placedBuilding;
     }
 
     private void PreparePlacedBuilding(int buildingDataIndex)
@@ -200,7 +258,14 @@ public class BuildingPlacer : MonoBehaviour
         }
         else
         {
-            _placedBuilding.Place();
+            if (_placedBuilding != null)
+            {
+                _placedBuilding.Place();
+            }
+            else if (_building != null)
+            {
+                _building.Place();
+            }
 
             if (canChain)
             {

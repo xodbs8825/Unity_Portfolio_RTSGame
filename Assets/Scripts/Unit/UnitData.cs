@@ -11,7 +11,7 @@ public class UnitData : ScriptableObject
     public string code;
     public string unitName;
     public string description;
-    public int healthPoint;
+    public float healthPoint;
     public GameObject prefab;
     public List<ResourceValue> cost;
     public float fieldOfView;
