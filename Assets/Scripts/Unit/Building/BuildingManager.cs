@@ -23,17 +23,18 @@ public class BuildingManager : UnitManager
         _building = building;
     }
 
-    private void Start()
-    {
-        //_buildingInteractSound = Unit.Data.interactSound[0];
-    }
-
     public override void Select(bool singleClick, bool holdingShift)
     {
         base.Select(singleClick, holdingShift);
         if (base.IsSelected && _buildingInteractSound != null)
             PlaySound();
     }
+
+    //public override void Update()
+    //{
+    //    base.Update();
+    //    UpdateHealthBar();
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -126,7 +127,7 @@ public class BuildingManager : UnitManager
 
     public bool Build(int buildPower)
     {
-        _building.SetConstructionHP(_building.ConstructionHP + buildPower * Time.deltaTime);
+        _building.SetConstructionHP(_building.ConstructionHP + buildPower);
         UpdateHealthBar();
         return _building.IsAlive;
     }

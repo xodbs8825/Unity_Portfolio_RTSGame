@@ -45,11 +45,11 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    public virtual void Update()
     {
         Unit.UpdateUpgradeParameters();
-
         zoomSize = 60f / Camera.main.orthographicSize;
+        UpdateHealthBar();
     }
 
     private void OnMouseDown()

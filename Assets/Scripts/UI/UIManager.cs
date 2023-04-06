@@ -10,8 +10,6 @@ public class UIManager : MonoBehaviour
     #region 건물
     [Header("Building")]
     private BuildingPlacer _buildingPlacer;
-    //public RectTransform placedBuildingProductionRectTransform;
-    //public GameObject cancelMenu;
     #endregion
 
     #region 유닛 선택
@@ -70,6 +68,8 @@ public class UIManager : MonoBehaviour
     private int _myPlayerID;
 
     private Unit _unit;
+    private List<bool> _isSkillAvailable;
+    private List<bool> _isEnemySkillAvailable;
 
     private void Awake()
     {
@@ -150,63 +150,41 @@ public class UIManager : MonoBehaviour
         if (_selectedUnit != null)
             UpdateSelectedUnitUpgradeInfoPanel();
 
-        UpdateSkillButtonInteractable();
+        //UpdateSkillButtonInteractable();
 
         if (Globals.SELECTED_UNITS.Count > 1)
         {
             ShowPanel(selectedUnitActionButtonsParent, false);
         }
-    }
 
-    public void UpdateSkillButtonInteractable()
-    {
         if (_unit != null)
         {
-            if (_unit.AttackDamageUpgradeIndicator && _unit.UnitName == "BlackSmith")
+            _isSkillAvailable = new List<bool>();
+            _isEnemySkillAvailable = new List<bool>();
+
+            for (int i = 0; i < _unit.SkillManagers.Count; i++)
             {
-                if (selectedUnitActionButtonsParent.transform.GetChild(0).name != "Archer Attack Damage Upgrade") return;
-                selectedUnitActionButtonsParent.transform.GetChild(0).GetComponent<Button>().interactable = false;
-                selectedUnitActionButtonsParent.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-            }
-            if (_unit.AttackRangeResearchCompleted && _unit.UnitName == "BlackSmith")
-            {
-                if (selectedUnitActionButtonsParent.transform.GetChild(1).name != "Archer Attack Range Research") return;
-                selectedUnitActionButtonsParent.transform.GetChild(1).GetComponent<Button>().interactable = false;
-                selectedUnitActionButtonsParent.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
-            }
-            
-            if (!_unit.IsAlive)
-            {
-                for (int i = 0; i < _unit.SkillManagers.Count; i++)
+                if (_unit.Owner == 0)
                 {
-                    selectedUnitActionButtonsParent.transform.GetChild(i).GetComponent<Button>().interactable = false;
-                    selectedUnitActionButtonsParent.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
-                }
-            }
-            else if (_unit.IsAlive && Globals.SELECTED_UNITS.Count == 1)
-            {
-                for (int i = 0; i < _unit.SkillManagers.Count; i++)
-                {
-                    if (_unit.SkillManagers[i].skill.techTreeOpen)
+                    _isSkillAvailable.Add(_unit.SkillManagers[i].skill.skillAvailable[0]);
+                    if (!_isSkillAvailable[i])
                     {
-                        selectedUnitActionButtonsParent.transform.GetChild(i).GetComponent<Button>().interactable = true;
-                        selectedUnitActionButtonsParent.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        selectedUnitActionButtonsParent.transform.GetChild(i).GetComponent<Button>().interactable = false;
-                        selectedUnitActionButtonsParent.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                        Destroy(_selectedUnitActionButtonsParent.GetChild(i).GetChild(0));
                     }
                 }
-            }
-            else if (_unit.IsAlive)
-            {
-                for (int i = 0; i < _unit.SkillManagers.Count; i++)
+                else if (_unit.Owner == 1)
                 {
-                    selectedUnitActionButtonsParent.transform.GetChild(i).GetComponent<Button>().interactable = true;
-                    selectedUnitActionButtonsParent.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                    _isEnemySkillAvailable.Add(_unit.SkillManagers[i].skill.skillAvailable[1]);
                 }
             }
+        }
+    }
+
+    public void UpdateSkillButtonInteractable(SkillData skill)
+    {
+        if (skill.skillAvailable[_unit.Owner])
+        {
+
         }
     }
 
@@ -476,24 +454,28 @@ public class UIManager : MonoBehaviour
         if (_selectedUnitTitleText != null)
             _selectedUnitTitleText.text = unit.Data.unitName;
 
-        foreach (Transform child in _selectedUnitActionButtonsParent)
-            Destroy(child.gameObject);
+        for (int i = 0; i < _selectedUnitActionButtonsParent.childCount; i++)
+        {
+            foreach (Transform child in _selectedUnitActionButtonsParent.GetChild(i))
+            {
+                Destroy(child.gameObject);
+            }
+        }
 
         if (unit.SkillManagers.Count > 0)
         {
             for (int i = 0; i < unit.SkillManagers.Count; i++)
             {
-                InstantiateSkillButton(unit, unit.SkillManagers[i].skill.skillName, i);
+                InstantiateSkillButton(unit, i);
             }
         }
     }
 
-    private void InstantiateSkillButton(Unit unit, string skill, int index)
+    private void InstantiateSkillButton(Unit unit, int index)
     {
-        GameObject g = GameObject.Instantiate(unitSkillButtonPrefab, _selectedUnitActionButtonsParent);
+        GameObject g = GameObject.Instantiate(unitSkillButtonPrefab, _selectedUnitActionButtonsParent.GetChild(index));
         Button b = g.GetComponent<Button>();
 
-        if (unit.SkillManagers[index].skill.skillName != skill) return;
         SetSkill(unit, index, g);
         b.GetComponent<SkillButton>().InitializeSkillButton(unit.SkillManagers[index].skill);
         AddUnitSkillButtonListener(b, index);

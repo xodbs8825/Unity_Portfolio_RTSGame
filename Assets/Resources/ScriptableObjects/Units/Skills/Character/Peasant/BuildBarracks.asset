@@ -17,10 +17,13 @@ MonoBehaviour:
   description: Build Barracks
   type: 1
   unitData: {fileID: 11400000, guid: 06a86b6958539164e839ad6b281f8c7d, type: 2}
+  targetUnit: []
+  skillCost: []
+  buildTime: 0
   castTime: 0
   cooldown: 0
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: {fileID: 11400000, guid: 224258bbcbb188c43932cf415d7a52cd, type: 2}
-  techTreeOpen: 1
+    requiredBuilding: {fileID: 0}
+  techTreeOpen: 0
