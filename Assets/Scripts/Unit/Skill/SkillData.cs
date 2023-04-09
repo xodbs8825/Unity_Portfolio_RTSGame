@@ -46,9 +46,6 @@ public class SkillData : ScriptableObject
     public TechTree techTree;
     public bool techTreeOpen;
 
-    [HideInInspector]
-    public bool[] skillAvailable = new bool[2];
-
     private int _myCounter;
     private int _enemyCounter;
 
@@ -95,14 +92,10 @@ public class SkillData : ScriptableObject
 
                     Unit unit = manager.Unit;
                     List<ResourceValue> cost;
-                    if (unit.Owner == 0)
+                    if (manager.Unit.Owner == 0)
                     {
                         _myCounter++;
-                        if (_myCounter == 3)
-                        {
-                            skillAvailable[0] = false;
-                            unit.AttackDamageUpgradeCompleteIndicator(true);
-                        }
+                        if (_myCounter == 3) manager.Unit.AttackDamageUpgradeCompleteIndicator(true);
 
 
                         for (int i = 0; i < targetUnit.Length; i++)
@@ -119,7 +112,7 @@ public class SkillData : ScriptableObject
                                 data.myAttackDamageLevel++;
                                 if (i == 0)
                                 {
-                                    BuyUpgrade(cost, unit.Owner);
+                                    BuyUpgrade(cost, manager.Unit.Owner);
                                 }
                             }
                         }
@@ -127,11 +120,7 @@ public class SkillData : ScriptableObject
                     else if (manager.Unit.Owner == 1)
                     {
                         _enemyCounter++;
-                        if (_enemyCounter == 3)
-                        {
-                            skillAvailable[1] = false;
-                            manager.Unit.AttackDamageUpgradeCompleteIndicator(true);
-                        }
+                        if (_enemyCounter == 3) manager.Unit.AttackDamageUpgradeCompleteIndicator(true);
 
                         for (int i = 0; i < targetUnit.Length; i++)
                         {
@@ -142,8 +131,7 @@ public class SkillData : ScriptableObject
                                 GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
 
                                 bool upgradeMaxedOut = data.enemyAttackDamageLevel == p.UnitMaxLevel();
-                                if (upgradeMaxedOut)
-                                    return;
+                                if (upgradeMaxedOut) return;
 
                                 data.enemyAttackDamageLevel++;
                                 if (i == 0)
@@ -170,15 +158,9 @@ public class SkillData : ScriptableObject
                             CharacterData data = (CharacterData)targetUnit[i];
 
                             if (manager.Unit.Owner == 0)
-                            {
-                                skillAvailable[0] = false;
                                 data.myAttackRangeResearchComplete = true;
-                            }
                             else if (manager.Unit.Owner == 1)
-                            {
-                                skillAvailable[1] = false;
                                 data.enemyAttackRangeResearchComplete = true;
-                            }
                         }
                         BuyUpgrade(cost, manager.Unit.Owner);
                         unit.AttackRangeResearchComplete();
@@ -212,7 +194,6 @@ public class SkillData : ScriptableObject
 
         _myCounter = 0;
         _enemyCounter = 0;
-
         for (int i = 0; i < targetUnit.Length; i++)
         {
             targetUnit[i].myAttackDamageLevel = 0;
@@ -220,11 +201,7 @@ public class SkillData : ScriptableObject
             targetUnit[i].myAttackRangeResearchComplete = false;
             targetUnit[i].enemyAttackRangeResearchComplete = false;
         }
-
         _buildingUpgradeStarted = false;
-
-        skillAvailable[0] = true;
-        skillAvailable[1] = true;
     }
 
     public List<ResourceValue> SetSkillCost(int index)

@@ -10,7 +10,6 @@ public class BuildingPlacer : MonoBehaviour
     private Building _placedBuilding = null;
     private UnitManager _builderManager;
     private Building _building = null;
-    private SkillData _upgradeSkill;
 
     private Ray _ray;
     private RaycastHit _raycastHit;
@@ -64,44 +63,49 @@ public class BuildingPlacer : MonoBehaviour
 
         if (_building != null)
         {
-            if (_upgradeSkill.type == SkillType.UPGRADE_UNIT)
+            for (int i = 0; i < _building.SkillManagers.Count; i++)
             {
-                if (_upgradeSkill.BuildingUpgradeStarted)
+                SkillData skill = _building.SkillManagers[i].skill;
+                if (skill.type == SkillType.UPGRADE_UNIT)
                 {
-                    _upgradeTimer += Time.deltaTime;
-
-                    if (_building.Owner == GameManager.instance.gamePlayersParameters.myPlayerID)
+                    if (skill.BuildingUpgradeStarted)
                     {
-                        if (_upgradeSkill.UnitManager != null)
+                        _upgradeTimer += Time.deltaTime;
+                        for (int j = 0; j < GameManager.instance.gamePlayersParameters.players.Length; j++)
                         {
-                            if (_upgradeSkill.UnitManager.gameObject)
+                            if (skill.UnitManager != null)
                             {
-                                _position = _upgradeSkill.UnitManager.transform.position;
-                                _prevBuilding = _building;
-                                Destroy(_upgradeSkill.UnitManager.gameObject);
+                                if (skill.UnitManager.gameObject)
+                                {
+                                    _position = skill.UnitManager.transform.position;
+                                    _prevBuilding = _building;
+                                    Destroy(skill.UnitManager.gameObject);
+                                }
                             }
-                        }
-                        else if (_building == _prevBuilding)
-                        {
-                            _building = new Building((BuildingData)_upgradeSkill.unitData, _building.Owner, new List<ResourceValue>() { });
-                            _building.SetPosition(_position);
-                            PlaceBuilding(false);
-                        }
-                        else if (_upgradeTimer < _upgradeSkill.buildTime)
-                        {
-                            _building.SetUpgradeConstructionHP(_prevBuilding.MaxHP, _building.MaxHP, _upgradeTimer / _upgradeSkill.buildTime);
-                        }
-                        else if (_upgradeTimer > _upgradeSkill.buildTime)
-                        {
-                            _building.SetConstructionHP(_building.MaxHP);
-                            _upgradeSkill.BuildingUpgradeStarted = false;
-                            _prevBuilding = _building;
-                            _building = _placedBuilding;
+                            else if (_building == _prevBuilding)
+                            {
+                                _building = new Building((BuildingData)skill.unitData, j, new List<ResourceValue>() { });
+                                _building.SetPosition(_position);
+                                PlaceBuilding(false);
+                            }
+                            else if (_building != _prevBuilding && _upgradeTimer <= skill.buildTime)
+                            {
+                                _building.SetUpgradeConstructionHP(_prevBuilding.MaxHP, _building.MaxHP, _upgradeTimer / skill.buildTime);
+                            }
+                            else if (_upgradeTimer > skill.buildTime)
+                            {
+                                Debug.Log("!");
+                                skill.BuildingUpgradeStarted = false;
+                                _prevBuilding = _building;
+                                _building = _placedBuilding;
+                            }
                         }
                     }
                 }
             }
         }
+        Debug.Log(_upgradeTimer);
+
     }
 
     private void Start()
@@ -178,13 +182,7 @@ public class BuildingPlacer : MonoBehaviour
         PlaceBuilding(false);
 
         _placedBuilding.SetConstructionHP(_placedBuilding.MaxHP);
-
-        if (_placedBuilding.Owner == GameManager.instance.gamePlayersParameters.myPlayerID)
-        {
-            _building = _placedBuilding;
-            _upgradeSkill = _building.SkillManagers[1].skill;
-        }
-
+        _building = _placedBuilding;
         _placedBuilding = prevPlacedBuilding;
     }
 
