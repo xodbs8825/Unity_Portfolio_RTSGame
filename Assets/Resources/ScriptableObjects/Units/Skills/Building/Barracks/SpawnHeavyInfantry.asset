@@ -18,6 +18,8 @@ MonoBehaviour:
   type: 0
   unitData: {fileID: 11400000, guid: d25e6befd580e5742a0d6395b08d7390, type: 2}
   targetUnit: []
+  skillCost: []
+  buildTime: 0
   castTime: 1
   cooldown: 1
   sprite: {fileID: 0}
@@ -25,3 +27,4 @@ MonoBehaviour:
   techTree:
     requiredBuilding: {fileID: 11400000, guid: 6ad37734c26986847bf00ee626c35d18, type: 2}
   techTreeOpen: 0
+  skillAvailable: 0101
