@@ -18,7 +18,10 @@ MonoBehaviour:
   type: 0
   unitData: {fileID: 11400000, guid: 219740ede27913f4796fbe973448b082, type: 2}
   targetUnit: []
-  skillCost: []
+  skillCost:
+  - cost:
+    - code: 0
+      amount: 50
   buildTime: 0
   castTime: 1
   cooldown: 13

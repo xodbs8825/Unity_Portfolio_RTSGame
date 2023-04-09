@@ -68,8 +68,6 @@ public class UIManager : MonoBehaviour
     private int _myPlayerID;
 
     private Unit _unit;
-    private List<bool> _isSkillAvailable;
-    private List<bool> _isEnemySkillAvailable;
 
     private void Awake()
     {
@@ -157,34 +155,20 @@ public class UIManager : MonoBehaviour
             ShowPanel(selectedUnitActionButtonsParent, false);
         }
 
-        if (_unit != null)
-        {
-            _isSkillAvailable = new List<bool>();
-            _isEnemySkillAvailable = new List<bool>();
-
-            for (int i = 0; i < _unit.SkillManagers.Count; i++)
-            {
-                if (_unit.Owner == 0)
-                {
-                    _isSkillAvailable.Add(_unit.SkillManagers[i].skill.skillAvailable[0]);
-                    if (!_isSkillAvailable[i])
-                    {
-                        Destroy(_selectedUnitActionButtonsParent.GetChild(i).GetChild(0));
-                    }
-                }
-                else if (_unit.Owner == 1)
-                {
-                    _isEnemySkillAvailable.Add(_unit.SkillManagers[i].skill.skillAvailable[1]);
-                }
-            }
-        }
+        UpdateSkillButtonInteractable();
     }
 
-    public void UpdateSkillButtonInteractable(SkillData skill)
+    public void UpdateSkillButtonInteractable()
     {
-        if (skill.skillAvailable[_unit.Owner])
+        if (_unit != null)
         {
-
+            for (int i = 0; i < _unit.SkillManagers.Count; i++)
+            {
+                if (!_unit.SkillManagers[i].skill.skillAvailable[_unit.Owner] || !_unit.SkillManagers[i].skill.techTreeOpen)
+                {
+                    _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                }
+            }
         }
     }
 

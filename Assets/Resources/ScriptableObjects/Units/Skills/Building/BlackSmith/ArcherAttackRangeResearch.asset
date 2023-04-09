@@ -21,7 +21,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 40cfd30adf6ca2b4ba312d5c03ece8f0, type: 2}
   - {fileID: 11400000, guid: fa32b78e943c1164c9309ee75bc746c1, type: 2}
   - {fileID: 11400000, guid: 3827e9efa3fe1764796607324834c159, type: 2}
-  skillCost: []
+  skillCost:
+  - cost:
+    - code: 0
+      amount: 100
+    - code: 1
+      amount: 100
   buildTime: 0
   castTime: 0
   cooldown: 0
