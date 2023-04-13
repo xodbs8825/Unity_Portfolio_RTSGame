@@ -16,8 +16,8 @@ MonoBehaviour:
   skillName: Upgrade to Keep
   description: Upgrade to Keep
   type: 4
-  unitData: {fileID: 11400000, guid: 49d5e9988cc9f1440ae7752dbf76dd4e, type: 2}
-  targetUnit: []
+  targetUnit:
+  - {fileID: 11400000, guid: 49d5e9988cc9f1440ae7752dbf76dd4e, type: 2}
   skillCost:
   - cost:
     - code: 0
@@ -32,3 +32,4 @@ MonoBehaviour:
   techTree:
     requiredBuilding: {fileID: 0}
   techTreeOpen: 1
+  skillAvailable: 0000

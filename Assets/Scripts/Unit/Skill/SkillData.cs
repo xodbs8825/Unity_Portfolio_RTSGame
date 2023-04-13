@@ -32,7 +32,7 @@ public class SkillData : ScriptableObject
     public string description;
     public SkillType type;
 
-    public UnitData unitData;
+    //public UnitData unitData;
     public UnitData[] targetUnit;
     public SkillCost[] skillCost;
 
@@ -53,12 +53,13 @@ public class SkillData : ScriptableObject
     private int _enemyCounter;
 
     private bool _buildingUpgradeStarted = false;
-    [HideInInspector]
     public bool BuildingUpgradeStarted { get => _buildingUpgradeStarted; set => _buildingUpgradeStarted = value; }
 
     private UnitManager _manager;
-    [HideInInspector]
     public UnitManager UnitManager { get => _manager; }
+
+    private List<ResourceValue> _cost;
+    public List<ResourceValue> Cost { get => _cost; set => _cost = value; }
 
     public void Trigger(GameObject source, GameObject target = null)
     {
@@ -71,13 +72,19 @@ public class SkillData : ScriptableObject
                         (source.transform.position.x - coll.size.x * 2f, 0,
                         source.transform.position.z - coll.size.z * 2f);
 
-                    CharacterData data = (CharacterData)unitData;
+                    CharacterData data = (CharacterData)targetUnit[0];
                     UnitManager sourceUnitManager = source.GetComponent<UnitManager>();
                     if (sourceUnitManager == null) return;
 
-                    Character character = new Character(data, sourceUnitManager.Unit.Owner);
-                    character.ComputeProduction();
-                    character.Transform.GetComponent<NavMeshAgent>().Warp(instantiatePosition);
+                    _cost = SetSkillCost(0);
+                    if (Globals.CanBuy(_cost))
+                    {
+                        Character character = new Character(data, sourceUnitManager.Unit.Owner);
+                        character.ComputeProduction();
+                        character.Transform.GetComponent<NavMeshAgent>().Warp(instantiatePosition);
+
+                        BuySkill(_cost, sourceUnitManager.Unit.Owner);
+                    }
                 }
                 break;
             case SkillType.INSTANTIATE_BUILDING:
@@ -85,7 +92,11 @@ public class SkillData : ScriptableObject
                     UnitManager unitManager = source.GetComponent<UnitManager>();
                     if (unitManager == null) return;
 
-                    BuildingPlacer.instance.SelectPlacedBuilding((BuildingData)unitData, unitManager);
+                    _cost = SetSkillCost(0);
+                    if (Globals.CanBuy(_cost))
+                    {
+                        BuildingPlacer.instance.SelectPlacedBuilding((BuildingData)targetUnit[0], unitManager);
+                    }
                 }
                 break;
             case SkillType.UPGRADE_ATTACKDAMAGE:
@@ -94,7 +105,6 @@ public class SkillData : ScriptableObject
                     if (manager == null) return;
 
                     Unit unit = manager.Unit;
-                    List<ResourceValue> cost;
                     if (unit.Owner == 0)
                     {
                         _myCounter++;
@@ -104,12 +114,11 @@ public class SkillData : ScriptableObject
                             unit.AttackDamageUpgradeCompleteIndicator(true);
                         }
 
-
                         for (int i = 0; i < targetUnit.Length; i++)
                         {
                             CharacterData data = (CharacterData)targetUnit[i];
-                            cost = SetSkillCost(data.myAttackDamageLevel);
-                            if (Globals.CanBuy(cost))
+                            _cost = SetSkillCost(data.myAttackDamageLevel);
+                            if (Globals.CanBuy(_cost))
                             {
                                 GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
 
@@ -119,7 +128,7 @@ public class SkillData : ScriptableObject
                                 data.myAttackDamageLevel++;
                                 if (i == 0)
                                 {
-                                    BuyUpgrade(cost, unit.Owner);
+                                    BuySkill(_cost, unit.Owner);
                                 }
                             }
                         }
@@ -136,8 +145,8 @@ public class SkillData : ScriptableObject
                         for (int i = 0; i < targetUnit.Length; i++)
                         {
                             CharacterData data = (CharacterData)targetUnit[i];
-                            cost = SetSkillCost(data.enemyAttackDamageLevel);
-                            if (Globals.CanBuy(cost))
+                            _cost = SetSkillCost(data.enemyAttackDamageLevel);
+                            if (Globals.CanBuy(_cost))
                             {
                                 GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
 
@@ -148,7 +157,7 @@ public class SkillData : ScriptableObject
                                 data.enemyAttackDamageLevel++;
                                 if (i == 0)
                                 {
-                                    BuyUpgrade(cost, manager.Unit.Owner);
+                                    BuySkill(_cost, manager.Unit.Owner);
                                 }
                             }
                         }
@@ -162,8 +171,8 @@ public class SkillData : ScriptableObject
 
                     Unit unit = manager.Unit;
 
-                    List<ResourceValue> cost = SetSkillCost(0);
-                    if (Globals.CanBuy(cost))
+                    _cost = SetSkillCost(0);
+                    if (Globals.CanBuy(_cost))
                     {
                         for (int i = 0; i < targetUnit.Length; i++)
                         {
@@ -180,7 +189,7 @@ public class SkillData : ScriptableObject
                                 data.enemyAttackRangeResearchComplete = true;
                             }
                         }
-                        BuyUpgrade(cost, manager.Unit.Owner);
+                        BuySkill(_cost, manager.Unit.Owner);
                         unit.AttackRangeResearchComplete();
                     }
                 }
@@ -190,14 +199,16 @@ public class SkillData : ScriptableObject
                     UnitManager manager = source.GetComponent<UnitManager>();
                     if (manager == null) return;
 
-                    List<ResourceValue> cost = SetSkillCost(0);
-                    if (Globals.CanBuy(cost))
+                    _cost = SetSkillCost(0);
+                    if (Globals.CanBuy(_cost))
                     {
-                        if (unitData.GetType() == typeof(BuildingData))
+                        if (targetUnit[0].GetType() == typeof(BuildingData))
                         {
                             _manager = manager;
                             _buildingUpgradeStarted = true;
                         }
+
+                        BuySkill(_cost, manager.Unit.Owner);
                     }
                 }
                 break;
@@ -238,7 +249,7 @@ public class SkillData : ScriptableObject
         return cost;
     }
 
-    public void BuyUpgrade(List<ResourceValue> cost, int owner)
+    public void BuySkill(List<ResourceValue> cost, int owner)
     {
         foreach (ResourceValue resource in cost)
             Globals.GAME_RESOURCES[owner][resource.code].AddAmount(-resource.amount);

@@ -16,8 +16,8 @@ MonoBehaviour:
   skillName: Spawn Peasant
   description: Spawn Peasant
   type: 0
-  unitData: {fileID: 11400000, guid: 219740ede27913f4796fbe973448b082, type: 2}
-  targetUnit: []
+  targetUnit:
+  - {fileID: 11400000, guid: 219740ede27913f4796fbe973448b082, type: 2}
   skillCost:
   - cost:
     - code: 0

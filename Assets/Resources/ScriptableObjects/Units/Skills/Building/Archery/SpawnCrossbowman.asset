@@ -16,9 +16,14 @@ MonoBehaviour:
   skillName: Spawn Crossbowman
   description: Spawn Crossbowman
   type: 0
-  unitData: {fileID: 11400000, guid: fa32b78e943c1164c9309ee75bc746c1, type: 2}
-  targetUnit: []
-  skillCost: []
+  targetUnit:
+  - {fileID: 11400000, guid: fa32b78e943c1164c9309ee75bc746c1, type: 2}
+  skillCost:
+  - cost:
+    - code: 0
+      amount: 50
+    - code: 1
+      amount: 50
   buildTime: 0
   castTime: 1
   cooldown: 1

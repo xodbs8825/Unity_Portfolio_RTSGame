@@ -42,6 +42,7 @@ public class UIManager : MonoBehaviour
     private Text _infoPanelDescriptionText;
     public GameObject gameResourceCostPrefab;
     private Transform _infoPanelResourcesCostParent;
+    private List<ResourceValue> _infoResourceCost;
     #endregion
 
     #region 게임 메뉴
@@ -177,7 +178,6 @@ public class UIManager : MonoBehaviour
         EventManager.AddListener("UpdateResourceTexts", OnUpdateResourceTexts);
         EventManager.AddListener("HoverSkillButton", OnHoverSkillButton);
         EventManager.AddListener("UnhoverSkillButton", OnUnhoverSkillButton);
-        //EventManager.AddListener("PlaceBuildingOff", OnPlaceBuildingOff);
         EventManager.AddListener("SelectUnit", OnSelectUnit);
         EventManager.AddListener("DeselectUnit", OnDeselectUnit);
         EventManager.AddListener("SetPlayer", OnSetPlayer);
@@ -188,7 +188,6 @@ public class UIManager : MonoBehaviour
         EventManager.RemoveListener("UpdateResourceTexts", OnUpdateResourceTexts);
         EventManager.RemoveListener("HoverSkillButton", OnHoverSkillButton);
         EventManager.RemoveListener("UnhoverSkillButton", OnUnhoverSkillButton);
-        //EventManager.RemoveListener("PlaceBuildingOff", OnPlaceBuildingOff);
         EventManager.RemoveListener("SelectUnit", OnSelectUnit);
         EventManager.RemoveListener("DeselectUnit", OnDeselectUnit);
         EventManager.RemoveListener("SetPlayer", OnSetPlayer);
@@ -207,12 +206,16 @@ public class UIManager : MonoBehaviour
         _unit = unit;
         AddSelectedUnitToUIList(unit);
 
-        //ShowPanel(selectedUnitActionButtonsParent, true);
+        ShowPanel(selectedUnitActionButtonsParent, true);
 
-        //if (unit.IsAlive)
+        if (unit.IsAlive)
         {
             SetSelectedUnitMenu(unit);
             ShowPanel(selectedUnitMenu, true);
+        }
+        else
+        {
+            ShowPanel(_selectedUnitActionButtonsParent.gameObject, false);
         }
     }
 
@@ -228,11 +231,6 @@ public class UIManager : MonoBehaviour
 
         ShowPanel(selectedUnitActionButtonsParent, false);
     }
-
-    //private void OnPlaceBuildingOff()
-    //{
-    //    placedBuildingProductionRectTransform.gameObject.SetActive(false);
-    //}
 
     public void AddSelectedUnitToUIList(Unit unit)
     {
@@ -273,6 +271,7 @@ public class UIManager : MonoBehaviour
 
     private void OnHoverSkillButton(object data)
     {
+        _infoResourceCost = ((SkillData)data).Cost;
         SetSkillPanel((SkillData)data);
         ShowPanel(infoPanel, true);
     }
@@ -284,46 +283,7 @@ public class UIManager : MonoBehaviour
 
     public void SetSkillPanel(SkillData data)
     {
-        List<ResourceValue> cost;
-        switch (data.skillName)
-        {
-            case "Archer Attack Damage Upgrade":
-                if (_unit.Owner == 0)
-                {
-                    if (data.unitData.myAttackDamageLevel == 3)
-                    {
-                        cost = Globals.UPGRADECOST_ATTACKDAMAGE[3];
-                    }
-                    else
-                    {
-                        cost = Globals.UPGRADECOST_ATTACKDAMAGE[data.unitData.myAttackDamageLevel + 1];
-                    }
-                }
-                else
-                {
-                    if (data.unitData.enemyAttackDamageLevel == 3)
-                    {
-                        cost = Globals.UPGRADECOST_ATTACKDAMAGE[3];
-                    }
-                    else
-                    {
-                        cost = Globals.UPGRADECOST_ATTACKDAMAGE[data.unitData.enemyAttackDamageLevel + 1];
-                    }
-                }
-                break;
-            case "Archer Attack Range Research":
-                cost = Globals.UPGRADECOST_ATTACKDAMAGE[1];
-                break;
-            default:
-                cost = data.unitData.cost;
-                break;
-        }
-        SetInfoPanel(data.skillName, data.description, cost);
-    }
-
-    public void SetInfoPanel(UnitData data)
-    {
-        SetInfoPanel(data.unitName, data.description, data.cost);
+        SetInfoPanel(data.skillName, data.description, _infoResourceCost);
     }
 
     public void SetInfoPanel(string title, string description, List<ResourceValue> resourcesCosts)
@@ -360,11 +320,6 @@ public class UIManager : MonoBehaviour
     {
         _resourcesTexts[resource].text = value.ToString();
     }
-
-    //private void CancelButtonListener(Button b)
-    //{
-    //    b.onClick.AddListener(() => _buildingPlacer.CancelPlacedBuilding());
-    //}
 
     private void OnUpdateResourceTexts()
     {

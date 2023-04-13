@@ -13,6 +13,11 @@ public class SkillManager : MonoBehaviour
 
     private AudioSource _sourceContextualSource;
 
+    private void Start()
+    {
+
+    }
+
     private void Update()
     {
         if (skill.techTree.requiredBuilding == null)
@@ -22,7 +27,7 @@ public class SkillManager : MonoBehaviour
         else
         {
             string n = skill.techTree.requiredBuilding.name + "(Clone)";
-            if (GameObject.Find(n) 
+            if (GameObject.Find(n)
                 && GameObject.Find(n).GetComponent<UnitManager>().Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID
                 && GameObject.Find(n).GetComponent<BuildingBT>().isActiveAndEnabled)
             {
@@ -31,6 +36,39 @@ public class SkillManager : MonoBehaviour
             else
             {
                 skill.techTreeOpen = false;
+            }
+        }
+
+        if (skill != null && _button != null)
+        {
+            if (skill.type == SkillType.UPGRADE_ATTACKDAMAGE)
+            {
+                if (GameManager.instance.gamePlayersParameters.myPlayerID == 0)
+                {
+                    if (((CharacterData)skill.targetUnit[0]).myAttackDamageLevel == GameManager.instance.gameGlobalParameters.UnitMaxLevel())
+                    {
+                        skill.Cost = skill.SetSkillCost(2);
+                    }
+                    else
+                    {
+                        skill.Cost = skill.SetSkillCost(((CharacterData)skill.targetUnit[0]).myAttackDamageLevel);
+                    }
+                }
+                else if (GameManager.instance.gamePlayersParameters.myPlayerID == 1)
+                {
+                    if (((CharacterData)skill.targetUnit[0]).enemyAttackDamageLevel == GameManager.instance.gameGlobalParameters.UnitMaxLevel())
+                    {
+                        skill.Cost = skill.SetSkillCost(2);
+                    }
+                    else
+                    {
+                        skill.Cost = skill.SetSkillCost(((CharacterData)skill.targetUnit[0]).enemyAttackDamageLevel);
+                    }
+                }
+            }
+            else
+            {
+                skill.Cost = skill.SetSkillCost(0);
             }
         }
     }

@@ -13,7 +13,7 @@ public class UnitData : ScriptableObject
     public string description;
     public float healthPoint;
     public GameObject prefab;
-    public List<ResourceValue> cost;
+    //public List<ResourceValue> cost;
     public float fieldOfView;
 
     [Header("Attack Parameters")]
@@ -36,10 +36,10 @@ public class UnitData : ScriptableObject
     public AudioClip selectSound;
     public AudioClip[] interactSound;
 
-    public bool CanBuy(int owner)
-    {
-        return Globals.CanBuy(owner, cost);
-    }
+    //public bool CanBuy(int owner)
+    //{
+    //    return Globals.CanBuy(owner, cost);
+    //}
 }
 
 [Serializable]

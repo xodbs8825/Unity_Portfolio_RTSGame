@@ -10,7 +10,7 @@ public class BuildingPlacer : MonoBehaviour
     private Building _placedBuilding = null;
     private UnitManager _builderManager;
     private Building _building = null;
-    private SkillData _upgradeSkill;
+    private SkillData _skill;
 
     private Ray _ray;
     private RaycastHit _raycastHit;
@@ -64,37 +64,38 @@ public class BuildingPlacer : MonoBehaviour
 
         if (_building != null)
         {
-            if (_upgradeSkill.type == SkillType.UPGRADE_UNIT)
+            if (_skill.type == SkillType.UPGRADE_UNIT)
             {
-                if (_upgradeSkill.BuildingUpgradeStarted)
+                if (_skill.BuildingUpgradeStarted)
                 {
                     _upgradeTimer += Time.deltaTime;
 
                     if (_building.Owner == GameManager.instance.gamePlayersParameters.myPlayerID)
                     {
-                        if (_upgradeSkill.UnitManager != null)
+                        if (_skill.UnitManager != null)
                         {
-                            if (_upgradeSkill.UnitManager.gameObject)
+                            if (_skill.UnitManager.gameObject)
                             {
-                                _position = _upgradeSkill.UnitManager.transform.position;
+                                _position = _skill.UnitManager.transform.position;
                                 _prevBuilding = _building;
-                                Destroy(_upgradeSkill.UnitManager.gameObject);
+                                _skill.UnitManager.Deselect();
+                                Destroy(_skill.UnitManager.gameObject);
                             }
                         }
                         else if (_building == _prevBuilding)
                         {
-                            _building = new Building((BuildingData)_upgradeSkill.unitData, _building.Owner, new List<ResourceValue>() { });
+                            _building = new Building((BuildingData)_skill.targetUnit[0], _building.Owner, new List<ResourceValue>() { });
                             _building.SetPosition(_position);
                             PlaceBuilding(false);
                         }
-                        else if (_upgradeTimer < _upgradeSkill.buildTime)
+                        else if (_upgradeTimer < _skill.buildTime)
                         {
-                            _building.SetUpgradeConstructionHP(_prevBuilding.MaxHP, _building.MaxHP, _upgradeTimer / _upgradeSkill.buildTime);
+                            _building.SetUpgradeConstructionHP(_prevBuilding.MaxHP, _building.MaxHP, _upgradeTimer / _skill.buildTime);
                         }
-                        else if (_upgradeTimer > _upgradeSkill.buildTime)
+                        else if (_upgradeTimer > _skill.buildTime)
                         {
                             _building.SetConstructionHP(_building.MaxHP);
-                            _upgradeSkill.BuildingUpgradeStarted = false;
+                            _skill.BuildingUpgradeStarted = false;
                             _prevBuilding = _building;
                             _building = _placedBuilding;
                         }
@@ -182,29 +183,10 @@ public class BuildingPlacer : MonoBehaviour
         if (_placedBuilding.Owner == GameManager.instance.gamePlayersParameters.myPlayerID)
         {
             _building = _placedBuilding;
-            _upgradeSkill = _building.SkillManagers[1].skill;
+            _skill = _building.SkillManagers[1].skill;
         }
 
         _placedBuilding = prevPlacedBuilding;
-    }
-
-    public void UpgradeBuilding(BuildingData data, int owner, Vector3 position, SkillData skill)
-    {
-        UpgradeBuilding(data, owner, position, new List<ResourceValue>() { }, skill);
-    }
-    public void UpgradeBuilding(BuildingData data, int owner, Vector3 position, List<ResourceValue> production, SkillData skill)
-    {
-        Building prevBuilding = _placedBuilding;
-
-        if (!skill.UnitManager.gameObject)
-        {
-            _placedBuilding = new Building(data, owner, production);
-            _placedBuilding.SetPosition(position);
-            PlaceBuilding(false);
-        }
-
-        _placedBuilding.SetConstructionHP(prevBuilding.MaxHP + _upgradeTimer / skill.buildTime);
-        _building = _placedBuilding;
     }
 
     private void PreparePlacedBuilding(int buildingDataIndex)
@@ -217,12 +199,12 @@ public class BuildingPlacer : MonoBehaviour
         if (_placedBuilding != null && !_placedBuilding.IsFixed)
             Destroy(_placedBuilding.Transform.gameObject);
 
-        Building building = new Building(buildingData, GameManager.instance.gamePlayersParameters.myPlayerID); ;
+        Building building = new Building(buildingData, GameManager.instance.gamePlayersParameters.myPlayerID);
 
         _placedBuilding = building;
         _lastPlacementPosition = Vector3.zero;
 
-        EventManager.TriggerEvent("PlaceBuildingOn");
+        _skill.BuySkill(_skill.Cost, GameManager.instance.gamePlayersParameters.myPlayerID);
     }
 
     public void SelectPlacedBuilding(BuildingData buildingData, UnitManager builderManager)
@@ -269,18 +251,18 @@ public class BuildingPlacer : MonoBehaviour
                 _building.Place();
             }
 
-            if (canChain)
-            {
-                if (_placedBuilding.CanBuy())
-                {
-                    PreparePlacedBuilding(_placedBuilding.DataIndex);
-                }
-                else
-                {
-                    //EventManager.TriggerEvent("PlaceBuildingOff");
-                    _placedBuilding = null;
-                }
-            }
+            //if (canChain)
+            //{
+            //    if (_placedBuilding.CanBuy())
+            //    {
+            //        PreparePlacedBuilding(_placedBuilding.DataIndex);
+            //    }
+            //    else
+            //    {
+            //        //EventManager.TriggerEvent("PlaceBuildingOff");
+            //        _placedBuilding = null;
+            //    }
+            //}
         }
         //EventManager.TriggerEvent("UpdateResourcesTexts");
 

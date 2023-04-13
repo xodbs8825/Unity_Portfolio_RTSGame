@@ -16,9 +16,14 @@ MonoBehaviour:
   skillName: Spawn Commander
   description: Spawn Commander
   type: 0
-  unitData: {fileID: 11400000, guid: 51fb9e5fe697be84dbeb38a8e097dfe0, type: 2}
-  targetUnit: []
-  skillCost: []
+  targetUnit:
+  - {fileID: 11400000, guid: 51fb9e5fe697be84dbeb38a8e097dfe0, type: 2}
+  skillCost:
+  - cost:
+    - code: 0
+      amount: 245
+    - code: 1
+      amount: 60
   buildTime: 0
   castTime: 1
   cooldown: 1

@@ -16,9 +16,14 @@ MonoBehaviour:
   skillName: Spawn Heavy Infantry
   description: Spawn Heavy Infantry
   type: 0
-  unitData: {fileID: 11400000, guid: d25e6befd580e5742a0d6395b08d7390, type: 2}
-  targetUnit: []
-  skillCost: []
+  targetUnit:
+  - {fileID: 11400000, guid: d25e6befd580e5742a0d6395b08d7390, type: 2}
+  skillCost:
+  - cost:
+    - code: 0
+      amount: 125
+    - code: 1
+      amount: 50
   buildTime: 0
   castTime: 1
   cooldown: 1

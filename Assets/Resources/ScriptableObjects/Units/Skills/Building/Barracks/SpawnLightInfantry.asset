@@ -16,9 +16,12 @@ MonoBehaviour:
   skillName: Spawn Light Infantry
   description: Spawn Light Infantry
   type: 0
-  unitData: {fileID: 11400000, guid: 923d123d20dfe974daed64ce31dee5b0, type: 2}
-  targetUnit: []
-  skillCost: []
+  targetUnit:
+  - {fileID: 11400000, guid: 923d123d20dfe974daed64ce31dee5b0, type: 2}
+  skillCost:
+  - cost:
+    - code: 0
+      amount: 100
   buildTime: 0
   castTime: 1
   cooldown: 1

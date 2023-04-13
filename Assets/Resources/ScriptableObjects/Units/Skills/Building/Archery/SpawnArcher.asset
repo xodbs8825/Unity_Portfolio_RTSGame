@@ -16,9 +16,14 @@ MonoBehaviour:
   skillName: Spawn Archer
   description: Spawn Archer
   type: 0
-  unitData: {fileID: 11400000, guid: 40cfd30adf6ca2b4ba312d5c03ece8f0, type: 2}
-  targetUnit: []
-  skillCost: []
+  targetUnit:
+  - {fileID: 11400000, guid: 40cfd30adf6ca2b4ba312d5c03ece8f0, type: 2}
+  skillCost:
+  - cost:
+    - code: 0
+      amount: 75
+    - code: 1
+      amount: 25
   buildTime: 0
   castTime: 1
   cooldown: 1

@@ -16,11 +16,18 @@ MonoBehaviour:
   skillName: Build BlackSmith
   description: Build BlackSmith
   type: 1
-  unitData: {fileID: 11400000, guid: 6ad37734c26986847bf00ee626c35d18, type: 2}
+  targetUnit:
+  - {fileID: 11400000, guid: 6ad37734c26986847bf00ee626c35d18, type: 2}
+  skillCost:
+  - cost:
+    - code: 0
+      amount: 125
+  buildTime: 0
   castTime: 0
   cooldown: 0
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
     requiredBuilding: {fileID: 11400000, guid: 06a86b6958539164e839ad6b281f8c7d, type: 2}
-  techTreeOpen: 1
+  techTreeOpen: 0
+  skillAvailable: 0101

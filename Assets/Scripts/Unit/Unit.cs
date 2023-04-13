@@ -138,8 +138,8 @@ public class Unit
 
     public virtual void Place()
     {
-        foreach (ResourceValue resource in _data.cost)
-            Globals.GAME_RESOURCES[_owner][resource.code].AddAmount(-resource.amount);
+        //foreach (ResourceValue resource in _data.cost)
+        //    Globals.GAME_RESOURCES[_owner][resource.code].AddAmount(-resource.amount);
 
         EventManager.TriggerEvent("UpdateResourceTexts");
 
@@ -147,10 +147,10 @@ public class Unit
             _transform.GetComponent<UnitManager>().EnableFOV(_fieldOfView);
     }
 
-    public bool CanBuy()
-    {
-        return _data.CanBuy(_owner);
-    }
+    //public bool CanBuy()
+    //{
+    //    return _data.CanBuy(_owner);
+    //}
 
     public void ProduceResources()
     {

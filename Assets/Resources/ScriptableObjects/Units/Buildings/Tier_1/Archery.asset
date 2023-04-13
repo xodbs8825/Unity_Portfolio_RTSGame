@@ -17,11 +17,6 @@ MonoBehaviour:
   description: Archer unit training facility
   healthPoint: 100
   prefab: {fileID: 5542380815447981279, guid: adf0ca5707f2b7442b7d34f87aba61b8, type: 3}
-  cost:
-  - code: 0
-    amount: 200
-  - code: 0
-    amount: 100
   fieldOfView: 100
   attackRange: 0
   attackDamage: 0
@@ -35,7 +30,6 @@ MonoBehaviour:
     attackRange: []
   canProduce: 
   skills:
-  - {fileID: 11400000, guid: 13a90edacd2769d41bd8af282d60bbaa, type: 2}
   - {fileID: 11400000, guid: 34feb75e243c9c24484212e6a35bfb59, type: 2}
   - {fileID: 11400000, guid: 5a1a393269b3d56459675c4e83c2b7ee, type: 2}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
