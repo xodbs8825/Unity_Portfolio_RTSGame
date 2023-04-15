@@ -10,17 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
-  m_Name: SpawnLightInfantry
+  m_Name: BuildTower
   m_EditorClassIdentifier: 
-  code: spawn_light_infantry
-  skillName: Spawn Light Infantry
-  description: Spawn Light Infantry
-  type: 0
+  code: build_tower
+  skillName: Build Tower
+  description: Build Tower
+  type: 1
   targetUnit:
-  - {fileID: 11400000, guid: 923d123d20dfe974daed64ce31dee5b0, type: 2}
+  - {fileID: 11400000, guid: 5223d7a25fa28e34f9120305113a1a42, type: 2}
   skillCost:
   - cost:
     - code: 0
+      amount: 200
+    - code: 1
       amount: 100
   buildTime: 0
   castTime: 0
@@ -28,6 +30,8 @@ MonoBehaviour:
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: []
-  techTreeOpen: 1
-  skillAvailable: 0101
+    requiredBuilding:
+    - {fileID: 11400000, guid: 49d5e9988cc9f1440ae7752dbf76dd4e, type: 2}
+    - {fileID: 11400000, guid: 06a86b6958539164e839ad6b281f8c7d, type: 2}
+  techTreeOpen: 0
+  skillAvailable: 0000

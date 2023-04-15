@@ -15,12 +15,9 @@ MonoBehaviour:
   code: blackSmith
   unitName: BlackSmith
   description: Unit upgrade facility
-  healthPoint: 125
+  healthPoint: 850
   prefab: {fileID: 5542380815447981279, guid: a452e36ef10e6d34e893c23a28b7a23f, type: 3}
-  cost:
-  - code: 0
-    amount: 125
-  fieldOfView: 100
+  fieldOfView: 50
   attackRange: 0
   attackDamage: 0
   attackRate: 0

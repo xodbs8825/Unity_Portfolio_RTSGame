@@ -10,18 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
-  m_Name: SpawnLightInfantry
+  m_Name: SpawnSpearman
   m_EditorClassIdentifier: 
-  code: spawn_light_infantry
-  skillName: Spawn Light Infantry
-  description: Spawn Light Infantry
+  code: spawn_spearman
+  skillName: Spawn Spearman
+  description: Spawn Spearman
   type: 0
   targetUnit:
-  - {fileID: 11400000, guid: 923d123d20dfe974daed64ce31dee5b0, type: 2}
+  - {fileID: 0}
   skillCost:
   - cost:
     - code: 0
       amount: 100
+    - code: 1
+      amount: 25
   buildTime: 0
   castTime: 0
   cooldown: 0
@@ -30,4 +32,4 @@ MonoBehaviour:
   techTree:
     requiredBuilding: []
   techTreeOpen: 1
-  skillAvailable: 0101
+  skillAvailable: 0000

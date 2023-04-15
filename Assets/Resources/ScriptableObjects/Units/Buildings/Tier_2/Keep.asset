@@ -18,11 +18,6 @@ MonoBehaviour:
     to destroy. '
   healthPoint: 1800
   prefab: {fileID: 5542380815447981279, guid: f5b69c3b204f7174ea9f2b751615c859, type: 3}
-  cost:
-  - code: 0
-    amount: 150
-  - code: 1
-    amount: 100
   fieldOfView: 50
   attackRange: 0
   attackDamage: 0
@@ -37,6 +32,7 @@ MonoBehaviour:
   canProduce: 
   skills:
   - {fileID: 11400000, guid: cd816dfedbc04054aaa587cca3521453, type: 2}
+  - {fileID: 11400000, guid: c8743eb1881c4a442aecaf9a23eeecaa, type: 2}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound: []
   constructionMeshes:

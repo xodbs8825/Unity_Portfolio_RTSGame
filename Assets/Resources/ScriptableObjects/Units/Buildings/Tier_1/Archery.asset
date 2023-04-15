@@ -15,9 +15,9 @@ MonoBehaviour:
   code: archery
   unitName: Archery
   description: Archer unit training facility
-  healthPoint: 100
+  healthPoint: 1000
   prefab: {fileID: 5542380815447981279, guid: adf0ca5707f2b7442b7d34f87aba61b8, type: 3}
-  fieldOfView: 100
+  fieldOfView: 50
   attackRange: 0
   attackDamage: 0
   attackRate: 0

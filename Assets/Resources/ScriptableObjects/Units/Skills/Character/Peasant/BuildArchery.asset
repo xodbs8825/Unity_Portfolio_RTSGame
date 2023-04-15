@@ -30,6 +30,7 @@ MonoBehaviour:
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: {fileID: 11400000, guid: 06a86b6958539164e839ad6b281f8c7d, type: 2}
+    requiredBuilding:
+    - {fileID: 11400000, guid: 06a86b6958539164e839ad6b281f8c7d, type: 2}
   techTreeOpen: 1
   skillAvailable: 0101

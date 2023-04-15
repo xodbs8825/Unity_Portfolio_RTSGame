@@ -15,7 +15,7 @@ public enum SkillType
 [System.Serializable]
 public class TechTree
 {
-    public UnitData requiredBuilding;
+    public UnitData[] requiredBuilding;
 }
 
 [System.Serializable]

@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
-  m_Name: SpawnLightInfantry
+  m_Name: BuildHouse
   m_EditorClassIdentifier: 
-  code: spawn_light_infantry
-  skillName: Spawn Light Infantry
-  description: Spawn Light Infantry
-  type: 0
+  code: build_house
+  skillName: Build House
+  description: Build House
+  type: 1
   targetUnit:
-  - {fileID: 11400000, guid: 923d123d20dfe974daed64ce31dee5b0, type: 2}
+  - {fileID: 11400000, guid: fbf27d4b1ec088e42b70570614fb5ae2, type: 2}
   skillCost:
   - cost:
     - code: 0
@@ -30,4 +30,4 @@ MonoBehaviour:
   techTree:
     requiredBuilding: []
   techTreeOpen: 1
-  skillAvailable: 0101
+  skillAvailable: 0000

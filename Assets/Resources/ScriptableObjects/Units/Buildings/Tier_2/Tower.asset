@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66fdca5b6dc1a0d42909c7167a4b0ea2, type: 3}
   m_Name: Tower
   m_EditorClassIdentifier: 
-  code: 
-  unitName: 
-  description: 
-  healthPoint: 0
-  prefab: {fileID: 0}
-  cost: []
-  fieldOfView: 0
+  code: tower
+  unitName: Tower
+  description: Advanced infantry unit training facility
+  healthPoint: 1250
+  prefab: {fileID: 5542380815447981279, guid: f946e089b130577468909415de36cf12, type: 3}
+  fieldOfView: 50
   attackRange: 0
   attackDamage: 0
   attackRate: 0
@@ -31,6 +30,6 @@ MonoBehaviour:
     attackRange: []
   canProduce: 
   skills: []
-  selectSound: {fileID: 0}
+  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound: []
   constructionMeshes: []

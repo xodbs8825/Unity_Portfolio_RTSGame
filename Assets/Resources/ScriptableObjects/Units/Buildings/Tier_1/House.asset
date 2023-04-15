@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66fdca5b6dc1a0d42909c7167a4b0ea2, type: 3}
   m_Name: House
   m_EditorClassIdentifier: 
-  code: 
-  unitName: 
-  description: 
-  healthPoint: 0
-  prefab: {fileID: 0}
-  cost: []
-  fieldOfView: 0
+  code: house
+  unitName: House
+  description: 'Add 10 Maximum Infantry Unit Counts (Maximum Infantry Unit Counts:
+    100)'
+  healthPoint: 500
+  prefab: {fileID: 5542380815447981279, guid: 0bf1793fe3e9bb247bc1be64ca85baf9, type: 3}
+  fieldOfView: 50
   attackRange: 0
   attackDamage: 0
   attackRate: 0
@@ -31,6 +31,9 @@ MonoBehaviour:
     attackRange: []
   canProduce: 
   skills: []
-  selectSound: {fileID: 0}
+  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound: []
-  constructionMeshes: []
+  constructionMeshes:
+  - {fileID: 4300000, guid: c4bb27f050a2ef4439fb736e16b2bded, type: 3}
+  - {fileID: 4300000, guid: b1ff534b3931e674e8e475faa59eb659, type: 3}
+  - {fileID: 4300000, guid: 05035b78d90b21f43854dfe010ccd289, type: 3}

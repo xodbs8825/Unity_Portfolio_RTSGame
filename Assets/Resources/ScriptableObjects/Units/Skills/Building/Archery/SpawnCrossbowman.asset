@@ -25,11 +25,11 @@ MonoBehaviour:
     - code: 1
       amount: 50
   buildTime: 0
-  castTime: 1
-  cooldown: 1
+  castTime: 0
+  cooldown: 0
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: {fileID: 0}
+    requiredBuilding: []
   techTreeOpen: 1
   skillAvailable: 0101

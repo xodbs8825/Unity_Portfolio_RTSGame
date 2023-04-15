@@ -7,12 +7,9 @@ using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
-    #region 건물
     [Header("Building")]
     private BuildingPlacer _buildingPlacer;
-    #endregion
 
-    #region 유닛 선택
     [Header("UnitSelection")]
     public Transform selectedUnitsListParent;
     public GameObject selectedUnitsDisplayPrefab;
@@ -26,16 +23,12 @@ public class UIManager : MonoBehaviour
     private Transform _selectedUnitResourcesProductionParent;
     private Transform _selectedUnitAttackParametersParent;
     public GameObject upgradeAttackDamageText;
-    #endregion
 
-    #region 자원
     [Header("Resources")]
     public Transform resourcesUIParent;
     public GameObject gameResourceDisplayPrefab;
     private Dictionary<InGameResource, Text> _resourcesTexts;
-    #endregion
 
-    #region 정보 창
     [Header("InfoPanel")]
     public GameObject infoPanel;
     private Text _infoPanelTitleText;
@@ -43,9 +36,7 @@ public class UIManager : MonoBehaviour
     public GameObject gameResourceCostPrefab;
     private Transform _infoPanelResourcesCostParent;
     private List<ResourceValue> _infoResourceCost;
-    #endregion
 
-    #region 게임 메뉴
     [Header("GameSettingsPanel")]
     public GameObject gameMenuPanel;
     public GameObject optionsPanel;
@@ -63,7 +54,6 @@ public class UIManager : MonoBehaviour
 
     public GameObject inputMappingPrefab;
     public GameObject inputBindingPrefab;
-    #endregion
 
     public GameObject unitSkillButtonPrefab;
     private int _myPlayerID;
@@ -74,24 +64,14 @@ public class UIManager : MonoBehaviour
     {
         ShowPanel(selectedUnitActionButtonsParent, false);
 
-        #region 건물 생성
-        // 건물 건설을 위한 버튼 생성
         _buildingPlacer = GetComponent<BuildingPlacer>();
-        //placedBuildingProductionRectTransform.gameObject.SetActive(false);
 
-        //Button cancelButton = cancelMenu.transform.Find("CancelButton").GetComponent<Button>();
-        //CancelButtonListener(cancelButton);
-        #endregion
-
-        #region 정보 창
         Transform infoPanelTransform = infoPanel.transform;
         _infoPanelTitleText = infoPanelTransform.Find("Content/Title").GetComponent<Text>();
         _infoPanelDescriptionText = infoPanelTransform.Find("Content/Description").GetComponent<Text>();
         _infoPanelResourcesCostParent = infoPanelTransform.Find("Content/ResourcesCost");
         ShowPanel(infoPanel, false);
-        #endregion
 
-        #region 유닛 선택
         for (int i = 1; i <= 9; i++)
             ToggleSelectionGroupButton(i, false);
 
@@ -101,9 +81,7 @@ public class UIManager : MonoBehaviour
         _selectedUnitActionButtonsParent = selectedUnitActionButtonsParent.transform;
         _selectedUnitResourcesProductionParent = selectedUnitMenuTransform.Find("ResourcesProduction");
         _selectedUnitAttackParametersParent = selectedUnitMenuTransform.Find("AttackParameters/Content");
-        #endregion
 
-        #region 게임 메뉴 창
         gameMenuPanel.SetActive(false);
 
         GameParameters[] gameParametersList = Resources.LoadAll<GameParameters>("ScriptableObjects/Parameters");
@@ -113,16 +91,12 @@ public class UIManager : MonoBehaviour
             _gameParameters[p.GetParametersName()] = p;
 
         SetupGameOptionsPanel();
-        #endregion
     }
 
     private void Start()
     {
         _myPlayerID = GameManager.instance.gamePlayersParameters.myPlayerID;
-        //Color c = GameManager.instance.gamePlayersParameters.players[_myPlayerID].color;
 
-        #region 인게임 자원 생성
-        // 인게임 자원 텍스트 생성
         _resourcesTexts = new Dictionary<InGameResource, Text>();
         foreach (KeyValuePair<InGameResource, GameResource> pair in Globals.GAME_RESOURCES[_myPlayerID])
         {
@@ -133,23 +107,16 @@ public class UIManager : MonoBehaviour
 
             SetResourceText(pair.Key, pair.Value.Amount);
         }
-        #endregion
     }
 
-    // 더 이상 사용하지 않거나 그럴 예정인 클래스나 함수, 변수에 붙히면 더 이상 사용하지 않는다는 경고가 뜸
-    // 베이스 작업자는 코드 작업만으로 다른 작업자에게 코드가 변경되었음을 알림과 동시에 그에 대한 해결책도 전해줄 수 있음
     [System.Obsolete]
     private void Update()
     {
-        //ShowPanel(cancelMenu, !_buildingPlacer.IsAbleToBuild);
-
         if (Input.GetKeyDown(KeyCode.F10))
             ToggleGameSetiingPanel();
 
         if (_selectedUnit != null)
             UpdateSelectedUnitUpgradeInfoPanel();
-
-        //UpdateSkillButtonInteractable();
 
         if (Globals.SELECTED_UNITS.Count > 1)
         {
@@ -165,9 +132,12 @@ public class UIManager : MonoBehaviour
         {
             for (int i = 0; i < _unit.SkillManagers.Count; i++)
             {
-                if (!_unit.SkillManagers[i].skill.skillAvailable[_unit.Owner] || !_unit.SkillManagers[i].skill.techTreeOpen)
+                if (!_unit.SkillManagers[i].skill.skillAvailable[_unit.Owner] || !_unit.SkillManagers[i].skill.techTreeOpen || !_unit.IsAlive)
                 {
-                    _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                    if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
+                    {
+                        _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                    }
                 }
             }
         }
@@ -206,16 +176,12 @@ public class UIManager : MonoBehaviour
         _unit = unit;
         AddSelectedUnitToUIList(unit);
 
-        ShowPanel(selectedUnitActionButtonsParent, true);
+        ShowPanel(selectedUnitMenu, true);
+        SetSelectedUnitMenu(unit);
 
         if (unit.IsAlive)
         {
-            SetSelectedUnitMenu(unit);
-            ShowPanel(selectedUnitMenu, true);
-        }
-        else
-        {
-            ShowPanel(_selectedUnitActionButtonsParent.gameObject, false);
+            ShowPanel(selectedUnitActionButtonsParent, true);
         }
     }
 
@@ -288,11 +254,9 @@ public class UIManager : MonoBehaviour
 
     public void SetInfoPanel(string title, string description, List<ResourceValue> resourcesCosts)
     {
-        // 텍스트 업데이트
         _infoPanelTitleText.text = title;
         _infoPanelDescriptionText.text = description;
 
-        // 자원 코스트 지우고 다시 Instatiate
         foreach (Transform child in _infoPanelResourcesCostParent)
             Destroy(child.gameObject);
 
@@ -389,7 +353,6 @@ public class UIManager : MonoBehaviour
 
     private void UpdateSelectedUnitSKill(Unit unit)
     {
-        // 텍스트 업데이트
         if (_selectedUnitTitleText != null)
             _selectedUnitTitleText.text = unit.Data.unitName;
 

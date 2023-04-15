@@ -16,7 +16,6 @@ MonoBehaviour:
   skillName: Archer Attack Range Research
   description: Increase archer unit attack range
   type: 3
-  unitData: {fileID: 11400000, guid: 40cfd30adf6ca2b4ba312d5c03ece8f0, type: 2}
   targetUnit:
   - {fileID: 11400000, guid: 40cfd30adf6ca2b4ba312d5c03ece8f0, type: 2}
   - {fileID: 11400000, guid: fa32b78e943c1164c9309ee75bc746c1, type: 2}
@@ -32,6 +31,6 @@ MonoBehaviour:
   sprite: {fileID: 0}
   sound: {fileID: 8300000, guid: bfbc2d723161f334d928f1b13a6873eb, type: 3}
   techTree:
-    requiredBuilding: {fileID: 0}
+    requiredBuilding: []
   techTreeOpen: 1
   skillAvailable: 0101

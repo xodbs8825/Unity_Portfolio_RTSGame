@@ -26,16 +26,21 @@ public class SkillManager : MonoBehaviour
         }
         else
         {
-            string n = skill.techTree.requiredBuilding.name + "(Clone)";
-            if (GameObject.Find(n)
-                && GameObject.Find(n).GetComponent<UnitManager>().Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID
-                && GameObject.Find(n).GetComponent<BuildingBT>().isActiveAndEnabled)
+            for (int i = 0; i < skill.techTree.requiredBuilding.Length; i++)
             {
-                skill.techTreeOpen = true;
-            }
-            else
-            {
-                skill.techTreeOpen = false;
+                string n = skill.techTree.requiredBuilding[i].name + "(Clone)";
+                GameObject g = GameObject.Find(n);
+                if (g
+                    && g.GetComponent<UnitManager>().Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID
+                    && g.GetComponent<BuildingBT>().isActiveAndEnabled
+                    && g.GetComponent<UnitManager>().Unit.IsAlive)
+                {
+                    skill.techTreeOpen = true;
+                }
+                else
+                {
+                    skill.techTreeOpen = false;
+                }
             }
         }
 

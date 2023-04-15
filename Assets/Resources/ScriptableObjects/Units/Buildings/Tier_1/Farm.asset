@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66fdca5b6dc1a0d42909c7167a4b0ea2, type: 3}
   m_Name: Farm
   m_EditorClassIdentifier: 
-  code: 
-  unitName: 
-  description: 
-  healthPoint: 0
-  prefab: {fileID: 0}
-  cost: []
-  fieldOfView: 0
+  code: farm
+  unitName: Farm
+  description: 'Produces 10 tree per second. (Maximum building count: 20)'
+  healthPoint: 500
+  prefab: {fileID: 5542380815447981279, guid: a5de1dad9e6715b44a1302c090d46526, type: 3}
+  fieldOfView: 50
   attackRange: 0
   attackDamage: 0
   attackRate: 0
@@ -31,6 +30,9 @@ MonoBehaviour:
     attackRange: []
   canProduce: 
   skills: []
-  selectSound: {fileID: 0}
+  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound: []
-  constructionMeshes: []
+  constructionMeshes:
+  - {fileID: 4300000, guid: 1b468518a5f1b10489a754019fbd290c, type: 3}
+  - {fileID: 4300000, guid: 8841aadd935eb6e4f9567e5a24a1f945, type: 3}
+  - {fileID: 4300000, guid: 520e20395d1150a4c94174228bde0499, type: 3}
