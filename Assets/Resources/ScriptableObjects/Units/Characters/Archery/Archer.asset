@@ -15,9 +15,14 @@ MonoBehaviour:
   code: archer
   unitName: Archer
   description: Basic range attack unit
-  healthPoint: 50
   prefab: {fileID: 5542380815447981279, guid: ce0d457cc0cf03740a924cd5279ab31d, type: 3}
   fieldOfView: 50
+  healthPoint: 50
+  upgradeParameters:
+    attackDamage: 05000000060000000700000008000000
+    attackRange:
+    - 20
+    - 25
   attackRange: 20
   attackDamage: 5
   attackRate: 1
@@ -25,11 +30,6 @@ MonoBehaviour:
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
   enemyAttackRangeResearchComplete: 0
-  upgrade:
-    attackDamage: 050000000a0000000f00000014000000
-    attackRange:
-    - 20
-    - 25
   canProduce: 
   skills: []
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}

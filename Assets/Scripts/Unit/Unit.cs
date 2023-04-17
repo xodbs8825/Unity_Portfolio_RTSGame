@@ -102,26 +102,26 @@ public class Unit
 
     public void UpdateUpgradeParameters()
     {
-        if (_data.upgrade.attackDamage.Count == 0) return;
+        if (_data.upgradeParameters.attackDamage.Count == 0) return;
 
         if (_owner == 0)
         {
             _attackDamageUpgradeValue = _data.myAttackDamageLevel;
-            _attackDamage = _data.upgrade.attackDamage[_attackDamageUpgradeValue];
+            _attackDamage = _data.upgradeParameters.attackDamage[_attackDamageUpgradeValue];
             if (_data.myAttackRangeResearchComplete)
             {
                 _attackRangeResearchComplete = true;
-                _attackRange = _data.upgrade.attackRange[1];
+                _attackRange = _data.upgradeParameters.attackRange[1];
             }
         }
         else if (_owner == 1)
         {
             _attackDamageUpgradeValue = _data.enemyAttackDamageLevel;
-            _attackDamage = _data.upgrade.attackDamage[_attackDamageUpgradeValue];
+            _attackDamage = _data.upgradeParameters.attackDamage[_attackDamageUpgradeValue];
             if (_data.enemyAttackRangeResearchComplete)
             {
                 _attackRangeResearchComplete = true;
-                _attackRange = _data.upgrade.attackRange[1];
+                _attackRange = _data.upgradeParameters.attackRange[1];
             }
         }
     }

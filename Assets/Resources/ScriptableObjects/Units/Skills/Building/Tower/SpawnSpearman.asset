@@ -17,7 +17,7 @@ MonoBehaviour:
   description: Spawn Spearman
   type: 0
   targetUnit:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: d927a36373d6c1f49b039d494643d5d3, type: 2}
   skillCost:
   - cost:
     - code: 0
@@ -30,6 +30,6 @@ MonoBehaviour:
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: []
+    requiredBuilding: {fileID: 0}
   techTreeOpen: 1
   skillAvailable: 0000

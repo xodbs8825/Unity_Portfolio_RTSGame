@@ -50,6 +50,10 @@ public class UnitManager : MonoBehaviour
         Unit.UpdateUpgradeParameters();
         zoomSize = 60f / Camera.main.orthographicSize;
         UpdateHealthBar();
+        if (_selected)
+        {
+            EventManager.TriggerEvent("SelectUnit", Unit);
+        }
     }
 
     private void OnMouseDown()
@@ -73,7 +77,6 @@ public class UnitManager : MonoBehaviour
         if (Globals.SELECTED_UNITS.Contains(this)) return;
 
         Globals.SELECTED_UNITS.Add(this);
-        EventManager.TriggerEvent("SelectUnit", Unit);
 
         selectionCircle.SetActive(true);
         if (healthBar)

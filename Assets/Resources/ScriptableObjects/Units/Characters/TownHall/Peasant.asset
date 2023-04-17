@@ -15,9 +15,13 @@ MonoBehaviour:
   code: peasant
   unitName: Peasant
   description: Worker unit
-  healthPoint: 60
   prefab: {fileID: 5542380815447981279, guid: f294de0d17cb791459e18eb4754e5c06, type: 3}
   fieldOfView: 50
+  healthPoint: 60
+  upgradeParameters:
+    attackDamage: 05000000
+    attackRange:
+    - 5
   attackRange: 5
   attackDamage: 5
   attackRate: 1
@@ -25,14 +29,8 @@ MonoBehaviour:
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
   enemyAttackRangeResearchComplete: 0
-  upgrade:
-    attackDamage: 050000000a0000000f00000014000000
-    attackRange:
-    - 10
-    - 15
   canProduce: 
   skills:
-  - {fileID: 11400000, guid: 3b0b3ec7df8f9984780858c529788aeb, type: 2}
   - {fileID: 11400000, guid: 835911a7830025849a421c6bab557d84, type: 2}
   - {fileID: 11400000, guid: fee647ad0fb020a49941f2c36099d7f1, type: 2}
   - {fileID: 11400000, guid: 818efbdb2cecca247914457883439b68, type: 2}
@@ -41,14 +39,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7f2fb41d84bb3bd46947ba240587c834, type: 2}
   - {fileID: 11400000, guid: f79f8b304c5765447b2519eec44a3ffe, type: 2}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
-  interactSound:
-  - {fileID: 8300000, guid: 94a7cc749f0d39e48b020744ce1f5c20, type: 3}
-  - {fileID: 8300000, guid: 1dca85e67df76724a9993e7406f33b83, type: 3}
-  - {fileID: 8300000, guid: 87b96a10783fa474da5baaa39486bd7d, type: 3}
-  - {fileID: 8300000, guid: c3dd67ab0342883419ac0241434fe027, type: 3}
-  - {fileID: 8300000, guid: e41fcd567ba76304cab0568083552b5f, type: 3}
-  - {fileID: 8300000, guid: 65ec287f1bd989e468dcf7ed524ab128, type: 3}
-  - {fileID: 8300000, guid: 688b9d1342268664f89cdba11cca8d18, type: 3}
+  interactSound: []
   buildRate: 1
   buildRange: 5
-  buildPower: 20
+  buildPower: 200

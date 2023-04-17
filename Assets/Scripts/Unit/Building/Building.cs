@@ -156,6 +156,8 @@ public class Building : Unit
 
     public void RemoveConstructor(int index)
     {
+        CharacterBT bt = _constructors[index].GetComponent<CharacterBT>();
+        bt.StopBuildingConstruction();
         _constructors.RemoveAt(index);
     }
 

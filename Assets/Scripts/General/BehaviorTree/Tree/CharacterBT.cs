@@ -113,4 +113,12 @@ public class CharacterBT : Tree
         _trySetDestinationOrTargetNode.SetFormationTargetOffset(new List<UnityEngine.Vector2>()
             { UnityEngine.Vector2.zero }, buildingTransform);
     }
+
+    public void StopBuildingConstruction()
+    {
+        manager.SetRendererVisibilty(true);
+        manager.SetIsConstructor(false);
+        _trySetDestinationOrTargetNode.ClearData("currentTarget");
+        _trySetDestinationOrTargetNode.ClearData("currentTargetOffset");
+    }
 }

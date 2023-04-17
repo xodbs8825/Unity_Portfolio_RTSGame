@@ -14,23 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   code: spearman
   unitName: Spearman
-  description: 
-  healthPoint: 0
+  description: Spearman
   prefab: {fileID: 0}
-  fieldOfView: 0
-  attackRange: 0
-  attackDamage: 0
-  attackRate: 0
+  fieldOfView: 50
+  healthPoint: 150
+  upgradeParameters:
+    attackDamage: 05000000060000000700000008000000
+    attackRange:
+    - 10
+  attackRange: 5
+  attackDamage: 5
+  attackRate: 2
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
   enemyAttackRangeResearchComplete: 0
-  upgrade:
-    attackDamage: 
-    attackRange: []
   canProduce: 
   skills: []
-  selectSound: {fileID: 0}
+  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound: []
   buildRate: 0
   buildRange: 0

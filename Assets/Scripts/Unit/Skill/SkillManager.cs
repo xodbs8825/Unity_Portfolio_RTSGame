@@ -13,11 +13,6 @@ public class SkillManager : MonoBehaviour
 
     private AudioSource _sourceContextualSource;
 
-    private void Start()
-    {
-
-    }
-
     private void Update()
     {
         if (skill.techTree.requiredBuilding == null)
@@ -26,21 +21,18 @@ public class SkillManager : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < skill.techTree.requiredBuilding.Length; i++)
+            string n = skill.techTree.requiredBuilding.name + "(Clone)";
+            GameObject g = GameObject.Find(n);
+            if (g
+                && g.GetComponent<UnitManager>().Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID
+                && g.GetComponent<BuildingBT>().isActiveAndEnabled
+                && g.GetComponent<UnitManager>().Unit.IsAlive)
             {
-                string n = skill.techTree.requiredBuilding[i].name + "(Clone)";
-                GameObject g = GameObject.Find(n);
-                if (g
-                    && g.GetComponent<UnitManager>().Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID
-                    && g.GetComponent<BuildingBT>().isActiveAndEnabled
-                    && g.GetComponent<UnitManager>().Unit.IsAlive)
-                {
-                    skill.techTreeOpen = true;
-                }
-                else
-                {
-                    skill.techTreeOpen = false;
-                }
+                skill.techTreeOpen = true;
+            }
+            else
+            {
+                skill.techTreeOpen = false;
             }
         }
 
@@ -80,7 +72,7 @@ public class SkillManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        skill.InitializeUpgrade();
+        skill.ResetParameters();
     }
 
     public void Initialize(SkillData skill, GameObject source)

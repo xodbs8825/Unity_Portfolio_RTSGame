@@ -15,14 +15,13 @@ MonoBehaviour:
   code: commander
   unitName: Commander
   description: Commanding infantry unit
-  healthPoint: 100
   prefab: {fileID: 5542380815447981279, guid: b9b770bb516be8e42a434cd5ab6be661, type: 3}
-  cost:
-  - code: 0
-    amount: 150
-  - code: 1
-    amount: 50
   fieldOfView: 50
+  healthPoint: 100
+  upgradeParameters:
+    attackDamage: 0a0000000b0000000c0000000d000000
+    attackRange:
+    - 5
   attackRange: 5
   attackDamage: 20
   attackRate: 1
@@ -30,9 +29,6 @@ MonoBehaviour:
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
   enemyAttackRangeResearchComplete: 0
-  upgrade:
-    attackDamage: 14000000170000001a0000001e000000
-    attackRange: []
   canProduce: 
   skills: []
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}

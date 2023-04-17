@@ -174,13 +174,13 @@ public class UIManager : MonoBehaviour
     {
         Unit unit = (Unit)data;
         _unit = unit;
-        AddSelectedUnitToUIList(unit);
 
+        UpdateSelectedUnitName(unit);
         ShowPanel(selectedUnitMenu, true);
-        SetSelectedUnitMenu(unit);
 
         if (unit.IsAlive)
         {
+            SetSelectedUnitMenu(unit);
             ShowPanel(selectedUnitActionButtonsParent, true);
         }
     }
@@ -189,6 +189,7 @@ public class UIManager : MonoBehaviour
     {
         Unit unit = (Unit)data;
         RemoveSelectedUnitToUIList(unit.Code);
+        _selectedUnit = null;
 
         if (Globals.SELECTED_UNITS.Count == 0)
             ShowPanel(selectedUnitMenu, false);
@@ -304,9 +305,9 @@ public class UIManager : MonoBehaviour
 
     private void SetSelectedUnitMenu(Unit unit)
     {
+        if (_selectedUnit == unit) return;
         ShowPanel(selectedUnitActionButtonsParent, true);
-
-        _selectedUnit = unit;
+        AddSelectedUnitToUIList(unit);
 
         bool unitIsMine = unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID;
 
@@ -334,6 +335,8 @@ public class UIManager : MonoBehaviour
 
         if (unitIsMine)
             SetSelectedUnitUpgrade($"{ unit.AttackDamage}");
+
+        _selectedUnit = unit;
     }
 
     private void SetSelectedUnitUpgrade(string attackDamage)
@@ -351,11 +354,14 @@ public class UIManager : MonoBehaviour
         _selectedUnitAttackDamageUpgradeLevelText.text = upgradeValue;
     }
 
-    private void UpdateSelectedUnitSKill(Unit unit)
+    private void UpdateSelectedUnitName(Unit unit)
     {
         if (_selectedUnitTitleText != null)
             _selectedUnitTitleText.text = unit.Data.unitName;
+    }
 
+    private void UpdateSelectedUnitSKill(Unit unit)
+    {
         for (int i = 0; i < _selectedUnitActionButtonsParent.childCount; i++)
         {
             foreach (Transform child in _selectedUnitActionButtonsParent.GetChild(i))

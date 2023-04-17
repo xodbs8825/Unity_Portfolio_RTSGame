@@ -11,22 +11,28 @@ public class UnitData : ScriptableObject
     public string code;
     public string unitName;
     public string description;
-    public float healthPoint;
     public GameObject prefab;
     //public List<ResourceValue> cost;
     public float fieldOfView;
 
-    [Header("Attack Parameters")]
+    [Header("Unit Status")]
+    public float healthPoint;
+    public UpgradeSystem upgradeParameters;
+    
+    [HideInInspector]
     public float attackRange;
+    [HideInInspector]
     public int attackDamage;
+    [HideInInspector]
     public float attackRate;
-
-    [Header("Upgrade System")]
+    [HideInInspector]
     public int myAttackDamageLevel;
+    [HideInInspector]
     public int enemyAttackDamageLevel;
+    [HideInInspector]
     public bool myAttackRangeResearchComplete;
+    [HideInInspector]
     public bool enemyAttackRangeResearchComplete;
-    public UpgradeSystem upgrade;
 
     [Header("Skill")]
     public InGameResource[] canProduce;
@@ -35,11 +41,6 @@ public class UnitData : ScriptableObject
     [Header("Audio")]
     public AudioClip selectSound;
     public AudioClip[] interactSound;
-
-    //public bool CanBuy(int owner)
-    //{
-    //    return Globals.CanBuy(owner, cost);
-    //}
 }
 
 [Serializable]

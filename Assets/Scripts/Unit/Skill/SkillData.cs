@@ -15,7 +15,7 @@ public enum SkillType
 [System.Serializable]
 public class TechTree
 {
-    public UnitData[] requiredBuilding;
+    public UnitData requiredBuilding;
 }
 
 [System.Serializable]
@@ -217,7 +217,7 @@ public class SkillData : ScriptableObject
         }
     }
 
-    public void InitializeUpgrade()
+    public void ResetParameters()
     {
         if (targetUnit == null) return;
 
