@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   code: spawn_archer
   skillName: Spawn Archer
-  description: Spawn Archer
+  description: Basic range attack unit
   type: 0
   targetUnit:
   - {fileID: 11400000, guid: 40cfd30adf6ca2b4ba312d5c03ece8f0, type: 2}
@@ -30,6 +30,6 @@ MonoBehaviour:
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: []
+    requiredBuilding: {fileID: 0}
   techTreeOpen: 1
   skillAvailable: 0101

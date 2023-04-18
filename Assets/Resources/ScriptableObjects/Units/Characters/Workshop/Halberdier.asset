@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6c9bc1f5a984e241a01bdb2b77f9fcf, type: 3}
-  m_Name: Spearman
+  m_Name: Halberdier
   m_EditorClassIdentifier: 
-  code: spearman
-  unitName: Spearman
-  description: Spearman
-  prefab: {fileID: 0}
+  code: halberdier
+  unitName: Halberdier
+  description: Halberdier
+  prefab: {fileID: 5542380815447981279, guid: a8e6adb287c6dde47ae740b904e4728e, type: 3}
   fieldOfView: 50
   healthPoint: 150
   upgradeParameters:
-    attackDamage: 05000000060000000700000008000000
+    attackDamage: 08000000090000000a0000000b000000
     attackRange:
     - 10
-  attackRange: 5
-  attackDamage: 5
-  attackRate: 2
+  attackRange: 0
+  attackDamage: 0
+  attackRate: 0
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0

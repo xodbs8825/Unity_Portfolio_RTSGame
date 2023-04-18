@@ -13,7 +13,24 @@ public class SkillManager : MonoBehaviour
 
     private AudioSource _sourceContextualSource;
 
+    private void Start()
+    {
+        // 프로젝트 새로 열었을 때 테스트 필요
+        TechTreeCheck();
+    }
+
     private void Update()
+    {
+        TechTreeCheck();
+        SkillCostSetting();
+    }
+
+    private void OnApplicationQuit()
+    {
+        skill.ResetParameters();
+    }
+
+    private void TechTreeCheck()
     {
         if (skill.techTree.requiredBuilding == null)
         {
@@ -30,12 +47,35 @@ public class SkillManager : MonoBehaviour
             {
                 skill.techTreeOpen = true;
             }
+            else if (skill.techTree.requiredBuilding.name == "Keep")
+            {
+                if (!g)
+                {
+                    n = "Castle(Clone)";
+                    g = GameObject.Find(n);
+
+                    if (g
+                        && g.GetComponent<UnitManager>().Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID
+                        && g.GetComponent<BuildingBT>().isActiveAndEnabled
+                        && g.GetComponent<UnitManager>().Unit.IsAlive)
+                    {
+                        skill.techTreeOpen = true;
+                    }
+                    else
+                    {
+                        skill.techTreeOpen = false;
+                    }
+                }
+            }
             else
             {
                 skill.techTreeOpen = false;
             }
         }
+    }
 
+    private void SkillCostSetting()
+    {
         if (skill != null && _button != null)
         {
             if (skill.type == SkillType.UPGRADE_ATTACKDAMAGE)
@@ -68,11 +108,6 @@ public class SkillManager : MonoBehaviour
                 skill.Cost = skill.SetSkillCost(0);
             }
         }
-    }
-
-    private void OnApplicationQuit()
-    {
-        skill.ResetParameters();
     }
 
     public void Initialize(SkillData skill, GameObject source)

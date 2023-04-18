@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Game
   m_RootView: {fileID: 4}
   m_MinSize: {x: 875, y: 371}
   m_MaxSize: {x: 10000, y: 10000}
@@ -69,8 +69,8 @@ MonoBehaviour:
     y: 590
     width: 1224
     height: 357
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 116
+  controlID: 105
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -574,9 +574,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 22620000
+      m_SelectedIDs: 9ec20100
       m_LastClickedID: 0
-      m_ExpandedIDs: 9482dbff388edcffee8edcff2092dcff0893dcff0209ddff520cddffc412ddff484dddff8c4dddffea50ddff10a1dfffe6a5dfff9c40e3ffac40e3ff0220fffffe20ffff666c0200786c0200e26c0200a49a0200b69a0200209b02004eb1020060b10200cab10200c0c30200d2c302003cc40200f8c702000ac8020074c802009cd00200
+      m_ExpandedIDs: 703ebcff0e41bcffb839beff48fccaffee2ecbffc42fcbff5846cbff9a46cbffe046cbff1e47cbffee47cbffcc19cdffdc19cdffa052d2ffec25e5ff32bbfcff42bbfcfff01cffff3c20ffff3e21ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -859,9 +859,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 960, y: 100, z: 0}
+    m_Target: {x: 739.1744, y: 408.85806, z: -2.541919}
     speed: 2
-    m_Value: {x: 960, y: 100, z: 0}
+    m_Value: {x: 739.1744, y: 408.85806, z: -2.541919}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -912,9 +912,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 509.90195
+    m_Target: 748.6025
     speed: 2
-    m_Value: 509.90195
+    m_Value: 748.6025
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -932,7 +932,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+  m_LastSceneViewRotation: {x: 0.10519859, y: 0.37799293, z: -0.04327882, w: 0.9187933}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -981,7 +981,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/ScriptableObjects/Units/Characters/Archery
+    - Assets/Scenes
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 0
@@ -1020,24 +1020,24 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 259.0264}
+    scrollPos: {x: 0, y: 3152}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff000000004ac2010062c2010064c2010066c2010014f501001cf5010024f5010026f5010028f501002af501002cf501002ef5010030f5010036f5010038f501003af501003cf501003ef5010040f5010044f5010046f50100d6fa0100defa0100e0fa0100e2fa0100e4fa0100442702004627020048270200689c020068e702006ae702006ce702006ee7020074e7020076e7020022ed0200
+    m_ExpandedIDs: ffffffff00000000f4c101000cc201000ec2010010c20100c8ff0100ceff0100d0ff0100daff0100dcff0100deff0100e0ff0100e2ff0100e4ff0100e6ff0100ecff0100eeff0100f0ff0100f2ff0100f4ff0100f6ff0100f8ff0100faff0100fcff0100feff01008e05020090050200940502009605020098050200800c0200820c0200840c0200880c02005c1402006014020062140200681402006a1402002a58020034580200365802003a580200f667020000680200b0ec0200
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: ArcherAttackRangeResearch
-      m_OriginalName: ArcherAttackRangeResearch
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 25130
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 2}
     m_SearchString: 

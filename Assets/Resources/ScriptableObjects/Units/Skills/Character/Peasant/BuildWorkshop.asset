@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
-  m_Name: SpawnCrossbowman
+  m_Name: BuildWorkshop
   m_EditorClassIdentifier: 
-  code: spawn_crossbowman
-  skillName: Spawn Crossbowman
-  description: Archer unit armed with Crossbow
-  type: 0
+  code: build_workshop
+  skillName: Build Workshop
+  description: Advanced infantry unit training facility.
+  type: 1
   targetUnit:
-  - {fileID: 11400000, guid: fa32b78e943c1164c9309ee75bc746c1, type: 2}
+  - {fileID: 11400000, guid: 5223d7a25fa28e34f9120305113a1a42, type: 2}
   skillCost:
   - cost:
     - code: 0
-      amount: 50
+      amount: 200
     - code: 1
-      amount: 50
+      amount: 100
   buildTime: 0
   castTime: 0
   cooldown: 0
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: {fileID: 0}
+    requiredBuilding: {fileID: 11400000, guid: 49d5e9988cc9f1440ae7752dbf76dd4e, type: 2}
   techTreeOpen: 1
   skillAvailable: 0101

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   code: build_barracks
   skillName: Build Barracks
-  description: Build Barracks
+  description: Basic infantry unit training facility.
   type: 1
   targetUnit:
   - {fileID: 11400000, guid: 06a86b6958539164e839ad6b281f8c7d, type: 2}
@@ -28,6 +28,6 @@ MonoBehaviour:
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: []
+    requiredBuilding: {fileID: 0}
   techTreeOpen: 1
   skillAvailable: 0101

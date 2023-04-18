@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   code: build_farm
   skillName: Build Farm
-  description: Build Farm
+  description: 'Produces 10 tree per second. (Maximum building count: 20)'
   type: 1
   targetUnit:
   - {fileID: 11400000, guid: a6c8b6fd34803e9479c3bac7f467f693, type: 2}
@@ -28,6 +28,6 @@ MonoBehaviour:
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: []
+    requiredBuilding: {fileID: 0}
   techTreeOpen: 1
-  skillAvailable: 0000
+  skillAvailable: 0101

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   code: build_house
   skillName: Build House
-  description: Build House
+  description: 'Add 10 Maximum Infantry Unit Counts (Maximum Infantry Unit Counts:
+    100)'
   type: 1
   targetUnit:
   - {fileID: 11400000, guid: fbf27d4b1ec088e42b70570614fb5ae2, type: 2}
@@ -28,6 +29,6 @@ MonoBehaviour:
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: []
+    requiredBuilding: {fileID: 0}
   techTreeOpen: 1
-  skillAvailable: 0000
+  skillAvailable: 0101

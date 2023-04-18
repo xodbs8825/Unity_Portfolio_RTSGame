@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   code: spawn_commander
   skillName: Spawn Commander
-  description: Spawn Commander
+  description: Commanding infantry unit
   type: 0
   targetUnit:
   - {fileID: 11400000, guid: 51fb9e5fe697be84dbeb38a8e097dfe0, type: 2}
@@ -30,7 +30,6 @@ MonoBehaviour:
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding:
-    - {fileID: 11400000, guid: 6ad37734c26986847bf00ee626c35d18, type: 2}
+    requiredBuilding: {fileID: 11400000, guid: 6ad37734c26986847bf00ee626c35d18, type: 2}
   techTreeOpen: 0
   skillAvailable: 0101

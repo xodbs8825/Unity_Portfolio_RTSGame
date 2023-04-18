@@ -27,6 +27,7 @@ public class SkillCost
 [CreateAssetMenu(fileName = "Skill", menuName = "Scriptable Objects/Skill", order = 4)]
 public class SkillData : ScriptableObject
 {
+    #region Shown in Inspector
     public string code;
     public string skillName;
     public string description;
@@ -44,6 +45,10 @@ public class SkillData : ScriptableObject
     public AudioClip sound;
 
     public TechTree techTree;
+    #endregion
+
+    #region Hiden in Inspector
+    [HideInInspector]
     public bool techTreeOpen;
 
     [HideInInspector]
@@ -60,6 +65,7 @@ public class SkillData : ScriptableObject
 
     private List<ResourceValue> _cost;
     public List<ResourceValue> Cost { get => _cost; set => _cost = value; }
+    #endregion
 
     public void Trigger(GameObject source, GameObject target = null)
     {

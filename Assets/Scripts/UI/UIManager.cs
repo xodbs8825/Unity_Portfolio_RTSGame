@@ -151,6 +151,8 @@ public class UIManager : MonoBehaviour
         EventManager.AddListener("SelectUnit", OnSelectUnit);
         EventManager.AddListener("DeselectUnit", OnDeselectUnit);
         EventManager.AddListener("SetPlayer", OnSetPlayer);
+        EventManager.AddListener("ActionUIOn", OnActionUIOn);
+        EventManager.AddListener("ActionUIOff", OnActionUIOff);
     }
 
     private void OnDisable()
@@ -161,6 +163,18 @@ public class UIManager : MonoBehaviour
         EventManager.RemoveListener("SelectUnit", OnSelectUnit);
         EventManager.RemoveListener("DeselectUnit", OnDeselectUnit);
         EventManager.RemoveListener("SetPlayer", OnSetPlayer);
+        EventManager.RemoveListener("ActionUIOn", OnActionUIOn);
+        EventManager.RemoveListener("ActionUIOff", OnActionUIOff);
+    }
+
+    private void OnActionUIOn()
+    {
+        ShowPanel(selectedUnitActionButtonsParent, true);
+    }
+
+    private void OnActionUIOff()
+    {
+        ShowPanel(selectedUnitActionButtonsParent, false);
     }
 
     private void OnSetPlayer(object data)
