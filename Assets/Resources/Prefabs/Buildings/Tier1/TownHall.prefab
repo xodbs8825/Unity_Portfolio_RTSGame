@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed2f10997135f594e8dc766a824521de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mesh: {fileID: 0}
+  mesh: {fileID: 8492345053184146594}
   threshold: 0.1
 --- !u!82 &5472681719910744038
 AudioSource:
@@ -545,6 +545,11 @@ PrefabInstance:
 --- !u!4 &8492345053183844482 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: c5f43a47e4b64c14da6e0081f639fdd3, type: 3}
+  m_PrefabInstance: {fileID: 8492345053184244226}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8492345053184146594 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: c5f43a47e4b64c14da6e0081f639fdd3, type: 3}
   m_PrefabInstance: {fileID: 8492345053184244226}
   m_PrefabAsset: {fileID: 0}
 --- !u!23 &8492345053186138722 stripped

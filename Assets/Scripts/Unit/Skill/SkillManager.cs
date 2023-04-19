@@ -13,9 +13,8 @@ public class SkillManager : MonoBehaviour
 
     private AudioSource _sourceContextualSource;
 
-    private void Start()
+    private void Awake()
     {
-        // 프로젝트 새로 열었을 때 테스트 필요
         TechTreeCheck();
     }
 
@@ -32,6 +31,8 @@ public class SkillManager : MonoBehaviour
 
     private void TechTreeCheck()
     {
+        if (skill == null) return;
+
         if (skill.techTree.requiredBuilding == null)
         {
             skill.techTreeOpen = true;

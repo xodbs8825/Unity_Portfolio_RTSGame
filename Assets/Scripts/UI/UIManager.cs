@@ -189,13 +189,29 @@ public class UIManager : MonoBehaviour
         Unit unit = (Unit)data;
         _unit = unit;
 
-        UpdateSelectedUnitName(unit);
         ShowPanel(selectedUnitMenu, true);
+        UpdateSelectedUnitName(unit);
 
         if (unit.IsAlive)
         {
             SetSelectedUnitMenu(unit);
             ShowPanel(selectedUnitActionButtonsParent, true);
+        }
+        else
+        {
+            ShowPanel(selectedUnitActionButtonsParent, false);
+        }
+
+        if (unit.GetType() == typeof(Character))
+        {
+            if (unit.Transform.GetComponent<CharacterManager>().IsConstructor)
+            {
+                ShowPanel(selectedUnitActionButtonsParent, false);
+            }
+            else
+            {
+                ShowPanel(selectedUnitActionButtonsParent, true);
+            }
         }
     }
 

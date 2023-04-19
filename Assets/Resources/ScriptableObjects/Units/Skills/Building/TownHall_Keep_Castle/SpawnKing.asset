@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
-  m_Name: SpawnCommander
+  m_Name: SpawnKing
   m_EditorClassIdentifier: 
-  code: spawn_commander
-  skillName: Spawn Commander
-  description: Commanding infantry unit
+  code: spawn_king
+  skillName: Spawn King
+  description: Spawn King
   type: 0
   targetUnit:
-  - {fileID: 11400000, guid: 51fb9e5fe697be84dbeb38a8e097dfe0, type: 2}
+  - {fileID: 11400000, guid: e172d9b64ef4d12428d74d98ad44da98, type: 2}
   skillCost:
   - cost:
     - code: 0
-      amount: 245
+      amount: 400
     - code: 1
-      amount: 60
+      amount: 300
   buildTime: 0
   castTime: 0
   cooldown: 0
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: {fileID: 11400000, guid: 49d5e9988cc9f1440ae7752dbf76dd4e, type: 2}
-  techTreeOpen: 1
-  skillAvailable: 0101
+    requiredBuilding: {fileID: 11400000, guid: 070c39f8fab990249a1fd86a1b65119c, type: 2}
+  techTreeOpen: 0
+  skillAvailable: 0000

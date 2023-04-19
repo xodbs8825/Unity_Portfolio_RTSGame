@@ -241,10 +241,11 @@ public class BuildingPlacer : MonoBehaviour
         {
             _builderManager.Select();
             _builderManager.GetComponent<CharacterBT>().StartBuildingConstruction(_placedBuilding.Transform);
+            _builderManager.Deselect();
             _builderManager = null;
 
             _placedBuilding.Place();
-
+            _placedBuilding.Transform.GetComponent<BuildingManager>().Select();
             //EventManager.TriggerEvent("PlaceBuildingOff");
             _placedBuilding = null;
         }

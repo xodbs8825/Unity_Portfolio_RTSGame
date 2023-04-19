@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6c9bc1f5a984e241a01bdb2b77f9fcf, type: 3}
+  m_Name: Paladin
+  m_EditorClassIdentifier: 
+  code: paladin
+  unitName: Paladin
+  description: Paladin
+  prefab: {fileID: 5542380815447981279, guid: fc5932ea0ba692149a59e05d0d33ed89, type: 3}
+  fieldOfView: 50
+  healthPoint: 300
+  upgradeParameters:
+    attackDamage: 0f000000100000001100000012000000
+    attackRange:
+    - 5
+  attackRange: 0
+  attackDamage: 0
+  attackRate: 0
+  myAttackDamageLevel: 0
+  enemyAttackDamageLevel: 0
+  myAttackRangeResearchComplete: 0
+  enemyAttackRangeResearchComplete: 0
+  canProduce: 
+  skills: []
+  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
+  interactSound: []
+  buildRate: 0
+  buildRange: 0
+  buildPower: 0

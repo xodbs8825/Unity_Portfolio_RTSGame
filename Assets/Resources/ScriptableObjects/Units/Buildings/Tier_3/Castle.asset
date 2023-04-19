@@ -16,9 +16,12 @@ MonoBehaviour:
   unitName: Castle
   description: 'Upgraded structure from Keep. The Castle is the toughest Human Town
     Hall and enables the highest-level of units and upgrades.  '
-  healthPoint: 2500
   prefab: {fileID: 5542380815447981279, guid: c25759ed314c4364c82bce295f224bdb, type: 3}
   fieldOfView: 50
+  healthPoint: 2500
+  upgradeParameters:
+    attackDamage: 
+    attackRange: []
   attackRange: 0
   attackDamage: 0
   attackRate: 0
@@ -26,12 +29,10 @@ MonoBehaviour:
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
   enemyAttackRangeResearchComplete: 0
-  upgrade:
-    attackDamage: 
-    attackRange: []
   canProduce: 
   skills:
   - {fileID: 11400000, guid: cd816dfedbc04054aaa587cca3521453, type: 2}
+  - {fileID: 11400000, guid: 71ff8dac8f07aac479775b60fd389d78, type: 2}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound: []
   constructionMeshes:

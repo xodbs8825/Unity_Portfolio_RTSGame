@@ -102,6 +102,7 @@ public class Unit
 
     public void UpdateUpgradeParameters()
     {
+        if (_data.upgradeParameters == null) return;
         if (_data.upgradeParameters.attackDamage.Count == 0) return;
 
         if (_owner == 0)
