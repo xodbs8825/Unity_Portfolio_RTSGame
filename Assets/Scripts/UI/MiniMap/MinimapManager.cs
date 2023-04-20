@@ -59,6 +59,4 @@ public class MinimapManager : MonoBehaviour
         }
         GL.PopMatrix();
     }
-
-    
 }
