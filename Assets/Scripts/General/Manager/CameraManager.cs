@@ -147,14 +147,22 @@ public class CameraManager : MonoBehaviour
 
     private void TranslateCamera(int dir)
     {
-        if (dir == 0 && transform.position.z - _camOffset.z + _camHalfViewZone.z <= _maxZ)
+        if (dir == 0 && transform.position.z <= _maxZ)
+        {
             transform.Translate(_forwardDir * Time.deltaTime * translationSpeed, Space.World);
+        }
         else if (dir == 1 && transform.position.x + _camHalfViewZone.x <= _maxX)
+        {
             transform.Translate(transform.right * Time.deltaTime * translationSpeed);
-        else if (dir == 2 && transform.position.z - _camOffset.z - _camHalfViewZone.z >= _minZ)
+        }
+        else if (dir == 2 && transform.position.z >= _minZ)
+        {
             transform.Translate(-_forwardDir * Time.deltaTime * translationSpeed, Space.World);
+        }
         else if (dir == 3 && transform.position.x - _camHalfViewZone.x >= _minX)
+        {
             transform.Translate(-transform.right * Time.deltaTime * translationSpeed);
+        }
 
         FixGroundTarget();
 
@@ -203,8 +211,8 @@ public class CameraManager : MonoBehaviour
     {
         _minX = 0;
         _maxX = GameManager.instance.terrainSize;
-        _minZ = 0;
-        _maxZ = GameManager.instance.terrainSize;
+        _minZ = -312f;
+        _maxZ = 445.99f;
 
         (Vector3 minWorldPoint, Vector3 maxWorldPoint) = Utils.GetCameraWorldBounds();
         _camOffset = transform.position - (maxWorldPoint + minWorldPoint) / 2f;

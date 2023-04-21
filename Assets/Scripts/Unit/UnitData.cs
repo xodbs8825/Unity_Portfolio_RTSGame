@@ -18,7 +18,8 @@ public class UnitData : ScriptableObject
     [Header("Unit Status")]
     public float healthPoint;
     public UpgradeSystem upgradeParameters;
-    
+    public UnitCountLimit maximumUnitCount;
+
     [HideInInspector]
     public float attackRange;
     [HideInInspector]
@@ -48,4 +49,11 @@ public class UpgradeSystem
 {
     public List<int> attackDamage;
     public List<float> attackRange;
+}
+
+[Serializable]
+public class UnitCountLimit
+{
+    public bool hasLimit;
+    public int unitMaxCount;
 }

@@ -28,7 +28,7 @@ public class Minimap : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         Vector2 delta = (Vector2)Input.mousePosition - _lastPointerPosition;
         //_lastPointerPosition = Input.mousePosition;
         _lastPointerPosition = new Vector2(Mathf.Clamp(Input.mousePosition.x, 0f, 300f), Mathf.Clamp(Input.mousePosition.y, 0f, 300f));
-        Debug.Log(_lastPointerPosition);
+        //Debug.Log(_lastPointerPosition);
 
         if (delta.magnitude > Mathf.Epsilon)
         {

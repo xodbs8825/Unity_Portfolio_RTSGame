@@ -10,18 +10,21 @@ public class SkillManager : MonoBehaviour
     private GameObject _source;
     private Button _button;
     private bool _ready;
+    private int _unitCounter;
 
     private AudioSource _sourceContextualSource;
 
     private void Awake()
     {
         TechTreeCheck();
+        _unitCounter = 0;
     }
 
     private void Update()
     {
         TechTreeCheck();
         SkillCostSetting();
+        MaxUnitCountCheck();
     }
 
     private void OnApplicationQuit()
@@ -48,7 +51,7 @@ public class SkillManager : MonoBehaviour
             {
                 skill.techTreeOpen = true;
             }
-            else if (skill.techTree.requiredBuilding.name == "Keep")
+            else if (skill.techTree.requiredBuilding.unitName == "Keep")
             {
                 if (!g)
                 {
@@ -71,6 +74,28 @@ public class SkillManager : MonoBehaviour
             else
             {
                 skill.techTreeOpen = false;
+            }
+        }
+    }
+
+    private void MaxUnitCountCheck()
+    {
+        for (int i = 0; i < skill.targetUnit.Length; i++)
+        {
+            if (skill.targetUnit[i].maximumUnitCount.hasLimit)
+            {
+                GameObject[] g = GameObject.FindGameObjectsWithTag("Unit");
+                for (int j = 0; j < g.Length; j++)
+                {
+                    if (g[j].name == skill.targetUnit[i].unitName + "(Clone)")
+                    {
+                        _unitCounter++;
+                        if (_unitCounter >= skill.targetUnit[i].maximumUnitCount.unitMaxCount)
+                        {
+                            SetReady(false);
+                        }
+                    }
+                }
             }
         }
     }
