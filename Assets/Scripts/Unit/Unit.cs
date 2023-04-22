@@ -26,7 +26,7 @@ public class Unit
     protected int _attackDamage;
     protected int _attackDamageUpgradeValue;
     protected float _attackRange;
-    protected bool _attackRangeResearchComplete;
+    protected float _attackRate;
     #endregion
 
     protected bool _myAttackDamageUpgradeComplete;
@@ -68,7 +68,7 @@ public class Unit
         _attackDamageUpgradeValue = data.myAttackDamageLevel;
 
         _attackRange = data.attackRange;
-        _attackRangeResearchComplete = false;
+        _attackRate = data.attackRate;
 
         _attackDamageUpgradeIndicator = false;
 
@@ -110,27 +110,48 @@ public class Unit
         {
             _attackDamageUpgradeValue = _data.myAttackDamageLevel;
             _attackDamage = _data.upgradeParameters.attackDamage[_attackDamageUpgradeValue];
+
             if (_data.myAttackRangeResearchComplete)
             {
-                _attackRangeResearchComplete = true;
                 _attackRange = _data.upgradeParameters.attackRange[1];
+            }
+            else
+            {
+                _attackRange = _data.upgradeParameters.attackRange[0];
+            }
+
+            if (_data.myAttackRateResearchComplete)
+            {
+                _attackRate = _data.upgradeParameters.attackRate[1];
+            }
+            else
+            {
+                _attackRate = _data.upgradeParameters.attackRate[0];
             }
         }
         else if (_owner == 1)
         {
             _attackDamageUpgradeValue = _data.enemyAttackDamageLevel;
             _attackDamage = _data.upgradeParameters.attackDamage[_attackDamageUpgradeValue];
+
             if (_data.enemyAttackRangeResearchComplete)
             {
-                _attackRangeResearchComplete = true;
                 _attackRange = _data.upgradeParameters.attackRange[1];
             }
-        }
-    }
+            else
+            {
+                _attackRange = _data.upgradeParameters.attackRange[0];
+            }
 
-    public void AttackRangeResearchComplete()
-    {
-        _attackRangeResearchComplete = true;
+            if (_data.enemyAttackRateResearchComplete)
+            {
+                _attackRate = _data.upgradeParameters.attackRate[1];
+            }
+            else
+            {
+                _attackRate = _data.upgradeParameters.attackRate[0];
+            }
+        }
     }
 
     public void SetPosition(Vector3 position)
@@ -214,14 +235,11 @@ public class Unit
     public Transform Transform { get => _transform; }
     public float HP { get => _currentHealth; set => _currentHealth = value; }
     public float MaxHP { get => _data.healthPoint; }
-    public string Uid { get => _uid; }
     public Dictionary<InGameResource, int> Production { get => _production; }
     public List<SkillManager> SkillManagers { get => _skillManagers; }
     public int Owner { get => _owner; }
     public int AttackDamage { get => _attackDamage; }
     public int AttackDamageUpgradeValue { get => _attackDamageUpgradeValue; }
-    public bool AttackDamageUpgradeIndicator { get => _attackDamageUpgradeIndicator; }
     public float AttackRange { get => _attackRange; }
-    public bool AttackRangeResearchCompleted { get => _attackRangeResearchComplete; }
     public string UnitName { get => _unitName; }
 }

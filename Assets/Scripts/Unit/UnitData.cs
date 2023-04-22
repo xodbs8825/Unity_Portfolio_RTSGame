@@ -34,6 +34,10 @@ public class UnitData : ScriptableObject
     public bool myAttackRangeResearchComplete;
     [HideInInspector]
     public bool enemyAttackRangeResearchComplete;
+    [HideInInspector]
+    public bool myAttackRateResearchComplete;
+    [HideInInspector]
+    public bool enemyAttackRateResearchComplete;
 
     [Header("Skill")]
     public InGameResource[] canProduce;
@@ -49,6 +53,7 @@ public class UpgradeSystem
 {
     public List<int> attackDamage;
     public List<float> attackRange;
+    public List<float> attackRate;
 }
 
 [Serializable]

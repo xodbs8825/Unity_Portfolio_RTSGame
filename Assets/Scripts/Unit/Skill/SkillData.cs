@@ -9,6 +9,7 @@ public enum SkillType
     INSTANTIATE_BUILDING,
     UPGRADE_ATTACKDAMAGE,
     RESEARCH_ATTACKRANGE,
+    RESEARCH_ATTACKRATE,
     UPGRADE_UNIT
 }
 
@@ -69,6 +70,9 @@ public class SkillData : ScriptableObject
 
     public void Trigger(GameObject source, GameObject target = null)
     {
+        UnitManager manager = source.GetComponent<UnitManager>();
+        if (manager == null) return;
+
         switch (type)
         {
             case SkillType.INSTANTIATE_CHARACTER:
@@ -79,37 +83,29 @@ public class SkillData : ScriptableObject
                         source.transform.position.z - coll.size.z * 2f);
 
                     CharacterData data = (CharacterData)targetUnit[0];
-                    UnitManager sourceUnitManager = source.GetComponent<UnitManager>();
-                    if (sourceUnitManager == null) return;
 
                     _cost = SetSkillCost(0);
                     if (Globals.CanBuy(_cost))
                     {
-                        Character character = new Character(data, sourceUnitManager.Unit.Owner);
+                        Character character = new Character(data, manager.Unit.Owner);
                         character.ComputeProduction();
                         character.Transform.GetComponent<NavMeshAgent>().Warp(instantiatePosition);
 
-                        BuySkill(_cost, sourceUnitManager.Unit.Owner);
+                        BuySkill(_cost, manager.Unit.Owner);
                     }
                 }
                 break;
             case SkillType.INSTANTIATE_BUILDING:
                 {
-                    UnitManager unitManager = source.GetComponent<UnitManager>();
-                    if (unitManager == null) return;
-
                     _cost = SetSkillCost(0);
                     if (Globals.CanBuy(_cost))
                     {
-                        BuildingPlacer.instance.SelectPlacedBuilding((BuildingData)targetUnit[0], unitManager);
+                        BuildingPlacer.instance.SelectPlacedBuilding((BuildingData)targetUnit[0], manager);
                     }
                 }
                 break;
             case SkillType.UPGRADE_ATTACKDAMAGE:
                 {
-                    UnitManager manager = source.GetComponent<UnitManager>();
-                    if (manager == null) return;
-
                     Unit unit = manager.Unit;
                     if (unit.Owner == 0)
                     {
@@ -139,7 +135,7 @@ public class SkillData : ScriptableObject
                             }
                         }
                     }
-                    else if (manager.Unit.Owner == 1)
+                    else if (unit.Owner == 1)
                     {
                         _enemyCounter++;
                         if (_enemyCounter == 3)
@@ -172,9 +168,6 @@ public class SkillData : ScriptableObject
                 break;
             case SkillType.RESEARCH_ATTACKRANGE:
                 {
-                    UnitManager manager = source.GetComponent<UnitManager>();
-                    if (manager == null) return;
-
                     Unit unit = manager.Unit;
 
                     _cost = SetSkillCost(0);
@@ -184,27 +177,49 @@ public class SkillData : ScriptableObject
                         {
                             CharacterData data = (CharacterData)targetUnit[i];
 
-                            if (manager.Unit.Owner == 0)
+                            if (unit.Owner == 0)
                             {
                                 skillAvailable[0] = false;
                                 data.myAttackRangeResearchComplete = true;
                             }
-                            else if (manager.Unit.Owner == 1)
+                            else if (unit.Owner == 1)
                             {
                                 skillAvailable[1] = false;
                                 data.enemyAttackRangeResearchComplete = true;
                             }
                         }
-                        BuySkill(_cost, manager.Unit.Owner);
-                        unit.AttackRangeResearchComplete();
+                        BuySkill(_cost, unit.Owner);
+                    }
+                }
+                break;
+            case SkillType.RESEARCH_ATTACKRATE:
+                {
+                    Unit unit = manager.Unit;
+
+                    _cost = SetSkillCost(0);
+                    if (Globals.CanBuy(_cost))
+                    {
+                        for (int i = 0; i < targetUnit.Length; i++)
+                        {
+                            CharacterData data = (CharacterData)targetUnit[i];
+
+                            if (unit.Owner == 0)
+                            {
+                                skillAvailable[0] = false;
+                                data.myAttackRateResearchComplete = true;
+                            }
+                            else if (unit.Owner == 1)
+                            {
+                                skillAvailable[1] = false;
+                                data.enemyAttackRateResearchComplete = true;
+                            }
+                        }
+                        BuySkill(_cost, unit.Owner);
                     }
                 }
                 break;
             case SkillType.UPGRADE_UNIT:
                 {
-                    UnitManager manager = source.GetComponent<UnitManager>();
-                    if (manager == null) return;
-
                     _cost = SetSkillCost(0);
                     if (Globals.CanBuy(_cost))
                     {
@@ -236,6 +251,8 @@ public class SkillData : ScriptableObject
             targetUnit[i].enemyAttackDamageLevel = 0;
             targetUnit[i].myAttackRangeResearchComplete = false;
             targetUnit[i].enemyAttackRangeResearchComplete = false;
+            targetUnit[i].myAttackRateResearchComplete = false;
+            targetUnit[i].enemyAttackRateResearchComplete = false;
         }
 
         _buildingUpgradeStarted = false;
