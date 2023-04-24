@@ -24,8 +24,8 @@ MonoBehaviour:
     - 20
     - 25
     attackRate:
-    - 0
-    - 0
+    - 2
+    - 1
   maximumUnitCount:
     hasLimit: 0
     unitMaxCount: 0

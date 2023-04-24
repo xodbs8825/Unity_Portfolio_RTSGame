@@ -22,6 +22,8 @@ MonoBehaviour:
     attackDamage: 190000001a0000001b0000001c000000
     attackRange:
     - 5
+    attackRate:
+    - 3
   maximumUnitCount:
     hasLimit: 1
     unitMaxCount: 1
@@ -32,6 +34,8 @@ MonoBehaviour:
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
   enemyAttackRangeResearchComplete: 0
+  myAttackRateResearchComplete: 0
+  enemyAttackRateResearchComplete: 0
   canProduce: 
   skills: []
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}

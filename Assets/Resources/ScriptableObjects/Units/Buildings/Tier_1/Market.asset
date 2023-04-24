@@ -15,9 +15,16 @@ MonoBehaviour:
   code: market
   unitName: Market
   description: 'Produces 25 gold per second. (Maximum building count: 20)'
-  healthPoint: 750
   prefab: {fileID: 5542380815447981279, guid: 83bf2b285fa1dd34fa381435d5f983ec, type: 3}
   fieldOfView: 50
+  healthPoint: 750
+  upgradeParameters:
+    attackDamage: 
+    attackRange: []
+    attackRate: []
+  maximumUnitCount:
+    hasLimit: 1
+    unitMaxCount: 5
   attackRange: 0
   attackDamage: 0
   attackRate: 0
@@ -25,9 +32,8 @@ MonoBehaviour:
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
   enemyAttackRangeResearchComplete: 0
-  upgrade:
-    attackDamage: 
-    attackRange: []
+  myAttackRateResearchComplete: 0
+  enemyAttackRateResearchComplete: 0
   canProduce: 
   skills: []
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}

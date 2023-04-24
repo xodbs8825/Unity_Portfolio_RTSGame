@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
-  m_Name: UpgradeToKeep
+  m_Name: ArcherAttackRateResearch
   m_EditorClassIdentifier: 
-  code: upgrade_keep
-  skillName: Upgrade to Keep
-  description: 'Upgraded structure from Town Hall. Enables further upgrades and harder
-    to destroy. '
-  type: 5
+  code: research_archerAttackRate
+  skillName: Archer attack rate research
+  description: Increase archer unit's attack rate.
+  type: 4
   targetUnit:
-  - {fileID: 11400000, guid: 49d5e9988cc9f1440ae7752dbf76dd4e, type: 2}
+  - {fileID: 11400000, guid: 40cfd30adf6ca2b4ba312d5c03ece8f0, type: 2}
+  - {fileID: 11400000, guid: fa32b78e943c1164c9309ee75bc746c1, type: 2}
   skillCost:
   - cost:
     - code: 0
-      amount: 150
+      amount: 100
     - code: 1
       amount: 100
-  buildTime: 10
+  buildTime: 0
   castTime: 0
   cooldown: 0
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: {fileID: 11400000, guid: ecf9e962d627680488bb8684e01c02af, type: 2}
-  techTreeOpen: 1
-  skillAvailable: 0101
+    requiredBuilding: {fileID: 0}
+  techTreeOpen: 0
+  skillAvailable: 0000

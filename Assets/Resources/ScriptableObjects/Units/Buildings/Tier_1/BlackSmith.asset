@@ -15,9 +15,16 @@ MonoBehaviour:
   code: blackSmith
   unitName: BlackSmith
   description: Unit upgrade facility
-  healthPoint: 850
   prefab: {fileID: 5542380815447981279, guid: a452e36ef10e6d34e893c23a28b7a23f, type: 3}
   fieldOfView: 50
+  healthPoint: 850
+  upgradeParameters:
+    attackDamage: 
+    attackRange: []
+    attackRate: []
+  maximumUnitCount:
+    hasLimit: 0
+    unitMaxCount: 0
   attackRange: 0
   attackDamage: 0
   attackRate: 0
@@ -25,13 +32,13 @@ MonoBehaviour:
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
   enemyAttackRangeResearchComplete: 0
-  upgrade:
-    attackDamage: 
-    attackRange: []
+  myAttackRateResearchComplete: 0
+  enemyAttackRateResearchComplete: 0
   canProduce: 
   skills:
   - {fileID: 11400000, guid: a48fbf933a5de6c43b0c241b3721fe1b, type: 2}
   - {fileID: 11400000, guid: 50a8db2b095ff92499b1335837f19edb, type: 2}
+  - {fileID: 11400000, guid: 8aca49610104ffb4a8c7467c8157e2c0, type: 2}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound:
   - {fileID: 8300000, guid: 3ebe6b402fa768e42a7619f00ec4527c, type: 3}

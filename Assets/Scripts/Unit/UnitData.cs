@@ -51,6 +51,7 @@ public class UnitData : ScriptableObject
 [Serializable]
 public class UpgradeSystem
 {
+    [Header("AttackParameter")]
     public List<int> attackDamage;
     public List<float> attackRange;
     public List<float> attackRate;
@@ -61,4 +62,7 @@ public class UnitCountLimit
 {
     public bool hasLimit;
     public int unitMaxCount;
+
+    [HideInInspector]
+    public bool maxUnitReached;
 }

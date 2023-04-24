@@ -126,23 +126,6 @@ public class UIManager : MonoBehaviour
         UpdateSkillButtonInteractable();
     }
 
-    public void UpdateSkillButtonInteractable()
-    {
-        if (_unit != null)
-        {
-            for (int i = 0; i < _unit.SkillManagers.Count; i++)
-            {
-                if (!_unit.SkillManagers[i].skill.skillAvailable[_unit.Owner] || !_unit.SkillManagers[i].skill.techTreeOpen || !_unit.IsAlive)
-                {
-                    if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
-                    {
-                        _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(false);
-                    }
-                }
-            }
-        }
-    }
-
     private void OnEnable()
     {
         EventManager.AddListener("UpdateResourceTexts", OnUpdateResourceTexts);
@@ -213,6 +196,15 @@ public class UIManager : MonoBehaviour
                 ShowPanel(selectedUnitActionButtonsParent, true);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log(unit.AttackRange);
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Log(unit.AttackRate);
+        }
     }
 
     private void OnDeselectUnit(object data)
@@ -227,6 +219,23 @@ public class UIManager : MonoBehaviour
             SetSelectedUnitMenu(Globals.SELECTED_UNITS[Globals.SELECTED_UNITS.Count - 1].Unit);
 
         ShowPanel(selectedUnitActionButtonsParent, false);
+    }
+
+    public void UpdateSkillButtonInteractable()
+    {
+        if (_unit != null)
+        {
+            for (int i = 0; i < _unit.SkillManagers.Count; i++)
+            {
+                if (!_unit.SkillManagers[i].skill.skillAvailable[_unit.Owner] || !_unit.SkillManagers[i].skill.techTreeOpen || !_unit.IsAlive)
+                {
+                    if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
+                    {
+                        _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                    }
+                }
+            }
+        }
     }
 
     public void AddSelectedUnitToUIList(Unit unit)

@@ -22,12 +22,10 @@ public class Unit
     protected bool _attackDamageUpgradeIndicator;
     protected bool _rIndicator;
 
-    #region 유닛 업그레이드
     protected int _attackDamage;
     protected int _attackDamageUpgradeValue;
     protected float _attackRange;
     protected float _attackRate;
-    #endregion
 
     protected bool _myAttackDamageUpgradeComplete;
     protected bool _enemyAttackDamageUpgradeComplete;
@@ -80,25 +78,25 @@ public class Unit
         _unitName = data.unitName;
     }
 
-    public void UpgradeCost(int i)
-    {
-        List<ResourceValue> cost = Globals.UPGRADECOST_ATTACKDAMAGE[i];
+    //public void UpgradeCost(int i)
+    //{
+    //    List<ResourceValue> cost = Globals.UPGRADECOST_ATTACKDAMAGE[i];
 
-        foreach (ResourceValue resource in cost)
-            Globals.GAME_RESOURCES[_owner][resource.code].AddAmount(-resource.amount);
+    //    foreach (ResourceValue resource in cost)
+    //        Globals.GAME_RESOURCES[_owner][resource.code].AddAmount(-resource.amount);
 
-        EventManager.TriggerEvent("UpdateResourceTexts");
-    }
+    //    EventManager.TriggerEvent("UpdateResourceTexts");
+    //}
 
-    public void ResearchCost()
-    {
-        List<ResourceValue> cost = Globals.UPGRADECOST_ATTACKDAMAGE[1];
+    //public void ResearchCost()
+    //{
+    //    List<ResourceValue> cost = Globals.UPGRADECOST_ATTACKDAMAGE[1];
 
-        foreach (ResourceValue resource in cost)
-            Globals.GAME_RESOURCES[_owner][resource.code].AddAmount(-resource.amount);
+    //    foreach (ResourceValue resource in cost)
+    //        Globals.GAME_RESOURCES[_owner][resource.code].AddAmount(-resource.amount);
 
-        EventManager.TriggerEvent("UpdateResourceTexts");
-    }
+    //    EventManager.TriggerEvent("UpdateResourceTexts");
+    //}
 
     public void UpdateUpgradeParameters()
     {
@@ -161,9 +159,6 @@ public class Unit
 
     public virtual void Place()
     {
-        //foreach (ResourceValue resource in _data.cost)
-        //    Globals.GAME_RESOURCES[_owner][resource.code].AddAmount(-resource.amount);
-
         EventManager.TriggerEvent("UpdateResourceTexts");
 
         if (_owner == GameManager.instance.gamePlayersParameters.myPlayerID)
@@ -241,5 +236,6 @@ public class Unit
     public int AttackDamage { get => _attackDamage; }
     public int AttackDamageUpgradeValue { get => _attackDamageUpgradeValue; }
     public float AttackRange { get => _attackRange; }
+    public float AttackRate { get => _attackRate; }
     public string UnitName { get => _unitName; }
 }

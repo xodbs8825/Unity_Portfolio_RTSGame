@@ -15,9 +15,16 @@ MonoBehaviour:
   code: farm
   unitName: Farm
   description: 'Produces 10 tree per second. (Maximum building count: 20)'
-  healthPoint: 500
   prefab: {fileID: 5542380815447981279, guid: a5de1dad9e6715b44a1302c090d46526, type: 3}
   fieldOfView: 50
+  healthPoint: 500
+  upgradeParameters:
+    attackDamage: 
+    attackRange: []
+    attackRate: []
+  maximumUnitCount:
+    hasLimit: 1
+    unitMaxCount: 5
   attackRange: 0
   attackDamage: 0
   attackRate: 0
@@ -25,9 +32,8 @@ MonoBehaviour:
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
   enemyAttackRangeResearchComplete: 0
-  upgrade:
-    attackDamage: 
-    attackRange: []
+  myAttackRateResearchComplete: 0
+  enemyAttackRateResearchComplete: 0
   canProduce: 
   skills: []
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
