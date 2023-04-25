@@ -49,7 +49,7 @@ public class SkillData : ScriptableObject
     #endregion
 
     #region Hiden in Inspector
-    [HideInInspector]
+    //[HideInInspector]
     public bool techTreeOpen;
 
     [HideInInspector]

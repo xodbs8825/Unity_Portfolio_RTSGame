@@ -24,7 +24,8 @@ MonoBehaviour:
     attackRate: []
   maximumUnitCount:
     hasLimit: 1
-    unitMaxCount: 5
+    unitMaxCount: 2
+    maxUnitReached: 0
   attackRange: 0
   attackDamage: 0
   attackRate: 0

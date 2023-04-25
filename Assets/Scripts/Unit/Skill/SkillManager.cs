@@ -11,20 +11,33 @@ public class SkillManager : MonoBehaviour
     private Button _button;
     private bool _ready;
 
-    private int _unitCounter;
-    private List<GameObject> _maxUnit;
+    private List<GameObject> _farmUnits;
+    private List<GameObject> _marketUnits;
 
     private AudioSource _sourceContextualSource;
 
     private void Awake()
     {
         TechTreeCheck();
+
+        _farmUnits = new List<GameObject>();
+        _marketUnits = new List<GameObject>();
     }
 
     private void Update()
     {
         TechTreeCheck();
         SkillCostSetting();
+        UnitCountLimitCheck();
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log(_farmUnits.Count);
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            Debug.Log(_marketUnits.Count);
+        }
     }
 
     private void OnApplicationQuit()
@@ -60,8 +73,7 @@ public class SkillManager : MonoBehaviour
 
                     if (g
                         && g.GetComponent<UnitManager>().Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID
-                        && g.GetComponent<BuildingBT>().isActiveAndEnabled
-                        && g.GetComponent<UnitManager>().Unit.IsAlive)
+                        && g.GetComponent<BuildingBT>().isActiveAndEnabled)
                     {
                         skill.techTreeOpen = true;
                     }
@@ -110,6 +122,49 @@ public class SkillManager : MonoBehaviour
             else
             {
                 skill.Cost = skill.SetSkillCost(0);
+            }
+        }
+    }
+
+    private void UnitCountLimitCheck()
+    {
+        GameObject[] g = GameObject.FindGameObjectsWithTag("Unit");
+        for (int i = 0; i < g.Length; i++)
+        {
+            if (g[i].GetComponent<UnitManager>().Unit.UnitName == "Farm")
+            {
+                if (skill.targetUnit[0].unitName == "Farm")
+                {
+                    if (_farmUnits.Count >= skill.targetUnit[0].maximumUnitCount.unitMaxCount)
+                    {
+                        SetReady(false);
+                    }
+                }
+                if (!_farmUnits.Contains(g[i]))
+                {
+                    _farmUnits.Add(g[i]);
+                }
+            }
+            else if (g[i].GetComponent<UnitManager>().Unit.UnitName == "Market")
+            {
+                if (skill.targetUnit[0].unitName == "Market")
+                {
+                    if (_marketUnits.Count >= skill.targetUnit[0].maximumUnitCount.unitMaxCount)
+                    {
+                        SetReady(false);
+                    }
+                }
+                if (!_marketUnits.Contains(g[i]))
+                {
+                    _marketUnits.Add(g[i]);
+                }
+            }
+            else if (g[i].GetComponent<UnitManager>().Unit.UnitName == "King")
+            {
+                if (skill.targetUnit[0].unitName == "King")
+                {
+                    SetReady(false);
+                }
             }
         }
     }
