@@ -52,6 +52,7 @@ public class UnitManager : MonoBehaviour
         UpdateHealthBar();
         if (_selected)
         {
+            TechTreeCheck();
             EventManager.TriggerEvent("SelectUnit", Unit);
         }
     }
@@ -156,6 +157,56 @@ public class UnitManager : MonoBehaviour
 
         _selected = false;
         _selectIndex = -1;
+    }
+
+    private void TechTreeCheck()
+    {
+        SkillData skill;
+        for (int i = 0; i < Unit.SkillManagers.Count; i++)
+        {
+            skill = Unit.SkillManagers[i].skill;
+            if (skill == null) return;
+
+            if (skill.techTree.requiredBuilding == null)
+            {
+                skill.techTreeOpen = true;
+            }
+            else
+            {
+                string n = skill.techTree.requiredBuilding.name + "(Clone)";
+                GameObject g = GameObject.Find(n);
+                if (g
+                    && g.GetComponent<UnitManager>().Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID
+                    && g.GetComponent<BuildingBT>().isActiveAndEnabled
+                    && g.GetComponent<UnitManager>().Unit.IsAlive)
+                {
+                    skill.techTreeOpen = true;
+                }
+                else if (skill.techTree.requiredBuilding.unitName == "Keep")
+                {
+                    if (!g)
+                    {
+                        n = "Castle(Clone)";
+                        g = GameObject.Find(n);
+
+                        if (g
+                            && g.GetComponent<UnitManager>().Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID
+                            && g.GetComponent<BuildingBT>().isActiveAndEnabled)
+                        {
+                            skill.techTreeOpen = true;
+                        }
+                        else
+                        {
+                            skill.techTreeOpen = false;
+                        }
+                    }
+                }
+                else
+                {
+                    skill.techTreeOpen = false;
+                }
+            }
+        }
     }
 
     public void Initialize(Unit unit)

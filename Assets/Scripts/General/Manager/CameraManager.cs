@@ -19,7 +19,6 @@ public class CameraManager : MonoBehaviour
 
     private Vector3 _forwardDir;
 
-    private Coroutine _mouseOnScreenCoroutine;
     private int _mouseOnScreenBorder;
     private KeyCode[] _cameraTranslationKeyCode = new KeyCode[]
     {
@@ -51,7 +50,6 @@ public class CameraManager : MonoBehaviour
         _camera = GetComponent<Camera>();
         _forwardDir = Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized;
         _placingBuilding = false;
-        _mouseOnScreenCoroutine = null;
         _mouseOnScreenBorder = -1;
 
         InitializeBounds();
@@ -106,17 +104,6 @@ public class CameraManager : MonoBehaviour
         _placingBuilding = false;
     }
 
-    public void OnMouseEnterScreenBorder(int borderIndex)
-    {
-        _mouseOnScreenCoroutine = StartCoroutine(SetMouseOnScreenBorder(borderIndex));
-    }
-
-    public void OnMouseExitScreenBorder()
-    {
-        StopCoroutine(_mouseOnScreenCoroutine);
-        _mouseOnScreenBorder = -1;
-    }
-
     private void OnClickedMinimap(object data)
     {
         Vector3 pos = FixBounds((Vector3)data);
@@ -128,10 +115,14 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    private IEnumerator SetMouseOnScreenBorder(int borderIndex)
+    public void OnMouseEnterScreenBorder(int borderIndex)
     {
-        yield return new WaitForSeconds(0.3f);
         _mouseOnScreenBorder = borderIndex;
+    }
+
+    public void OnMouseExitScreenBorder()
+    {
+        _mouseOnScreenBorder = -1;
     }
 
     public void SetPosition(int playerID)

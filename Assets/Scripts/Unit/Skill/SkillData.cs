@@ -61,6 +61,9 @@ public class SkillData : ScriptableObject
     private bool _buildingUpgradeStarted = false;
     public bool BuildingUpgradeStarted { get => _buildingUpgradeStarted; set => _buildingUpgradeStarted = value; }
 
+    private bool _characterUpgradeStarted = false;
+    public bool CharacterUpgradeStarted { get => _characterUpgradeStarted; set => _characterUpgradeStarted = value; }
+
     private UnitManager _manager;
     public UnitManager UnitManager { get => _manager; }
 
@@ -227,6 +230,11 @@ public class SkillData : ScriptableObject
                         {
                             _manager = manager;
                             _buildingUpgradeStarted = true;
+                        }
+                        else if (targetUnit[0].GetType() == typeof(CharacterData))
+                        {
+                            _manager = manager;
+                            _characterUpgradeStarted = true;
                         }
 
                         BuySkill(_cost, manager.Unit.Owner);

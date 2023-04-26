@@ -18,7 +18,6 @@ public class Minimap : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         _offset = minimapContainerRectTransform.anchoredPosition;
         _uiSize = GetComponent<RectTransform>().sizeDelta;
         _lastPointerPosition = Input.mousePosition;
-        //_lastPointerPosition = new Vector2(Mathf.Clamp(Input.mousePosition.x, 0f, 300f), Mathf.Clamp(Input.mousePosition.y, 0f, 300f));
     }
 
     void Update()
@@ -26,13 +25,10 @@ public class Minimap : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (!_dragging) return;
 
         Vector2 delta = (Vector2)Input.mousePosition - _lastPointerPosition;
-        //_lastPointerPosition = Input.mousePosition;
         _lastPointerPosition = new Vector2(Mathf.Clamp(Input.mousePosition.x, 0f, 300f), Mathf.Clamp(Input.mousePosition.y, 0f, 300f));
-        //Debug.Log(_lastPointerPosition);
 
         if (delta.magnitude > Mathf.Epsilon)
         {
-            //Vector2 uiPos = (new Vector2(Input.mousePosition.x, Input.mousePosition.y) / GameManager.instance.canvasScaleFactor) - _offset;
             Vector2 uiPos = (new Vector2(_lastPointerPosition.x, _lastPointerPosition.y) / GameManager.instance.canvasScaleFactor) - _offset;
             Vector3 realPos = new Vector3(uiPos.x / _uiSize.x * terrainSize.x, 0f, uiPos.y / _uiSize.y * terrainSize.y);
             realPos = Utils.ProjectOnTerrain(realPos);

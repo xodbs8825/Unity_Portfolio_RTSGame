@@ -19,6 +19,8 @@ public class CharacterManager : UnitManager
     public ColorIndication[] colorIndications;
 
     private Character _character = null;
+    private Character _prevCharacter = null;
+    private Vector3 _pos;
 
     private AudioClip[] _characterInteractSound;
     private float _maxSoundClipsSize;
@@ -39,6 +41,12 @@ public class CharacterManager : UnitManager
         _characterInteractSound = (Unit.Data).interactSound;
         _maxSoundClipsSize = (Unit.Data).interactSound.Length;
     }
+
+    //public override void Update()
+    //{
+    //    base.Update();
+    //    UpgradeCharacter();
+    //}
 
     public override void Select(bool singleClick, bool holdingShift)
     {
@@ -107,5 +115,41 @@ public class CharacterManager : UnitManager
     protected override bool IsActive()
     {
         return !_isConstructor;
+    }
+
+    private void UpgradeCharacter()
+    {
+        if (_character != null)
+        {
+            for (int i = 0; i < _character.SkillManagers.Count; i++)
+            {
+                SkillData skill = _character.SkillManagers[i].skill;
+                if (skill.type == SkillType.UPGRADE_UNIT)
+                {
+                    if (skill.CharacterUpgradeStarted)
+                    {
+                        if (_character.Owner == GameManager.instance.gamePlayersParameters.myPlayerID)
+                        {
+                            if (skill.UnitManager != null)
+                            {
+                                if (skill.UnitManager.gameObject)
+                                {
+                                    _pos = skill.UnitManager.transform.position;
+                                    _prevCharacter = _character;
+                                    skill.UnitManager.Deselect();
+                                    Destroy(skill.UnitManager.gameObject);
+                                }
+                            }
+                            else if (_prevCharacter == _character)
+                            {
+                                _character = new Character((CharacterData)skill.targetUnit[0], _character.Owner);
+                                _character.ComputeProduction();
+                                _character.Transform.GetComponent<NavMeshAgent>().Warp(_pos);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -97,8 +97,8 @@ public class BuildingPlacer : MonoBehaviour
                             _building.SetConstructionHP(_building.MaxHP);
                             if (_building.UnitName != "Castle")
                             {
-                                _skill.BuildingUpgradeStarted = false;
                                 _skill = _building.SkillManagers[1].skill;
+                                _skill.BuildingUpgradeStarted = false;
                                 _prevBuilding = _building;
                                 _upgradeTimer = 0;
                             }

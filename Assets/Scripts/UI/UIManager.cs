@@ -195,6 +195,7 @@ public class UIManager : MonoBehaviour
             {
                 ShowPanel(selectedUnitActionButtonsParent, true);
             }
+            EventManager.TriggerEvent("GetCharacter", data);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))

@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
-  m_Name: ArcherAttackRateResearch
+  m_Name: SpawnPriest
   m_EditorClassIdentifier: 
-  code: research_archerAttackRate
-  skillName: Archer attack rate research
-  description: Increase archer unit's attack rate.
-  type: 4
+  code: spawn_priest
+  skillName: Spawn Priest
+  description: Spawn Priest
+  type: 0
   targetUnit:
-  - {fileID: 11400000, guid: 40cfd30adf6ca2b4ba312d5c03ece8f0, type: 2}
-  - {fileID: 11400000, guid: fa32b78e943c1164c9309ee75bc746c1, type: 2}
+  - {fileID: 11400000, guid: 69672f5ed5d03aa458812571b150bac3, type: 2}
   skillCost:
   - cost:
     - code: 0
