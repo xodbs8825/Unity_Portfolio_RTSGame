@@ -50,19 +50,21 @@ public class CharacterUpgrade : MonoBehaviour
                                     _prevCharacter = _character;
                                     skill.UnitManager.Deselect();
                                     Destroy(skill.UnitManager.gameObject);
+                                    InstantiateCharacter(skill);
                                 }
-                            }
-                            else if (_prevCharacter == _character)
-                            {
-                                _character = new Character((CharacterData)skill.targetUnit[0], _character.Owner);
-                                _character.ComputeProduction();
-                                _character.Transform.GetComponent<NavMeshAgent>().Warp(_pos);
-                                skill.CharacterUpgradeStarted = false;
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    private void InstantiateCharacter(SkillData skill)
+    {
+        _character = new Character((CharacterData)skill.targetUnit[0], _character.Owner);
+        _character.ComputeProduction();
+        _character.Transform.GetComponent<NavMeshAgent>().Warp(_pos);
+        skill.CharacterUpgradeStarted = false;
     }
 }
