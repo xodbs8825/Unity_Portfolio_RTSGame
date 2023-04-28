@@ -15,7 +15,7 @@ MonoBehaviour:
   code: research_archerAttackRate
   skillName: Archer attack rate research
   description: Increase archer unit's attack rate.
-  type: 4
+  type: 5
   targetUnit:
   - {fileID: 11400000, guid: 40cfd30adf6ca2b4ba312d5c03ece8f0, type: 2}
   - {fileID: 11400000, guid: fa32b78e943c1164c9309ee75bc746c1, type: 2}
@@ -33,4 +33,4 @@ MonoBehaviour:
   techTree:
     requiredBuilding: {fileID: 0}
   techTreeOpen: 1
-  skillAvailable: 0000
+  skillAvailable: 0101

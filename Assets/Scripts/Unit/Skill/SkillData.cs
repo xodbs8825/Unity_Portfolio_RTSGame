@@ -8,6 +8,7 @@ public enum SkillType
     INSTANTIATE_CHARACTER,
     INSTANTIATE_BUILDING,
     UPGRADE_ATTACKDAMAGE,
+    UPGRADE_ARMOR,
     RESEARCH_ATTACKRANGE,
     RESEARCH_ATTACKRATE,
     UPGRADE_UNIT
@@ -28,7 +29,6 @@ public class SkillCost
 [CreateAssetMenu(fileName = "Skill", menuName = "Scriptable Objects/Skill", order = 4)]
 public class SkillData : ScriptableObject
 {
-    #region Shown in Inspector
     public string code;
     public string skillName;
     public string description;
@@ -46,17 +46,19 @@ public class SkillData : ScriptableObject
     public AudioClip sound;
 
     public TechTree techTree;
-    #endregion
 
-    #region Hiden in Inspector
-    //[HideInInspector]
+    #region Hide In Inspector
+    [HideInInspector]
     public bool techTreeOpen;
 
     [HideInInspector]
-    public bool[] skillAvailable = new bool[2];
+    public bool[] skillAvailable = new bool[2] { true, true };
 
-    private int _myCounter;
-    private int _enemyCounter;
+    private int _myAttackDamageCounter;
+    private int _enemyAttackDamageCounter;
+
+    private int _myArmorCounter;
+    private int _enemyArmorCounter;
 
     private bool _buildingUpgradeStarted = false;
     public bool BuildingUpgradeStarted { get => _buildingUpgradeStarted; set => _buildingUpgradeStarted = value; }
@@ -112,11 +114,10 @@ public class SkillData : ScriptableObject
                     Unit unit = manager.Unit;
                     if (unit.Owner == 0)
                     {
-                        _myCounter++;
-                        if (_myCounter == 3)
+                        _myAttackDamageCounter++;
+                        if (_myAttackDamageCounter == 3)
                         {
                             skillAvailable[0] = false;
-                            unit.AttackDamageUpgradeCompleteIndicator(true);
                         }
 
                         for (int i = 0; i < targetUnit.Length; i++)
@@ -140,11 +141,10 @@ public class SkillData : ScriptableObject
                     }
                     else if (unit.Owner == 1)
                     {
-                        _enemyCounter++;
-                        if (_enemyCounter == 3)
+                        _enemyAttackDamageCounter++;
+                        if (_enemyAttackDamageCounter == 3)
                         {
                             skillAvailable[1] = false;
-                            manager.Unit.AttackDamageUpgradeCompleteIndicator(true);
                         }
 
                         for (int i = 0; i < targetUnit.Length; i++)
@@ -163,6 +163,65 @@ public class SkillData : ScriptableObject
                                 if (i == 0)
                                 {
                                     BuySkill(_cost, manager.Unit.Owner);
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case SkillType.UPGRADE_ARMOR:
+                {
+                    Unit unit = manager.Unit;
+                    if (unit.Owner == 0)
+                    {
+                        _myArmorCounter++;
+                        if (_myArmorCounter == 3)
+                        {
+                            skillAvailable[0] = false;
+                        }
+
+                        for (int i = 0; i < targetUnit.Length; i++)
+                        {
+                            CharacterData data = (CharacterData)targetUnit[i];
+                            _cost = SetSkillCost(data.myArmorLevel);
+                            if (Globals.CanBuy(_cost))
+                            {
+                                GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
+
+                                bool upgradeMaxedOut = data.myArmorLevel == p.UnitMaxLevel();
+                                if (upgradeMaxedOut) return;
+
+                                data.myArmorLevel++;
+                                if (i == 0)
+                                {
+                                    BuySkill(_cost, unit.Owner);
+                                }
+                            }
+                        }
+                    }
+                    else if (unit.Owner == 1)
+                    {
+                        _enemyArmorCounter++;
+                        if (_enemyArmorCounter == 3)
+                        {
+                            skillAvailable[1] = false;
+                        }
+
+                        for (int i = 0; i < targetUnit.Length; i++)
+                        {
+                            CharacterData data = (CharacterData)targetUnit[i];
+                            _cost = SetSkillCost(data.enemyArmorLevel);
+                            if (Globals.CanBuy(_cost))
+                            {
+                                GameGlobalParameters p = GameManager.instance.gameGlobalParameters;
+
+                                bool upgradeMaxedOut = data.enemyArmorLevel == p.UnitMaxLevel();
+                                if (upgradeMaxedOut) return;
+
+                                data.enemyArmorLevel++;
+                                if (i == 0)
+                                {
+                                    BuySkill(_cost, unit.Owner);
                                 }
                             }
                         }
@@ -250,8 +309,10 @@ public class SkillData : ScriptableObject
     {
         if (targetUnit == null) return;
 
-        _myCounter = 0;
-        _enemyCounter = 0;
+        _myAttackDamageCounter = 0;
+        _enemyAttackDamageCounter = 0;
+        _myArmorCounter = 0;
+        _enemyArmorCounter = 0;
 
         for (int i = 0; i < targetUnit.Length; i++)
         {

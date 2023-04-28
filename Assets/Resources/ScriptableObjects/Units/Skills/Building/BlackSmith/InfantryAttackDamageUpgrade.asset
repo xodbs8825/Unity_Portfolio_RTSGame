@@ -10,26 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
-  m_Name: ArcherAttackRangeResearch
+  m_Name: InfantryAttackDamageUpgrade
   m_EditorClassIdentifier: 
-  code: research_archerAttackRange
-  skillName: Archer Attack Range Research
-  description: Increase archer unit attack range
-  type: 4
+  code: upgrade_infantryAttackDamage
+  skillName: Infantry Attack Damage Upgrade
+  description: Upgrade infantry unit attack damage.
+  type: 2
   targetUnit:
-  - {fileID: 11400000, guid: 40cfd30adf6ca2b4ba312d5c03ece8f0, type: 2}
-  - {fileID: 11400000, guid: fa32b78e943c1164c9309ee75bc746c1, type: 2}
+  - {fileID: 11400000, guid: 51fb9e5fe697be84dbeb38a8e097dfe0, type: 2}
+  - {fileID: 11400000, guid: d25e6befd580e5742a0d6395b08d7390, type: 2}
+  - {fileID: 11400000, guid: 923d123d20dfe974daed64ce31dee5b0, type: 2}
   skillCost:
   - cost:
     - code: 0
       amount: 100
     - code: 1
       amount: 100
+  - cost:
+    - code: 0
+      amount: 200
+    - code: 1
+      amount: 200
+  - cost:
+    - code: 0
+      amount: 300
+    - code: 1
+      amount: 300
   buildTime: 0
   castTime: 0
   cooldown: 0
   sprite: {fileID: 0}
-  sound: {fileID: 8300000, guid: bfbc2d723161f334d928f1b13a6873eb, type: 3}
+  sound: {fileID: 0}
   techTree:
     requiredBuilding: {fileID: 0}
   techTreeOpen: 1

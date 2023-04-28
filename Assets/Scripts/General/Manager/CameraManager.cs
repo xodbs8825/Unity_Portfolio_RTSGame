@@ -37,6 +37,8 @@ public class CameraManager : MonoBehaviour
     private float _minZ;
     private float _maxX;
     private float _maxZ;
+    private float _keyCodeTranslateMinZ;
+    private float _keyCodeTranslateMaxZ;
     private float _camMinimapBuffer = 5f;
 
     private Vector3 _camOffset;
@@ -76,7 +78,7 @@ public class CameraManager : MonoBehaviour
 
         if (!_placingBuilding && Math.Abs(Input.mouseScrollDelta.y) > 0f)
         {
-            Zoom(Input.mouseScrollDelta.y > 0f ? 1 : -1);
+            Zoom(Input.mouseScrollDelta.y > 0f ? -1 : 1);
         }
     }
 
@@ -138,7 +140,7 @@ public class CameraManager : MonoBehaviour
 
     private void TranslateCamera(int dir)
     {
-        if (dir == 0 && transform.position.z <= _maxZ)
+        if (dir == 0 && transform.position.z <= _keyCodeTranslateMaxZ)
         {
             transform.Translate(_forwardDir * Time.deltaTime * translationSpeed, Space.World);
         }
@@ -146,7 +148,7 @@ public class CameraManager : MonoBehaviour
         {
             transform.Translate(transform.right * Time.deltaTime * translationSpeed);
         }
-        else if (dir == 2 && transform.position.z >= _minZ)
+        else if (dir == 2 && transform.position.z >= _keyCodeTranslateMinZ)
         {
             transform.Translate(-_forwardDir * Time.deltaTime * translationSpeed, Space.World);
         }
@@ -202,8 +204,10 @@ public class CameraManager : MonoBehaviour
     {
         _minX = 0;
         _maxX = GameManager.instance.terrainSize;
-        _minZ = -312f;
-        _maxZ = 445.99f;
+        _minZ = 0;
+        _maxZ = GameManager.instance.terrainSize;
+        _keyCodeTranslateMinZ = -312f;
+        _keyCodeTranslateMaxZ = 445.99f;
 
         (Vector3 minWorldPoint, Vector3 maxWorldPoint) = Utils.GetCameraWorldBounds();
         _camOffset = transform.position - (maxWorldPoint + minWorldPoint) / 2f;

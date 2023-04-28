@@ -31,5 +31,5 @@ MonoBehaviour:
   sound: {fileID: 0}
   techTree:
     requiredBuilding: {fileID: 11400000, guid: 070c39f8fab990249a1fd86a1b65119c, type: 2}
-  techTreeOpen: 0
-  skillAvailable: 0000
+  techTreeOpen: 1
+  skillAvailable: 0101

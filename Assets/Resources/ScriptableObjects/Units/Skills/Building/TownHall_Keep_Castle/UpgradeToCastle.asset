@@ -16,7 +16,7 @@ MonoBehaviour:
   skillName: Upgrade to Castle
   description: 'Upgraded structure from Keep. The Castle is the toughest Human Town
     Hall and enables the highest-level of units and upgrades.  '
-  type: 5
+  type: 6
   targetUnit:
   - {fileID: 11400000, guid: 070c39f8fab990249a1fd86a1b65119c, type: 2}
   skillCost:

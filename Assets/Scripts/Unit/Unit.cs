@@ -31,6 +31,9 @@ public class Unit
     protected bool _enemyAttackDamageUpgradeComplete;
     protected int _enemylvl;
 
+    protected int _armor;
+    protected int _armorLevel;
+
     protected string _unitName;
 
     public Unit(UnitData data, int owner) : this(data, owner, new List<ResourceValue>() { }) { }
@@ -68,6 +71,9 @@ public class Unit
         _attackRange = data.attackRange;
         _attackRate = data.attackRate;
 
+        _armor = data.armor;
+        _armorLevel = data.myArmorLevel;
+
         _attackDamageUpgradeIndicator = false;
 
         GamePlayersParameters parameter = GameManager.instance.gamePlayersParameters;
@@ -78,36 +84,21 @@ public class Unit
         _unitName = data.unitName;
     }
 
-    //public void UpgradeCost(int i)
-    //{
-    //    List<ResourceValue> cost = Globals.UPGRADECOST_ATTACKDAMAGE[i];
-
-    //    foreach (ResourceValue resource in cost)
-    //        Globals.GAME_RESOURCES[_owner][resource.code].AddAmount(-resource.amount);
-
-    //    EventManager.TriggerEvent("UpdateResourceTexts");
-    //}
-
-    //public void ResearchCost()
-    //{
-    //    List<ResourceValue> cost = Globals.UPGRADECOST_ATTACKDAMAGE[1];
-
-    //    foreach (ResourceValue resource in cost)
-    //        Globals.GAME_RESOURCES[_owner][resource.code].AddAmount(-resource.amount);
-
-    //    EventManager.TriggerEvent("UpdateResourceTexts");
-    //}
-
     public void UpdateUpgradeParameters()
     {
+        #region Null Check
+        if (this.GetType() == typeof(Building)) return;
         if (_data.upgradeParameters == null) return;
         if (_data.upgradeParameters.attackDamage == null) return;
-        if (_data.upgradeParameters.attackDamage.Count == 0) return;
+        if (_data.upgradeParameters.armor == null) return;
+        #endregion
 
         if (_owner == 0)
         {
             _attackDamageUpgradeValue = _data.myAttackDamageLevel;
             _attackDamage = _data.upgradeParameters.attackDamage[_attackDamageUpgradeValue];
+            _armorLevel = _data.myArmorLevel;
+            _armor = _data.upgradeParameters.armor[_armorLevel];
 
             if (_data.myAttackRangeResearchComplete)
             {
@@ -131,6 +122,8 @@ public class Unit
         {
             _attackDamageUpgradeValue = _data.enemyAttackDamageLevel;
             _attackDamage = _data.upgradeParameters.attackDamage[_attackDamageUpgradeValue];
+            _armorLevel = _data.enemyArmorLevel;
+            _armor = _data.upgradeParameters.armor[_armorLevel];
 
             if (_data.enemyAttackRangeResearchComplete)
             {
@@ -164,11 +157,6 @@ public class Unit
         if (_owner == GameManager.instance.gamePlayersParameters.myPlayerID)
             _transform.GetComponent<UnitManager>().EnableFOV(_fieldOfView);
     }
-
-    //public bool CanBuy()
-    //{
-    //    return _data.CanBuy(_owner);
-    //}
 
     public void ProduceResources()
     {
@@ -219,11 +207,6 @@ public class Unit
         return _production;
     }
 
-    public void AttackDamageUpgradeCompleteIndicator(bool indicator)
-    {
-        _attackDamageUpgradeIndicator = indicator;
-    }
-
     public virtual bool IsAlive { get => true; }
     public UnitData Data { get => _data; }
     public string Code { get => _data.code; }
@@ -237,5 +220,6 @@ public class Unit
     public int AttackDamageUpgradeValue { get => _attackDamageUpgradeValue; }
     public float AttackRange { get => _attackRange; }
     public float AttackRate { get => _attackRate; }
+    public int Armor { get => _armor; }
     public string UnitName { get => _unitName; }
 }

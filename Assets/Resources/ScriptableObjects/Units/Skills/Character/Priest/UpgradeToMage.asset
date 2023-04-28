@@ -15,7 +15,7 @@ MonoBehaviour:
   code: upgrade_mage
   skillName: Upgrade to Mage
   description: Upgrade to Mage
-  type: 5
+  type: 6
   targetUnit:
   - {fileID: 11400000, guid: 0a05c9b6b566cc74b8d44d3824ed4efe, type: 2}
   skillCost:
@@ -30,6 +30,6 @@ MonoBehaviour:
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: {fileID: 0}
-  techTreeOpen: 1
+    requiredBuilding: {fileID: 11400000, guid: d01775be02f82374fb42a6fdfd514d57, type: 2}
+  techTreeOpen: 0
   skillAvailable: 0000

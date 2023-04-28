@@ -124,6 +124,8 @@ public class UIManager : MonoBehaviour
         }
 
         UpdateSkillButtonInteractable();
+
+        
     }
 
     private void OnEnable()
@@ -175,6 +177,7 @@ public class UIManager : MonoBehaviour
         ShowPanel(selectedUnitMenu, true);
         UpdateSelectedUnitName(unit);
 
+        UpdateSkillButtonInteractable();
         if (unit.IsAlive)
         {
             SetSelectedUnitMenu(unit);
@@ -206,6 +209,10 @@ public class UIManager : MonoBehaviour
         {
             Debug.Log(unit.AttackRate);
         }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Debug.Log(unit.Armor);
+        }
     }
 
     private void OnDeselectUnit(object data)
@@ -233,6 +240,13 @@ public class UIManager : MonoBehaviour
                     if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
                     {
                         _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                    }
+                }
+                else if (_unit.SkillManagers[i].skill.skillAvailable[_unit.Owner] && _unit.SkillManagers[i].skill.techTreeOpen && _unit.IsAlive)
+                {
+                    if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
+                    {
+                        _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(true);
                     }
                 }
             }

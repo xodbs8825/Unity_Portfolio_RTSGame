@@ -10,26 +10,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
-  m_Name: BuildMageTower
+  m_Name: InfantryArmorUpgrade
   m_EditorClassIdentifier: 
-  code: build_mageTower
-  skillName: Build Mage Tower
-  description: Build Mage Tower
-  type: 1
+  code: upgrade_infantryArmor
+  skillName: Infantry Armor Upgrade
+  description: Upgrade infantry armor
+  type: 3
   targetUnit:
-  - {fileID: 11400000, guid: 5cd08e08439a1624eb43ee8bc1e99663, type: 2}
+  - {fileID: 11400000, guid: 51fb9e5fe697be84dbeb38a8e097dfe0, type: 2}
+  - {fileID: 11400000, guid: d25e6befd580e5742a0d6395b08d7390, type: 2}
+  - {fileID: 11400000, guid: 923d123d20dfe974daed64ce31dee5b0, type: 2}
   skillCost:
   - cost:
     - code: 0
-      amount: 150
+      amount: 100
     - code: 1
-      amount: 150
+      amount: 100
+  - cost:
+    - code: 0
+      amount: 200
+    - code: 1
+      amount: 200
+  - cost:
+    - code: 0
+      amount: 300
+    - code: 1
+      amount: 300
   buildTime: 0
   castTime: 0
   cooldown: 0
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: {fileID: 11400000, guid: 070c39f8fab990249a1fd86a1b65119c, type: 2}
+    requiredBuilding: {fileID: 0}
   techTreeOpen: 0
   skillAvailable: 0101

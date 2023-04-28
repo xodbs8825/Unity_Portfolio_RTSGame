@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   code: library
   unitName: Library
-  description: Library
+  description: Unlocks Priest unit to upgrade to High Priest or Mage.
   prefab: {fileID: 5542380815447981279, guid: d73c152ac08ca51429ad7208a5cfa565, type: 3}
   fieldOfView: 50
   healthPoint: 750

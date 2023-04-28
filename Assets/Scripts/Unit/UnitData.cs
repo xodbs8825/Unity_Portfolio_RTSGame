@@ -20,6 +20,15 @@ public class UnitData : ScriptableObject
     public UpgradeSystem upgradeParameters;
     public UnitCountLimit maximumUnitCount;
 
+    [Header("Skill")]
+    public InGameResource[] canProduce;
+    public List<SkillData> skills = new List<SkillData>();
+
+    [Header("Audio")]
+    public AudioClip selectSound;
+    public AudioClip[] interactSound;
+
+    #region Hide In Inspector
     [HideInInspector]
     public float attackRange;
     [HideInInspector]
@@ -38,23 +47,25 @@ public class UnitData : ScriptableObject
     public bool myAttackRateResearchComplete;
     [HideInInspector]
     public bool enemyAttackRateResearchComplete;
-
-    [Header("Skill")]
-    public InGameResource[] canProduce;
-    public List<SkillData> skills = new List<SkillData>();
-
-    [Header("Audio")]
-    public AudioClip selectSound;
-    public AudioClip[] interactSound;
+    [HideInInspector]
+    public int armor;
+    [HideInInspector]
+    public int myArmorLevel;
+    [HideInInspector]
+    public int enemyArmorLevel;
+    #endregion
 }
 
 [Serializable]
 public class UpgradeSystem
 {
-    [Header("AttackParameter")]
+    [Header("Attack Parameter")]
     public List<int> attackDamage;
     public List<float> attackRange;
     public List<float> attackRate;
+
+    [Header("Defence Parameter")]
+    public List<int> armor;
 }
 
 [Serializable]

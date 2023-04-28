@@ -26,9 +26,11 @@ MonoBehaviour:
     attackRate:
     - 2
     - 1
+    armor: 00000000010000000200000003000000
   maximumUnitCount:
     hasLimit: 0
     unitMaxCount: 0
+    maxUnitReached: 0
   attackRange: 20
   attackDamage: 5
   attackRate: 1

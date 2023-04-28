@@ -16,7 +16,7 @@ MonoBehaviour:
   skillName: Upgrade to Keep
   description: 'Upgraded structure from Town Hall. Enables further upgrades and harder
     to destroy. '
-  type: 5
+  type: 6
   targetUnit:
   - {fileID: 11400000, guid: 49d5e9988cc9f1440ae7752dbf76dd4e, type: 2}
   skillCost:

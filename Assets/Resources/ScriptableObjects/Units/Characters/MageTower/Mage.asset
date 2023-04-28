@@ -17,13 +17,14 @@ MonoBehaviour:
   description: Mage
   prefab: {fileID: 5542380815447981279, guid: d0e53fb4e0ca98841bf5744e634840c7, type: 3}
   fieldOfView: 50
-  healthPoint: 0
+  healthPoint: 200
   upgradeParameters:
     attackDamage: 090000000a0000000b0000000c000000
     attackRange:
-    - 1
-    attackRate:
     - 30
+    attackRate:
+    - 1
+    armor: 00000000010000000200000003000000
   maximumUnitCount:
     hasLimit: 0
     unitMaxCount: 0
