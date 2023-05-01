@@ -124,8 +124,6 @@ public class UIManager : MonoBehaviour
         }
 
         UpdateSkillButtonInteractable();
-
-        
     }
 
     private void OnEnable()
@@ -248,6 +246,14 @@ public class UIManager : MonoBehaviour
                     {
                         _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(true);
                     }
+                }
+                if (_unit.Data.skills[i] == null)
+                {
+                    _selectedUnitActionButtonsParent.GetChild(i).gameObject.SetActive(false);
+                }
+                else
+                {
+                    _selectedUnitActionButtonsParent.GetChild(i).gameObject.SetActive(true);
                 }
             }
         }
