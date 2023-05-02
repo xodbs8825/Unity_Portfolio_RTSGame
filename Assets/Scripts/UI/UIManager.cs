@@ -3,13 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
-    [Header("Building")]
-    private BuildingPlacer _buildingPlacer;
-
     [Header("UnitSelection")]
     public Transform selectedUnitsListParent;
     public GameObject selectedUnitsDisplayPrefab;
@@ -63,8 +59,6 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         ShowPanel(selectedUnitActionButtonsParent, false);
-
-        _buildingPlacer = GetComponent<BuildingPlacer>();
 
         Transform infoPanelTransform = infoPanel.transform;
         _infoPanelTitleText = infoPanelTransform.Find("Content/Title").GetComponent<Text>();
@@ -233,20 +227,6 @@ public class UIManager : MonoBehaviour
         {
             for (int i = 0; i < _unit.SkillManagers.Count; i++)
             {
-                if (!_unit.SkillManagers[i].skill.skillAvailable[_unit.Owner] || !_unit.SkillManagers[i].skill.techTreeOpen || !_unit.IsAlive)
-                {
-                    if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
-                    {
-                        _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(false);
-                    }
-                }
-                else if (_unit.SkillManagers[i].skill.skillAvailable[_unit.Owner] && _unit.SkillManagers[i].skill.techTreeOpen && _unit.IsAlive)
-                {
-                    if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
-                    {
-                        _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(true);
-                    }
-                }
                 if (_unit.Data.skills[i] == null)
                 {
                     _selectedUnitActionButtonsParent.GetChild(i).gameObject.SetActive(false);
@@ -254,6 +234,20 @@ public class UIManager : MonoBehaviour
                 else
                 {
                     _selectedUnitActionButtonsParent.GetChild(i).gameObject.SetActive(true);
+                    if (!_unit.SkillManagers[i].skill.skillAvailable[_unit.Owner] || !_unit.SkillManagers[i].skill.techTreeOpen || !_unit.IsAlive)
+                    {
+                        if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
+                        {
+                            _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                        }
+                    }
+                    else if (_unit.SkillManagers[i].skill.skillAvailable[_unit.Owner] && _unit.SkillManagers[i].skill.techTreeOpen && _unit.IsAlive)
+                    {
+                        if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
+                        {
+                            _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                        }
+                    }
                 }
             }
         }
@@ -434,7 +428,10 @@ public class UIManager : MonoBehaviour
         {
             for (int i = 0; i < unit.SkillManagers.Count; i++)
             {
-                InstantiateSkillButton(unit, i);
+                if (unit.SkillManagers[i].skill != null)
+                {
+                    InstantiateSkillButton(unit, i);
+                }
             }
         }
     }

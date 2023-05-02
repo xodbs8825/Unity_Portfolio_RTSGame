@@ -42,12 +42,6 @@ public class CharacterManager : UnitManager
         _maxSoundClipsSize = (Unit.Data).interactSound.Length;
     }
 
-    //public override void Update()
-    //{
-    //    base.Update();
-    //    UpgradeCharacter();
-    //}
-
     public override void Select(bool singleClick, bool holdingShift)
     {
         base.Select(singleClick, holdingShift);

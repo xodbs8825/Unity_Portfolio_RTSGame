@@ -71,9 +71,7 @@ public class SkillManager : MonoBehaviour
                     n = "Castle(Clone)";
                     g = GameObject.Find(n);
 
-                    if (g
-                        && g.GetComponent<UnitManager>().Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID
-                        && g.GetComponent<BuildingBT>().isActiveAndEnabled)
+                    if (g && g.GetComponent<UnitManager>().Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID)
                     {
                         skill.techTreeOpen = true;
                     }

@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66fdca5b6dc1a0d42909c7167a4b0ea2, type: 3}
-  m_Name: Library
+  m_Name: Temple
   m_EditorClassIdentifier: 
-  code: library
-  unitName: Library
-  description: Unlocks Priest unit to upgrade to High Priest or Mage.
-  prefab: {fileID: 5542380815447981279, guid: d73c152ac08ca51429ad7208a5cfa565, type: 3}
+  code: temple
+  unitName: Temple
+  description: Advanced infantry unit training facility
+  prefab: {fileID: 5542380815447981279, guid: d7c66f12131fa5043a7e66d7d0a7fd82, type: 3}
   fieldOfView: 50
-  healthPoint: 750
+  healthPoint: 1250
   upgradeParameters:
     attackDamage: 
     attackRange: []
@@ -29,8 +29,9 @@ MonoBehaviour:
     maxUnitReached: 0
   canProduce: 
   skills:
-  - {fileID: 11400000, guid: f645662e5ef058045bb51ffe673b7cee, type: 2}
-  - {fileID: 11400000, guid: c89e17fddda904a449f385498c65fccd, type: 2}
+  - {fileID: 11400000, guid: 71f0246fb7d9fab4899574364b2cd617, type: 2}
+  - {fileID: 11400000, guid: 8dd8300f87b856247b4e31bf8e812839, type: 2}
+  - {fileID: 11400000, guid: 46f0754b7cee58b40a58193894e7d1bc, type: 2}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound: []
   attackRange: 0
@@ -46,6 +47,6 @@ MonoBehaviour:
   myArmorLevel: 0
   enemyArmorLevel: 0
   constructionMeshes:
-  - {fileID: 4300000, guid: 3fae66635eefa35409bdeb9bcad140ff, type: 3}
-  - {fileID: 4300000, guid: 2969cfa0fe7f35d4c94a50c9fb1d9f8c, type: 3}
-  - {fileID: 4300000, guid: a219455911288e84da9a9c5f55fd95c6, type: 3}
+  - {fileID: 4300000, guid: 2c19f74705f3b6b44af06171a67178a1, type: 3}
+  - {fileID: 4300000, guid: b40bcd86f471a554696e16e6e41c7e0b, type: 3}
+  - {fileID: 4300002, guid: 9bf280570cf5dce45a29b84470a52c7e, type: 3}

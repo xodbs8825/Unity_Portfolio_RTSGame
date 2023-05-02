@@ -29,6 +29,19 @@ MonoBehaviour:
     hasLimit: 0
     unitMaxCount: 0
     maxUnitReached: 0
+  canProduce: 
+  skills:
+  - {fileID: 11400000, guid: fee647ad0fb020a49941f2c36099d7f1, type: 2}
+  - {fileID: 11400000, guid: 818efbdb2cecca247914457883439b68, type: 2}
+  - {fileID: 11400000, guid: 0dfe34b7ac4260a47bbe3ae2404ff0bf, type: 2}
+  - {fileID: 11400000, guid: be5c337d6ae876c49b5f7ad60538d7ed, type: 2}
+  - {fileID: 11400000, guid: 7f2fb41d84bb3bd46947ba240587c834, type: 2}
+  - {fileID: 11400000, guid: a6d524d88c761bf45b947de1f09f204f, type: 2}
+  - {fileID: 11400000, guid: f79f8b304c5765447b2519eec44a3ffe, type: 2}
+  - {fileID: 11400000, guid: 1e1b8c8261d9d6b42a91ef10054f2c5e, type: 2}
+  - {fileID: 11400000, guid: ce6021d1974474544b04e2ab257b25f7, type: 2}
+  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
+  interactSound: []
   attackRange: 5
   attackDamage: 5
   attackRate: 1
@@ -38,18 +51,9 @@ MonoBehaviour:
   enemyAttackRangeResearchComplete: 0
   myAttackRateResearchComplete: 0
   enemyAttackRateResearchComplete: 0
-  canProduce: 
-  skills:
-  - {fileID: 11400000, guid: fee647ad0fb020a49941f2c36099d7f1, type: 2}
-  - {fileID: 11400000, guid: 818efbdb2cecca247914457883439b68, type: 2}
-  - {fileID: 11400000, guid: 0dfe34b7ac4260a47bbe3ae2404ff0bf, type: 2}
-  - {fileID: 11400000, guid: be5c337d6ae876c49b5f7ad60538d7ed, type: 2}
-  - {fileID: 11400000, guid: 7f2fb41d84bb3bd46947ba240587c834, type: 2}
-  - {fileID: 11400000, guid: f79f8b304c5765447b2519eec44a3ffe, type: 2}
-  - {fileID: 11400000, guid: 1e1b8c8261d9d6b42a91ef10054f2c5e, type: 2}
-  - {fileID: 11400000, guid: ce6021d1974474544b04e2ab257b25f7, type: 2}
-  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
-  interactSound: []
+  armor: 0
+  myArmorLevel: 0
+  enemyArmorLevel: 0
   buildRate: 1
   buildRange: 5
   buildPower: 200

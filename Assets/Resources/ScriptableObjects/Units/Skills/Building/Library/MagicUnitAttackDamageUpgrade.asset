@@ -10,26 +10,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
-  m_Name: BuildWorkshop
+  m_Name: MagicUnitAttackDamageUpgrade
   m_EditorClassIdentifier: 
-  code: build_workshop
-  skillName: Build Workshop
-  description: Advanced infantry unit upgrading facility.
-  type: 1
+  code: upgrade_magicUnitAttackDamage
+  skillName: Upgrade Magic Unit Attack Damage
+  description: Upgrade Magic Unit Attack Damage
+  type: 2
   targetUnit:
-  - {fileID: 11400000, guid: 5223d7a25fa28e34f9120305113a1a42, type: 2}
+  - {fileID: 11400000, guid: b36a342fa4b11b847bbd6a77321bb75f, type: 2}
+  - {fileID: 11400000, guid: 0a05c9b6b566cc74b8d44d3824ed4efe, type: 2}
+  - {fileID: 11400000, guid: 69672f5ed5d03aa458812571b150bac3, type: 2}
   skillCost:
   - cost:
     - code: 0
-      amount: 125
+      amount: 100
     - code: 1
       amount: 100
+  - cost:
+    - code: 0
+      amount: 200
+    - code: 1
+      amount: 200
+  - cost:
+    - code: 0
+      amount: 300
+    - code: 1
+      amount: 300
   buildTime: 0
   castTime: 0
   cooldown: 0
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:
-    requiredBuilding: {fileID: 11400000, guid: 8db8e1a9cfe2bdc42b850d0d99f97b77, type: 2}
+    requiredBuilding: {fileID: 0}
   techTreeOpen: 0
   skillAvailable: 0101

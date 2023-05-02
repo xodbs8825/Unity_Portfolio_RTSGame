@@ -14,13 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   code: workshop
   unitName: Workshop
-  description: Advanced infantry unit training facility
+  description: Advanced infantry unit upgrading facility.
   prefab: {fileID: 5542380815447981279, guid: 6fd79a3d594d3904b8366ae72e45c547, type: 3}
   fieldOfView: 50
-  healthPoint: 1250
+  healthPoint: 1000
   upgradeParameters:
     attackDamage: 
     attackRange: []
+    attackRate: []
+    armor: 
+  maximumUnitCount:
+    hasLimit: 0
+    unitMaxCount: 0
+    maxUnitReached: 0
+  canProduce: 
+  skills:
+  - {fileID: 11400000, guid: ee1e952a02d9669469b0e0dab94ffa07, type: 2}
+  - {fileID: 11400000, guid: 5438e35dbb53e514b9cac6dd1eefd9c1, type: 2}
+  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
+  interactSound: []
   attackRange: 0
   attackDamage: 0
   attackRate: 0
@@ -28,13 +40,11 @@ MonoBehaviour:
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
   enemyAttackRangeResearchComplete: 0
-  canProduce: 
-  skills:
-  - {fileID: 11400000, guid: 71f0246fb7d9fab4899574364b2cd617, type: 2}
-  - {fileID: 11400000, guid: 8dd8300f87b856247b4e31bf8e812839, type: 2}
-  - {fileID: 11400000, guid: 46f0754b7cee58b40a58193894e7d1bc, type: 2}
-  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
-  interactSound: []
+  myAttackRateResearchComplete: 0
+  enemyAttackRateResearchComplete: 0
+  armor: 0
+  myArmorLevel: 0
+  enemyArmorLevel: 0
   constructionMeshes:
   - {fileID: 4300000, guid: 4f825c353b2346344a464e665e8a8f59, type: 3}
   - {fileID: 4300000, guid: de6238c57a8f0ac478c92903b1b153cc, type: 3}

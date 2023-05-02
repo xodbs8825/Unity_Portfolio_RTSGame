@@ -14,8 +14,8 @@ public class CameraManager : MonoBehaviour
     private RaycastHit _hit;
     private Ray _ray;
 
-    private Vector3 _spawnPoint0 = new Vector3(115f, 60f, 15f);
-    private Vector3 _spawnPoint1 = new Vector3(885f, 60f, 775f);
+    private Vector3 _spawnPoint0 = new Vector3(115f, 249f, -312f);
+    private Vector3 _spawnPoint1 = new Vector3(885f, 249f, 445.99f);
 
     private Vector3 _forwardDir;
 
