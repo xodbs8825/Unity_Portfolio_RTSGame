@@ -16,14 +16,14 @@ public class BuildingBT : Tree
         Node _root;
         _root = new Parallel();
 
-        if (manager.Unit.Data.attackDamage > 0)
+        if (manager.Unit.AttackDamage > 0)
         {
             Sequence attackSequence = new Sequence(new List<Node> 
             {
                 new CheckUnitInRange(manager, true),
                 new Timer
                 (
-                    manager.Unit.Data.attackRate,
+                    manager.Unit.AttackRate,
                     new List<Node>()
                     {
                         new TaskAttack(manager),

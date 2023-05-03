@@ -132,6 +132,8 @@ public class BuildingPlacer : MonoBehaviour
                 Camera.main.GetComponent<CameraManager>().SetPosition(i);
             }
         }
+
+        SpawnBuilding(initialBuilding, 1, new Vector3(200, 0, spawnPoints.GetChild(0).position.z));
     }
 
     private void OnEnable()

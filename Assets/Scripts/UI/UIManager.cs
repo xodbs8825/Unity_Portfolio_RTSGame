@@ -192,19 +192,6 @@ public class UIManager : MonoBehaviour
             }
             EventManager.TriggerEvent("GetCharacter", data);
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log(unit.AttackRange);
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Debug.Log(unit.AttackRate);
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            Debug.Log(unit.Armor);
-        }
     }
 
     private void OnDeselectUnit(object data)

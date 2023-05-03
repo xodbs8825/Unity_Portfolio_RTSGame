@@ -65,15 +65,23 @@ public class Unit
 
         _owner = owner;
 
-        _attackDamage = data.attackDamage;
+        if (this.GetType() == typeof(Building))
+        {
+            _attackDamage = 0;
+            _attackRange = 0;
+            _attackRate = 0;
+            _armor = 0;
+        }
+        else if (this.GetType() == typeof(Character))
+        {
+            _attackDamage = data.upgradeParameters.attackDamage[0];
+            _attackRange = data.upgradeParameters.attackRange[0];
+            _attackRate = data.upgradeParameters.attackRate[0];
+            _armor = data.upgradeParameters.armor[0];
+        }
+
         _attackDamageUpgradeValue = data.myAttackDamageLevel;
-
-        _attackRange = data.attackRange;
-        _attackRate = data.attackRate;
-
-        _armor = data.armor;
         _armorLevel = data.myArmorLevel;
-
         _attackDamageUpgradeIndicator = false;
 
         GamePlayersParameters parameter = GameManager.instance.gamePlayersParameters;

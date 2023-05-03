@@ -45,7 +45,7 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    public virtual void Update()
+    private void Update()
     {
         Unit.UpdateUpgradeParameters();
         zoomSize = 60f / Camera.main.orthographicSize;
@@ -54,6 +54,15 @@ public class UnitManager : MonoBehaviour
         {
             TechTreeCheck();
             EventManager.TriggerEvent("SelectUnit", Unit);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Log("Attacking : " + animator.GetBool("Attacking"));
+                Debug.Log("Running : " + animator.GetBool("Running"));
+            }
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                Debug.Log(Unit.HP);
+            }
         }
     }
 
@@ -66,11 +75,6 @@ public class UnitManager : MonoBehaviour
     {
         return true;
     }
-
-    //private bool IsMyUnit()
-    //{
-    //    return Unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID;
-    //}
 
     private void SelectUtils()
     {

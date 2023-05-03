@@ -8,15 +8,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Building", menuName = "Scriptable Objects/Unit", order = 1)]
 public class UnitData : ScriptableObject
 {
+    [Header("Unit Details")]
     public string code;
     public string unitName;
     public string description;
     public GameObject prefab;
-    //public List<ResourceValue> cost;
     public float fieldOfView;
+    public float healthPoint;
 
     [Header("Unit Status")]
-    public float healthPoint;
     public UpgradeSystem upgradeParameters;
     public UnitCountLimit maximumUnitCount;
 
@@ -30,12 +30,6 @@ public class UnitData : ScriptableObject
 
     #region Hide In Inspector
     [HideInInspector]
-    public float attackRange;
-    [HideInInspector]
-    public int attackDamage;
-    [HideInInspector]
-    public float attackRate;
-    [HideInInspector]
     public int myAttackDamageLevel;
     [HideInInspector]
     public int enemyAttackDamageLevel;
@@ -47,8 +41,6 @@ public class UnitData : ScriptableObject
     public bool myAttackRateResearchComplete;
     [HideInInspector]
     public bool enemyAttackRateResearchComplete;
-    [HideInInspector]
-    public int armor;
     [HideInInspector]
     public int myArmorLevel;
     [HideInInspector]

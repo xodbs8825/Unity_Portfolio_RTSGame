@@ -42,16 +42,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ce6021d1974474544b04e2ab257b25f7, type: 2}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound: []
-  attackRange: 5
-  attackDamage: 5
-  attackRate: 1
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
   enemyAttackRangeResearchComplete: 0
   myAttackRateResearchComplete: 0
   enemyAttackRateResearchComplete: 0
-  armor: 0
   myArmorLevel: 0
   enemyArmorLevel: 0
   buildRate: 1

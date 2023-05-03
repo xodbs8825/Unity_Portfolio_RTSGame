@@ -31,13 +31,13 @@ public class CharacterBT : Tree
         });
 
         Selector attackOrBuildSelector = new Selector();
-        if (manager.Unit.Data.attackDamage > 0)
+        if (manager.Unit.AttackDamage > 0)
         {
             Sequence attackSequence = new Sequence(new List<Node>
             {
                 new Inverter(new List<Node>() { new CheckTargetIsMine(manager) }),
                 new CheckUnitInRange(manager, true),
-                new Timer(manager.Unit.Data.attackRate, new List<Node>() { new TaskAttack(manager) })
+                new Timer(manager.Unit.AttackRate, new List<Node>() { new TaskAttack(manager) })
             });
 
             attackOrBuildSelector.Attach(attackSequence);
