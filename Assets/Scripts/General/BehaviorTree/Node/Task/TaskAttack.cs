@@ -14,7 +14,6 @@ public class TaskAttack : Node
     {
         object currentTarget = GetData("currentTarget");
         _manager.Attack((Transform)currentTarget);
-        _manager.SetAnimatorBoolVariable("Attacking", true);
         _manager.SetAnimatorBoolVariable("Running", false);
         _state = NodeState.SUCCESS;
         return _state;

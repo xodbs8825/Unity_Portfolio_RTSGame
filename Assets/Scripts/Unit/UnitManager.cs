@@ -56,8 +56,7 @@ public class UnitManager : MonoBehaviour
             EventManager.TriggerEvent("SelectUnit", Unit);
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Debug.Log("Attacking : " + animator.GetBool("Attacking"));
-                Debug.Log("Running : " + animator.GetBool("Running"));
+                Debug.Log(Unit.EnemySpottingRadius);
             }
             if (Input.GetKeyDown(KeyCode.Q))
             {
@@ -283,7 +282,8 @@ public class UnitManager : MonoBehaviour
     {
         UnitManager um = target.GetComponent<UnitManager>();
         if (um == null) return;
-        um.TakeHit(Unit.AttackDamage);
+        meshRenderer.transform.GetChild(0).GetComponent<CharacterAnimationController>().SetTarget(um);
+        animator.SetTrigger("Attack");
     }
 
     public void TakeHit(int attackPoints)

@@ -26,6 +26,7 @@ public class Unit
     protected int _attackDamageUpgradeValue;
     protected float _attackRange;
     protected float _attackRate;
+    protected float _enemySpottingRadius;
 
     protected bool _myAttackDamageUpgradeComplete;
     protected bool _enemyAttackDamageUpgradeComplete;
@@ -71,6 +72,7 @@ public class Unit
             _attackRange = 0;
             _attackRate = 0;
             _armor = 0;
+            _enemySpottingRadius = 0;
         }
         else if (this.GetType() == typeof(Character))
         {
@@ -78,6 +80,7 @@ public class Unit
             _attackRange = data.upgradeParameters.attackRange[0];
             _attackRate = data.upgradeParameters.attackRate[0];
             _armor = data.upgradeParameters.armor[0];
+            _enemySpottingRadius = data.upgradeParameters.attackRange[0] + 10;
         }
 
         _attackDamageUpgradeValue = data.myAttackDamageLevel;
@@ -151,6 +154,7 @@ public class Unit
                 _attackRate = _data.upgradeParameters.attackRate[0];
             }
         }
+        _enemySpottingRadius = _attackRange + 10;
     }
 
     public void SetPosition(Vector3 position)
@@ -229,5 +233,6 @@ public class Unit
     public float AttackRange { get => _attackRange; }
     public float AttackRate { get => _attackRate; }
     public int Armor { get => _armor; }
+    public float EnemySpottingRadius { get => _enemySpottingRadius; }
     public string UnitName { get => _unitName; }
 }

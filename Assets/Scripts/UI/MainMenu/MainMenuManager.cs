@@ -26,6 +26,7 @@ public class MainMenuManager : MonoBehaviour
     };
     private List<Color> _availableColors;
     private List<bool> _activePlayers;
+    private bool _colorPicked = false;
 
     void Start()
     {
@@ -99,6 +100,11 @@ public class MainMenuManager : MonoBehaviour
                 picker = colorPicker.Find("Background").GetChild(j);
                 picker.GetComponent<Image>().color = _playerColors[j];
                 AddScenePickPlayerColorListener(colorPicker, colorSprite, picker.GetComponent<Button>(), i, j);
+            }
+
+            if (!_colorPicked)
+            {
+                _playerData[i].colorIndex = i;
             }
 
             AddScenePickPlayerInputListener(player.Find("Name/InputField").GetComponent<InputField>(), i);
@@ -204,6 +210,7 @@ public class MainMenuManager : MonoBehaviour
     {
         b.onClick.AddListener(() =>
         {
+            _colorPicked = true;
             SetPlayerColor(_playerColors[j], i, colorSprite);
             colorPicker.gameObject.SetActive(false);
             _playerData[i].colorIndex = j;

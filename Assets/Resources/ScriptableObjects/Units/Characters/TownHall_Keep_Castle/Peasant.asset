@@ -17,6 +17,7 @@ MonoBehaviour:
   description: Worker unit
   prefab: {fileID: 5542380815447981279, guid: f294de0d17cb791459e18eb4754e5c06, type: 3}
   fieldOfView: 50
+  enemySpottingRadius: 15
   healthPoint: 60
   upgradeParameters:
     attackDamage: 05000000

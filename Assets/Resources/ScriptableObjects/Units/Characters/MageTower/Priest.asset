@@ -29,21 +29,20 @@ MonoBehaviour:
     hasLimit: 0
     unitMaxCount: 0
     maxUnitReached: 0
-  attackRange: 0
-  attackDamage: 0
-  attackRate: 0
-  myAttackDamageLevel: 0
-  enemyAttackDamageLevel: 0
-  myAttackRangeResearchComplete: 0
-  enemyAttackRangeResearchComplete: 0
-  myAttackRateResearchComplete: 0
-  enemyAttackRateResearchComplete: 0
   canProduce: 
   skills:
   - {fileID: 11400000, guid: de525b7f54f6cec4daaecfe2bcf9bc81, type: 2}
   - {fileID: 11400000, guid: 9e1848ecd725f0b4788f0ead53cbbea5, type: 2}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound: []
+  myAttackDamageLevel: 0
+  enemyAttackDamageLevel: 0
+  myAttackRangeResearchComplete: 0
+  enemyAttackRangeResearchComplete: 0
+  myAttackRateResearchComplete: 0
+  enemyAttackRateResearchComplete: 0
+  myArmorLevel: 0
+  enemyArmorLevel: 0
   buildRate: 0
   buildRange: 0
   buildPower: 0

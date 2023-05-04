@@ -29,19 +29,18 @@ MonoBehaviour:
     hasLimit: 0
     unitMaxCount: 0
     maxUnitReached: 0
-  attackRange: 5
-  attackDamage: 5
-  attackRate: 1
+  canProduce: 
+  skills: []
+  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
+  interactSound: []
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
   enemyAttackRangeResearchComplete: 0
   myAttackRateResearchComplete: 0
   enemyAttackRateResearchComplete: 0
-  canProduce: 
-  skills: []
-  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
-  interactSound: []
+  myArmorLevel: 0
+  enemyArmorLevel: 0
   buildRate: 0
   buildRange: 0
   buildPower: 0

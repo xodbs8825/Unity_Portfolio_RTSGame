@@ -7,7 +7,7 @@ using BehaviorTree;
 public class CheckEnemyInFOVRange : Node
 {
     UnitManager _manager;
-    float _fovRadius;
+    float _radius;
     int _unitOwner;
 
     Vector3 _pos;
@@ -15,7 +15,7 @@ public class CheckEnemyInFOVRange : Node
     public CheckEnemyInFOVRange(UnitManager manager) : base()
     {
         _manager = manager;
-        _fovRadius = _manager.Unit.Data.fieldOfView;
+        _radius = _manager.Unit.EnemySpottingRadius;
         _unitOwner = _manager.Unit.Owner;
     }
 
@@ -23,7 +23,7 @@ public class CheckEnemyInFOVRange : Node
     {
         _pos = _manager.transform.position;
         IEnumerable<Collider> enemiesInRange =
-            Physics.OverlapSphere(_pos, _fovRadius, Globals.UNIT_MASK).Where(delegate (Collider c)
+            Physics.OverlapSphere(_pos, _radius, Globals.UNIT_MASK).Where(delegate (Collider c)
             {
                 UnitManager um = c.GetComponent<UnitManager>();
                 if (um == null) return false;

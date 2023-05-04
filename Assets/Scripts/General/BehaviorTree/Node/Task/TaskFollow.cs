@@ -80,7 +80,6 @@ public class TaskFollow : Node
             _state = NodeState.SUCCESS;
             return _state;
         }
-        _manager.SetAnimatorBoolVariable("Attacking", false);
         _state = NodeState.RUNNING;
         return _state;
     }
