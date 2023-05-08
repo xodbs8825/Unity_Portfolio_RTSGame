@@ -10,7 +10,6 @@ public class CharacterAnimationController : MonoBehaviour
     public void Hit()
     {
         _target.TakeHit(manager.Unit.AttackDamage);
-        //Debug.Log("Hit");
     }
 
     public void SetTarget(UnitManager target)

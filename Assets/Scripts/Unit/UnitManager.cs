@@ -26,6 +26,9 @@ public class UnitManager : MonoBehaviour
 
     public int ownerMatrialSlotIndex = 0;
 
+    private bool ableToAutoHill;
+    private bool attack;
+
     public Renderer meshRenderer;
     private Vector3 _meshSize;
     public Vector3 MeshSize => _meshSize;
@@ -43,6 +46,8 @@ public class UnitManager : MonoBehaviour
             healthBar.SetActive(false);
             _healthbarRenderer = healthBar.GetComponent<Renderer>();
         }
+
+        ableToAutoHill = false;
     }
 
     private void Update()
@@ -56,11 +61,12 @@ public class UnitManager : MonoBehaviour
             EventManager.TriggerEvent("SelectUnit", Unit);
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Debug.Log(Unit.EnemySpottingRadius);
-            }
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
                 Debug.Log(Unit.HP);
+                Debug.Log(ableToAutoHill);
+            }
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                Debug.Log(attack);
             }
         }
     }
@@ -291,6 +297,10 @@ public class UnitManager : MonoBehaviour
         Unit.HP -= attackPoints;
         UpdateHealthBar();
         if (Unit.HP <= 0) Die();
+
+        attack = true;
+        StartCoroutine(Attacked());
+        StartCoroutine(AutoHillCheck(10));
     }
 
     private void Die()
@@ -307,6 +317,37 @@ public class UnitManager : MonoBehaviour
         _healthbarRenderer.material.SetFloat("_Health", Unit.HP / (float)Unit.MaxHP);
         _healthbarRenderer.material.SetFloat("_Width", healthBar.transform.localScale.x);
         _healthbarRenderer.SetPropertyBlock(MaterialPropertyBlock);
+    }
+
+    public virtual void AutoHill()
+    {
+        if (Unit.HP >= Unit.MaxHP)
+        {
+            Unit.HP = Unit.MaxHP;
+        }
+        else if (Unit.MaxHP >= Unit.HP)
+        {
+            if (ableToAutoHill && !attack)
+            {
+                //ableToAutoHill = false;
+                Unit.HP += 5;
+                Debug.Log("AutoHill");
+                StartCoroutine(AutoHillCheck(3));
+            }
+        }
+    }
+
+    private IEnumerator AutoHillCheck(float seconds)
+    {
+        ableToAutoHill = false;
+        yield return new WaitForSeconds(seconds);
+        ableToAutoHill = true;
+    }
+    
+    private IEnumerator Attacked()
+    {
+        yield return new WaitForSeconds(10);
+        attack = false;
     }
 
     protected static MaterialPropertyBlock materialPropertyBlock;

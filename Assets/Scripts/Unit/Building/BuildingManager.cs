@@ -30,12 +30,6 @@ public class BuildingManager : UnitManager
             PlaySound();
     }
 
-    //public override void Update()
-    //{
-    //    base.Update();
-    //    UpdateHealthBar();
-    //}
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Terrain") return;
@@ -119,10 +113,14 @@ public class BuildingManager : UnitManager
     {
         if (!_healthbarRenderer) return;
         float hp = (IsActive() && !_building.IsAlive) ? _building.ConstructionHP : Unit.HP;
+        float hpRatio = hp / (float)Unit.MaxHP;
         _healthbarRenderer.GetPropertyBlock(MaterialPropertyBlock);
-        _healthbarRenderer.material.SetFloat("_Health", hp / (float)Unit.MaxHP);
+        _healthbarRenderer.material.SetFloat("_Health", hpRatio);
         _healthbarRenderer.material.SetFloat("_Width", healthBar.transform.localScale.x);
         _healthbarRenderer.SetPropertyBlock(MaterialPropertyBlock);
+
+        BurningVFX(hpRatio);
+        AutoHill();
     }
 
     public bool Build(int buildPower)
@@ -130,5 +128,30 @@ public class BuildingManager : UnitManager
         _building.SetConstructionHP(_building.ConstructionHP + buildPower);
         UpdateHealthBar();
         return _building.IsAlive;
+    }
+
+    private void BurningVFX(float hpRatio)
+    {
+        Transform VFX = transform.Find("VFX");
+        if (VFX == null) return;
+
+        if (_building.IsAlive)
+        {
+            if (hpRatio >= 0.66)
+            {
+                VFX.GetChild(0).gameObject.SetActive(false);
+                VFX.GetChild(1).gameObject.SetActive(false);
+            }
+            else if (hpRatio < 0.66 && hpRatio >= 0.33)
+            {
+                VFX.GetChild(0).gameObject.SetActive(true);
+                VFX.GetChild(1).gameObject.SetActive(false);
+            }
+            else if (hpRatio < 0.33)
+            {
+                VFX.GetChild(0).gameObject.SetActive(true);
+                VFX.GetChild(1).gameObject.SetActive(true);
+            }
+        }
     }
 }
