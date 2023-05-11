@@ -16,7 +16,8 @@ MonoBehaviour:
   _fieldsToShowInGame:
   - enableFOV
   initialBuilding: {fileID: 11400000, guid: 224258bbcbb188c43932cf415d7a52cd, type: 2}
-  baseMineralProduction: 5
+  baseMineralProduction: 25
+  baseGasProduction: 10
   bonusMineralProductionPerBuilding: 0
   mineralBonusRange: 10
   gasProductionRange: 10

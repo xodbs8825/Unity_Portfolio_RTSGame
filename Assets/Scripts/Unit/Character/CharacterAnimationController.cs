@@ -9,6 +9,7 @@ public class CharacterAnimationController : MonoBehaviour
 
     public void Hit()
     {
+        Debug.Log(manager.Unit.AttackDamage);
         _target.TakeHit(manager.Unit.AttackDamage);
     }
 

@@ -21,7 +21,7 @@ public class UnitData : ScriptableObject
     public UnitCountLimit maximumUnitCount;
 
     [Header("Skill")]
-    public InGameResource[] canProduce;
+    public ResourceProduction[] resourceProduction;
     public List<SkillData> skills = new List<SkillData>();
 
     [Header("Audio")]
@@ -68,4 +68,11 @@ public class UnitCountLimit
 
     [HideInInspector]
     public bool maxUnitReached;
+}
+
+[Serializable]
+public class ResourceProduction
+{
+    public InGameResource resource;
+    public int amount;
 }

@@ -68,6 +68,30 @@ public class UnitManager : MonoBehaviour
             {
                 Debug.Log(attack);
             }
+            
+            // 플레이어 아이디에 따라 빌딩, 캐릭터 조작
+            if (Unit.Owner != GameManager.instance.gamePlayersParameters.myPlayerID)
+            {
+                if (Unit.GetType() == typeof(Building))
+                {
+                    GetComponent<BuildingBT>().enabled = false;
+                }
+                else if (Unit.GetType() == typeof(Character))
+                {
+                    GetComponent<CharacterBT>().enabled = false;
+                }
+            }
+            else
+            {
+                if (Unit.GetType() == typeof(Building))
+                {
+                    GetComponent<BuildingBT>().enabled = true;
+                }
+                else if (Unit.GetType() == typeof(Character))
+                {
+                    GetComponent<CharacterBT>().enabled = true;
+                }
+            }
         }
     }
 
@@ -108,6 +132,8 @@ public class UnitManager : MonoBehaviour
 
     public void SetAnimatorBoolVariable(string name, bool boolValue)
     {
+        if (Unit.Owner != GameManager.instance.gamePlayersParameters.myPlayerID) return;
+
         if (animator == null) return;
         animator.SetBool(name, boolValue);
     }
@@ -286,6 +312,8 @@ public class UnitManager : MonoBehaviour
 
     public void Attack(Transform target)
     {
+        if (Unit.Owner != GameManager.instance.gamePlayersParameters.myPlayerID) return;
+
         UnitManager um = target.GetComponent<UnitManager>();
         if (um == null) return;
         meshRenderer.transform.GetChild(0).GetComponent<CharacterAnimationController>().SetTarget(um);
@@ -329,7 +357,6 @@ public class UnitManager : MonoBehaviour
         {
             if (ableToAutoHill && !attack)
             {
-                //ableToAutoHill = false;
                 Unit.HP += 5;
                 Debug.Log("AutoHill");
                 StartCoroutine(AutoHillCheck(3));

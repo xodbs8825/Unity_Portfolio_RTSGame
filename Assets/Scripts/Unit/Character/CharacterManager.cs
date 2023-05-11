@@ -49,6 +49,8 @@ public class CharacterManager : UnitManager
 
     public bool MoveTo(Vector3 targetPosition)
     {
+        if (_character.Owner != GameManager.instance.gamePlayersParameters.myPlayerID) return false;
+
         NavMeshPath path = new NavMeshPath();
         agent.CalculatePath(targetPosition, path);
         if (path.status == NavMeshPathStatus.PathInvalid)

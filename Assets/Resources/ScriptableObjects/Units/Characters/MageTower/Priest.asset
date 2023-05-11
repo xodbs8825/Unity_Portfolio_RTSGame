@@ -21,7 +21,7 @@ MonoBehaviour:
   upgradeParameters:
     attackDamage: 090000000a0000000b0000000c000000
     attackRange:
-    - 20
+    - 40
     attackRate:
     - 2
     armor: 00000000010000000200000003000000
@@ -29,7 +29,7 @@ MonoBehaviour:
     hasLimit: 0
     unitMaxCount: 0
     maxUnitReached: 0
-  canProduce: 
+  resourceProduction: []
   skills:
   - {fileID: 11400000, guid: de525b7f54f6cec4daaecfe2bcf9bc81, type: 2}
   - {fileID: 11400000, guid: 9e1848ecd725f0b4788f0ead53cbbea5, type: 2}

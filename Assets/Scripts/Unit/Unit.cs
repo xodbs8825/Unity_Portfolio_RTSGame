@@ -183,37 +183,16 @@ public class Unit
 
     public Dictionary<InGameResource, int> ComputeProduction()
     {
-        if (_data.canProduce.Length == 0) return null;
+        if (_data.resourceProduction.Count() == 0) return null;
 
-        GameGlobalParameters globalParameters = GameManager.instance.gameGlobalParameters;
-        GamePlayersParameters playerParameters = GameManager.instance.gamePlayersParameters;
-        Vector3 pos = _transform.position;
-
-        if (_data.canProduce.Contains(InGameResource.Mineral))
+        if (_data.resourceProduction[0].resource == InGameResource.Mineral)
         {
-            int bonusBuildingsCount =
-                Physics.OverlapSphere(pos, globalParameters.mineralBonusRange, Globals.UNIT_MASK)
-                .Where(delegate (Collider c)
-                {
-                    BuildingManager m = c.GetComponent<BuildingManager>();
-                    if (m == null) return false;
-                    return m.Unit.Owner == playerParameters.myPlayerID;
-                })
-                .Count();
-
-            _production[InGameResource.Mineral] =
-                globalParameters.baseMineralProduction +
-                bonusBuildingsCount * globalParameters.bonusMineralProductionPerBuilding;
+            _production[InGameResource.Mineral] = _data.resourceProduction[0].amount;
         }
 
-        if (_data.canProduce.Contains(InGameResource.Gas))
+        if (_data.resourceProduction[0].resource == InGameResource.Gas)
         {
-            int gasScore =
-                Physics.OverlapSphere(pos, globalParameters.gasProductionRange, Globals.GASCHAMBER_MASK)
-                .Select((c) => globalParameters.gasProductionFunc(Vector3.Distance(pos, c.transform.position)))
-                .Sum();
-
-            _production[InGameResource.Gas] = gasScore;
+            _production[InGameResource.Gas] = _data.resourceProduction[0].amount;
         }
 
         return _production;

@@ -103,14 +103,26 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    [System.Obsolete]
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F10))
+        {
             ToggleGameSetiingPanel();
+        }
 
         if (_selectedUnit != null)
+        {
             UpdateSelectedUnitUpgradeInfoPanel();
+
+            if (_selectedUnit.Owner != _myPlayerID)
+            {
+                selectedUnitActionButtonsParent.SetActive(false);
+            }
+            else
+            {
+                selectedUnitActionButtonsParent.SetActive(true);
+            }
+        }
 
         if (Globals.SELECTED_UNITS.Count > 1)
         {

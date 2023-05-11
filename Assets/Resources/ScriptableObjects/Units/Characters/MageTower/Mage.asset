@@ -21,7 +21,7 @@ MonoBehaviour:
   upgradeParameters:
     attackDamage: 090000000a0000000b0000000c000000
     attackRange:
-    - 30
+    - 60
     attackRate:
     - 1
     armor: 00000000010000000200000003000000
@@ -29,7 +29,7 @@ MonoBehaviour:
     hasLimit: 0
     unitMaxCount: 0
     maxUnitReached: 0
-  canProduce: 
+  resourceProduction: []
   skills: []
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound: []
