@@ -8,6 +8,7 @@ public class BuildingManager : UnitManager
     private Building _building = null;
     private AudioClip _buildingInteractSound;
     private bool _isAbleToPlaySound = true;
+    private bool triggered;
 
     public override Unit Unit
     {
@@ -33,6 +34,7 @@ public class BuildingManager : UnitManager
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Terrain") return;
+        if (other.tag == "Unit") triggered = true;
 
         _nCollisions--;
         CheckPlacement();
@@ -41,6 +43,7 @@ public class BuildingManager : UnitManager
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Terrain") return;
+        if (other.tag == "Unit") triggered = false;
 
         _nCollisions++;
         CheckPlacement();
@@ -51,7 +54,7 @@ public class BuildingManager : UnitManager
         if (_building == null) return false;
         if (_building.IsFixed) return false;
 
-        bool validPlacement = HasValidPlacement();
+        bool validPlacement = HasValidPlacement() && PlacementBuilding(triggered);
 
         if (!validPlacement)
             _building.SetMaterials(BuildingPlacement.INVALID);
@@ -59,6 +62,23 @@ public class BuildingManager : UnitManager
             _building.SetMaterials(BuildingPlacement.VALID);
 
         return validPlacement;
+    }
+
+    public bool PlacementBuilding(bool triggered)
+    {
+        if (_building == null) return false;
+        if (_building.IsFixed) return false;
+
+        if (triggered)
+        {
+            _building.SetMaterials(BuildingPlacement.INVALID);
+        }
+        else
+        {
+            _building.SetMaterials(BuildingPlacement.VALID);
+        }
+
+        return !triggered;
     }
 
     public bool HasValidPlacement()

@@ -35,6 +35,9 @@ public class UnitManager : MonoBehaviour
 
     public Animator animator;
 
+    private bool _autoHillCoroutineCheck;
+    private bool _attackCoroutineCheck;
+
     public virtual Unit Unit { get; set; }
 
     private void Awake()
@@ -48,6 +51,8 @@ public class UnitManager : MonoBehaviour
         }
 
         ableToAutoHill = false;
+        _autoHillCoroutineCheck = false;
+        _attackCoroutineCheck = false;
     }
 
     private void Update()
@@ -327,15 +332,43 @@ public class UnitManager : MonoBehaviour
         if (Unit.HP <= 0) Die();
 
         attack = true;
+
+        if (_autoHillCoroutineCheck && _attackCoroutineCheck)
+        {
+            StopAllCoroutines();
+        }
+
         StartCoroutine(Attacked());
         StartCoroutine(AutoHillCheck(10));
     }
 
     private void Die()
     {
+        animator.SetTrigger("Death");
+
+        if (Unit.GetType() == typeof(Building))
+        {
+            Transform VFX = transform.Find("VFX");
+            if (VFX.GetChild(2))
+            {
+                VFX.GetChild(2).gameObject.SetActive(true);
+            }
+
+            StartCoroutine(BuildingDestroy());
+        }
+    }
+
+    public void Death()
+    {
         if (_selected)
             Deselect();
         Destroy(gameObject);
+    }
+
+    private IEnumerator BuildingDestroy()
+    {
+        yield return new WaitForSeconds(3);
+        Death();
     }
 
     protected virtual void UpdateHealthBar()
@@ -358,7 +391,7 @@ public class UnitManager : MonoBehaviour
             if (ableToAutoHill && !attack)
             {
                 Unit.HP += 5;
-                Debug.Log("AutoHill");
+                Debug.Log($"AutoHill {Unit.HP}");
                 StartCoroutine(AutoHillCheck(3));
             }
         }
@@ -366,14 +399,22 @@ public class UnitManager : MonoBehaviour
 
     private IEnumerator AutoHillCheck(float seconds)
     {
+        _autoHillCoroutineCheck = true;
         ableToAutoHill = false;
+
         yield return new WaitForSeconds(seconds);
+
+        _autoHillCoroutineCheck = false;
         ableToAutoHill = true;
     }
     
     private IEnumerator Attacked()
     {
+        _attackCoroutineCheck = true;
+
         yield return new WaitForSeconds(10);
+
+        _attackCoroutineCheck = false;
         attack = false;
     }
 

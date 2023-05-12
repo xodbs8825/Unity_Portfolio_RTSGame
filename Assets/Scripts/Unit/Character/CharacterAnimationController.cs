@@ -13,6 +13,11 @@ public class CharacterAnimationController : MonoBehaviour
         _target.TakeHit(manager.Unit.AttackDamage);
     }
 
+    public void Death()
+    {
+        manager.Death();
+    }
+
     public void SetTarget(UnitManager target)
     {
         _target = target;

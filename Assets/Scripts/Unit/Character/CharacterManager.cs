@@ -56,6 +56,7 @@ public class CharacterManager : UnitManager
         if (path.status == NavMeshPathStatus.PathInvalid)
         {
             Debug.Log("Invalid Path");
+            Debug.Log(targetPosition);
             return false;
         }
 

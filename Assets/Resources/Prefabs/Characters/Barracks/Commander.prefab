@@ -724,7 +724,7 @@ PrefabInstance:
     - target: {fileID: 9557480, guid: a9733678a87478b4689672067b7718fb, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: f5a5df21e2ce72749aab436d5667e57b, type: 2}
+      objectReference: {fileID: 9100000, guid: db6a51f83128b364a9f32abca4b17201, type: 2}
     - target: {fileID: 9557480, guid: a9733678a87478b4689672067b7718fb, type: 3}
       propertyPath: m_WarningMessage
       value: 
@@ -751,6 +751,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 134188, guid: a9733678a87478b4689672067b7718fb, type: 3}
   m_PrefabInstance: {fileID: 6520349510384386869}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1333001388304133649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6520349510384258841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 658b15064aa7db640a63056bf997d78c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 1853060306182332087}
 --- !u!1 &6520349510384260799 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 136586, guid: a9733678a87478b4689672067b7718fb, type: 3}
