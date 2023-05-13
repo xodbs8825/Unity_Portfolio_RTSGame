@@ -24,6 +24,8 @@ public static class DataHandler
                 parameters.LoadFromFile();
             }
         }
+
+        Globals.SKILL_BUILDING_DATA = Resources.LoadAll<SkillData>("ScriptableObjects/Character/Peasant");
     }
 
     public static void SaveGameData()

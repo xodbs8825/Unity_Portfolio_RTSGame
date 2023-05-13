@@ -172,8 +172,17 @@ public class BuildingPlacer : MonoBehaviour
         {
             if (Globals.BUILDING_DATA[i].code == buildingCode)
             {
-                SelectPlacedBuilding(i);
-                return;
+                for (int j = 0; j < Globals.SKILL_BUILDING_DATA.Length; j++)
+                {
+                    if (Globals.SKILL_BUILDING_DATA[j].targetUnit[0].unitName == buildingCode)
+                    {
+                        if (Globals.SKILL_BUILDING_DATA[j].techTreeOpen)
+                        {
+                            SelectPlacedBuilding(i);
+                            return;
+                        }
+                    }
+                }
             }
         }
     }

@@ -16,18 +16,33 @@ MonoBehaviour:
   _fieldsToShowInGame:
   - bindings
   bindings:
-  - displayName: Build Castle
-    key: c
-    inputEvent: Build:castle
-  - displayName: Build BlackSmith
-    key: e
-    inputEvent: Build:blackSmith
-  - displayName: Build Archery
+  - displayName: Build Farm
     key: f
-    inputEvent: Build:archery
+    inputEvent: Build:farm
+  - displayName: Build Market
+    key: m
+    inputEvent: Build:market
   - displayName: Build Barracks
     key: b
     inputEvent: Build:barracks
+  - displayName: Build BlackSmith
+    key: s
+    inputEvent: Build:blackSmith
+  - displayName: Build Archery
+    key: a
+    inputEvent: Build:archery
+  - displayName: Build Temple
+    key: t
+    inputEvent: Build:temple
+  - displayName: Build Workshop
+    key: w
+    inputEvent: Build:workshop
+  - displayName: Build Mage Tower
+    key: g
+    inputEvent: Build:mageTower
+  - displayName: Build Library
+    key: l
+    inputEvent: Build:library
   - displayName: Show Debug Console
     key: '`'
     inputEvent: ShowDebugConsole
