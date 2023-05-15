@@ -48,9 +48,6 @@ public class CheckUnitInRange : Node
         }
 
         float d = Vector3.Distance(_manager.transform.position, target.position);
-        //Debug.Log(d);
-        //Debug.Log(_targetSize);
-        //Debug.Log(d - _targetSize);
         bool isInRange = (d - _targetSize) <= _range;
         _state = isInRange ? NodeState.SUCCESS : NodeState.FAILURE;
 

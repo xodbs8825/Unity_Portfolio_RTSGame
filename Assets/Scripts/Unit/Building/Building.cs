@@ -142,7 +142,11 @@ public class Building : Unit
     {
         _isAlive = true;
         _bt.enabled = true;
-        ComputeProduction();
+
+        if (ComputeProduction() != null)
+        {
+            ComputeProduction();
+        }
 
         EventManager.TriggerEvent("PlaySoundByName", "buildingFinishedSound");
 

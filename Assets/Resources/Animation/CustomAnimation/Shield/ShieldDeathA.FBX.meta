@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d2ef7186d1d921b44a050ced01f3bb19
+guid: 01f1666264d2ff549b2bf0bc33aee3f1
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
@@ -167,7 +167,7 @@ ModelImporter:
     second: R_hand_container
   - first:
       74: 7400000
-    second: InfantryDeath
+    second: ShieldDeathA
   - first:
       95: 9500000
     second: //RootNode
@@ -201,7 +201,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: InfantryDeath
+      name: ShieldDeathA
       takeName: Take 001
       internalID: 0
       firstFrame: 0
@@ -225,7 +225,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.99421966
+      - time: 0.93004113
         functionName: Death
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 658b15064aa7db640a63056bf997d78c, type: 3}

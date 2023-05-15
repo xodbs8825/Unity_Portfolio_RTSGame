@@ -63,7 +63,6 @@ public class CharacterUpgrade : MonoBehaviour
     private void InstantiateCharacter(SkillData skill)
     {
         _character = new Character((CharacterData)skill.targetUnit[0], _character.Owner);
-        _character.ComputeProduction();
         _character.Transform.GetComponent<NavMeshAgent>().Warp(_pos);
         skill.CharacterUpgradeStarted = false;
     }

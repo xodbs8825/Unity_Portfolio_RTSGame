@@ -73,7 +73,7 @@ public class UnitManager : MonoBehaviour
             {
                 Debug.Log(attack);
             }
-            
+
             // 플레이어 아이디에 따라 빌딩, 캐릭터 조작
             if (Unit.Owner != GameManager.instance.gamePlayersParameters.myPlayerID)
             {
@@ -321,8 +321,27 @@ public class UnitManager : MonoBehaviour
 
         UnitManager um = target.GetComponent<UnitManager>();
         if (um == null) return;
+        if (um.Unit.HP <= 0) return;
+
         meshRenderer.transform.GetChild(0).GetComponent<CharacterAnimationController>().SetTarget(um);
-        animator.SetTrigger("Attack");
+
+        if (animator.runtimeAnimatorController.name == "DualWieldStaff")
+        {
+            float targetDistance = Vector3.Distance(transform.position, um.transform.position);
+            float targetSize = Mathf.Max(um.MeshSize.x, um.MeshSize.z);
+            if ((targetDistance - targetSize) <= 5)
+            {
+                animator.SetTrigger("MeleeAttack");
+            }
+            else
+            {
+                animator.SetTrigger("Attack");
+            }
+        }
+        else
+        {
+            animator.SetTrigger("Attack");
+        }
     }
 
     public void TakeHit(int attackPoints)
@@ -344,7 +363,7 @@ public class UnitManager : MonoBehaviour
 
     private void Die()
     {
-        animator.SetTrigger("Death");
+        animator.SetTrigger($"Death{Random.Range(1, 3)}");
 
         if (Unit.GetType() == typeof(Building))
         {
@@ -407,7 +426,7 @@ public class UnitManager : MonoBehaviour
         _autoHillCoroutineCheck = false;
         ableToAutoHill = true;
     }
-    
+
     private IEnumerator Attacked()
     {
         _attackCoroutineCheck = true;

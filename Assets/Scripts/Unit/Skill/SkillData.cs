@@ -34,7 +34,6 @@ public class SkillData : ScriptableObject
     public string description;
     public SkillType type;
 
-    //public UnitData unitData;
     public UnitData[] targetUnit;
     public SkillCost[] skillCost;
 
@@ -48,7 +47,7 @@ public class SkillData : ScriptableObject
     public TechTree techTree;
 
     #region Hide In Inspector
-    [HideInInspector]
+    //[HideInInspector]
     public bool techTreeOpen;
 
     [HideInInspector]
@@ -93,7 +92,6 @@ public class SkillData : ScriptableObject
                     if (Globals.CanBuy(_cost))
                     {
                         Character character = new Character(data, manager.Unit.Owner);
-                        character.ComputeProduction();
                         character.Transform.GetComponent<NavMeshAgent>().Warp(instantiatePosition);
 
                         BuySkill(_cost, manager.Unit.Owner);

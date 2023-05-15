@@ -52,7 +52,6 @@ public class DebugConsole : MonoBehaviour
             foreach (Vector3 pos in positions)
             {
                 Character character = new Character(data, owner);
-                character.ComputeProduction();
                 character.Transform.GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(pos);
             }
         });

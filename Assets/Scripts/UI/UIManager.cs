@@ -233,18 +233,39 @@ public class UIManager : MonoBehaviour
                 else
                 {
                     _selectedUnitActionButtonsParent.GetChild(i).gameObject.SetActive(true);
-                    if (!_unit.SkillManagers[i].skill.skillAvailable[_unit.Owner] || !_unit.SkillManagers[i].skill.techTreeOpen || !_unit.IsAlive)
+                    SkillData skill = _unit.SkillManagers[i].skill;
+                    if (skill.type == SkillType.INSTANTIATE_BUILDING || skill.type == SkillType.INSTANTIATE_CHARACTER || skill.type == SkillType.UPGRADE_UNIT)
                     {
-                        if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
+                        if (!skill.techTreeOpen || !_unit.IsAlive)
                         {
-                            _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                            if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
+                            {
+                                _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                            }
+                        }
+                        else if (skill.techTreeOpen && _unit.IsAlive)
+                        {
+                            if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
+                            {
+                                _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                            }
                         }
                     }
-                    else if (_unit.SkillManagers[i].skill.skillAvailable[_unit.Owner] && _unit.SkillManagers[i].skill.techTreeOpen && _unit.IsAlive)
+                    else
                     {
-                        if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
+                        if (!skill.skillAvailable[_unit.Owner] || !skill.techTreeOpen || !_unit.IsAlive)
                         {
-                            _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                            if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
+                            {
+                                _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                            }
+                        }
+                        else if (skill.skillAvailable[_unit.Owner] && skill.techTreeOpen && _unit.IsAlive)
+                        {
+                            if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
+                            {
+                                _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                            }
                         }
                     }
                 }
