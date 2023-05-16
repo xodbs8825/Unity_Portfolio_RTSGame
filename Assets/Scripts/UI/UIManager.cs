@@ -13,12 +13,13 @@ public class UIManager : MonoBehaviour
     private Unit _selectedUnit;
     public GameObject selectedUnitMenu;
     private Text _selectedUnitTitleText;
-    private Text _selectedUnitAttackDamageUpgradeLevelText;
     public GameObject selectedUnitActionButtonsParent;
     private Transform _selectedUnitActionButtonsParent;
     private Transform _selectedUnitResourcesProductionParent;
     private Transform _selectedUnitAttackParametersParent;
-    public GameObject upgradeAttackDamageText;
+    private Transform _selectedUnitArmorParametersParent;
+    public GameObject upgradeParametersText;
+    public GameObject unitStatParameters;
 
     [Header("Resources")]
     public Transform resourcesUIParent;
@@ -70,11 +71,11 @@ public class UIManager : MonoBehaviour
             ToggleSelectionGroupButton(i, false);
 
         Transform selectedUnitMenuTransform = selectedUnitMenu.transform;
-        _selectedUnitTitleText = selectedUnitMenuTransform.Find("Content/Title").GetComponent<Text>();
-        _selectedUnitAttackDamageUpgradeLevelText = selectedUnitMenuTransform.Find("AttackParameters/Value").GetComponent<Text>();
+        _selectedUnitTitleText = selectedUnitMenuTransform.Find("Content/UnitName").GetComponent<Text>();
         _selectedUnitActionButtonsParent = selectedUnitActionButtonsParent.transform;
         _selectedUnitResourcesProductionParent = selectedUnitMenuTransform.Find("ResourcesProduction");
-        _selectedUnitAttackParametersParent = selectedUnitMenuTransform.Find("AttackParameters/Content");
+        _selectedUnitAttackParametersParent = selectedUnitMenuTransform.Find("UnitStatParameters/AttackParameters/Damage/Content");
+        _selectedUnitArmorParametersParent = selectedUnitMenuTransform.Find("UnitStatParameters/ArmorParameters/Armor/Content");
 
         gameMenuPanel.SetActive(false);
 
@@ -194,6 +195,7 @@ public class UIManager : MonoBehaviour
 
         if (unit.GetType() == typeof(Character))
         {
+            unitStatParameters.SetActive(true);
             if (unit.Transform.GetComponent<CharacterManager>().IsConstructor)
             {
                 ShowPanel(selectedUnitActionButtonsParent, false);
@@ -203,6 +205,10 @@ public class UIManager : MonoBehaviour
                 ShowPanel(selectedUnitActionButtonsParent, true);
             }
             EventManager.TriggerEvent("GetCharacter", data);
+        }
+        else
+        {
+            unitStatParameters.SetActive(false);
         }
     }
 
@@ -373,8 +379,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateSelectedUnitUpgradeInfoPanel()
     {
-        SetSelectedUnitUpgradeText($"{_selectedUnit.AttackDamageUpgradeValue}");
-        SetSelectedUnitUpgrade($"{_selectedUnit.AttackDamage}");
+        SetSelectedUnitUpgrade($"{_selectedUnit.AttackDamage}", $"{_selectedUnit.Armor}");
     }
 
     private void SetSelectedUnitMenu(Unit unit)
@@ -405,27 +410,27 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        SetSelectedUnitUpgradeText($"{unit.AttackDamageUpgradeValue}");
 
         if (unitIsMine)
-            SetSelectedUnitUpgrade($"{ unit.AttackDamage}");
+            SetSelectedUnitUpgrade($"{unit.AttackDamage}", $"{unit.Armor}");
 
         _selectedUnit = unit;
     }
 
-    private void SetSelectedUnitUpgrade(string attackDamage)
+    private void SetSelectedUnitUpgrade(string attackDamage, string armor)
     {
         foreach (Transform child in _selectedUnitAttackParametersParent)
             Destroy(child.gameObject);
 
-        GameObject g;
-        g = GameObject.Instantiate(upgradeAttackDamageText, _selectedUnitAttackParametersParent);
-        g.GetComponent<Text>().text = attackDamage;
-    }
+        foreach (Transform child in _selectedUnitArmorParametersParent)
+            Destroy(child.gameObject);
 
-    private void SetSelectedUnitUpgradeText(string upgradeValue)
-    {
-        _selectedUnitAttackDamageUpgradeLevelText.text = upgradeValue;
+        GameObject g, j;
+        g = GameObject.Instantiate(upgradeParametersText, _selectedUnitAttackParametersParent);
+        j = GameObject.Instantiate(upgradeParametersText, _selectedUnitArmorParametersParent);
+
+        g.GetComponent<Text>().text = attackDamage;
+        j.GetComponent<Text>().text = armor;
     }
 
     private void UpdateSelectedUnitName(Unit unit)

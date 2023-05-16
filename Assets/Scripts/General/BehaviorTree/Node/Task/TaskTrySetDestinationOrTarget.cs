@@ -28,17 +28,19 @@ public class TaskTrySetDestinationOrTarget : Node
                 UnitManager um = _raycastHit.collider.GetComponent<UnitManager>();
                 if (um != null)
                 {
-                    
-                    Parent.Parent.SetData("currentTarget", _raycastHit.transform);
-
-                    if (_manager.SelectIndex == 0)
+                    if (um.Unit != _manager.Unit)
                     {
-                        List<Vector2> targetOffsets = ComputeFormationTargetOffsets();
-                        EventManager.TriggerEvent("TargetFormationOffsets", targetOffsets);
-                    }
+                        Parent.Parent.SetData("currentTarget", _raycastHit.transform);
 
-                    _state = NodeState.SUCCESS;
-                    return _state;
+                        if (_manager.SelectIndex == 0)
+                        {
+                            List<Vector2> targetOffsets = ComputeFormationTargetOffsets();
+                            EventManager.TriggerEvent("TargetFormationOffsets", targetOffsets);
+                        }
+
+                        _state = NodeState.SUCCESS;
+                        return _state;
+                    }
                 }
             }
             else if (Physics.Raycast(_ray, out _raycastHit, 1000f, Globals.TERRAIN_LAYER_MASK))

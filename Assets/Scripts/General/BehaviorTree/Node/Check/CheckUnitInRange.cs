@@ -74,14 +74,14 @@ public class CheckUnitInRange : Node
                         }
                     }
                 }
-                else
-                {
-                    Parent.ClearData("currentTarget");
-                    Parent.ClearData("currentTargetOffset");
-                    _manager.SetAnimatorBoolVariable("Running", false);
-                    _state = NodeState.FAILURE;
-                    return _state;
-                }
+                //else
+                //{
+                //    Parent.ClearData("currentTarget");
+                //    Parent.ClearData("currentTargetOffset");
+                //    _manager.SetAnimatorBoolVariable("Running", false);
+                //    _state = NodeState.FAILURE;
+                //    return _state;
+                //}
             }
         }
         return _state;

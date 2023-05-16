@@ -57,6 +57,7 @@ public class TaskFollow : Node
             }
             else
             {
+                _manager.SetAnimatorBoolVariable("Running", false);
                 int buildPower = ((CharacterData)_manager.Unit.Data).buildPower;
                 if (targetUnit is Building building && !building.IsAlive)
                 {
@@ -64,7 +65,6 @@ public class TaskFollow : Node
                     {
                         ClearData("currentTarget");
                         ClearData("currentTargetOffset");
-                        _manager.SetAnimatorBoolVariable("Running", false);
                     }
                     else if (!_manager.IsConstructor && buildPower > 0)
                     {
