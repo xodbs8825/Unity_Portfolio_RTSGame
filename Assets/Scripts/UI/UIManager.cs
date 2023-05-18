@@ -35,7 +35,7 @@ public class UIManager : MonoBehaviour
     private List<ResourceValue> _infoResourceCost;
 
     [Header("GameSettingsPanel")]
-    public GameObject gameMenuPanel;
+    //public GameObject gameMenuPanel;
     public GameObject optionsPanel;
     public GameObject gameSettingsMenuButtonPrefab;
 
@@ -77,7 +77,7 @@ public class UIManager : MonoBehaviour
         _selectedUnitAttackParametersParent = selectedUnitMenuTransform.Find("UnitStatParameters/AttackParameters/Damage/Content");
         _selectedUnitArmorParametersParent = selectedUnitMenuTransform.Find("UnitStatParameters/ArmorParameters/Armor/Content");
 
-        gameMenuPanel.SetActive(false);
+        optionsPanel.SetActive(false);
 
         GameParameters[] gameParametersList = Resources.LoadAll<GameParameters>("ScriptableObjects/Parameters");
         _gameParameters = new Dictionary<string, GameParameters>();
@@ -108,7 +108,7 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F10))
         {
-            ToggleGameSetiingPanel();
+            ToggleOptionPanel();
         }
 
         if (_selectedUnit != null)
@@ -487,10 +487,10 @@ public class UIManager : MonoBehaviour
         });
     }
 
-    public void ToggleGameSetiingPanel()
+    public void ToggleOptionPanel()
     {
-        bool showPanel = !gameMenuPanel.activeSelf;
-        gameMenuPanel.SetActive(showPanel);
+        bool showPanel = !optionsPanel.activeSelf;
+        optionsPanel.SetActive(showPanel);
         EventManager.TriggerEvent(showPanel ? "PauseGame" : "ResumeGame");
     }
 
@@ -649,24 +649,6 @@ public class UIManager : MonoBehaviour
     {
         field.SetValue(parameters, change.isOn);
         EventManager.TriggerEvent($"UpdateGameParameter:{gameParameters}", change.isOn);
-    }
-
-    public void ToggleGameMenuSetting(int index)
-    {
-        switch (index)
-        {
-            case 0:
-                gameMenuPanel.SetActive(false);
-                optionsPanel.SetActive(false);
-                EventManager.TriggerEvent("ResumeGame");
-                break;
-            case 3:
-                gameMenuPanel.SetActive(false);
-                optionsPanel.SetActive(true);
-                break;
-            default:
-                break;
-        }
     }
 
     private void OnGameOptionsSliderValueChanged(GameParameters parameters, FieldInfo field, string gameParameters, Slider change)

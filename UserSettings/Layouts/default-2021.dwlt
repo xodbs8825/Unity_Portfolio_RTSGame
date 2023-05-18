@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Project
   m_RootView: {fileID: 4}
   m_MinSize: {x: 875, y: 371}
   m_MaxSize: {x: 10000, y: 10000}
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 95
+  controlID: 135
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 20
+  controlID: 46
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 21
+  controlID: 47
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -299,8 +299,8 @@ MonoBehaviour:
     y: 0
     width: 427
     height: 947
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 23}
   m_Panes:
   - {fileID: 23}
@@ -1255,7 +1255,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 177082
+  m_LastSelectedObjectID: 19208
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1696,9 +1696,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 8e0a0000
       m_LastClickedID: 0
-      m_ExpandedIDs: cc16f5ff9613f9ff848bfbff0e8dfbff9021fcff5222fcff1e6dfcffe46efcff068cfcffb08ffcffd031fdff6a34fdffa634fdff9235fdffa4f9fdffb0fefdff0402feff5603feff7c08feffda10feff0a17feff921afeff305dfeff365dfeff6472feff6a72feffa074feff10b6feffeccefeffe4defeff3edffeff4ce0feffd46a0200c46b0200046c0200246d02004a6d0200a06d020050a3020058a3020060a302006aa3020072a302007aa302007ea3020088a3020092a30200a4a30200c2a30200cca30200d0a30200f6a3020016b3020028b30200a6b30200f8b8020088b90200e6ca0200b0cc0200b4cc0200d6d30200a0d50200bee90200d8e902001cea020020ea020040eb02000aed0200c0fc020022fd020026fd020046fe02005c0b0300ba0b0300be0b0300e60c0300001a03005e1a0300621a03008a1b0300
+      m_ExpandedIDs: aa7cffffb67cffffc63a0100
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1756,7 +1756,7 @@ MonoBehaviour:
       collapsed: 0
       displayed: 1
       snapOffset: {x: 0, y: 0}
-      snapOffsetDelta: {x: -101, y: -26}
+      snapOffsetDelta: {x: -101, y: -1}
       snapCorner: 3
       id: Tool Settings
       index: 0
@@ -1789,7 +1789,7 @@ MonoBehaviour:
       collapsed: 0
       displayed: 0
       snapOffset: {x: 0, y: 0}
-      snapOffsetDelta: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 25}
       snapCorner: 1
       id: unity-search-toolbar
       index: 1
@@ -1833,7 +1833,7 @@ MonoBehaviour:
       collapsed: 0
       displayed: 0
       snapOffset: {x: 0, y: 0}
-      snapOffsetDelta: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 25}
       snapCorner: 0
       id: Scene View/Light Settings
       index: 0
@@ -1855,7 +1855,7 @@ MonoBehaviour:
       collapsed: 0
       displayed: 0
       snapOffset: {x: 0, y: 0}
-      snapOffsetDelta: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 25}
       snapCorner: 0
       id: Scene View/Cloth Constraints
       index: 2
@@ -1866,7 +1866,7 @@ MonoBehaviour:
       collapsed: 0
       displayed: 0
       snapOffset: {x: 0, y: 0}
-      snapOffsetDelta: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 25}
       snapCorner: 0
       id: Scene View/Cloth Collisions
       index: 3
@@ -1899,7 +1899,7 @@ MonoBehaviour:
       collapsed: 0
       displayed: 0
       snapOffset: {x: 0, y: 0}
-      snapOffsetDelta: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 25}
       snapCorner: 0
       id: Scene View/Obstacle Display
       index: 6
@@ -1910,7 +1910,7 @@ MonoBehaviour:
       collapsed: 0
       displayed: 0
       snapOffset: {x: 0, y: 0}
-      snapOffsetDelta: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 25}
       snapCorner: 0
       id: Scene View/Occlusion Culling
       index: 7
@@ -1921,7 +1921,7 @@ MonoBehaviour:
       collapsed: 0
       displayed: 0
       snapOffset: {x: 0, y: 0}
-      snapOffsetDelta: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 25}
       snapCorner: 0
       id: Scene View/Physics Debugger
       index: 8
@@ -1932,7 +1932,7 @@ MonoBehaviour:
       collapsed: 0
       displayed: 0
       snapOffset: {x: 0, y: 0}
-      snapOffsetDelta: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 25}
       snapCorner: 0
       id: Scene View/Scene Visibility
       index: 9
@@ -1973,7 +1973,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_WindowGUID: cc27987af1a868c49b0894db9c0f5429
   m_Gizmos: 1
-  m_OverrideSceneCullingMask: 6917529027641081856
+  m_OverrideSceneCullingMask: 0
   m_SceneIsLit: 0
   m_SceneLighting: 1
   m_2DMode: 1
@@ -1981,9 +1981,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1079.8802, y: 222.77237, z: 12.310033}
+    m_Target: {x: 0, y: 0, z: 0}
     speed: 2
-    m_Value: {x: 1079.8802, y: 222.77237, z: 12.310033}
+    m_Value: {x: 0, y: 0, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -2034,9 +2034,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 673.2266
+    m_Target: 131.24405
     speed: 2
-    m_Value: 673.2266
+    m_Value: 131.24405
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -2103,21 +2103,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/Prefabs/Characters/TownHall_Keep_Castle
+    - Assets/Scripts/General/Parameters
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders: []
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\user\Documents\GitHub\Unity_Portfolio_RTSGame
+  m_LastProjectPath: D:\User\Unity\Unity_Portfolio_RTSGame
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: b85f0000
     m_LastClickedID: 24504
-    m_ExpandedIDs: 
+    m_ExpandedIDs: 00000000621801006418010066180100681801006a1801006c1801006e18010070180100721801007418010076180100781801007a1801007c1801007e18010080180100821801008418010086180100881801008a1801008c1801008e18010090180100921801009418010096180100981801009a1801009c1801009e180100a0180100a2180100a4180100a6180100a8180100aa180100ac180100ae180100b0180100b2180100b4180100b6180100b8180100ba180100bc180100be180100c0180100c2180100c4180100c6180100c8180100ca180100cc180100ce180100d0180100d2180100d4180100d6180100d8180100da180100dc180100de180100e0180100e2180100e4180100e6180100e8180100ea180100ec180100ee180100f0180100f2180100f4180100f6180100f8180100
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2142,21 +2142,21 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 784}
+    scrollPos: {x: 0, y: 1216}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000c8f50100e0f50100e2f50100886a02008e6a02009c6a0200a06a0200a26a0200a86a0200aa6a0200c06f0200ce6f0200f86f0200b8710200c6710200d4710200de710200e0710200707202000273020064730200527402008a7402004e8a0200528a0200548a020056c60200
+    m_ExpandedIDs: ffffffff00000000621801006418010066180100681801006a1801006c1801006e18010070180100721801007418010076180100781801007a1801007c1801007e180100801801008418010086180100881801008a1801008c1801008e180100901801009418010096180100981801009a1801009c1801009e180100a0180100a2180100a4180100a6180100a8180100ac180100b0180100b2180100b4180100b6180100b8180100ba180100bc180100be180100c0180100c2180100c4180100c6180100c8180100ca180100cc180100ce180100d0180100d2180100d4180100d6180100d8180100da180100dc180100de180100e0180100e2180100e4180100e6180100e8180100ea180100ec180100ee180100f0180100f2180100f4180100f6180100f8180100a4290100c6290100f4290100fc290100202a01003e2a0100
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: GameResourceCost
-      m_OriginalName: GameResourceCost
+      m_Name: UpgradeParametersText
+      m_OriginalName: UpgradeParametersText
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 128396
+      m_UserData: 20228
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
