@@ -29,15 +29,6 @@ public class SkillManager : MonoBehaviour
         TechTreeCheck();
         SkillCostSetting();
         UnitCountLimitCheck();
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Debug.Log(_farmUnits.Count);
-        }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            Debug.Log(_marketUnits.Count);
-        }
     }
 
     private void OnApplicationQuit()

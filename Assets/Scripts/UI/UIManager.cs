@@ -509,10 +509,7 @@ public class UIManager : MonoBehaviour
 
             g.transform.Find("Text").GetComponent<Text>().text = n;
 
-            Transform unselected = g.transform.Find("Unselected").GetComponent<Transform>();
-            Transform selected = g.transform.Find("Selected").GetComponent<Transform>();
-
-            AddGameOptionsPanelMenuListener(g.GetComponent<Button>(), n, unselected, selected);
+            AddGameOptionsPanelMenuListener(g.GetComponent<Button>(), n);
             availableMenus.Add(n);
         }
 
@@ -520,7 +517,7 @@ public class UIManager : MonoBehaviour
             SetGameOptionsContent(availableMenus[0]);
     }
 
-    private void AddGameOptionsPanelMenuListener(Button b, string menu, Transform unselected, Transform selected)
+    private void AddGameOptionsPanelMenuListener(Button b, string menu)
     {
         b.onClick.AddListener(() => SetGameOptionsContent(menu));
     }
@@ -588,7 +585,7 @@ public class UIManager : MonoBehaviour
                 {
                     GameObject g = GameObject.Instantiate(inputBindingPrefab, gEditor.transform);
                     g.transform.Find("Text").GetComponent<Text>().text = bindings[b].displayName;
-                    g.transform.Find("Key/Text").GetComponent<Text>().text = Utils.CapitalizeWords(bindings[b].key);
+                    g.transform.Find("Key/Text").GetComponent<Text>().text = bindings[b].key.ToUpper();
                     AddInputBindingButtonListener(g.transform.Find("Key").GetComponent<Button>(),
                         gEditor.transform, (GameInputParameters)parameters, b);
                 }
@@ -659,5 +656,15 @@ public class UIManager : MonoBehaviour
             field.SetValue(parameters, change.value);
 
         EventManager.TriggerEvent($"UpdateGameParameter:{gameParameters}", change.value);
+    }
+
+    public void OptionsToggle(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                optionsPanel.SetActive(false);
+                break;
+        }
     }
 }

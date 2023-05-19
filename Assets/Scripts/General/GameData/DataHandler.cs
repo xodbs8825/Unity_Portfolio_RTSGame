@@ -25,7 +25,7 @@ public static class DataHandler
             }
         }
 
-        Globals.SKILL_BUILDING_DATA = Resources.LoadAll<SkillData>("ScriptableObjects/Character/Peasant");
+        Globals.SKILL_BUILDING_DATA = Resources.LoadAll<SkillData>("ScriptableObjects/Units/Skills/Character/Peasant");
     }
 
     public static void SaveGameData()

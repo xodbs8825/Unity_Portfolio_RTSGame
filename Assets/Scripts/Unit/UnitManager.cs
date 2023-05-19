@@ -64,15 +64,6 @@ public class UnitManager : MonoBehaviour
         {
             TechTreeCheck();
             EventManager.TriggerEvent("SelectUnit", Unit);
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Debug.Log(Unit.HP);
-                Debug.Log(ableToAutoHill);
-            }
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                Debug.Log(attack);
-            }
 
             // 플레이어 아이디에 따라 빌딩, 캐릭터 조작
             if (Unit.Owner != GameManager.instance.gamePlayersParameters.myPlayerID)

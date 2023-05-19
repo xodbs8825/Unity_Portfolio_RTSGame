@@ -43,6 +43,8 @@ MonoBehaviour:
   - displayName: Build Library
     key: l
     inputEvent: Build:library
-  - displayName: Show Debug Console
-    key: '`'
-    inputEvent: ShowDebugConsole
+  buildings: []
+  characters:
+  - displayName: Spawn Peasant
+    key: p
+    inputEvent: Character:peasant
