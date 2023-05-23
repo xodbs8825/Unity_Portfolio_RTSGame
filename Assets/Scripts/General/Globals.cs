@@ -28,19 +28,6 @@ public static class Globals
 
     public static NavMeshSurface NAV_MESH_SURFACE;
 
-    public static Dictionary<int, List<ResourceValue>> UPGRADECOST_ATTACKDAMAGE = new Dictionary<int, List<ResourceValue>>()
-    {
-        {1, new List<ResourceValue>(){
-                new ResourceValue(InGameResource.Mineral, 100),
-                new ResourceValue(InGameResource.Gas, 100)}},
-        {2, new List<ResourceValue>(){
-                new ResourceValue(InGameResource.Mineral, 200),
-                new ResourceValue(InGameResource.Gas, 200)}},
-        {3, new List<ResourceValue>(){
-                new ResourceValue(InGameResource.Mineral, 300),
-                new ResourceValue(InGameResource.Gas, 300)}},
-    };
-
     public static void InitializeGameResources(int nPlayers)
     {
         GAME_RESOURCES = new Dictionary<InGameResource, GameResource>[nPlayers];

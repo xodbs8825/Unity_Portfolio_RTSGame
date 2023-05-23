@@ -279,17 +279,22 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void AddSelectedUnitToUIList(Unit unit)
+    public void UpdateSelectedUnitToUIList(Unit unit)
     {
-        // if there is another unit of the same type already selected, increase the counter
         Transform alreadyInstantiatedChild = selectedUnitsListParent.Find(unit.Code);
         if (alreadyInstantiatedChild != null)
         {
             Text t = alreadyInstantiatedChild.Find("Count").GetComponent<Text>();
-            int count = int.Parse(t.text);
-            t.text = (count + 1).ToString();
+            int count = 0;
+            for (int i = 0; i < Globals.SELECTED_UNITS.Count; i++)
+            {
+                if (Globals.SELECTED_UNITS[i].Unit.Code == unit.Code)
+                {
+                    count++;
+                }
+            }
+            t.text = count.ToString();
         }
-        // else create a brand new counter initialized with a count of 1
         else
         {
             GameObject g = GameObject.Instantiate(selectedUnitsDisplayPrefab, selectedUnitsListParent);
@@ -386,7 +391,7 @@ public class UIManager : MonoBehaviour
     {
         if (_selectedUnit == unit) return;
         ShowPanel(selectedUnitActionButtonsParent, true);
-        AddSelectedUnitToUIList(unit);
+        UpdateSelectedUnitToUIList(unit);
 
         bool unitIsMine = unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID;
 
@@ -409,7 +414,6 @@ public class UIManager : MonoBehaviour
                 t.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Imports/GameResources/{resource.Key}");
             }
         }
-
 
         if (unitIsMine)
             SetSelectedUnitUpgrade($"{unit.AttackDamage}", $"{unit.Armor}");

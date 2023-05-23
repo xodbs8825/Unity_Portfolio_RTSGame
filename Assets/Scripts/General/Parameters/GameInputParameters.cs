@@ -16,8 +16,6 @@ public class GameInputParameters : GameParameters
     public override string GetParametersName() => "Controls";
 
     public InputBinding[] bindings;
-    public InputBinding[] buildings;
-    public InputBinding[] characters;
 
     public void CheckForInput()
     {

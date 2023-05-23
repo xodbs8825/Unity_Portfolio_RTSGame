@@ -43,8 +43,3 @@ MonoBehaviour:
   - displayName: Build Library
     key: l
     inputEvent: Build:library
-  buildings: []
-  characters:
-  - displayName: Spawn Peasant
-    key: p
-    inputEvent: Character:peasant

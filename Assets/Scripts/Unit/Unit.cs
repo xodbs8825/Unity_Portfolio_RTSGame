@@ -185,14 +185,16 @@ public class Unit
     {
         if (_data.resourceProduction.Count() == 0) return null;
 
-        if (_data.resourceProduction[0].resource == InGameResource.Mineral)
+        for (int i = 0; i < _data.resourceProduction.Length; i++)
         {
-            _production[InGameResource.Mineral] = _data.resourceProduction[0].amount;
-        }
-
-        if (_data.resourceProduction[0].resource == InGameResource.Gas)
-        {
-            _production[InGameResource.Gas] = _data.resourceProduction[0].amount;
+            if (_data.resourceProduction[i].resource == InGameResource.Mineral)
+            {
+                _production[InGameResource.Mineral] = _data.resourceProduction[i].amount;
+            }
+            else if (_data.resourceProduction[i].resource == InGameResource.Gas)
+            {
+                _production[InGameResource.Gas] = _data.resourceProduction[i].amount;
+            }
         }
 
         return _production;

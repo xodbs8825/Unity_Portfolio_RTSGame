@@ -339,32 +339,40 @@ public class UnitManager : MonoBehaviour
     {
         Unit.HP -= attackPoints;
         UpdateHealthBar();
-        if (Unit.HP <= 0) Die();
-
-        attack = true;
-
-        if (_autoHillCoroutineCheck && _attackCoroutineCheck)
+        if (Unit.HP <= 0)
         {
-            StopAllCoroutines();
+            Die();
         }
+        else
+        {
+            attack = true;
 
-        StartCoroutine(Attacked());
-        StartCoroutine(AutoHillCheck(10));
+            if (_autoHillCoroutineCheck && _attackCoroutineCheck)
+            {
+                StopAllCoroutines();
+            }
+
+            StartCoroutine(Attacked());
+            StartCoroutine(AutoHillCheck(10));
+        }
     }
 
     private void Die()
     {
-        animator.SetTrigger($"Death{Random.Range(1, 3)}");
-
-        if (Unit.GetType() == typeof(Building))
+        if (Unit.GetType() == typeof(Character))
+        {
+            animator.SetTrigger($"Death{Random.Range(1, 3)}");
+        }
+        else if (Unit.GetType() == typeof(Building))
         {
             Transform VFX = transform.Find("VFX");
             if (VFX.GetChild(2))
             {
+                VFX.GetChild(0).gameObject.SetActive(false);
+                VFX.GetChild(1).gameObject.SetActive(false);
                 VFX.GetChild(2).gameObject.SetActive(true);
+                StartCoroutine(BuildingDestroy());
             }
-
-            StartCoroutine(BuildingDestroy());
         }
     }
 
@@ -375,8 +383,14 @@ public class UnitManager : MonoBehaviour
         Destroy(gameObject);
     }
 
+
     private IEnumerator BuildingDestroy()
     {
+        for (int i = 0; i < transform.childCount - 1; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
+        ableToAutoHill = false;
         yield return new WaitForSeconds(3);
         Death();
     }

@@ -16,25 +16,36 @@ MonoBehaviour:
   unitName: Keep
   description: 'Upgraded structure from Town Hall. Enables further upgrades and harder
     to destroy. '
-  healthPoint: 1800
   prefab: {fileID: 5542380815447981279, guid: f5b69c3b204f7174ea9f2b751615c859, type: 3}
   fieldOfView: 50
-  attackRange: 0
-  attackDamage: 0
-  attackRate: 0
-  myAttackDamageLevel: 0
-  enemyAttackDamageLevel: 0
-  myAttackRangeResearchComplete: 0
-  enemyAttackRangeResearchComplete: 0
-  upgrade:
+  healthPoint: 1800
+  upgradeParameters:
     attackDamage: 
     attackRange: []
-  canProduce: 
+    attackRate: []
+    armor: 
+  maximumUnitCount:
+    hasLimit: 0
+    unitMaxCount: 0
+    maxUnitReached: 0
+  resourceProduction:
+  - resource: 0
+    amount: 30
+  - resource: 1
+    amount: 30
   skills:
   - {fileID: 11400000, guid: cd816dfedbc04054aaa587cca3521453, type: 2}
   - {fileID: 11400000, guid: c8743eb1881c4a442aecaf9a23eeecaa, type: 2}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound: []
+  myAttackDamageLevel: 0
+  enemyAttackDamageLevel: 0
+  myAttackRangeResearchComplete: 0
+  enemyAttackRangeResearchComplete: 0
+  myAttackRateResearchComplete: 0
+  enemyAttackRateResearchComplete: 0
+  myArmorLevel: 0
+  enemyArmorLevel: 0
   constructionMeshes:
   - {fileID: 4300000, guid: 9f1a76b274a57c841b1aa03e7c5e5200, type: 3}
   - {fileID: 4300000, guid: 70a74a7e3a8172e4d9fc5cd02c4800ba, type: 3}
