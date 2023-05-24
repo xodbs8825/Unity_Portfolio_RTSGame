@@ -22,7 +22,7 @@ MonoBehaviour:
   - cost:
     - code: 0
       amount: 50
-  buildTime: 0
+  buildTime: 13
   castTime: 0
   cooldown: 0
   sprite: {fileID: 0}

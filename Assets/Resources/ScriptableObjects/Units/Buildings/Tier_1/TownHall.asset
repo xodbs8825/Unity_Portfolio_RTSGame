@@ -45,6 +45,12 @@ MonoBehaviour:
   enemyAttackRateResearchComplete: 0
   myArmorLevel: 0
   enemyArmorLevel: 0
+  skillQueue:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   constructionMeshes:
   - {fileID: 4300000, guid: 8bfa3476d6d02f04aac71fd7a8d1da0a, type: 3}
   - {fileID: 4300000, guid: 1fa72418f34eb6d42adaa061aa64c0d9, type: 3}

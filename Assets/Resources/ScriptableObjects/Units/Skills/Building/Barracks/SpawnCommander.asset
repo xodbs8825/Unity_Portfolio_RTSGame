@@ -24,7 +24,7 @@ MonoBehaviour:
       amount: 245
     - code: 1
       amount: 60
-  buildTime: 0
+  buildTime: 40
   castTime: 0
   cooldown: 0
   sprite: {fileID: 0}

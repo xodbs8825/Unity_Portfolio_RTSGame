@@ -45,6 +45,8 @@ public class UnitData : ScriptableObject
     public int myArmorLevel;
     [HideInInspector]
     public int enemyArmorLevel;
+    //[HideInInspector]
+    public List<SkillManager> skillQueue = new List<SkillManager>(5);
     #endregion
 }
 

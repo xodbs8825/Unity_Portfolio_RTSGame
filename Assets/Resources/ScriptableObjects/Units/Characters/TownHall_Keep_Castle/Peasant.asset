@@ -29,7 +29,7 @@ MonoBehaviour:
     hasLimit: 0
     unitMaxCount: 0
     maxUnitReached: 0
-  canProduce: 
+  resourceProduction: []
   skills:
   - {fileID: 11400000, guid: fee647ad0fb020a49941f2c36099d7f1, type: 2}
   - {fileID: 11400000, guid: 818efbdb2cecca247914457883439b68, type: 2}
@@ -52,4 +52,4 @@ MonoBehaviour:
   enemyArmorLevel: 0
   buildRate: 1
   buildRange: 5
-  buildPower: 200
+  buildPower: 20

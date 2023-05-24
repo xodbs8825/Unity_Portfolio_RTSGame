@@ -37,6 +37,8 @@ public class Unit
 
     protected string _unitName;
 
+    protected List<SkillManager> _skillQueue;
+
     public Unit(UnitData data, int owner) : this(data, owner, new List<ResourceValue>() { }) { }
     public Unit(UnitData data, int owner, List<ResourceValue> production)
     {
@@ -60,7 +62,7 @@ public class Unit
         foreach (SkillData skill in _data.skills)
         {
             skillManager = g.AddComponent<SkillManager>();
-            skillManager.Initialize(skill, g);
+            skillManager.Initialize(skill, g, this);
             _skillManagers.Add(skillManager);
         }
 
@@ -93,6 +95,8 @@ public class Unit
         minimapIcon.GetComponent<Renderer>().material.color = c;
 
         _unitName = data.unitName;
+
+        _skillQueue = data.skillQueue;
     }
 
     public void UpdateUpgradeParameters()
@@ -216,4 +220,5 @@ public class Unit
     public int Armor { get => _armor; }
     public float EnemySpottingRadius { get => _enemySpottingRadius; }
     public string UnitName { get => _unitName; }
+    public List<SkillManager> SkillQueue { get => _skillQueue; set => value = _skillQueue; }
 }

@@ -36,7 +36,7 @@ MonoBehaviour:
       amount: 300
     - code: 1
       amount: 300
-  buildTime: 0
+  buildTime: 60
   castTime: 0
   cooldown: 0
   sprite: {fileID: 0}

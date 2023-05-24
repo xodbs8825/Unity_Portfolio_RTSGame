@@ -38,8 +38,8 @@ public class SkillData : ScriptableObject
     public SkillCost[] skillCost;
 
     public float buildTime;
-    public float castTime;
-    public float cooldown;
+    //public float castTime;
+    //public float cooldown;
     public Sprite sprite;
 
     public AudioClip sound;
@@ -47,7 +47,7 @@ public class SkillData : ScriptableObject
     public TechTree techTree;
 
     #region Hide In Inspector
-    //[HideInInspector]
+    [HideInInspector]
     public bool techTreeOpen;
 
     [HideInInspector]

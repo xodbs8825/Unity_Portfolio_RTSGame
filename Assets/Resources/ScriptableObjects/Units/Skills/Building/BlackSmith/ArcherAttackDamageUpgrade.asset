@@ -35,12 +35,12 @@ MonoBehaviour:
       amount: 300
     - code: 1
       amount: 300
-  buildTime: 0
+  buildTime: 60
   castTime: 0
   cooldown: 0
   sprite: {fileID: 0}
   sound: {fileID: 8300000, guid: 012bcc20c5a29ee40b7f014109eefd79, type: 3}
   techTree:
-    requiredBuilding: []
+    requiredBuilding: {fileID: 0}
   techTreeOpen: 1
   skillAvailable: 0101

@@ -8,6 +8,7 @@ public class SkillManager : MonoBehaviour
     public SkillData skill;
 
     private GameObject _source;
+    private Unit _sourceUnit;
     private Button _button;
     private bool _ready;
 
@@ -158,10 +159,11 @@ public class SkillManager : MonoBehaviour
         }
     }
 
-    public void Initialize(SkillData skill, GameObject source)
+    public void Initialize(SkillData skill, GameObject source, Unit sourceUnit)
     {
         this.skill = skill;
         _source = source;
+        _sourceUnit = sourceUnit;
 
         UnitManager um = source.GetComponent<UnitManager>();
         if (um != null)
@@ -182,17 +184,27 @@ public class SkillManager : MonoBehaviour
 
     private IEnumerator WrappedTrigger(GameObject target)
     {
-        yield return new WaitForSeconds(skill.castTime);
+        if (skill.type != SkillType.UPGRADE_UNIT)
+        {
+            yield return new WaitForSeconds(skill.buildTime);
 
-        if (_sourceContextualSource != null && skill.sound)
-            _sourceContextualSource.PlayOneShot(skill.sound);
+            if (_sourceContextualSource != null && skill.sound)
+                _sourceContextualSource.PlayOneShot(skill.sound);
 
-        skill.Trigger(_source, target);
-        SetReady(false);
+            skill.Trigger(_source, target);
 
-        yield return new WaitForSeconds(skill.cooldown);
+            _sourceUnit.SkillQueue[0] = null;
+            for (int i = 0; i < _sourceUnit.SkillQueue.Count - 1; i++)
+            {
+                _sourceUnit.SkillQueue[i] = _sourceUnit.SkillQueue[i + 1];
+            }
+            _sourceUnit.SkillQueue[4] = null;
 
-        SetReady(true);
+            if (_sourceUnit.SkillQueue[0] != null)
+            {
+                StartCoroutine(WrappedTrigger(target));
+            }
+        }
     }
 
     private void SetReady(bool ready)
