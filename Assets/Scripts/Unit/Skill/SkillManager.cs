@@ -193,17 +193,24 @@ public class SkillManager : MonoBehaviour
 
             skill.Trigger(_source, target);
 
-            _sourceUnit.SkillQueue[0] = null;
-            for (int i = 0; i < _sourceUnit.SkillQueue.Count - 1; i++)
+            if (_sourceUnit.GetType() == typeof(Building))
             {
-                _sourceUnit.SkillQueue[i] = _sourceUnit.SkillQueue[i + 1];
-            }
-            _sourceUnit.SkillQueue[4] = null;
+                _sourceUnit.SkillQueue[0] = null;
+                for (int i = 0; i < _sourceUnit.SkillQueue.Count - 1; i++)
+                {
+                    _sourceUnit.SkillQueue[i] = _sourceUnit.SkillQueue[i + 1];
+                }
+                _sourceUnit.SkillQueue[4] = null;
 
-            if (_sourceUnit.SkillQueue[0] != null)
-            {
-                StartCoroutine(WrappedTrigger(target));
+                if (_sourceUnit.SkillQueue[0] != null)
+                {
+                    _sourceUnit.SkillQueue[0].StartCoroutine(WrappedTrigger(target));
+                }
             }
+        }
+        else
+        {
+            skill.Trigger(_source, target);
         }
     }
 

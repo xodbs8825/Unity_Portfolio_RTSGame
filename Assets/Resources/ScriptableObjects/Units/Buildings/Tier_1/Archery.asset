@@ -15,25 +15,38 @@ MonoBehaviour:
   code: archery
   unitName: Archery
   description: Archer unit training facility
-  healthPoint: 1000
   prefab: {fileID: 5542380815447981279, guid: adf0ca5707f2b7442b7d34f87aba61b8, type: 3}
   fieldOfView: 50
-  attackRange: 0
-  attackDamage: 0
-  attackRate: 0
-  myAttackDamageLevel: 0
-  enemyAttackDamageLevel: 0
-  myAttackRangeResearchComplete: 0
-  enemyAttackRangeResearchComplete: 0
-  upgrade:
+  healthPoint: 1000
+  upgradeParameters:
     attackDamage: 
     attackRange: []
-  canProduce: 
+    attackRate: []
+    armor: 
+  maximumUnitCount:
+    hasLimit: 0
+    unitMaxCount: 0
+    maxUnitReached: 0
+  resourceProduction: []
   skills:
   - {fileID: 11400000, guid: 34feb75e243c9c24484212e6a35bfb59, type: 2}
   - {fileID: 11400000, guid: 5a1a393269b3d56459675c4e83c2b7ee, type: 2}
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound:
+  - {fileID: 0}
+  myAttackDamageLevel: 0
+  enemyAttackDamageLevel: 0
+  myAttackRangeResearchComplete: 0
+  enemyAttackRangeResearchComplete: 0
+  myAttackRateResearchComplete: 0
+  enemyAttackRateResearchComplete: 0
+  myArmorLevel: 0
+  enemyArmorLevel: 0
+  skillQueue:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   constructionMeshes:
   - {fileID: 4300000, guid: 9018b9e829e697640b479e00dd8fdcc0, type: 3}

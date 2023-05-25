@@ -50,6 +50,7 @@ MonoBehaviour:
   enemyAttackRateResearchComplete: 0
   myArmorLevel: 0
   enemyArmorLevel: 0
+  skillQueue: []
   buildRate: 1
   buildRange: 5
-  buildPower: 20
+  buildPower: 200

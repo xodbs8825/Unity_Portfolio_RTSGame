@@ -27,7 +27,7 @@ MonoBehaviour:
     hasLimit: 0
     unitMaxCount: 0
     maxUnitReached: 0
-  canProduce: 
+  resourceProduction: []
   skills:
   - {fileID: 11400000, guid: fbdc05cdea1d9854fbb4a175881ada36, type: 2}
   - {fileID: 11400000, guid: 0f3d0da5e44d4e341be636d7341d3e14, type: 2}
@@ -38,18 +38,20 @@ MonoBehaviour:
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound:
   - {fileID: 8300000, guid: 3ebe6b402fa768e42a7619f00ec4527c, type: 3}
-  attackRange: 0
-  attackDamage: 0
-  attackRate: 0
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
   enemyAttackRangeResearchComplete: 0
   myAttackRateResearchComplete: 0
   enemyAttackRateResearchComplete: 0
-  armor: 0
   myArmorLevel: 0
   enemyArmorLevel: 0
+  skillQueue:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   constructionMeshes:
   - {fileID: 4300000, guid: 16c16ea3927925b4a85067b12080333d, type: 3}
   - {fileID: 4300000, guid: 75cb71cd68996f147af86badbf154a13, type: 3}

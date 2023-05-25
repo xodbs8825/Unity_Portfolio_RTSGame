@@ -38,6 +38,8 @@ public class UnitManager : MonoBehaviour
     private bool _autoHillCoroutineCheck;
     private bool _attackCoroutineCheck;
 
+    public float skillTimer;
+
     public virtual Unit Unit { get; set; }
 
     private void Awake()
@@ -53,6 +55,7 @@ public class UnitManager : MonoBehaviour
         ableToAutoHill = false;
         _autoHillCoroutineCheck = false;
         _attackCoroutineCheck = false;
+        skillTimer = 0;
     }
 
     private void Update()
@@ -60,34 +63,12 @@ public class UnitManager : MonoBehaviour
         Unit.UpdateUpgradeParameters();
         zoomSize = 60f / Camera.main.orthographicSize;
         UpdateHealthBar();
+        skillTimer += Time.deltaTime;
+
         if (_selected)
         {
             TechTreeCheck();
             EventManager.TriggerEvent("SelectUnit", Unit);
-
-            // 플레이어 아이디에 따라 빌딩, 캐릭터 조작
-            if (Unit.Owner != GameManager.instance.gamePlayersParameters.myPlayerID)
-            {
-                if (Unit.GetType() == typeof(Building))
-                {
-                    GetComponent<BuildingBT>().enabled = false;
-                }
-                else if (Unit.GetType() == typeof(Character))
-                {
-                    GetComponent<CharacterBT>().enabled = false;
-                }
-            }
-            else
-            {
-                if (Unit.GetType() == typeof(Building))
-                {
-                    GetComponent<BuildingBT>().enabled = true;
-                }
-                else if (Unit.GetType() == typeof(Character))
-                {
-                    GetComponent<CharacterBT>().enabled = true;
-                }
-            }
         }
     }
 

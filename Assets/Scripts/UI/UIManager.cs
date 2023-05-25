@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     public GameObject upgradeParametersText;
     public GameObject unitStatParameters;
     public GameObject unitProductionParent;
+    public Transform unitProductionProgressbarFill;
 
     [Header("Resources")]
     public Transform resourcesUIParent;
@@ -112,9 +113,19 @@ public class UIManager : MonoBehaviour
             ToggleOptionPanel();
         }
 
-
         if (_selectedUnit != null)
         {
+            UpdateSelectedUnitPanel();
+
+            if (_selectedUnit.Owner != _myPlayerID)
+            {
+                selectedUnitActionButtonsParent.SetActive(false);
+            }
+            else
+            {
+                selectedUnitActionButtonsParent.SetActive(true);
+            }
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 for (int i = 0; i < _selectedUnit.SkillQueue.Count; i++)
@@ -129,20 +140,14 @@ public class UIManager : MonoBehaviour
                     }
                 }
             }
-            if (Input.GetKeyDown(KeyCode.LeftAlt))
-            {
-                Debug.Log(_selectedUnit.SkillQueue.Count);
-            }
 
-            UpdateSelectedUnitPanel();
-
-            if (_selectedUnit.Owner != _myPlayerID)
+            if (_selectedUnit.GetType() == typeof(Character) || _selectedUnit.SkillQueue[0] == null || !_selectedUnit.IsAlive || _selectedUnit.Owner != GameManager.instance.gamePlayersParameters.myPlayerID)
             {
-                selectedUnitActionButtonsParent.SetActive(false);
+                unitProductionParent.SetActive(false);
             }
             else
             {
-                selectedUnitActionButtonsParent.SetActive(true);
+                unitProductionParent.SetActive(true);
             }
         }
 
@@ -407,6 +412,11 @@ public class UIManager : MonoBehaviour
     {
         SetSelectedUnitUpgrade($"{_selectedUnit.AttackDamage}", $"{_selectedUnit.Armor}");
         SetSelectedUnitSkillQueue();
+
+        if (_selectedUnit.GetType() == typeof(Building))
+        {
+            UpdateSkillQueueProgressbar();
+        }
     }
 
     private void SetSelectedUnitMenu(Unit unit)
@@ -465,12 +475,29 @@ public class UIManager : MonoBehaviour
         {
             if (_selectedUnit.SkillQueue[i] == null)
             {
-                unitProductionParent.transform.GetChild(1).GetChild(i).GetChild(0).GetComponent<Text>().text = i.ToString();
+                unitProductionParent.transform.GetChild(1).GetChild(i).GetChild(0).GetComponent<Text>().text = (i + 1).ToString();
             }
             else
             {
                 unitProductionParent.transform.GetChild(1).GetChild(i).GetChild(0).GetComponent<Text>().text = _selectedUnit.SkillQueue[i].skill.skillName;
             }
+        }
+    }
+
+    private void UpdateSkillQueueProgressbar()
+    {
+        if (_selectedUnit.SkillQueue[0] != null)
+        {
+            unitProductionProgressbarFill.GetComponent<Image>().fillAmount = _selectedUnit.Transform.GetComponent<UnitManager>().skillTimer / _selectedUnit.SkillQueue[0].skill.buildTime;
+
+            if (unitProductionProgressbarFill.GetComponent<Image>().fillAmount >= 1)
+            {
+                _selectedUnit.Transform.GetComponent<UnitManager>().skillTimer = 0;
+            }
+        }
+        else if (_selectedUnit.SkillQueue[0] == null)
+        {
+            _selectedUnit.Transform.GetComponent<UnitManager>().skillTimer = 0;
         }
     }
 
@@ -523,20 +550,28 @@ public class UIManager : MonoBehaviour
     {
         b.onClick.AddListener(() =>
         {
-            for (int j = 0; j < _selectedUnit.SkillQueue.Count; j++)
+            if (_selectedUnit.GetType() == typeof(Building))
             {
-                if (_selectedUnit.SkillQueue[j] == null)
+                for (int j = 0; j < _selectedUnit.SkillQueue.Count; j++)
                 {
-                    _selectedUnit.SkillQueue[j] = _selectedUnit.SkillManagers[i];
-
-                    if (j == 0)
+                    if (_selectedUnit.SkillQueue[j] == null)
                     {
-                        _selectedUnit.TriggerSkill(i);
-                    }
-                    EventManager.TriggerEvent("UnhoverSkillButton");
+                        _selectedUnit.SkillQueue[j] = _selectedUnit.SkillManagers[i];
 
-                    break;
+                        if (j == 0)
+                        {
+                            _selectedUnit.TriggerSkill(i);
+                        }
+                        EventManager.TriggerEvent("UnhoverSkillButton");
+
+                        break;
+                    }
                 }
+            }
+            else if (_selectedUnit.GetType() == typeof(Character))
+            {
+                _selectedUnit.TriggerSkill(i);
+                EventManager.TriggerEvent("UnhoverSkillButton");
             }
         });
     }
