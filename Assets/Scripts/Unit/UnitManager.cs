@@ -67,6 +67,7 @@ public class UnitManager : MonoBehaviour
 
         if (_selected)
         {
+            if (Unit.GetType() == typeof(Character) && Unit.Transform.GetComponent<CharacterManager>().IsConstructor) return;
             TechTreeCheck();
             EventManager.TriggerEvent("SelectUnit", Unit);
         }

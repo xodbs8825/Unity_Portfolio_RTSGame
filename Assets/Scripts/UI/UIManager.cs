@@ -7,10 +7,9 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [Header("UnitSelection")]
-    public Transform selectedUnitsListParent;
-    public GameObject selectedUnitsDisplayPrefab;
     public Transform selectionGroupsParent;
     private Unit _selectedUnit;
+    private Unit _prevSelectedUnit;
     public GameObject selectedUnitMenu;
     private Text _selectedUnitTitleText;
     public GameObject selectedUnitActionButtonsParent;
@@ -126,21 +125,6 @@ public class UIManager : MonoBehaviour
                 selectedUnitActionButtonsParent.SetActive(true);
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                for (int i = 0; i < _selectedUnit.SkillQueue.Count; i++)
-                {
-                    if (_selectedUnit.SkillQueue[i] == null)
-                    {
-                        Debug.Log("null");
-                    }
-                    else
-                    {
-                        Debug.Log(_selectedUnit.SkillQueue[i].skill.skillName);
-                    }
-                }
-            }
-
             if (_selectedUnit.GetType() == typeof(Character) || _selectedUnit.SkillQueue[0] == null || !_selectedUnit.IsAlive || _selectedUnit.Owner != GameManager.instance.gamePlayersParameters.myPlayerID)
             {
                 unitProductionParent.SetActive(false);
@@ -204,6 +188,7 @@ public class UIManager : MonoBehaviour
     {
         Unit unit = (Unit)data;
         _unit = unit;
+        _selectedUnit = unit;
 
         ShowPanel(selectedUnitMenu, true);
         UpdateSelectedUnitName(unit);
@@ -241,7 +226,6 @@ public class UIManager : MonoBehaviour
     private void OnDeselectUnit(object data)
     {
         Unit unit = (Unit)data;
-        RemoveSelectedUnitToUIList(unit.Code);
         _selectedUnit = null;
 
         if (Globals.SELECTED_UNITS.Count == 0)
@@ -303,48 +287,6 @@ public class UIManager : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void UpdateSelectedUnitToUIList(Unit unit)
-    {
-        Transform alreadyInstantiatedChild = selectedUnitsListParent.Find(unit.Code);
-        if (alreadyInstantiatedChild != null)
-        {
-            Text t = alreadyInstantiatedChild.Find("Count").GetComponent<Text>();
-            int count = 0;
-            for (int i = 0; i < Globals.SELECTED_UNITS.Count; i++)
-            {
-                if (Globals.SELECTED_UNITS[i].Unit.Code == unit.Code)
-                {
-                    count++;
-                }
-            }
-            t.text = count.ToString();
-        }
-        else
-        {
-            GameObject g = GameObject.Instantiate(selectedUnitsDisplayPrefab, selectedUnitsListParent);
-            g.name = unit.Code;
-            Transform t = g.transform;
-            t.Find("Count").GetComponent<Text>().text = "1";
-            t.Find("Name").GetComponent<Text>().text = unit.Data.unitName;
-        }
-    }
-
-    public void RemoveSelectedUnitToUIList(string code)
-    {
-        Transform listItem = selectedUnitsListParent.Find(code);
-        if (listItem == null) return;
-
-        Text t = listItem.Find("Count").GetComponent<Text>();
-
-        int count = int.Parse(t.text);
-        count -= 1;
-
-        if (count == 0)
-            DestroyImmediate(listItem.gameObject);
-        else
-            t.text = count.ToString();
     }
 
     private void OnHoverSkillButton(object data)
@@ -421,9 +363,8 @@ public class UIManager : MonoBehaviour
 
     private void SetSelectedUnitMenu(Unit unit)
     {
-        if (_selectedUnit == unit) return;
+        if (_prevSelectedUnit == unit) return;
         ShowPanel(selectedUnitActionButtonsParent, true);
-        UpdateSelectedUnitToUIList(unit);
 
         bool unitIsMine = unit.Owner == GameManager.instance.gamePlayersParameters.myPlayerID;
 
@@ -450,7 +391,7 @@ public class UIManager : MonoBehaviour
         if (unitIsMine)
             SetSelectedUnitUpgrade($"{unit.AttackDamage}", $"{unit.Armor}");
 
-        _selectedUnit = unit;
+        _prevSelectedUnit = unit;
     }
 
     private void SetSelectedUnitUpgrade(string attackDamage, string armor)

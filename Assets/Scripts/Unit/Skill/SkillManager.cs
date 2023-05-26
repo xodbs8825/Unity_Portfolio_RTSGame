@@ -204,7 +204,7 @@ public class SkillManager : MonoBehaviour
 
                 if (_sourceUnit.SkillQueue[0] != null)
                 {
-                    _sourceUnit.SkillQueue[0].StartCoroutine(WrappedTrigger(target));
+                    _sourceUnit.SkillQueue[0].Trigger();
                 }
             }
         }

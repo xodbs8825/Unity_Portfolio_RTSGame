@@ -39,6 +39,17 @@ public class UnitSelection : MonoBehaviour
             {
                 _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             }
+
+            for (int i = 0; i < Globals.SELECTED_UNITS.Count; i++)
+            {
+                if (Globals.SELECTED_UNITS[i].Unit.GetType() == typeof(Character))
+                {
+                    if (Globals.SELECTED_UNITS[i].GetComponent<CharacterManager>().IsConstructor)
+                    {
+                        Globals.SELECTED_UNITS[i].Deselect();
+                    }
+                }
+            }
         }
 
         for (int i = 0; i < _unitNumbering.Length; i++)
@@ -85,7 +96,6 @@ public class UnitSelection : MonoBehaviour
                 unit.GetComponent<UnitManager>().Deselect();
             }
         }
-
     }
 
     private void OnGUI()

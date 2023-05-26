@@ -23,8 +23,6 @@ MonoBehaviour:
     - code: 0
       amount: 100
   buildTime: 25
-  castTime: 0
-  cooldown: 0
   sprite: {fileID: 0}
   sound: {fileID: 0}
   techTree:

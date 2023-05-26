@@ -90,7 +90,7 @@ public class BuildingPlacer : MonoBehaviour
                         {
                             _building = new Building((BuildingData)_skill.targetUnit[0], _building.Owner, new List<ResourceValue>() { });
                             _building.SetPosition(_position);
-                            PlaceBuilding(false);
+                            PlaceBuilding();
                         }
                         else if (_upgradeTimer < _skill.buildTime)
                         {
@@ -199,7 +199,7 @@ public class BuildingPlacer : MonoBehaviour
         _placedBuilding = new Building(data, owner, production);
         _placedBuilding.SetPosition(position);
 
-        PlaceBuilding(false);
+        PlaceBuilding();
 
         _placedBuilding.SetConstructionHP(_placedBuilding.MaxHP);
 
@@ -250,7 +250,7 @@ public class BuildingPlacer : MonoBehaviour
         isAbleToBuild = true;
     }
 
-    void PlaceBuilding(bool canChain = false)
+    void PlaceBuilding()
     {
         if (_builderManager != null)
         {
@@ -261,7 +261,6 @@ public class BuildingPlacer : MonoBehaviour
 
             _placedBuilding.Place();
             _placedBuilding.Transform.GetComponent<BuildingManager>().Select();
-            //EventManager.TriggerEvent("PlaceBuildingOff");
             _placedBuilding = null;
         }
         else
@@ -274,21 +273,7 @@ public class BuildingPlacer : MonoBehaviour
             {
                 _building.Place();
             }
-
-            //if (canChain)
-            //{
-            //    if (_placedBuilding.CanBuy())
-            //    {
-            //        PreparePlacedBuilding(_placedBuilding.DataIndex);
-            //    }
-            //    else
-            //    {
-            //        //EventManager.TriggerEvent("PlaceBuildingOff");
-            //        _placedBuilding = null;
-            //    }
-            //}
         }
-        //EventManager.TriggerEvent("UpdateResourcesTexts");
 
         isAbleToBuild = true;
     }
