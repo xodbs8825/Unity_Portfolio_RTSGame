@@ -466,7 +466,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            unitPortrait.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Imports/AssetStore/GUI_Parts/Gui_parts/Mini_background");
+            unitPortrait.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Imports/AssetStore/UI/GUI_Parts/Gui_parts/Mini_background");
         }
     }
 

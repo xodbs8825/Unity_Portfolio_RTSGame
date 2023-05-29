@@ -18,5 +18,5 @@ MonoBehaviour:
   - sfxVolume
   musicVolume: -12
   sfxVolume: 0
-  buildingPlacedSound: {fileID: 8300000, guid: 60d64185f84c28a45ae95eaef8dbc331, type: 3}
-  buildingFinishedSound: {fileID: 0}
+  buildingPlacedSound: {fileID: 8300000, guid: 30276ec3e6fb58248b0bf8d02fb44e98, type: 3}
+  buildingFinishedSound: {fileID: 8300000, guid: 4ef2eeb0929631e48bd72bd0b1371468, type: 3}

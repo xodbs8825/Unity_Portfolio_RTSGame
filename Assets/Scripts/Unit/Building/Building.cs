@@ -116,6 +116,41 @@ public class Building : Unit
             SetAlive();
     }
 
+    public void _SetConstructionHP(float constructionHP)
+    {
+        if (_isAlive) return;
+
+        _constructionHP = constructionHP;
+        float constructionRatio = _constructionHP / (float)MaxHP;
+
+        int meshIndex = 0;
+        if (constructionRatio < 0.5f)
+        {
+            meshIndex = 0;
+        }
+        else if (constructionRatio >= 0.5f && constructionRatio < 1)
+        {
+            meshIndex = 1;
+        }
+        else if (constructionRatio >= 1)
+        {
+            meshIndex = 2;
+        }
+
+        Mesh mesh = _constructionMeshes[meshIndex];
+        _rendererMesh.sharedMesh = mesh;
+
+        if (constructionRatio >= 1)
+        {
+            _isAlive = true;
+            _bt.enabled = true;
+
+            ComputeProduction();
+
+            Globals.UpdateNevMeshSurface();
+        }
+    }
+
     public void SetUpgradeConstructionHP(float prevHP, float currentHP, float constructionRatio)
     {
         _constructionHP = prevHP + (currentHP - prevHP) * constructionRatio;
