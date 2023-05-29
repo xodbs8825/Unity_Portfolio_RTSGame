@@ -23,9 +23,7 @@ MonoBehaviour:
     - code: 0
       amount: 100
   buildTime: 0
-  castTime: 0
-  cooldown: 0
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: fd52c4ff7f6a74949b66d7c8eb2ce845, type: 3}
   sound: {fileID: 0}
   techTree:
     requiredBuilding: {fileID: 0}

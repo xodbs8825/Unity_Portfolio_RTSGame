@@ -24,10 +24,8 @@ MonoBehaviour:
       amount: 50
     - code: 1
       amount: 50
-  buildTime: 28
-  castTime: 0
-  cooldown: 0
-  sprite: {fileID: 0}
+  buildTime: 18
+  sprite: {fileID: 21300000, guid: db7d443ed9bb7454aa8814109bb4e056, type: 3}
   sound: {fileID: 0}
   techTree:
     requiredBuilding: {fileID: 0}

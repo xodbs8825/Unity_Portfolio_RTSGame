@@ -15,6 +15,7 @@ public class UnitData : ScriptableObject
     public GameObject prefab;
     public float fieldOfView;
     public float healthPoint;
+    public Sprite unitPortrait;
 
     [Header("Unit Status")]
     public UpgradeSystem upgradeParameters;

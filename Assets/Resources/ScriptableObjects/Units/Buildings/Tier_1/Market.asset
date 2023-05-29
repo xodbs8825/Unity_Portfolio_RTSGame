@@ -18,6 +18,7 @@ MonoBehaviour:
   prefab: {fileID: 5542380815447981279, guid: 83bf2b285fa1dd34fa381435d5f983ec, type: 3}
   fieldOfView: 50
   healthPoint: 750
+  unitPortrait: {fileID: 21300000, guid: 68fbcecc8a014dd468319677f94f2311, type: 3}
   upgradeParameters:
     attackDamage: 
     attackRange: []

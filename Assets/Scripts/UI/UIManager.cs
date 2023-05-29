@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     public GameObject unitStatParameters;
     public GameObject unitProductionParent;
     public Transform unitProductionProgressbarFill;
+    public GameObject unitPortrait;
 
     [Header("Resources")]
     public Transform resourcesUIParent;
@@ -111,6 +112,8 @@ public class UIManager : MonoBehaviour
         {
             ToggleOptionPanel();
         }
+
+        UpdateSelectedUnit();
 
         if (_selectedUnit != null)
         {
@@ -220,6 +223,11 @@ public class UIManager : MonoBehaviour
         else
         {
             unitStatParameters.SetActive(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log(unit.SkillManagers[0].skill.targetUnit[0].unitName);
         }
     }
 
@@ -417,10 +425,12 @@ public class UIManager : MonoBehaviour
             if (_selectedUnit.SkillQueue[i] == null)
             {
                 unitProductionParent.transform.GetChild(1).GetChild(i).GetChild(0).GetComponent<Text>().text = (i + 1).ToString();
+                unitProductionParent.transform.GetChild(1).GetChild(i).GetComponent<Image>().sprite = null;
             }
             else
             {
-                unitProductionParent.transform.GetChild(1).GetChild(i).GetChild(0).GetComponent<Text>().text = _selectedUnit.SkillQueue[i].skill.skillName;
+                //unitProductionParent.transform.GetChild(1).GetChild(i).GetChild(0).GetComponent<Text>().text = _selectedUnit.SkillQueue[i].skill.skillName;
+                unitProductionParent.transform.GetChild(1).GetChild(i).GetComponent<Image>().sprite = _selectedUnit.SkillQueue[i].skill.sprite;
             }
         }
     }
@@ -446,6 +456,18 @@ public class UIManager : MonoBehaviour
     {
         if (_selectedUnitTitleText != null)
             _selectedUnitTitleText.text = unit.Data.unitName;
+    }
+
+    private void UpdateSelectedUnit()
+    {
+        if (_selectedUnit != null)
+        {
+            unitPortrait.transform.GetChild(0).GetComponent<Image>().sprite = _selectedUnit.Data.unitPortrait;
+        }
+        else
+        {
+            unitPortrait.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Imports/AssetStore/GUI_Parts/Gui_parts/Mini_background");
+        }
     }
 
     private void UpdateSelectedUnitSKill(Unit unit)
@@ -484,7 +506,8 @@ public class UIManager : MonoBehaviour
     {
         unit.SkillManagers[index].SetButton(g.GetComponent<Button>());
         g.name = unit.SkillManagers[index].skill.skillName;
-        g.GetComponent<Transform>().Find("Text").GetComponent<Text>().text = unit.SkillManagers[index].skill.skillName;
+        g.transform.Find("Content").GetComponent<Image>().sprite = unit.SkillManagers[index].skill.sprite;
+        //g.GetComponent<Transform>().Find("Text").GetComponent<Text>().text = unit.SkillManagers[index].skill.skillName;
     }
 
     private void AddUnitSkillButtonListener(Button b, int i)

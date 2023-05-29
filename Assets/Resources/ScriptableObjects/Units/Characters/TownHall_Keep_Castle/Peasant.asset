@@ -18,6 +18,7 @@ MonoBehaviour:
   prefab: {fileID: 5542380815447981279, guid: f294de0d17cb791459e18eb4754e5c06, type: 3}
   fieldOfView: 50
   healthPoint: 60
+  unitPortrait: {fileID: 21300000, guid: a5591d4ca3819d14787a052e91271189, type: 3}
   upgradeParameters:
     attackDamage: 64000000
     attackRange:
@@ -53,4 +54,4 @@ MonoBehaviour:
   skillQueue: []
   buildRate: 0.1
   buildRange: 5
-  buildPower: 2
+  buildPower: 20

@@ -18,6 +18,7 @@ MonoBehaviour:
   prefab: {fileID: 5542380815447981279, guid: a7b02e32feeaafa40a1142ee788fbfc2, type: 3}
   fieldOfView: 50
   healthPoint: 150
+  unitPortrait: {fileID: 21300000, guid: 5c61d8a7f20086d458809cef5b2cf7b6, type: 3}
   upgradeParameters:
     attackDamage: 05000000060000000700000008000000
     attackRange:
@@ -29,7 +30,7 @@ MonoBehaviour:
     hasLimit: 0
     unitMaxCount: 0
     maxUnitReached: 0
-  canProduce: 
+  resourceProduction: []
   skills: []
   selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound: []
@@ -41,6 +42,7 @@ MonoBehaviour:
   enemyAttackRateResearchComplete: 0
   myArmorLevel: 0
   enemyArmorLevel: 0
+  skillQueue: []
   buildRate: 0
   buildRange: 0
   buildPower: 0
