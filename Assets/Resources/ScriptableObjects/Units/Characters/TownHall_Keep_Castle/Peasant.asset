@@ -41,8 +41,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f79f8b304c5765447b2519eec44a3ffe, type: 2}
   - {fileID: 11400000, guid: 1e1b8c8261d9d6b42a91ef10054f2c5e, type: 2}
   - {fileID: 11400000, guid: ce6021d1974474544b04e2ab257b25f7, type: 2}
-  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
-  interactSound: []
+  interactSound:
+  - {fileID: 8300000, guid: 42b36cd2565f7414db079c876c90ba0c, type: 3}
+  - {fileID: 8300000, guid: f932657bd475f6a40a04e274a95e686c, type: 3}
+  - {fileID: 8300000, guid: e0c0d007df6a5b34ba3fbea84935332f, type: 3}
+  - {fileID: 8300000, guid: af0b1ff63dd3a8247a816bf19102b655, type: 3}
+  - {fileID: 8300000, guid: 64f3c3cc31697ae4a90ecffacd136a78, type: 3}
+  - {fileID: 8300000, guid: aa3c231617e432348833f533ec6ebbb2, type: 3}
+  - {fileID: 8300000, guid: 161317998a8a80545a5641fbf53f375b, type: 3}
+  - {fileID: 8300000, guid: 68b61b455219e9741a2f74352dbe5e4b, type: 3}
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0

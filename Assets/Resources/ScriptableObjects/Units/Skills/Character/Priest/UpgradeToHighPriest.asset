@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea5e3cf08db503540bcaa43ba2f921af, type: 3}
+  m_Name: UpgradeToHighPriest
+  m_EditorClassIdentifier: 
+  code: upgrade_highPriest
+  skillName: Upgrade to HIgh Priest
+  description: Upgrade to HIgh Priest
+  type: 6
+  targetUnit:
+  - {fileID: 11400000, guid: b36a342fa4b11b847bbd6a77321bb75f, type: 2}
+  skillCost:
+  - cost:
+    - code: 0
+      amount: 150
+    - code: 1
+      amount: 50
+  buildTime: 0
+  sprite: {fileID: 21300000, guid: 9956f031e63e43f43a31b52dcaaf06f2, type: 3}
+  sound: {fileID: 8300000, guid: 920a69ea251887646968a01a1c03074a, type: 3}
+  techTree:
+    requiredBuilding: {fileID: 11400000, guid: d01775be02f82374fb42a6fdfd514d57, type: 2}
+  techTreeOpen: 0
+  skillAvailable: 0000

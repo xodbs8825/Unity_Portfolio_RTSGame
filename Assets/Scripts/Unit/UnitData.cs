@@ -26,7 +26,6 @@ public class UnitData : ScriptableObject
     public List<SkillData> skills = new List<SkillData>();
 
     [Header("Audio")]
-    public AudioClip selectSound;
     public AudioClip[] interactSound;
 
     #region Hide In Inspector

@@ -22,7 +22,6 @@ public class UnitManager : MonoBehaviour
     public GameObject fov;
 
     public AudioSource contextualSource;
-    private bool _isSelectSoundEnded = true;
 
     public int ownerMatrialSlotIndex = 0;
 
@@ -95,13 +94,6 @@ public class UnitManager : MonoBehaviour
         {
             healthBar.SetActive(true);
             UpdateHealthBar();
-        }
-
-        if (_isSelectSoundEnded)
-        {
-            _isSelectSoundEnded = false;
-            contextualSource.PlayOneShot(Unit.Data.selectSound);
-            StartCoroutine(SelectSoundEnded(Unit.Data.selectSound.length));
         }
 
         _selected = true;
@@ -254,12 +246,6 @@ public class UnitManager : MonoBehaviour
     }
 
     public virtual void PlaySound() { }
-
-    private IEnumerator SelectSoundEnded(float seconds)
-    {
-        yield return new WaitForSecondsRealtime(seconds);
-        _isSelectSoundEnded = true;
-    }
 
     public virtual void SetOwnerMaterial(int owner)
     {
