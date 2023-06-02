@@ -154,8 +154,6 @@ public class UIManager : MonoBehaviour
         EventManager.AddListener("SelectUnit", OnSelectUnit);
         EventManager.AddListener("DeselectUnit", OnDeselectUnit);
         EventManager.AddListener("SetPlayer", OnSetPlayer);
-        EventManager.AddListener("ActionUIOn", OnActionUIOn);
-        EventManager.AddListener("ActionUIOff", OnActionUIOff);
     }
 
     private void OnDisable()
@@ -166,18 +164,6 @@ public class UIManager : MonoBehaviour
         EventManager.RemoveListener("SelectUnit", OnSelectUnit);
         EventManager.RemoveListener("DeselectUnit", OnDeselectUnit);
         EventManager.RemoveListener("SetPlayer", OnSetPlayer);
-        EventManager.RemoveListener("ActionUIOn", OnActionUIOn);
-        EventManager.RemoveListener("ActionUIOff", OnActionUIOff);
-    }
-
-    private void OnActionUIOn()
-    {
-        ShowPanel(selectedUnitActionButtonsParent, true);
-    }
-
-    private void OnActionUIOff()
-    {
-        ShowPanel(selectedUnitActionButtonsParent, false);
     }
 
     private void OnSetPlayer(object data)
@@ -227,7 +213,7 @@ public class UIManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log(unit.SkillManagers[0].skill.targetUnit[0].unitName);
+            Debug.Log(unit.IsAlive);
         }
     }
 
@@ -291,6 +277,17 @@ public class UIManager : MonoBehaviour
                                 _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(true);
                             }
                         }
+                    }
+                }
+            }
+
+            if (_unit.SkillManagers.Count < 9)
+            {
+                for (int i = _unit.SkillManagers.Count; i < 9; i++)
+                {
+                    if (_selectedUnitActionButtonsParent.GetChild(i).childCount > 0)
+                    {
+                        _selectedUnitActionButtonsParent.GetChild(i).GetChild(0).gameObject.SetActive(false);
                     }
                 }
             }

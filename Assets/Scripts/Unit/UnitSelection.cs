@@ -74,6 +74,7 @@ public class UnitSelection : MonoBehaviour
         {
             SelectUnitsInDraggingBox();
         }
+
     }
 
     private void SelectUnitsInDraggingBox()
