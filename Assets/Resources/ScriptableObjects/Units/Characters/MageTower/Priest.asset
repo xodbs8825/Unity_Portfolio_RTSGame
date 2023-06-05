@@ -34,8 +34,15 @@ MonoBehaviour:
   skills:
   - {fileID: 11400000, guid: de525b7f54f6cec4daaecfe2bcf9bc81, type: 2}
   - {fileID: 11400000, guid: 9e1848ecd725f0b4788f0ead53cbbea5, type: 2}
-  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
-  interactSound: []
+  interactSound:
+  - {fileID: 8300000, guid: 0c6bfa243b767f84a849aa9a0a1502e0, type: 3}
+  - {fileID: 8300000, guid: f16e2c1ffe059cb45995edd457b191ba, type: 3}
+  - {fileID: 8300000, guid: a5aec8f3d69d1cc4cafcc12dc91a945f, type: 3}
+  - {fileID: 8300000, guid: d1548ca83c7642942a87675f4ec4c760, type: 3}
+  - {fileID: 8300000, guid: 0c519e68c24ade44682d221677033a79, type: 3}
+  - {fileID: 8300000, guid: 0140ee0dc062dcf4dafddaca4fefbd5c, type: 3}
+  - {fileID: 8300000, guid: fadf7dad51834cd4eb8c2e9d3de890a4, type: 3}
+  - {fileID: 8300000, guid: 731680e565482b44abead369d06e221a, type: 3}
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0

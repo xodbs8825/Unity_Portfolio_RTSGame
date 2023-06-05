@@ -32,8 +32,12 @@ MonoBehaviour:
     maxUnitReached: 0
   resourceProduction: []
   skills: []
-  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
-  interactSound: []
+  interactSound:
+  - {fileID: 8300000, guid: c2771d1a3320fb149ae3663ecbf53ffd, type: 3}
+  - {fileID: 8300000, guid: da982b6bb3864de478c02502626435f2, type: 3}
+  - {fileID: 8300000, guid: f25cfe09c4a1f634099c3ff245e78eab, type: 3}
+  - {fileID: 8300000, guid: 2698ffc6652f5fd45b070248d25c1331, type: 3}
+  - {fileID: 8300000, guid: bcdb5d6402d6c6542871d80b5086f7c5, type: 3}
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
