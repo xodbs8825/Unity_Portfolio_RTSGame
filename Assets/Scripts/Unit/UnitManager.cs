@@ -323,6 +323,11 @@ public class UnitManager : MonoBehaviour
             StartCoroutine(Attacked());
             StartCoroutine(AutoHillCheck(10));
         }
+
+        if (Unit.Data.attackSound != null)
+        {
+            contextualSource.PlayOneShot(Unit.Data.attackSound[Random.Range(0, Unit.Data.attackSound.Length)]);
+        }
     }
 
     private void Die()
@@ -341,6 +346,11 @@ public class UnitManager : MonoBehaviour
                 VFX.GetChild(2).gameObject.SetActive(true);
                 StartCoroutine(BuildingDestroy());
             }
+        }
+
+        if (Unit.Data.deathSound != null)
+        {
+            contextualSource.PlayOneShot(Unit.Data.deathSound);
         }
     }
 

@@ -38,6 +38,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f25cfe09c4a1f634099c3ff245e78eab, type: 3}
   - {fileID: 8300000, guid: 2698ffc6652f5fd45b070248d25c1331, type: 3}
   - {fileID: 8300000, guid: bcdb5d6402d6c6542871d80b5086f7c5, type: 3}
+  attackSound:
+  - {fileID: 8300000, guid: c80ed3b7628442544adb1153aa8106d2, type: 3}
+  - {fileID: 8300000, guid: 23633fe867dd3dc4e8b2ba670ea7c687, type: 3}
+  - {fileID: 8300000, guid: 3714f52e0bf63ca4f9ed493ebc968c2d, type: 3}
+  - {fileID: 8300000, guid: 9697cdd1dbad1ed41bcd3fced139676c, type: 3}
+  - {fileID: 8300000, guid: 2f46a4befd057ae47b678866977d330c, type: 3}
+  - {fileID: 8300000, guid: 375cc68729412e04088151fc298e1577, type: 3}
+  - {fileID: 8300000, guid: d4466363967ced84e9180cf2307ab724, type: 3}
+  - {fileID: 8300000, guid: 2f5bb6ef68d11af488597e75dca15c68, type: 3}
+  - {fileID: 8300000, guid: 2301facf22c80e44395d7fa4b528de19, type: 3}
+  - {fileID: 8300000, guid: 59ea8f9ea1df08f4f877e8030361aafd, type: 3}
+  deathSound: {fileID: 8300000, guid: 4e43158c58c3b9542aa30f699f31dd98, type: 3}
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0

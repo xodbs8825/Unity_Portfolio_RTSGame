@@ -7,4 +7,8 @@ public class BuildingData : UnitData
 {
     [Header("Construction")]
     public Mesh[] constructionMeshes;
+
+    [Header("Building Interact Sound")]
+    public AudioClip buildingConstruction;
+    public AudioClip buildingDamaged;
 }

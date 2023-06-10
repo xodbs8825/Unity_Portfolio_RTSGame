@@ -93,8 +93,6 @@ public class Building : Unit
         _constructionHP = constructionHP;
         float constructionRatio = _constructionHP / (float)MaxHP;
 
-        //int meshIndex = Mathf.Max(0, (int)(_constructionMeshes.Length * constructionRatio) - 1);
-
         int meshIndex = 0;
         if (constructionRatio < 0.5f)
         {

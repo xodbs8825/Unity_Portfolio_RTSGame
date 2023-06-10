@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BuildingManager : UnitManager
 {
     private Building _building = null;
-    private AudioClip _buildingInteractSound;
+    private BuildingData _buildingData;
     private bool _isAbleToPlaySound = true;
     private bool triggered;
 
@@ -22,12 +22,13 @@ public class BuildingManager : UnitManager
     {
         _collider = GetComponent<BoxCollider>();
         _building = building;
+        _buildingData = (BuildingData)_building.Data;
     }
 
     public override void Select(bool singleClick, bool holdingShift)
     {
         base.Select(singleClick, holdingShift);
-        if (base.IsSelected && _buildingInteractSound != null)
+        if (base.IsSelected && _buildingData.interactSound[0] != null)
             PlaySound();
     }
 
@@ -118,9 +119,26 @@ public class BuildingManager : UnitManager
         if (_isAbleToPlaySound)
         {
             _isAbleToPlaySound = false;
-            contextualSource.PlayOneShot(_buildingInteractSound);
-            StartCoroutine(SoundPlayDelay(_buildingInteractSound.length));
+
+            if (!_building.IsAlive)
+            {
+                PlayInteractSound(_buildingData.buildingConstruction);
+            }
+            else
+            {
+                PlayInteractSound(_buildingData.interactSound[0]);
+                if (_building.HP < (_building.MaxHP / 2))
+                {
+                    contextualSource.PlayOneShot(_buildingData.buildingDamaged);
+                }
+            }
         }
+    }
+
+    private void PlayInteractSound(AudioClip sound)
+    {
+        contextualSource.PlayOneShot(sound);
+        StartCoroutine(SoundPlayDelay(sound.length));
     }
 
     private IEnumerator SoundPlayDelay(float seconds)

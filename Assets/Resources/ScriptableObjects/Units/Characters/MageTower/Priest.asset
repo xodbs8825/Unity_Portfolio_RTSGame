@@ -43,6 +43,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0140ee0dc062dcf4dafddaca4fefbd5c, type: 3}
   - {fileID: 8300000, guid: fadf7dad51834cd4eb8c2e9d3de890a4, type: 3}
   - {fileID: 8300000, guid: 731680e565482b44abead369d06e221a, type: 3}
+  attackSound:
+  - {fileID: 8300000, guid: 8f7932f5f27be8c44911f44d2119a6ac, type: 3}
+  - {fileID: 8300000, guid: ab726005b4e40834f9c703df405dc612, type: 3}
+  - {fileID: 8300000, guid: 8cc846ecc481f6d42b491d2072f0b4a7, type: 3}
+  - {fileID: 8300000, guid: ba24f21b14c85b041b8ffc3478144f5b, type: 3}
+  - {fileID: 8300000, guid: a0882fc1fb3c17a40bd575252d722c95, type: 3}
+  - {fileID: 8300000, guid: 345b6e79713bbb04bbf065430e5a1ee5, type: 3}
+  - {fileID: 8300000, guid: 024db9ab3e7dec4448127822bd536d06, type: 3}
+  - {fileID: 8300000, guid: 2ba437b36bef3664da613c3cf45e61f6, type: 3}
+  - {fileID: 8300000, guid: 664af818bb3e515419be9b534954cad1, type: 3}
+  dualWieldAttackSound: []
+  deathSound: {fileID: 8300000, guid: b21e555cb87c7034a86c885979dbf8f1, type: 3}
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0

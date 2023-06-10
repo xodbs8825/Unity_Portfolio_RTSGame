@@ -27,6 +27,9 @@ public class UnitData : ScriptableObject
 
     [Header("Audio")]
     public AudioClip[] interactSound;
+    public AudioClip[] attackSound;
+    public AudioClip[] dualWieldAttackSound;
+    public AudioClip deathSound;
 
     #region Hide In Inspector
     [HideInInspector]

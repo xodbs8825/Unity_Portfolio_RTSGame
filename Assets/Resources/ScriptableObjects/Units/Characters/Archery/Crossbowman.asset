@@ -40,6 +40,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: eed7cee4224e5b249be6e0383b4b34a0, type: 3}
   - {fileID: 8300000, guid: b81eea985b0a446488f287499eb6bb9d, type: 3}
   - {fileID: 8300000, guid: 9a6cc7994065e504b9de13b1a0402e8c, type: 3}
+  attackSound:
+  - {fileID: 8300000, guid: d2b77263dff25714eae2dbfd3d58848e, type: 3}
+  - {fileID: 8300000, guid: ee83d76669ad1054983775dabc98b096, type: 3}
+  - {fileID: 8300000, guid: 1f3b58217c95392448905301643de08a, type: 3}
+  - {fileID: 8300000, guid: c42eb55263df58c47aef31d72fed492d, type: 3}
+  - {fileID: 8300000, guid: e600a377ca0ff2f4e8921da314760a01, type: 3}
+  deathSound: {fileID: 8300000, guid: 4c939e81062f58f4eb2b4ac8fcc21ac3, type: 3}
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
