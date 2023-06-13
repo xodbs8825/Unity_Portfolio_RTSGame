@@ -102,6 +102,7 @@ public class SkillData : ScriptableObject
                     if (Globals.CanBuy(_cost))
                     {
                         BuildingPlacer.instance.SelectPlacedBuilding((BuildingData)targetUnit[0], manager);
+                        EventManager.TriggerEvent("PlaySoundByName", "buildingPlacedSound");
                     }
                 }
                 break;

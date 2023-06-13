@@ -201,7 +201,7 @@ public class BuildingPlacer : MonoBehaviour
 
         PlaceBuilding();
 
-        _placedBuilding._SetConstructionHP(_placedBuilding.MaxHP);
+        _placedBuilding.SetConstructionHP(_placedBuilding.MaxHP);
 
         if (_placedBuilding.Owner == GameManager.instance.gamePlayersParameters.myPlayerID)
         {

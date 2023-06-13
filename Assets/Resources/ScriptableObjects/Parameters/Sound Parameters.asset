@@ -20,3 +20,5 @@ MonoBehaviour:
   sfxVolume: 0
   buildingPlacedSound: {fileID: 8300000, guid: 30276ec3e6fb58248b0bf8d02fb44e98, type: 3}
   buildingFinishedSound: {fileID: 8300000, guid: 4ef2eeb0929631e48bd72bd0b1371468, type: 3}
+  unitSelectSound: {fileID: 8300000, guid: 48c45a5a57431fa44aa14a7f1795a9fa, type: 3}
+  buttonClickSound: {fileID: 8300000, guid: e1346f5f520488e4cb78c246844074cf, type: 3}

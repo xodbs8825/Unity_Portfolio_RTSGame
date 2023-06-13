@@ -127,6 +127,7 @@
     <Compile Include="Assets\Scripts\UI\MainMenu\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\UI\MiniMap\MinimapCaptureWindow.cs" />
     <Compile Include="Assets\Scripts\Map\MapMetaDataExtractor.cs" />
+    <Compile Include="Assets\Scripts\UI\ButtonSoundManager.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Task\TaskTrySetDestinationOrTarget.cs" />
     <Compile Include="Assets\Scripts\General\BehaviorTree\Node\Parallel.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerData.cs" />

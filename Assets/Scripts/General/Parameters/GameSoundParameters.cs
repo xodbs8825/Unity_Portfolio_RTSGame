@@ -13,7 +13,8 @@ public class GameSoundParameters : GameParameters
     [Range(-80, 0)]
     public int sfxVolume;
 
-    [Header("Ambient sounds")]
+    [Header("Unit")]
     public AudioClip buildingPlacedSound;
     public AudioClip buildingFinishedSound;
+    public AudioClip unitSelectSound;
 }

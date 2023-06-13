@@ -83,7 +83,6 @@ public class Building : Unit
         _placement = BuildingPlacement.FIXED;
         SetMaterials();
         SetConstructionHP(0);
-        EventManager.TriggerEvent("PlaySoundByName", "buildingPlacedSound");
     }
 
     public void SetConstructionHP(float constructionHP)
@@ -92,11 +91,13 @@ public class Building : Unit
 
         _constructionHP = constructionHP;
         float constructionRatio = _constructionHP / (float)MaxHP;
+        bool construction = false;
 
         int meshIndex = 0;
         if (constructionRatio < 0.5f)
         {
             meshIndex = 0;
+            construction = true;
         }
         else if (constructionRatio >= 0.5f && constructionRatio < 1)
         {
@@ -105,48 +106,16 @@ public class Building : Unit
         else if (constructionRatio >= 1)
         {
             meshIndex = 2;
-        }
-
-        Mesh mesh = _constructionMeshes[meshIndex];
-        _rendererMesh.sharedMesh = mesh;
-
-        if (constructionRatio >= 1)
             SetAlive();
-    }
 
-    public void _SetConstructionHP(float constructionHP)
-    {
-        if (_isAlive) return;
-
-        _constructionHP = constructionHP;
-        float constructionRatio = _constructionHP / (float)MaxHP;
-
-        int meshIndex = 0;
-        if (constructionRatio < 0.5f)
-        {
-            meshIndex = 0;
-        }
-        else if (constructionRatio >= 0.5f && constructionRatio < 1)
-        {
-            meshIndex = 1;
-        }
-        else if (constructionRatio >= 1)
-        {
-            meshIndex = 2;
+            if (construction)
+            {
+                EventManager.TriggerEvent("PlaySoundByName", "buildingFinishedSound");
+            }
         }
 
         Mesh mesh = _constructionMeshes[meshIndex];
         _rendererMesh.sharedMesh = mesh;
-
-        if (constructionRatio >= 1)
-        {
-            _isAlive = true;
-            _bt.enabled = true;
-
-            ComputeProduction();
-
-            Globals.UpdateNevMeshSurface();
-        }
     }
 
     public void SetUpgradeConstructionHP(float prevHP, float currentHP, float constructionRatio)
@@ -177,8 +146,6 @@ public class Building : Unit
         _bt.enabled = true;
 
         ComputeProduction();
-
-        EventManager.TriggerEvent("PlaySoundByName", "buildingFinishedSound");
 
         Globals.UpdateNevMeshSurface();
     }
