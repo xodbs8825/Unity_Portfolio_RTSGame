@@ -191,13 +191,13 @@ public class Unit
 
         for (int i = 0; i < _data.resourceProduction.Length; i++)
         {
-            if (_data.resourceProduction[i].resource == InGameResource.Mineral)
+            if (_data.resourceProduction[i].resource == InGameResource.Gold)
             {
-                _production[InGameResource.Mineral] = _data.resourceProduction[i].amount;
+                _production[InGameResource.Gold] = _data.resourceProduction[i].amount;
             }
-            else if (_data.resourceProduction[i].resource == InGameResource.Gas)
+            else if (_data.resourceProduction[i].resource == InGameResource.Wood)
             {
-                _production[InGameResource.Gas] = _data.resourceProduction[i].amount;
+                _production[InGameResource.Wood] = _data.resourceProduction[i].amount;
             }
         }
 

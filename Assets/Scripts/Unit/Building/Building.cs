@@ -91,13 +91,11 @@ public class Building : Unit
 
         _constructionHP = constructionHP;
         float constructionRatio = _constructionHP / (float)MaxHP;
-        bool construction = false;
 
         int meshIndex = 0;
         if (constructionRatio < 0.5f)
         {
             meshIndex = 0;
-            construction = true;
         }
         else if (constructionRatio >= 0.5f && constructionRatio < 1)
         {
@@ -107,11 +105,32 @@ public class Building : Unit
         {
             meshIndex = 2;
             SetAlive();
+        }
 
-            if (construction)
-            {
-                EventManager.TriggerEvent("PlaySoundByName", "buildingFinishedSound");
-            }
+        Mesh mesh = _constructionMeshes[meshIndex];
+        _rendererMesh.sharedMesh = mesh;
+    }
+
+    public void SetConstructingHP(float constructionHP)
+    {
+        if (_isAlive) return;
+
+        _constructionHP = constructionHP;
+        float constructionRatio = _constructionHP / (float)MaxHP;
+
+        int meshIndex = 0;
+        if (constructionRatio < 0.5f)
+        {
+            meshIndex = 0;
+        }
+        else if (constructionRatio >= 0.5f && constructionRatio < 1)
+        {
+            meshIndex = 1;
+        }
+        else if (constructionRatio >= 1)
+        {
+            meshIndex = 2;
+            ConstructionFinished();
         }
 
         Mesh mesh = _constructionMeshes[meshIndex];
@@ -146,6 +165,17 @@ public class Building : Unit
         _bt.enabled = true;
 
         ComputeProduction();
+
+        Globals.UpdateNevMeshSurface();
+    }
+
+    private void ConstructionFinished()
+    {
+        _isAlive = true;
+        _bt.enabled = true;
+
+        ComputeProduction();
+        EventManager.TriggerEvent("PlaySoundByName", "buildingFinishedSound");
 
         Globals.UpdateNevMeshSurface();
     }

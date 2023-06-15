@@ -36,9 +36,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cd6a0e462962b7848a20badac8e670d2, type: 2}
   - {fileID: 11400000, guid: 50a8db2b095ff92499b1335837f19edb, type: 2}
   - {fileID: 11400000, guid: 8aca49610104ffb4a8c7467c8157e2c0, type: 2}
-  selectSound: {fileID: 8300000, guid: 1b7a82196be8b954e83a5d3efb10b91d, type: 3}
   interactSound:
-  - {fileID: 8300000, guid: 3ebe6b402fa768e42a7619f00ec4527c, type: 3}
+  - {fileID: 8300000, guid: 8ce364bebed12cc408f874a0711327ea, type: 3}
+  attackSound: []
+  dualWieldAttackSound: []
+  deathSound: {fileID: 8300000, guid: c09199b3f9e1a4c4183ff774a101ee0a, type: 3}
   myAttackDamageLevel: 0
   enemyAttackDamageLevel: 0
   myAttackRangeResearchComplete: 0
@@ -57,3 +59,5 @@ MonoBehaviour:
   - {fileID: 4300000, guid: 16c16ea3927925b4a85067b12080333d, type: 3}
   - {fileID: 4300000, guid: 75cb71cd68996f147af86badbf154a13, type: 3}
   - {fileID: 4300006, guid: a43f0d6131f84de40b182eb70bb23b87, type: 3}
+  buildingConstruction: {fileID: 8300000, guid: b3301c72a4bf86c40b9ff9ce8b7e127f, type: 3}
+  buildingDamaged: {fileID: 8300000, guid: f7214836315c2d846bf2891835454174, type: 3}

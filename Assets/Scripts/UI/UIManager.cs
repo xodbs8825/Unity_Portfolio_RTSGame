@@ -88,6 +88,8 @@ public class UIManager : MonoBehaviour
             _gameParameters[p.GetParametersName()] = p;
 
         SetupGameOptionsPanel();
+
+        
     }
 
     private void Start()
@@ -100,7 +102,7 @@ public class UIManager : MonoBehaviour
             GameObject display = Instantiate(gameResourceDisplayPrefab, resourcesUIParent);
             display.name = pair.Key.ToString();
             _resourcesTexts[pair.Key] = display.transform.Find("Text").GetComponent<Text>();
-            display.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Imports/GameResources/{pair.Key}");
+            display.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Imports/Sprites/GameResources/{pair.Key}");
 
             SetResourceText(pair.Key, pair.Value.Amount);
         }
@@ -142,6 +144,8 @@ public class UIManager : MonoBehaviour
         {
             ShowPanel(selectedUnitActionButtonsParent, false);
         }
+
+        
 
         UpdateSkillButtonInteractable();
     }
@@ -329,7 +333,7 @@ public class UIManager : MonoBehaviour
                 t = g.transform;
 
                 t.Find("Text").GetComponent<Text>().text = resource.amount.ToString();
-                t.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Imports/GameResources/{resource.code}");
+                t.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Imports/Sprites/GameResources/{resource.code}");
             }
         }
     }
@@ -389,7 +393,7 @@ public class UIManager : MonoBehaviour
                 t = g.transform;
 
                 t.Find("Text").GetComponent<Text>().text = $"+{resource.Value}";
-                t.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Imports/GameResources/{resource.Key}");
+                t.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Imports/Sprites/GameResources/{resource.Key}");
             }
         }
 

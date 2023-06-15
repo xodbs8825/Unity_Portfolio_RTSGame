@@ -6,8 +6,8 @@ using UnityEngine.AI;
 
 public enum InGameResource
 {
-    Mineral,
-    Gas
+    Gold,
+    Wood
 }
 
 public static class Globals
@@ -35,8 +35,8 @@ public static class Globals
         {
             GAME_RESOURCES[i] = new Dictionary<InGameResource, GameResource>()
             {
-                { InGameResource.Mineral, new GameResource("Mineral", 999999) },
-                { InGameResource.Gas, new GameResource("Gas", 999999) }
+                { InGameResource.Gold, new GameResource("Gold", 999999) },
+                { InGameResource.Wood, new GameResource("Wood", 999999) }
             };
         }
     }
