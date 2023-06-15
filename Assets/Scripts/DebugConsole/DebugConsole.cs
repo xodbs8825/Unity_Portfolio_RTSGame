@@ -33,10 +33,10 @@ public class DebugConsole : MonoBehaviour
             EventManager.TriggerEvent("UpdateGameParameter:enableFOV", fov);
         });
 
-        new DebugCommand("Show me the money", "Add 10000 minerals and 10000 gas", "Show me the money", () =>
+        new DebugCommand("Show me the money", "Add 10000 golds and 10000 trees", "Show me the money", () =>
         {
-            Globals.GAME_RESOURCES[GameManager.instance.gamePlayersParameters.myPlayerID][InGameResource.Mineral].AddAmount(10000);
-            Globals.GAME_RESOURCES[GameManager.instance.gamePlayersParameters.myPlayerID][InGameResource.Gas].AddAmount(10000);
+            Globals.GAME_RESOURCES[GameManager.instance.gamePlayersParameters.myPlayerID][InGameResource.Gold].AddAmount(10000);
+            Globals.GAME_RESOURCES[GameManager.instance.gamePlayersParameters.myPlayerID][InGameResource.Wood].AddAmount(10000);
             EventManager.TriggerEvent("UpdateResourceTexts");
         });
 

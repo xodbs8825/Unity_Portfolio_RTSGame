@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameResource
 {
-    // 인게임 자원 관리 (스타크래프트의 경우 미네랄, 가스, 등등)
     private string _name;
     private int _currentAmount;
 

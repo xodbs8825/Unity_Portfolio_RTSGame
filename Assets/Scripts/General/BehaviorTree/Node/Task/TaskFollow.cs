@@ -73,6 +73,8 @@ public class TaskFollow : Node
                         _manager.SetRendererVisibilty(false);
                         _manager.agent.Warp(((Transform)currentTarget).position +
                             Quaternion.Euler(0f, Random.Range(0f, 360f), 0f) * Vector3.down * _targetSize * 0.8f);
+
+                        EventManager.TriggerEvent("PlaySoundByName", "buildingPlacedSound");
                     }
                 }
             }

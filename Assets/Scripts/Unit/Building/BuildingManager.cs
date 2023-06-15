@@ -22,12 +22,12 @@ public class BuildingManager : UnitManager
     {
         _collider = GetComponent<BoxCollider>();
         _building = building;
-        _buildingData = (BuildingData)_building.Data;
     }
 
     public override void Select(bool singleClick, bool holdingShift)
     {
         base.Select(singleClick, holdingShift);
+        _buildingData = (BuildingData)_building.Data;
         if (base.IsSelected && _buildingData.interactSound[0] != null)
             PlaySound();
     }
@@ -163,7 +163,7 @@ public class BuildingManager : UnitManager
 
     public bool Build(int buildPower)
     {
-        _building.SetConstructionHP(_building.ConstructionHP + buildPower);
+        _building.SetConstructingHP(_building.ConstructionHP + buildPower);
         UpdateHealthBar();
         return _building.IsAlive;
     }
