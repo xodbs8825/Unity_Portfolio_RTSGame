@@ -59,6 +59,8 @@ public class UIManager : MonoBehaviour
 
     private Unit _unit;
 
+    public GameObject playerIDChangeIndicator;
+
     private void Awake()
     {
         ShowPanel(selectedUnitActionButtonsParent, false);
@@ -145,7 +147,16 @@ public class UIManager : MonoBehaviour
             ShowPanel(selectedUnitActionButtonsParent, false);
         }
 
-        
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            EventManager.TriggerEvent("SetPlayer", 0);
+            StartCoroutine(IDChange(0));
+        }
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            EventManager.TriggerEvent("SetPlayer", 1);
+            StartCoroutine(IDChange(1));
+        }
 
         UpdateSkillButtonInteractable();
     }
@@ -720,5 +731,13 @@ public class UIManager : MonoBehaviour
                 optionsPanel.SetActive(false);
                 break;
         }
+    }
+
+    private IEnumerator IDChange(int id)
+    {
+        playerIDChangeIndicator.GetComponent<Text>().text = $"Your current player ID is : {id}";
+        playerIDChangeIndicator.SetActive(true);
+        yield return new WaitForSeconds(2);
+        playerIDChangeIndicator.SetActive(false);
     }
 }

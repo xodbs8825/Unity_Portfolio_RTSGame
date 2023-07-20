@@ -9,8 +9,8 @@ public class CharacterAnimationController : MonoBehaviour
 
     public void Hit()
     {
-        Debug.Log(manager.Unit.AttackDamage);
         _target.TakeHit(manager.Unit.AttackDamage);
+        manager.contextualSource.PlayOneShot(manager.Unit.Data.attackSound[Random.Range(0, manager.Unit.Data.attackSound.Length - 1)]);
     }
 
     public void Death()

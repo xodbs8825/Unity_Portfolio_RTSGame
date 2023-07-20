@@ -137,6 +137,8 @@ public class GameManager : MonoBehaviour
         EventManager.AddListener("DebugVector3", OnDebugTargetPosition);
         EventManager.AddListener("DebugFloat", OnDebugFloat);
         EventManager.AddListener("DebugBool", OnDebugBool);
+
+        EventManager.AddListener("ChangeCurrentPlayerID", OnChangeCurrentPlayerID);
     }
 
     private void OnDisable()
@@ -148,6 +150,8 @@ public class GameManager : MonoBehaviour
         EventManager.RemoveListener("DebugVector3", OnDebugTargetPosition);
         EventManager.RemoveListener("DebugFloat", OnDebugFloat);
         EventManager.RemoveListener("DebugBool", OnDebugBool);
+
+        EventManager.RemoveListener("ChangeCurrentPlayerID", OnChangeCurrentPlayerID);
     }
 
     private void OnPauseGame()
@@ -182,6 +186,12 @@ public class GameManager : MonoBehaviour
     {
         bool b = (bool)data;
         Debug.Log(b);
+    }
+
+    private void OnChangeCurrentPlayerID(object data)
+    {
+        int id = (int)data;
+        gamePlayersParameters.myPlayerID = id;
     }
 
     private void OnApplicationQuit()
