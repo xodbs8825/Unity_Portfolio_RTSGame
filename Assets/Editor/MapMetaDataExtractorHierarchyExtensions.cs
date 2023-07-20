@@ -1,9 +1,7 @@
-using System;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEditor;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 [InitializeOnLoad]
 public class MapMetaDataExtractorHierarchyExtensions
@@ -32,17 +30,17 @@ public class MapMetaDataExtractorHierarchyExtensions
                 width, selectionRect.height - 2);
             if (GUI.Button(buttonPosition, "Extract", _buttonStyle))
             {
-                MapMetaDataExtractor.Extract(scene);
+                MapMetadataExtractor.Extract(scene);
             }
         }
     }
 
     private static Scene GetSceneFromInstanceID(int id)
     {
-        Type type = typeof(EditorSceneManager);
+        System.Type type = typeof(UnityEditor.SceneManagement.EditorSceneManager);
         MethodInfo methodInfo = type.GetMethod("GetSceneByHandle", BindingFlags.Instance | BindingFlags.NonPublic
             | BindingFlags.Static);
-        object classInstance = Activator.CreateInstance(type, null);
+        object classInstance = System.Activator.CreateInstance(type, null);
         return (Scene)methodInfo.Invoke(classInstance, new object[] { id });
     }
 }

@@ -1,33 +1,32 @@
-using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEditor;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
+//using UnityEditor.SceneManagement;
 
-public static class MapMetaDataExtractor
+#if UNITY_EDITOR
+public static class MapMetadataExtractor
 {
     private static readonly string _mapDataFolder = "Resources/ScriptableObjects/Maps";
 
-    public static void Extract(Scene scene)
+    public static void Extract(Scene s)
     {
-        // 맵 폴더가 없으면 새로 폴더 생성
-        if (!Directory.Exists(Application.dataPath + $"/{_mapDataFolder}"))
-            Directory.CreateDirectory(Application.dataPath + $"/{_mapDataFolder}");
+        // check the map metadata Scriptable Objects folder exists,
+        // or create it
+        if (!System.IO.Directory.Exists(Application.dataPath + $"/{_mapDataFolder}"))
+            System.IO.Directory.CreateDirectory(Application.dataPath + $"/{_mapDataFolder}");
 
-        // 게임 씬 이름을 가져오고 액티브 활성화
-        string sceneName = scene.name;
-        EditorSceneManager.SetActiveScene(scene);
+        // get the scene name + set it as active
+        string sceneName = s.name;
+        SceneManager.SetActiveScene(s);
 
-        // 터레인 불러오기
-        GameObject[] gameObjects = scene.GetRootGameObjects();
+        // try to get the "Terrain" object
+        GameObject[] objs = s.GetRootGameObjects();
         Terrain terrain = null;
-        foreach (GameObject g in gameObjects)
+        foreach (GameObject g in objs)
         {
             terrain = g.GetComponent<Terrain>();
             if (terrain != null)
-            {
                 break;
-            }
         }
         if (terrain == null)
         {
@@ -35,7 +34,8 @@ public static class MapMetaDataExtractor
             return;
         }
 
-        // ScriptableObject 메타 데이터 가져오기, 데이터가 존재 하지 않으면 인스턴스 생성
+        // try and get the map metadata Scriptable Object,
+        // or create and save it
         string assetPath = $"Assets/{_mapDataFolder}/{sceneName}.asset";
         MapData data = AssetDatabase.LoadAssetAtPath<MapData>(assetPath);
         if (data == null)
@@ -46,15 +46,16 @@ public static class MapMetaDataExtractor
             data.sceneName = sceneName;
         }
 
-        // 맵 사이즈 가져오기
+        // get the map size
         Bounds bounds = terrain.terrainData.bounds;
         data.mapSize = bounds.size.x;
 
-        // 최대 플레이어 인원 수 가져오기
-        data.maxPlayers = GameObject.Find("SpawnPoints").transform.childCount;
+        // get the max number of players = number of spawnpoints
+        data.maxPlayers = GameObject.Find("Spawnpoints").transform.childCount;
 
-        // ScriptableObject 업데이트
+        // update the Scriptable Object
         EditorUtility.SetDirty(data);
         AssetDatabase.SaveAssets();
     }
 }
+#endif
