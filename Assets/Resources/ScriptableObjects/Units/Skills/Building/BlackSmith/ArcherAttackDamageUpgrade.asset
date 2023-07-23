@@ -35,7 +35,7 @@ MonoBehaviour:
       amount: 300
     - code: 1
       amount: 300
-  buildTime: 50
+  buildTime: 10
   sprite: {fileID: 21300000, guid: 98bdcbf4fc31e2340bc64a5db9ac98f8, type: 3}
   sound: {fileID: 8300000, guid: 012bcc20c5a29ee40b7f014109eefd79, type: 3}
   techTree:

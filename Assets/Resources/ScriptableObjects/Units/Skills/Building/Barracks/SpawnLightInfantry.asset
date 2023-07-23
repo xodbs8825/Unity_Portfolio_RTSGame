@@ -22,7 +22,7 @@ MonoBehaviour:
   - cost:
     - code: 0
       amount: 100
-  buildTime: 15
+  buildTime: 5
   sprite: {fileID: 21300000, guid: 42b421f32517c2a4c955b6e464378d84, type: 3}
   sound: {fileID: 8300000, guid: 34e3f09d9ac977e46b874b6f9413ab9f, type: 3}
   techTree:
